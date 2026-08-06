@@ -287,6 +287,7 @@ function startLevel(levelId) {
     rows: 8,
     cols: 8,
     tiles: level.tiles,
+    symbols: currentParcours().tileSymbols,
     onScore: handleScore,
     onMove: handleMove,
     onInvalid: () => {}

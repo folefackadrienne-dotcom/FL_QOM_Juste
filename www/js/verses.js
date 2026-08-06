@@ -2,9 +2,6 @@
    anglais : King James Version — deux traductions du domaine public),
    organisées en "parcours" narratifs de 12 niveaux chacun. */
 
-/* Symboles à thème biblique utilisés comme "bonbons" du jeu */
-const TILE_SYMBOLS = ["✝️", "🕊️", "🐟", "⭐", "👑", "📖", "🍇"];
-
 /* Difficulté progressive appliquée aux 12 niveaux de chaque parcours */
 const LEVEL_TARGET = [400, 435, 470, 505, 540, 575, 610, 645, 680, 715, 750, 785];
 const LEVEL_MOVES = [20, 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15];
@@ -30,6 +27,7 @@ const PARCOURS = [
   {
     id: "creation",
     emoji: "🌱",
+    tileSymbols: ["☀️", "🦁", "🐟", "🐦", "🍎", "🧑"],
     fr: { title: "La Création", subtitle: "Les 7 jours où Dieu a tout créé" },
     en: { title: "Creation", subtitle: "The 7 days God made everything" },
     verses: [
@@ -86,6 +84,7 @@ const PARCOURS = [
   {
     id: "abraham",
     emoji: "⛺",
+    tileSymbols: ["⛺", "🐫", "⭐", "🐑", "🔥", "🏜️"],
     fr: { title: "La vie d'Abraham", subtitle: "L'ami de Dieu, père des croyants" },
     en: { title: "The life of Abraham", subtitle: "God's friend, father of believers" },
     verses: [
@@ -142,6 +141,7 @@ const PARCOURS = [
   {
     id: "jacob",
     emoji: "🪜",
+    tileSymbols: ["🪜", "👼", "🐑", "🪨", "🥊", "💧"],
     fr: { title: "La vie de Jacob", subtitle: "L'échelle qui touche le ciel" },
     en: { title: "The life of Jacob", subtitle: "The ladder that touches heaven" },
     verses: [
@@ -198,6 +198,7 @@ const PARCOURS = [
   {
     id: "joseph",
     emoji: "🌾",
+    tileSymbols: ["🌈", "💭", "🌾", "👑", "⛓️", "🏺"],
     fr: { title: "La vie de Joseph", subtitle: "Du puits d'Égypte au palais de Pharaon" },
     en: { title: "The life of Joseph", subtitle: "From the pit to Pharaoh's palace" },
     verses: [
@@ -254,6 +255,7 @@ const PARCOURS = [
   {
     id: "exode",
     emoji: "🌊",
+    tileSymbols: ["🌊", "🔥", "🐸", "🍞", "🐑", "📜"],
     fr: { title: "L'Exode", subtitle: "La sortie d'Égypte vers la liberté" },
     en: { title: "The Exodus", subtitle: "Leaving Egypt for freedom" },
     verses: [
@@ -310,6 +312,7 @@ const PARCOURS = [
   {
     id: "david",
     emoji: "🪨",
+    tileSymbols: ["🪨", "🎼", "👑", "🐑", "⚔️", "🦁"],
     fr: { title: "La vie de David", subtitle: "Le petit berger devenu roi" },
     en: { title: "The life of David", subtitle: "The shepherd boy who became king" },
     verses: [
@@ -366,6 +369,7 @@ const PARCOURS = [
   {
     id: "jesus",
     emoji: "🌟",
+    tileSymbols: ["⭐", "👼", "🐑", "👶", "🐫", "🎁"],
     fr: { title: "La naissance de Jésus", subtitle: "Noël : Dieu vient habiter parmi nous" },
     en: { title: "The birth of Jesus", subtitle: "Christmas: God comes to live among us" },
     verses: [
@@ -422,6 +426,7 @@ const PARCOURS = [
   {
     id: "paul",
     emoji: "📜",
+    tileSymbols: ["⚡", "⛓️", "📜", "⛵", "✍️", "🕊️"],
     fr: { title: "La vie de Paul", subtitle: "De persécuteur à apôtre de Jésus" },
     en: { title: "The life of Paul", subtitle: "From persecutor to apostle of Jesus" },
     verses: [

@@ -1,11 +1,14 @@
 /* Moteur de jeu "match-3" façon Candy Crush, à thème biblique. */
 
+const DEFAULT_TILE_SYMBOLS = ["✝️", "🕊️", "🐟", "⭐", "👑", "📖"];
+
 class Board {
   constructor(container, options) {
     this.container = container;
     this.rows = options.rows || 8;
     this.cols = options.cols || 8;
     this.numTypes = options.tiles || 6;
+    this.symbols = options.symbols || DEFAULT_TILE_SYMBOLS;
     this.onScore = options.onScore || function () {};
     this.onMove = options.onMove || function () {};
     this.onInvalid = options.onInvalid || function () {};
@@ -63,7 +66,7 @@ class Board {
         el.className = "tile";
         el.dataset.r = r;
         el.dataset.c = c;
-        el.textContent = TILE_SYMBOLS[this.grid[r][c]];
+        el.textContent = this.symbols[this.grid[r][c]];
         el.addEventListener("click", () => this.handleClick(r, c));
         this.container.appendChild(el);
         rowEls.push(el);
@@ -135,7 +138,7 @@ class Board {
   updateCell(r, c) {
     const el = this.cellEls[r][c];
     const type = this.grid[r][c];
-    el.textContent = type === null ? "" : TILE_SYMBOLS[type];
+    el.textContent = type === null ? "" : this.symbols[type];
   }
 
   flashInvalid(r1, c1, r2, c2) {
@@ -223,7 +226,7 @@ class Board {
         const el = this.cellEls[r][c];
         el.classList.remove("matched");
         el.classList.add("dropping");
-        el.textContent = TILE_SYMBOLS[this.grid[r][c]];
+        el.textContent = this.symbols[this.grid[r][c]];
         setTimeout(() => el.classList.remove("dropping"), 260);
       }
     }
