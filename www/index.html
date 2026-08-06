@@ -33,6 +33,24 @@
       <span></span>
     </header>
     <div class="parcours-list" id="parcours-list"></div>
+    <button class="btn-link" id="btn-restore-top"></button>
+  </section>
+
+  <!-- ÉCRAN DÉBLOCAGE D'UN PARCOURS -->
+  <section id="screen-unlock" class="screen">
+    <header class="topbar">
+      <button class="btn-icon" data-nav="parcours">⬅️</button>
+      <h2 id="unlock-title"></h2>
+      <span></span>
+    </header>
+    <div class="home-card">
+      <div class="result-emoji" id="unlock-emoji">🔒</div>
+      <p id="unlock-desc"></p>
+      <button class="btn btn-primary" id="btn-unlock-one"></button>
+      <button class="btn btn-secondary" id="btn-unlock-all"></button>
+      <div class="verse-feedback" id="unlock-feedback"></div>
+      <button class="btn-link" id="btn-restore-unlock"></button>
+    </div>
   </section>
 
   <!-- ÉCRAN CARTE DES NIVEAUX -->
@@ -124,6 +142,7 @@
 
 <script src="js/verses.js"></script>
 <script src="js/i18n.js"></script>
+<script src="js/billing.js"></script>
 <script src="js/board.js"></script>
 <script src="js/verseGame.js"></script>
 <script src="js/app.js"></script>

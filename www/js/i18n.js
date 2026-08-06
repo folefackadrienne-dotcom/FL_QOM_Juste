@@ -37,7 +37,16 @@ const I18N = {
     ],
     help_quote: "« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. » — Psaume 119.105",
     toast_learned: "Verset mémorisé ! 🌟",
-    lang_switch_label: "EN"
+    lang_switch_label: "EN",
+    btn_restore: "🔓 Restaurer mes achats",
+    unlock_desc: "Débloque ce parcours pour toujours et retrouve tous ses versets à apprendre.",
+    btn_unlock_one: (price) => (price ? `🔓 Débloquer ce parcours (${price})` : "🔓 Débloquer ce parcours"),
+    btn_unlock_all: (price) => (price ? `🌟 Tout débloquer (${price})` : "🌟 Tout débloquer"),
+    purchase_pending: "Achat en cours…",
+    purchase_error: "Achat impossible pour le moment. Réessaie plus tard.",
+    purchase_unavailable: "Les achats ne sont disponibles que dans l'application Android.",
+    restore_done: "Achats restaurés ✅",
+    toast_unlocked: "Parcours débloqué ! 🎉"
   },
   en: {
     doc_title: "Croque-Versets — The Bible verse game",
@@ -75,7 +84,16 @@ const I18N = {
     ],
     help_quote: "“Thy word is a lamp unto my feet, and a light unto my path.” — Psalm 119:105",
     toast_learned: "Verse memorized! 🌟",
-    lang_switch_label: "FR"
+    lang_switch_label: "FR",
+    btn_restore: "🔓 Restore purchases",
+    unlock_desc: "Unlock this journey for life and access all its verses to learn.",
+    btn_unlock_one: (price) => (price ? `🔓 Unlock this journey (${price})` : "🔓 Unlock this journey"),
+    btn_unlock_all: (price) => (price ? `🌟 Unlock everything (${price})` : "🌟 Unlock everything"),
+    purchase_pending: "Purchase in progress…",
+    purchase_error: "Purchase couldn't be completed. Please try again later.",
+    purchase_unavailable: "Purchases are only available in the Android app.",
+    restore_done: "Purchases restored ✅",
+    toast_unlocked: "Journey unlocked! 🎉"
   }
 };
 

@@ -1,0 +1,19 @@
+{
+  "name": "croque-versets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Croque-Versets — jeu de mémorisation de versets bibliques (Capacitor / Android)",
+  "scripts": {
+    "sync": "cap sync android",
+    "open:android": "cap open android",
+    "serve": "npx http-server www -p 8765"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "cordova-plugin-purchase": "^13.12.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  }
+}

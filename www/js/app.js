@@ -97,6 +97,9 @@ function applyStaticI18n() {
   document.getElementById("btn-next-level").textContent = t("btn_next_level");
   document.getElementById("library-header").textContent = t("library_header");
   document.getElementById("help-header").textContent = t("help_header");
+  document.getElementById("btn-restore-top").textContent = t("btn_restore");
+  document.getElementById("btn-restore-unlock").textContent = t("btn_restore");
+  document.getElementById("unlock-desc").textContent = t("unlock_desc");
 
   const helpLines = document.getElementById("help-lines");
   helpLines.innerHTML = t("help_lines").map((line) => `<p>${line}</p>`).join("");
@@ -128,6 +131,9 @@ function refreshActiveScreen() {
     case "screen-verse":
       openVerseGameForCurrentLevel();
       break;
+    case "screen-unlock":
+      renderUnlockScreen(state.currentUnlockParcoursId);
+      break;
   }
 }
 
@@ -153,6 +159,15 @@ function renderParcoursList() {
     const pct = Math.round((learnedCount / p.verses.length) * 100);
     const done = learnedCount === p.verses.length;
     const txt = parcoursText(p);
+    const unlocked = Billing.isUnlocked(p.id);
+
+    let badge;
+    if (!unlocked) {
+      const price = Billing.priceFor(p.id);
+      badge = `<div class="parcours-price">🔒${price ? " " + price : ""}</div>`;
+    } else {
+      badge = `<div class="parcours-check">${done ? "🏆" : "▶️"}</div>`;
+    }
 
     const card = document.createElement("button");
     card.className = "parcours-card";
@@ -164,14 +179,67 @@ function renderParcoursList() {
         <div class="p-progress"><div class="p-progress-bar" style="width:${pct}%"></div></div>
         <div class="p-progress-text">${t("progress_text", learnedCount, p.verses.length)}</div>
       </div>
-      <div class="parcours-check">${done ? "🏆" : "▶️"}</div>
+      ${badge}
     `;
     card.addEventListener("click", () => {
-      state.currentParcoursId = p.id;
-      renderLevels();
-      navTo("levels");
+      if (Billing.isUnlocked(p.id)) {
+        state.currentParcoursId = p.id;
+        renderLevels();
+        navTo("levels");
+      } else {
+        state.currentUnlockParcoursId = p.id;
+        renderUnlockScreen(p.id);
+        navTo("unlock");
+      }
     });
     list.appendChild(card);
+  });
+}
+
+/* ---------- DÉBLOCAGE (ACHATS) ---------- */
+
+function renderUnlockScreen(parcoursId) {
+  const p = getParcours(parcoursId);
+  const txt = parcoursText(p);
+  document.getElementById("unlock-title").textContent = `${p.emoji} ${txt.title}`;
+  document.getElementById("unlock-feedback").textContent = "";
+  document.getElementById("unlock-feedback").className = "verse-feedback";
+  document.getElementById("btn-unlock-one").textContent = t("btn_unlock_one", Billing.priceFor(parcoursId));
+  document.getElementById("btn-unlock-all").textContent = t("btn_unlock_all", Billing.bundlePrice());
+}
+
+function setUnlockFeedback(msg, ok) {
+  const el = document.getElementById("unlock-feedback");
+  el.textContent = msg;
+  el.className = "verse-feedback " + (ok ? "ok" : "ko");
+}
+
+function handlePurchase(purchaseFn, parcoursId) {
+  if (!Billing.available()) {
+    setUnlockFeedback(t("purchase_unavailable"), false);
+    return;
+  }
+  setUnlockFeedback(t("purchase_pending"), true);
+  purchaseFn()
+    .then(() => {
+      if (Billing.isUnlocked(parcoursId)) {
+        showToast(t("toast_unlocked"));
+        state.currentParcoursId = parcoursId;
+        renderLevels();
+        navTo("levels");
+      }
+    })
+    .catch(() => setUnlockFeedback(t("purchase_error"), false));
+}
+
+function handleRestore() {
+  if (!Billing.available()) {
+    showToast(t("purchase_unavailable"));
+    return;
+  }
+  Billing.restore().then(() => {
+    showToast(t("restore_done"));
+    refreshActiveScreen();
   });
 }
 
@@ -376,6 +444,19 @@ document.addEventListener("DOMContentLoaded", () => {
   loadProgress();
   applyStaticI18n();
   renderHome();
+
+  Billing.init(() => refreshActiveScreen());
+
+  document.getElementById("btn-unlock-one").addEventListener("click", () => {
+    handlePurchase(() => Billing.purchase(state.currentUnlockParcoursId), state.currentUnlockParcoursId);
+  });
+
+  document.getElementById("btn-unlock-all").addEventListener("click", () => {
+    handlePurchase(() => Billing.purchaseAll(), state.currentUnlockParcoursId);
+  });
+
+  document.getElementById("btn-restore-top").addEventListener("click", handleRestore);
+  document.getElementById("btn-restore-unlock").addEventListener("click", handleRestore);
 
   document.getElementById("lang-toggle").addEventListener("click", () => {
     state.lang = state.lang === "fr" ? "en" : "fr";

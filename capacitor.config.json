@@ -1,0 +1,9 @@
+{
+  "appId": "com.croqueversets.app",
+  "appName": "Croque-Versets",
+  "webDir": "www",
+  "backgroundColor": "#fff3d6",
+  "android": {
+    "allowMixedContent": false
+  }
+}

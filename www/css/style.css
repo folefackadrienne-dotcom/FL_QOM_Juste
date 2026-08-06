@@ -178,6 +178,28 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
 }
 .parcours-info .p-progress-text { font-size: .72rem; color: #8a76b8; margin-top: 3px; }
 .parcours-check { font-size: 1.3rem; flex-shrink: 0; }
+.parcours-price {
+  font-size: .7rem;
+  font-weight: bold;
+  color: var(--purple-dark);
+  background: #ffe9b0;
+  border-radius: 10px;
+  padding: 3px 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--purple);
+  font-weight: bold;
+  font-size: .85rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 10px;
+  font-family: inherit;
+}
 
 /* NIVEAUX */
 .levels-grid {
