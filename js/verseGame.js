@@ -20,8 +20,10 @@ const VerseGame = (function () {
 
   function pool() {
     const set = new Set();
-    LEVELS.forEach((l) => {
-      l.text.split(" ").forEach((w) => set.add(w));
+    PARCOURS.forEach((p) => {
+      p.levels.forEach((l) => {
+        l.text.split(" ").forEach((w) => set.add(w));
+      });
     });
     return Array.from(set);
   }

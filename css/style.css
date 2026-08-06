@@ -109,6 +109,58 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   padding: 8px 0;
 }
 
+/* PARCOURS */
+.parcours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+.parcours-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fffdf8;
+  border: none;
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 5px 0 #d9a8be;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+}
+.parcours-card:active { transform: translateY(2px); box-shadow: 0 3px 0 #d9a8be; }
+.parcours-emoji {
+  font-size: 2rem;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #ffe4ef, #ffd6e8);
+  border-radius: 14px;
+}
+.parcours-info { flex: 1; min-width: 0; }
+.parcours-info .p-title { font-weight: bold; color: var(--purple-dark); font-size: 1.05rem; }
+.parcours-info .p-subtitle { font-size: .8rem; color: #8a76b8; margin-top: 2px; }
+.parcours-info .p-progress {
+  margin-top: 6px;
+  height: 8px;
+  background: #eee3f5;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.parcours-info .p-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--purple));
+  border-radius: 6px;
+}
+.parcours-info .p-progress-text { font-size: .72rem; color: #8a76b8; margin-top: 3px; }
+.parcours-check { font-size: 1.3rem; flex-shrink: 0; }
+
 /* NIVEAUX */
 .levels-grid {
   display: grid;
@@ -258,6 +310,12 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
 
 /* BIBLIOTHÈQUE */
 .library-list { width: 100%; margin-top: 10px; }
+.library-section {
+  color: var(--purple-dark);
+  font-size: 1rem;
+  margin: 18px 0 8px;
+}
+.library-section:first-child { margin-top: 4px; }
 .library-item {
   background: #fffdf8;
   border-radius: 14px;

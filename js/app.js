@@ -1,11 +1,11 @@
 /* Contrôleur principal : navigation entre écrans, progression, sauvegarde. */
 
-const STORAGE_KEY = "douceParoleProgress";
+const STORAGE_KEY = "douceParoleProgressV2";
+const TOTAL_LEVELS = PARCOURS.reduce((s, p) => s + p.levels.length, 0);
 
 const state = {
-  unlocked: 1,
-  stars: {},
-  learned: {},
+  progress: {}, // { [parcoursId]: { unlocked, stars: {levelId:n}, learned: {levelId:true} } }
+  currentParcoursId: null,
   currentLevelId: null,
   board: null,
   score: 0,
@@ -13,14 +13,33 @@ const state = {
   target: 0
 };
 
+function emptyParcoursProgress() {
+  return { unlocked: 1, stars: {}, learned: {} };
+}
+
+function getParcours(id) {
+  return PARCOURS.find((p) => p.id === id);
+}
+
+function getProgress(parcoursId) {
+  if (!state.progress[parcoursId]) state.progress[parcoursId] = emptyParcoursProgress();
+  return state.progress[parcoursId];
+}
+
+function currentParcours() {
+  return getParcours(state.currentParcoursId);
+}
+
+function currentLevel() {
+  return currentParcours().levels.find((l) => l.id === state.currentLevelId);
+}
+
 function loadProgress() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const data = JSON.parse(raw);
-      state.unlocked = data.unlocked || 1;
-      state.stars = data.stars || {};
-      state.learned = data.learned || {};
+      if (data && data.progress) state.progress = data.progress;
     }
   } catch (e) {
     /* stockage indisponible : on continue avec l'état par défaut */
@@ -29,10 +48,7 @@ function loadProgress() {
 
 function saveProgress() {
   try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ unlocked: state.unlocked, stars: state.stars, learned: state.learned })
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ progress: state.progress }));
   } catch (e) {
     /* stockage indisponible : progression non persistée */
   }
@@ -53,21 +69,61 @@ function navTo(id) {
 /* ---------- ACCUEIL ---------- */
 
 function renderHome() {
-  const learnedCount = Object.keys(state.learned).length;
+  let learnedCount = 0;
+  PARCOURS.forEach((p) => {
+    const prog = getProgress(p.id);
+    learnedCount += Object.keys(prog.learned).length;
+  });
   document.getElementById("home-stats").textContent =
-    `📖 ${learnedCount} verset(s) appris sur ${LEVELS.length} • 🗺️ Niveau ${state.unlocked}`;
+    `📖 ${learnedCount} verset(s) appris sur ${TOTAL_LEVELS} • 🗺️ ${PARCOURS.length} parcours`;
+}
+
+/* ---------- CHOIX DU PARCOURS ---------- */
+
+function renderParcoursList() {
+  const list = document.getElementById("parcours-list");
+  list.innerHTML = "";
+  PARCOURS.forEach((p) => {
+    const prog = getProgress(p.id);
+    const learnedCount = Object.keys(prog.learned).length;
+    const pct = Math.round((learnedCount / p.levels.length) * 100);
+    const done = learnedCount === p.levels.length;
+
+    const card = document.createElement("button");
+    card.className = "parcours-card";
+    card.innerHTML = `
+      <div class="parcours-emoji">${p.emoji}</div>
+      <div class="parcours-info">
+        <div class="p-title">${p.title}</div>
+        <div class="p-subtitle">${p.subtitle}</div>
+        <div class="p-progress"><div class="p-progress-bar" style="width:${pct}%"></div></div>
+        <div class="p-progress-text">${learnedCount} / ${p.levels.length} versets appris</div>
+      </div>
+      <div class="parcours-check">${done ? "🏆" : "▶️"}</div>
+    `;
+    card.addEventListener("click", () => {
+      state.currentParcoursId = p.id;
+      renderLevels();
+      navTo("levels");
+    });
+    list.appendChild(card);
+  });
 }
 
 /* ---------- CARTE DES NIVEAUX ---------- */
 
 function renderLevels() {
+  const p = currentParcours();
+  const prog = getProgress(p.id);
+  document.getElementById("levels-title").textContent = `${p.emoji} ${p.title}`;
+
   const grid = document.getElementById("levels-grid");
   grid.innerHTML = "";
-  LEVELS.forEach((level) => {
-    const locked = level.id > state.unlocked;
+  p.levels.forEach((level) => {
+    const locked = level.id > prog.unlocked;
     const btn = document.createElement("button");
     btn.className = "level-btn" + (locked ? " locked" : "");
-    const starCount = state.stars[level.id] || 0;
+    const starCount = prog.stars[level.id] || 0;
     btn.innerHTML = `<div>${level.id}</div><div class="lv-stars">${locked ? "" : "⭐".repeat(starCount) + "☆".repeat(3 - starCount)}</div>`;
     if (!locked) {
       btn.addEventListener("click", () => startLevel(level.id));
@@ -78,15 +134,18 @@ function renderLevels() {
 
 /* ---------- JEU ---------- */
 
+let levelFinished = false;
+
 function startLevel(levelId) {
   levelFinished = false;
-  const level = LEVELS.find((l) => l.id === levelId);
+  const p = currentParcours();
+  const level = p.levels.find((l) => l.id === levelId);
   state.currentLevelId = levelId;
   state.score = 0;
   state.movesLeft = level.moves;
   state.target = level.target;
 
-  document.getElementById("game-ref").textContent = level.ref;
+  document.getElementById("game-ref").textContent = `${p.emoji} ${level.ref}`;
   document.getElementById("verse-preview").textContent =
     "Gagne ce niveau pour mémoriser : « " + level.text + " »";
   updateHud();
@@ -138,13 +197,13 @@ function handleMove() {
   }
 }
 
-let levelFinished = false;
-
 function finishLevel(win) {
   if (levelFinished) return;
   levelFinished = true;
 
-  const level = LEVELS.find((l) => l.id === state.currentLevelId);
+  const p = currentParcours();
+  const prog = getProgress(p.id);
+  const level = currentLevel();
 
   if (win) {
     const ratio = state.score / state.target;
@@ -152,11 +211,9 @@ function finishLevel(win) {
     if (ratio >= 1.6) stars = 3;
     else if (ratio >= 1.3) stars = 2;
 
-    state.stars[level.id] = Math.max(state.stars[level.id] || 0, stars);
-    if (level.id === state.unlocked && level.id < LEVELS.length) {
-      state.unlocked = level.id + 1;
-    } else if (level.id === state.unlocked && level.id === LEVELS.length) {
-      state.unlocked = level.id; // dernier niveau
+    prog.stars[level.id] = Math.max(prog.stars[level.id] || 0, stars);
+    if (level.id === prog.unlocked && level.id < p.levels.length) {
+      prog.unlocked = level.id + 1;
     }
     saveProgress();
 
@@ -181,7 +238,7 @@ function finishLevel(win) {
 /* ---------- VERSET ---------- */
 
 function openVerseGameForCurrentLevel() {
-  const level = LEVELS.find((l) => l.id === state.currentLevelId);
+  const level = currentLevel();
   VerseGame.start(level, {
     title: document.getElementById("verse-ref-title"),
     sentence: document.getElementById("verse-sentence"),
@@ -194,7 +251,8 @@ function openVerseGameForCurrentLevel() {
 }
 
 function markVerseLearned(levelId) {
-  state.learned[levelId] = true;
+  const prog = getProgress(state.currentParcoursId);
+  prog.learned[levelId] = true;
   saveProgress();
 }
 
@@ -203,19 +261,31 @@ function markVerseLearned(levelId) {
 function renderLibrary() {
   const list = document.getElementById("library-list");
   list.innerHTML = "";
-  const learnedIds = Object.keys(state.learned).map(Number).sort((a, b) => a - b);
 
-  if (learnedIds.length === 0) {
+  const sections = PARCOURS.map((p) => {
+    const prog = getProgress(p.id);
+    const learnedIds = Object.keys(prog.learned).map(Number).sort((a, b) => a - b);
+    return { p, learnedIds };
+  }).filter((s) => s.learnedIds.length > 0);
+
+  if (sections.length === 0) {
     list.innerHTML = '<p class="library-empty">Tu n\'as encore appris aucun verset.<br>Gagne un niveau pour commencer ! 🍭</p>';
     return;
   }
 
-  learnedIds.forEach((id) => {
-    const level = LEVELS.find((l) => l.id === id);
-    const div = document.createElement("div");
-    div.className = "library-item";
-    div.innerHTML = `<div class="ref">${level.ref}</div><div class="txt">${level.text}.</div>`;
-    list.appendChild(div);
+  sections.forEach(({ p, learnedIds }) => {
+    const heading = document.createElement("h3");
+    heading.className = "library-section";
+    heading.textContent = `${p.emoji} ${p.title}`;
+    list.appendChild(heading);
+
+    learnedIds.forEach((id) => {
+      const level = p.levels.find((l) => l.id === id);
+      const div = document.createElement("div");
+      div.className = "library-item";
+      div.innerHTML = `<div class="ref">${level.ref}</div><div class="txt">${level.text}.</div>`;
+      list.appendChild(div);
+    });
   });
 }
 
@@ -229,14 +299,15 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       const target = btn.dataset.nav;
       if (target === "home") renderHome();
+      if (target === "parcours") renderParcoursList();
       if (target === "levels") renderLevels();
       navTo(target);
     });
   });
 
   document.getElementById("btn-play").addEventListener("click", () => {
-    renderLevels();
-    navTo("levels");
+    renderParcoursList();
+    navTo("parcours");
   });
 
   document.getElementById("btn-library").addEventListener("click", () => {
@@ -257,7 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-retry").addEventListener("click", () => {
-    levelFinished = false;
     startLevel(state.currentLevelId);
   });
 
@@ -275,12 +345,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-next-level").addEventListener("click", () => {
+    const p = currentParcours();
+    const prog = getProgress(p.id);
     const nextId = state.currentLevelId + 1;
-    renderLevels();
-    navTo("levels");
-    if (nextId <= LEVELS.length && nextId <= state.unlocked) {
-      levelFinished = false;
+    if (nextId <= p.levels.length && nextId <= prog.unlocked) {
       startLevel(nextId);
+    } else {
+      renderLevels();
+      navTo("levels");
     }
   });
 
