@@ -1,0 +1,290 @@
+:root {
+  --bg1: #fff3d6;
+  --bg2: #ffd6e8;
+  --purple: #6c4ab6;
+  --purple-dark: #4b2e91;
+  --pink: #ff6f91;
+  --yellow: #ffc93c;
+  --green: #4caf50;
+  --card-radius: 22px;
+  font-size: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Comic Sans MS", "Baloo 2", "Trebuchet MS", sans-serif;
+  background: linear-gradient(160deg, var(--bg1), var(--bg2));
+  color: #3a2a5d;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+#app {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  animation: fadeIn .25s ease;
+}
+.screen.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 { font-size: 2.1rem; margin: 4px 0; color: var(--purple-dark); text-shadow: 1px 1px 0 #fff; }
+h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
+
+.home-card, .verse-card, .help-card {
+  background: #fffdf8;
+  border-radius: var(--card-radius);
+  padding: 24px 20px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(90, 50, 130, 0.18);
+  margin-top: 24px;
+}
+
+.home-emoji { font-size: 2.6rem; }
+.subtitle { color: #7a5fb0; margin-top: -8px; margin-bottom: 20px; font-weight: bold; }
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform .1s ease;
+  font-family: inherit;
+}
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  color: white;
+  box-shadow: 0 6px 0 #9c3f6b;
+}
+.btn-secondary {
+  background: #ffe9b0;
+  color: var(--purple-dark);
+  box-shadow: 0 4px 0 #e0b95c;
+}
+.btn-icon {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+.hidden { display: none !important; }
+
+.home-stats {
+  margin-top: 16px;
+  font-size: .9rem;
+  color: #8a76b8;
+}
+
+.topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+/* NIVEAUX */
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+  margin-top: 12px;
+}
+.level-btn {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #fff, #ffe4ef);
+  box-shadow: 0 6px 0 #d9a8be;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: var(--purple-dark);
+  cursor: pointer;
+  position: relative;
+}
+.level-btn .lv-stars { font-size: .8rem; margin-top: 4px; }
+.level-btn.locked {
+  background: #e6e2ec;
+  color: #a89dc0;
+  box-shadow: 0 6px 0 #cfc7dd;
+  cursor: not-allowed;
+}
+.level-btn.locked::after { content: "🔒"; position: absolute; top: 6px; right: 8px; font-size: .9rem; }
+
+/* JEU */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: #ffffffaa;
+  border-radius: 14px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-weight: bold;
+  font-size: .85rem;
+}
+.game-ref { font-weight: bold; text-align: center; flex: 1; color: var(--purple-dark); font-size: 1rem; }
+
+.board-wrap { width: 100%; display: flex; justify-content: center; }
+.board {
+  display: grid;
+  gap: 4px;
+  background: #d8c4ee;
+  padding: 6px;
+  border-radius: 16px;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 480px;
+  box-shadow: inset 0 0 12px rgba(90,50,130,.3);
+}
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  background: #fff;
+  cursor: pointer;
+  transition: transform .12s ease, opacity .15s ease;
+  box-shadow: 0 2px 0 rgba(0,0,0,.08);
+}
+.tile.selected {
+  transform: scale(0.85);
+  box-shadow: 0 0 0 3px var(--pink), 0 0 10px var(--pink);
+}
+.tile.matched {
+  transform: scale(0);
+  opacity: 0;
+}
+.tile.dropping {
+  animation: dropIn .25s ease;
+}
+.tile.invalid {
+  animation: shake .3s ease;
+}
+@keyframes dropIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.verse-preview {
+  margin-top: 14px;
+  font-size: .8rem;
+  color: #7a5fb0;
+  text-align: center;
+  font-style: italic;
+}
+
+/* RÉSULTAT */
+.result-emoji { font-size: 3rem; }
+.result-stars { font-size: 2rem; margin: 8px 0; }
+
+/* VERSET */
+.verse-sentence {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: var(--purple-dark);
+  font-weight: bold;
+}
+.blank {
+  display: inline-block;
+  min-width: 64px;
+  border-bottom: 3px solid var(--pink);
+  margin: 0 3px;
+  padding: 0 4px;
+  color: var(--purple);
+}
+.blank.filled { border-bottom-color: var(--green); }
+
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 18px 0;
+}
+.word-chip {
+  background: var(--yellow);
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #d19a10;
+}
+.word-chip:active { transform: translateY(2px); box-shadow: 0 2px 0 #d19a10; }
+.word-chip.used { opacity: .3; cursor: default; pointer-events: none; }
+
+.verse-feedback { min-height: 28px; font-weight: bold; }
+.verse-feedback.ok { color: var(--green); }
+.verse-feedback.ko { color: #e0475b; }
+
+/* BIBLIOTHÈQUE */
+.library-list { width: 100%; margin-top: 10px; }
+.library-item {
+  background: #fffdf8;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(90,50,130,.12);
+}
+.library-item .ref { font-weight: bold; color: var(--purple); }
+.library-item .txt { margin-top: 4px; font-size: .95rem; }
+.library-empty { text-align: center; color: #8a76b8; margin-top: 30px; }
+
+.help-card p { text-align: left; line-height: 1.5; }
+.help-verse { text-align: center !important; font-style: italic; color: var(--purple); margin-top: 16px; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--purple-dark);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: transform .3s ease;
+  z-index: 50;
+  max-width: 90%;
+  text-align: center;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }

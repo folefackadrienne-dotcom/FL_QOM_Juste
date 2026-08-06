@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Douce Parole — Le jeu des versets</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ÉCRAN D'ACCUEIL -->
+  <section id="screen-home" class="screen active">
+    <div class="home-card">
+      <div class="home-emoji">✝️🕊️🍇</div>
+      <h1>Douce Parole</h1>
+      <p class="subtitle">Le jeu des versets bibliques</p>
+      <button class="btn btn-primary" id="btn-play">▶️ Jouer</button>
+      <button class="btn btn-secondary" id="btn-library">📖 Mes versets</button>
+      <button class="btn btn-secondary" id="btn-help">❓ Comment jouer ?</button>
+      <div class="home-stats" id="home-stats"></div>
+    </div>
+  </section>
+
+  <!-- ÉCRAN CARTE DES NIVEAUX -->
+  <section id="screen-levels" class="screen">
+    <header class="topbar">
+      <button class="btn-icon" data-nav="home">⬅️</button>
+      <h2>Choisis un niveau</h2>
+      <span></span>
+    </header>
+    <div class="levels-grid" id="levels-grid"></div>
+  </section>
+
+  <!-- ÉCRAN DE JEU -->
+  <section id="screen-game" class="screen">
+    <header class="topbar">
+      <button class="btn-icon" id="btn-quit-game">⬅️</button>
+      <div class="game-ref" id="game-ref">Référence</div>
+      <span></span>
+    </header>
+
+    <div class="hud">
+      <div class="hud-item">🎯 <span id="hud-score">0</span> / <span id="hud-target">0</span></div>
+      <div class="hud-item">🔁 <span id="hud-moves">0</span> coups</div>
+      <div class="hud-item stars-live" id="hud-stars">☆☆☆</div>
+    </div>
+
+    <div class="board-wrap">
+      <div id="board" class="board"></div>
+    </div>
+
+    <div class="verse-preview" id="verse-preview"></div>
+  </section>
+
+  <!-- ÉCRAN RÉSULTAT NIVEAU -->
+  <section id="screen-result" class="screen">
+    <div class="home-card">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <h2 id="result-title">Bravo !</h2>
+      <div class="result-stars" id="result-stars">⭐⭐⭐</div>
+      <p id="result-text"></p>
+      <button class="btn btn-primary" id="btn-to-verse">📖 Mémoriser le verset</button>
+      <button class="btn btn-secondary" id="btn-retry">🔄 Rejouer</button>
+      <button class="btn btn-secondary" id="btn-back-levels">🗺️ Carte des niveaux</button>
+    </div>
+  </section>
+
+  <!-- ÉCRAN MÉMORISATION DU VERSET -->
+  <section id="screen-verse" class="screen">
+    <header class="topbar">
+      <button class="btn-icon" data-nav="levels">⬅️</button>
+      <h2 id="verse-ref-title">Référence</h2>
+      <span></span>
+    </header>
+    <div class="verse-card">
+      <p class="verse-sentence" id="verse-sentence"></p>
+      <div class="word-bank" id="word-bank"></div>
+      <div class="verse-feedback" id="verse-feedback"></div>
+      <button class="btn btn-primary" id="btn-check-verse">✅ Vérifier</button>
+      <button class="btn btn-secondary hidden" id="btn-next-level">➡️ Niveau suivant</button>
+    </div>
+  </section>
+
+  <!-- ÉCRAN BIBLIOTHÈQUE DES VERSETS -->
+  <section id="screen-library" class="screen">
+    <header class="topbar">
+      <button class="btn-icon" data-nav="home">⬅️</button>
+      <h2>Mes versets appris</h2>
+      <span></span>
+    </header>
+    <div class="library-list" id="library-list"></div>
+  </section>
+
+  <!-- ÉCRAN AIDE -->
+  <section id="screen-help" class="screen">
+    <header class="topbar">
+      <button class="btn-icon" data-nav="home">⬅️</button>
+      <h2>Comment jouer ?</h2>
+      <span></span>
+    </header>
+    <div class="help-card">
+      <p>1️⃣ Touche une image, puis touche une image voisine pour les échanger.</p>
+      <p>2️⃣ Aligne <strong>3 images identiques</strong> (ligne ou colonne) pour les faire disparaître et gagner des points.</p>
+      <p>3️⃣ Atteins le score demandé avant la fin des coups pour gagner le niveau.</p>
+      <p>4️⃣ Après chaque victoire, apprends un <strong>verset biblique</strong> en complétant la phrase avec les bons mots.</p>
+      <p>5️⃣ Retrouve tous tes versets appris dans <strong>« Mes versets »</strong> pour les réviser.</p>
+      <p class="help-verse">« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. » — Psaume 119.105</p>
+    </div>
+  </section>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/verses.js"></script>
+<script src="js/board.js"></script>
+<script src="js/verseGame.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
