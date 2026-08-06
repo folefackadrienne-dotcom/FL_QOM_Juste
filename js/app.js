@@ -1,6 +1,6 @@
 /* Contrôleur principal : navigation entre écrans, progression, sauvegarde. */
 
-const STORAGE_KEY = "douceParoleProgressV2";
+const STORAGE_KEY = "croqueVersetsProgressV1";
 const TOTAL_LEVELS = PARCOURS.reduce((s, p) => s + p.levels.length, 0);
 
 const state = {
