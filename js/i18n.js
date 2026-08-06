@@ -1,0 +1,85 @@
+/* Textes de l'interface en français et en anglais. */
+
+const I18N = {
+  fr: {
+    doc_title: "Croque-Versets — Le jeu des versets",
+    home_subtitle: "Le jeu des versets bibliques",
+    btn_play: "▶️ Jouer",
+    btn_library: "📖 Mes versets",
+    btn_help: "❓ Comment jouer ?",
+    home_stats: (learned, total, count) => `📖 ${learned} verset(s) appris sur ${total} • 🗺️ ${count} parcours`,
+    parcours_header: "Choisis un parcours",
+    progress_text: (learned, total) => `${learned} / ${total} versets appris`,
+    hud_moves_suffix: "coups",
+    verse_preview: (text) => `Gagne ce niveau pour mémoriser : « ${text} »`,
+    result_win_title: "Niveau réussi !",
+    result_lose_title: "Essaie encore !",
+    result_win_text: (score, target) => `Score : ${score} / ${target}. Tu peux maintenant apprendre le verset de ce niveau.`,
+    result_lose_text: (score, target) => `Tu n'as pas atteint le score demandé (${score} / ${target}). Courage, réessaie !`,
+    btn_to_verse: "📖 Mémoriser le verset",
+    btn_retry: "🔄 Rejouer",
+    btn_back_levels: "🗺️ Carte des niveaux",
+    btn_check_verse: "✅ Vérifier",
+    btn_next_level: "➡️ Niveau suivant",
+    verse_missing: "Complète tous les mots manquants ✏️",
+    verse_success: "Bravo, tu connais ce verset par cœur ! 🎉",
+    verse_retry: "Presque ! Essaie encore 💪",
+    library_header: "Mes versets appris",
+    library_empty: "Tu n'as encore appris aucun verset.<br>Gagne un niveau pour commencer ! 🍭",
+    help_header: "Comment jouer ?",
+    help_lines: [
+      "1️⃣ Touche une image, puis touche une image voisine pour les échanger.",
+      "2️⃣ Aligne <strong>3 images identiques</strong> (ligne ou colonne) pour les faire disparaître et gagner des points.",
+      "3️⃣ Atteins le score demandé avant la fin des coups pour gagner le niveau.",
+      "4️⃣ Après chaque victoire, apprends un <strong>verset biblique</strong> en complétant la phrase avec les bons mots.",
+      "5️⃣ Choisis parmi <strong>8 parcours</strong> (la Création, Abraham, Jacob, Joseph, l'Exode, David, la naissance de Jésus, Paul), chacun avec 12 niveaux.",
+      "6️⃣ Retrouve tous tes versets appris dans <strong>« Mes versets »</strong> pour les réviser."
+    ],
+    help_quote: "« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. » — Psaume 119.105",
+    toast_learned: "Verset mémorisé ! 🌟",
+    lang_switch_label: "EN"
+  },
+  en: {
+    doc_title: "Croque-Versets — The Bible verse game",
+    home_subtitle: "The Bible verse memory game",
+    btn_play: "▶️ Play",
+    btn_library: "📖 My verses",
+    btn_help: "❓ How to play?",
+    home_stats: (learned, total, count) => `📖 ${learned} verse(s) learned out of ${total} • 🗺️ ${count} journeys`,
+    parcours_header: "Choose a journey",
+    progress_text: (learned, total) => `${learned} / ${total} verses learned`,
+    hud_moves_suffix: "moves",
+    verse_preview: (text) => `Win this level to memorize: "${text}"`,
+    result_win_title: "Level complete!",
+    result_lose_title: "Try again!",
+    result_win_text: (score, target) => `Score: ${score} / ${target}. You can now learn this level's verse.`,
+    result_lose_text: (score, target) => `You didn't reach the target score (${score} / ${target}). Don't give up, try again!`,
+    btn_to_verse: "📖 Memorize the verse",
+    btn_retry: "🔄 Retry",
+    btn_back_levels: "🗺️ Level map",
+    btn_check_verse: "✅ Check",
+    btn_next_level: "➡️ Next level",
+    verse_missing: "Fill in all the missing words ✏️",
+    verse_success: "Well done, you know this verse by heart! 🎉",
+    verse_retry: "Almost! Try again 💪",
+    library_header: "My learned verses",
+    library_empty: "You haven't learned any verse yet.<br>Win a level to get started! 🍭",
+    help_header: "How to play?",
+    help_lines: [
+      "1️⃣ Tap a tile, then tap a neighboring tile to swap them.",
+      "2️⃣ Line up <strong>3 matching tiles</strong> (row or column) to clear them and score points.",
+      "3️⃣ Reach the target score before you run out of moves to win the level.",
+      "4️⃣ After every win, learn a <strong>Bible verse</strong> by completing the sentence with the right words.",
+      "5️⃣ Choose from <strong>8 journeys</strong> (Creation, Abraham, Jacob, Joseph, the Exodus, David, the birth of Jesus, Paul), each with 12 levels.",
+      "6️⃣ Find every verse you've learned in <strong>“My verses”</strong> to review them."
+    ],
+    help_quote: "“Thy word is a lamp unto my feet, and a light unto my path.” — Psalm 119:105",
+    toast_learned: "Verse memorized! 🌟",
+    lang_switch_label: "FR"
+  }
+};
+
+function t(key, ...args) {
+  const entry = I18N[state.lang][key];
+  return typeof entry === "function" ? entry(...args) : entry;
+}

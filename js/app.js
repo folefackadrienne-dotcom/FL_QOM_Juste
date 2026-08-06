@@ -1,12 +1,14 @@
-/* Contrôleur principal : navigation entre écrans, progression, sauvegarde. */
+/* Contrôleur principal : navigation entre écrans, progression, sauvegarde, langue. */
 
 const STORAGE_KEY = "croqueVersetsProgressV1";
-const TOTAL_LEVELS = PARCOURS.reduce((s, p) => s + p.levels.length, 0);
+const TOTAL_LEVELS = PARCOURS.reduce((s, p) => s + p.verses.length, 0);
 
 const state = {
+  lang: "fr",
   progress: {}, // { [parcoursId]: { unlocked, stars: {levelId:n}, learned: {levelId:true} } }
   currentParcoursId: null,
   currentLevelId: null,
+  lastWin: false,
   board: null,
   score: 0,
   movesLeft: 0,
@@ -26,12 +28,20 @@ function getProgress(parcoursId) {
   return state.progress[parcoursId];
 }
 
+function parcoursText(p) {
+  return p[state.lang];
+}
+
 function currentParcours() {
   return getParcours(state.currentParcoursId);
 }
 
+function currentLevels() {
+  return buildLevels(currentParcours().verses, state.lang);
+}
+
 function currentLevel() {
-  return currentParcours().levels.find((l) => l.id === state.currentLevelId);
+  return currentLevels().find((l) => l.id === state.currentLevelId);
 }
 
 function loadProgress() {
@@ -40,6 +50,7 @@ function loadProgress() {
     if (raw) {
       const data = JSON.parse(raw);
       if (data && data.progress) state.progress = data.progress;
+      if (data && (data.lang === "fr" || data.lang === "en")) state.lang = data.lang;
     }
   } catch (e) {
     /* stockage indisponible : on continue avec l'état par défaut */
@@ -48,7 +59,7 @@ function loadProgress() {
 
 function saveProgress() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ progress: state.progress }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ progress: state.progress, lang: state.lang }));
   } catch (e) {
     /* stockage indisponible : progression non persistée */
   }
@@ -66,6 +77,60 @@ function navTo(id) {
   document.getElementById("screen-" + id).classList.add("active");
 }
 
+/* ---------- TEXTES STATIQUES / LANGUE ---------- */
+
+function applyStaticI18n() {
+  document.documentElement.lang = state.lang;
+  document.title = t("doc_title");
+  document.getElementById("lang-toggle").textContent = "🌐 " + t("lang_switch_label");
+
+  document.getElementById("home-subtitle").textContent = t("home_subtitle");
+  document.getElementById("btn-play").textContent = t("btn_play");
+  document.getElementById("btn-library").textContent = t("btn_library");
+  document.getElementById("btn-help").textContent = t("btn_help");
+  document.getElementById("parcours-header").textContent = t("parcours_header");
+  document.getElementById("hud-moves-suffix").textContent = t("hud_moves_suffix");
+  document.getElementById("btn-to-verse").textContent = t("btn_to_verse");
+  document.getElementById("btn-retry").textContent = t("btn_retry");
+  document.getElementById("btn-back-levels").textContent = t("btn_back_levels");
+  document.getElementById("btn-check-verse").textContent = t("btn_check_verse");
+  document.getElementById("btn-next-level").textContent = t("btn_next_level");
+  document.getElementById("library-header").textContent = t("library_header");
+  document.getElementById("help-header").textContent = t("help_header");
+
+  const helpLines = document.getElementById("help-lines");
+  helpLines.innerHTML = t("help_lines").map((line) => `<p>${line}</p>`).join("");
+  document.getElementById("help-quote").textContent = t("help_quote");
+}
+
+function refreshActiveScreen() {
+  const active = document.querySelector(".screen.active");
+  if (!active) return;
+  switch (active.id) {
+    case "screen-home":
+      renderHome();
+      break;
+    case "screen-parcours":
+      renderParcoursList();
+      break;
+    case "screen-levels":
+      renderLevels();
+      break;
+    case "screen-library":
+      renderLibrary();
+      break;
+    case "screen-game":
+      refreshGameTexts();
+      break;
+    case "screen-result":
+      renderResultTexts();
+      break;
+    case "screen-verse":
+      openVerseGameForCurrentLevel();
+      break;
+  }
+}
+
 /* ---------- ACCUEIL ---------- */
 
 function renderHome() {
@@ -74,8 +139,7 @@ function renderHome() {
     const prog = getProgress(p.id);
     learnedCount += Object.keys(prog.learned).length;
   });
-  document.getElementById("home-stats").textContent =
-    `📖 ${learnedCount} verset(s) appris sur ${TOTAL_LEVELS} • 🗺️ ${PARCOURS.length} parcours`;
+  document.getElementById("home-stats").textContent = t("home_stats", learnedCount, TOTAL_LEVELS, PARCOURS.length);
 }
 
 /* ---------- CHOIX DU PARCOURS ---------- */
@@ -86,18 +150,19 @@ function renderParcoursList() {
   PARCOURS.forEach((p) => {
     const prog = getProgress(p.id);
     const learnedCount = Object.keys(prog.learned).length;
-    const pct = Math.round((learnedCount / p.levels.length) * 100);
-    const done = learnedCount === p.levels.length;
+    const pct = Math.round((learnedCount / p.verses.length) * 100);
+    const done = learnedCount === p.verses.length;
+    const txt = parcoursText(p);
 
     const card = document.createElement("button");
     card.className = "parcours-card";
     card.innerHTML = `
       <div class="parcours-emoji">${p.emoji}</div>
       <div class="parcours-info">
-        <div class="p-title">${p.title}</div>
-        <div class="p-subtitle">${p.subtitle}</div>
+        <div class="p-title">${txt.title}</div>
+        <div class="p-subtitle">${txt.subtitle}</div>
         <div class="p-progress"><div class="p-progress-bar" style="width:${pct}%"></div></div>
-        <div class="p-progress-text">${learnedCount} / ${p.levels.length} versets appris</div>
+        <div class="p-progress-text">${t("progress_text", learnedCount, p.verses.length)}</div>
       </div>
       <div class="parcours-check">${done ? "🏆" : "▶️"}</div>
     `;
@@ -115,11 +180,11 @@ function renderParcoursList() {
 function renderLevels() {
   const p = currentParcours();
   const prog = getProgress(p.id);
-  document.getElementById("levels-title").textContent = `${p.emoji} ${p.title}`;
+  document.getElementById("levels-title").textContent = `${p.emoji} ${parcoursText(p).title}`;
 
   const grid = document.getElementById("levels-grid");
   grid.innerHTML = "";
-  p.levels.forEach((level) => {
+  currentLevels().forEach((level) => {
     const locked = level.id > prog.unlocked;
     const btn = document.createElement("button");
     btn.className = "level-btn" + (locked ? " locked" : "");
@@ -138,16 +203,14 @@ let levelFinished = false;
 
 function startLevel(levelId) {
   levelFinished = false;
-  const p = currentParcours();
-  const level = p.levels.find((l) => l.id === levelId);
   state.currentLevelId = levelId;
   state.score = 0;
+
+  const level = currentLevel();
   state.movesLeft = level.moves;
   state.target = level.target;
 
-  document.getElementById("game-ref").textContent = `${p.emoji} ${level.ref}`;
-  document.getElementById("verse-preview").textContent =
-    "Gagne ce niveau pour mémoriser : « " + level.text + " »";
+  refreshGameTexts();
   updateHud();
 
   const container = document.getElementById("board");
@@ -163,6 +226,13 @@ function startLevel(levelId) {
   state.board.init();
 
   navTo("game");
+}
+
+function refreshGameTexts() {
+  const p = currentParcours();
+  const level = currentLevel();
+  document.getElementById("game-ref").textContent = `${p.emoji} ${level.ref}`;
+  document.getElementById("verse-preview").textContent = t("verse_preview", level.text);
 }
 
 function updateHud() {
@@ -200,6 +270,7 @@ function handleMove() {
 function finishLevel(win) {
   if (levelFinished) return;
   levelFinished = true;
+  state.lastWin = win;
 
   const p = currentParcours();
   const prog = getProgress(p.id);
@@ -212,27 +283,36 @@ function finishLevel(win) {
     else if (ratio >= 1.3) stars = 2;
 
     prog.stars[level.id] = Math.max(prog.stars[level.id] || 0, stars);
-    if (level.id === prog.unlocked && level.id < p.levels.length) {
+    if (level.id === prog.unlocked && level.id < currentLevels().length) {
       prog.unlocked = level.id + 1;
     }
     saveProgress();
+  }
+
+  renderResultTexts();
+  navTo("result");
+}
+
+function renderResultTexts() {
+  const win = state.lastWin;
+  if (win) {
+    const ratio = state.target > 0 ? state.score / state.target : 0;
+    let stars = 1;
+    if (ratio >= 1.6) stars = 3;
+    else if (ratio >= 1.3) stars = 2;
 
     document.getElementById("result-emoji").textContent = "🎉";
-    document.getElementById("result-title").textContent = "Niveau réussi !";
+    document.getElementById("result-title").textContent = t("result_win_title");
     document.getElementById("result-stars").textContent = "⭐".repeat(stars) + "☆".repeat(3 - stars);
-    document.getElementById("result-text").textContent =
-      `Score : ${state.score} / ${state.target}. Tu peux maintenant apprendre le verset de ce niveau.`;
+    document.getElementById("result-text").textContent = t("result_win_text", state.score, state.target);
     document.getElementById("btn-to-verse").classList.remove("hidden");
   } else {
     document.getElementById("result-emoji").textContent = "🙏";
-    document.getElementById("result-title").textContent = "Essaie encore !";
+    document.getElementById("result-title").textContent = t("result_lose_title");
     document.getElementById("result-stars").textContent = "";
-    document.getElementById("result-text").textContent =
-      `Tu n'as pas atteint le score demandé (${state.score} / ${state.target}). Courage, réessaie !`;
+    document.getElementById("result-text").textContent = t("result_lose_text", state.score, state.target);
     document.getElementById("btn-to-verse").classList.add("hidden");
   }
-
-  navTo("result");
 }
 
 /* ---------- VERSET ---------- */
@@ -269,18 +349,19 @@ function renderLibrary() {
   }).filter((s) => s.learnedIds.length > 0);
 
   if (sections.length === 0) {
-    list.innerHTML = '<p class="library-empty">Tu n\'as encore appris aucun verset.<br>Gagne un niveau pour commencer ! 🍭</p>';
+    list.innerHTML = `<p class="library-empty">${t("library_empty")}</p>`;
     return;
   }
 
   sections.forEach(({ p, learnedIds }) => {
+    const levels = buildLevels(p.verses, state.lang);
     const heading = document.createElement("h3");
     heading.className = "library-section";
-    heading.textContent = `${p.emoji} ${p.title}`;
+    heading.textContent = `${p.emoji} ${parcoursText(p).title}`;
     list.appendChild(heading);
 
     learnedIds.forEach((id) => {
-      const level = p.levels.find((l) => l.id === id);
+      const level = levels.find((l) => l.id === id);
       const div = document.createElement("div");
       div.className = "library-item";
       div.innerHTML = `<div class="ref">${level.ref}</div><div class="txt">${level.text}.</div>`;
@@ -293,7 +374,15 @@ function renderLibrary() {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadProgress();
+  applyStaticI18n();
   renderHome();
+
+  document.getElementById("lang-toggle").addEventListener("click", () => {
+    state.lang = state.lang === "fr" ? "en" : "fr";
+    saveProgress();
+    applyStaticI18n();
+    refreshActiveScreen();
+  });
 
   document.querySelectorAll("[data-nav]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -340,15 +429,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const success = VerseGame.check();
     if (success) {
       markVerseLearned(state.currentLevelId);
-      showToast("Verset mémorisé ! 🌟");
+      showToast(t("toast_learned"));
     }
   });
 
   document.getElementById("btn-next-level").addEventListener("click", () => {
-    const p = currentParcours();
-    const prog = getProgress(p.id);
+    const prog = getProgress(state.currentParcoursId);
     const nextId = state.currentLevelId + 1;
-    if (nextId <= p.levels.length && nextId <= prog.unlocked) {
+    if (nextId <= currentLevels().length && nextId <= prog.unlocked) {
       startLevel(nextId);
     } else {
       renderLevels();

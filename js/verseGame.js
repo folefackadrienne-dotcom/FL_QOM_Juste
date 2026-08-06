@@ -21,8 +21,8 @@ const VerseGame = (function () {
   function pool() {
     const set = new Set();
     PARCOURS.forEach((p) => {
-      p.levels.forEach((l) => {
-        l.text.split(" ").forEach((w) => set.add(w));
+      p.verses.forEach((v) => {
+        v[state.lang].text.split(" ").forEach((w) => set.add(w));
       });
     });
     return Array.from(set);
@@ -107,19 +107,19 @@ const VerseGame = (function () {
   function check() {
     const allFilled = blanks.every((b) => b.filled);
     if (!allFilled) {
-      els.feedback.textContent = "Complète tous les mots manquants ✏️";
+      els.feedback.textContent = t("verse_missing");
       els.feedback.className = "verse-feedback ko";
       return false;
     }
     const allCorrect = blanks.every((b) => b.chosen === b.word);
     if (allCorrect) {
-      els.feedback.textContent = "Bravo, tu connais ce verset par cœur ! 🎉";
+      els.feedback.textContent = t("verse_success");
       els.feedback.className = "verse-feedback ok";
       els.checkBtn.classList.add("hidden");
       els.nextBtn.classList.remove("hidden");
       return true;
     } else {
-      els.feedback.textContent = "Presque ! Essaie encore 💪";
+      els.feedback.textContent = t("verse_retry");
       els.feedback.className = "verse-feedback ko";
       reset();
       return false;
