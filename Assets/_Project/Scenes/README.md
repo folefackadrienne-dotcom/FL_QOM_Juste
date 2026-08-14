@@ -65,6 +65,10 @@ per entry, but stays a no-op until a `listItemPrefab` is assigned (no such
 prefab exists yet, see `Assets/_Project/Prefabs/`). Still missing: the
 actual hex-grid visual (tilemap or mesh) — `HexGrid`'s data lives on the
 persistent Bootstrap object, this scene doesn't need its own.
+`BuildingManager.TryPlace` (Bootstrap) now instantiates `BuildingData.prefab`
+at the placed cell's world position via `HexCoordinates.ToWorldPosition`,
+but stays a no-op until a building has a prefab assigned — none of the 39
+`BuildingData` assets do yet.
 
 ### `Battle`
 Camera, EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for

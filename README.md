@@ -47,8 +47,10 @@ Assets/_Project/
     Core/          GameManager, cycle des 7 Âges
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules)
-    Buildings/      Bâtiments, placement, Temple (niveaux 1-5, un
-                    TempleLevelData.prefab par niveau,
+    Buildings/      Bâtiments, placement — BuildingManager.TryPlace
+                    instancie BuildingData.prefab à la position de la
+                    cellule dès qu'un prefab existe —, Temple (niveaux
+                    1-5, un TempleLevelData.prefab par niveau,
                     TempleSystem.LevelUpgraded)
     Population/     Population & Loyauté (PopulationChanged,
                     LoyaltyLow/LoyaltyCritical)

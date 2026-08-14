@@ -39,6 +39,7 @@ namespace KingdomOfGod.Buildings
             grid.TryGetCell(position, out var cell);
             cell.Building = instance;
             buildings.Add(instance);
+            SpawnVisual(instance);
 
             foreach (var bonus in data.storageCapacityBonus)
             {
@@ -47,6 +48,15 @@ namespace KingdomOfGod.Buildings
 
             BuildingPlaced?.Invoke(instance);
             return true;
+        }
+
+        /// <summary>Instantiates BuildingData.prefab at the cell's world position — a deliberate no-op until a prefab is assigned (no building art exists yet).</summary>
+        private void SpawnVisual(BuildingInstance instance)
+        {
+            if (instance.Data.prefab == null) return;
+
+            var worldPosition = instance.Position.ToWorldPosition(grid.HexSize);
+            Instantiate(instance.Data.prefab, worldPosition, Quaternion.identity, transform);
         }
 
         /// <summary>Applies every placed building's per-turn production to the resource pool.</summary>
