@@ -1,4 +1,5 @@
 using KingdomOfGod.Alliance;
+using KingdomOfGod.Audio;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Collectibles;
 using KingdomOfGod.Grid;
@@ -35,6 +36,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private MissionManager missionManager;
         [SerializeField] private SaveManager saveManager;
         [SerializeField] private EntitlementManager entitlementManager;
+        [SerializeField] private AudioManager audioManager;
 
         public AgeManager Ages => ageManager;
         public ResourceManager Resources => resourceManager;
@@ -48,6 +50,7 @@ namespace KingdomOfGod.Core
         public MissionManager Missions => missionManager;
         public SaveManager Save => saveManager;
         public EntitlementManager Entitlements => entitlementManager;
+        public AudioManager Audio => audioManager;
 
         private void Awake()
         {

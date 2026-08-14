@@ -27,3 +27,4 @@ MonoBehaviour:
   allianceCostOnCast: 6
   requiredPriorChoiceId:
   icon: {fileID: 0}
+  audioSignatureDescription: Silence, puis explosion de flammes + chœur.

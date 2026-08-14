@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae117ea83ed6438e8c5188c8200b5728, type: 3}
+  m_Name: Leitmotif_Alliance
+  m_EditorClassIdentifier:
+  displayName: Thème de l'Alliance
+  originAge: 0
+  description: >-
+    Mélodie douce et noble, portée par les cordes et une harpe discrète,
+    qui incarne la fidélité de Dieu à Sa promesse plutôt qu'un moment
+    précis de l'histoire.
+  recurrenceDescription: >-
+    Revient chaque fois que le joueur reste fidèle à l'Alliance : Temple,
+    moments de haute Foi, fins de mission accomplies dans l'obéissance.
+  clip: {fileID: 0}

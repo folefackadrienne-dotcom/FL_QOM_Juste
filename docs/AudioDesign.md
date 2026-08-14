@@ -1,0 +1,194 @@
+# Kingdom of God – Direction Sonore (Audio Design)
+
+Identité sonore complète et cohérente du jeu. Elle renforce le ton
+**épique, sacré, humain et immersif** tout en restant accessible.
+
+Implémentation : `Assets/_Project/Scripts/Audio/` (`MusicThemeData`,
+`LeitmotifData`, `AmbientSoundscapeData`, `AudioManager`) — voir
+[« Implémentation »](#implémentation) en fin de document.
+
+---
+
+## 1. Identité sonore globale
+
+Le style sonore se situe entre :
+- La gravité des bandes originales de films bibliques (*The Bible*, *Exodus*, *The Passion*)
+- L'épique orchestral de jeux comme *Civilization VI* et *Total War*
+- Des influences du Proche-Orient ancien (instruments traditionnels)
+
+**Mots-clés :**
+Sacré • Épique • Organique • Solennel • Espoir • Tension spirituelle
+
+Le son doit faire sentir la présence de Dieu sans jamais être lourd ou
+moralisateur. La musique et les effets soutiennent l'émotion plus qu'ils
+ne la forcent.
+
+---
+
+## 2. Musique
+
+**Instrumentation principale :**
+- Orchestre symphonique (cordes, cuivres, percussions)
+- Instruments anciens et moyen-orientaux : oud, ney (flûte), duduk, lyre, harpe, shofar, tambours sur cadre, cymbales
+- Chœurs (hommes et femmes) utilisés avec parcimonie, souvent en hébreu ou en vocalises
+
+**Structure musicale par contexte :**
+
+| Situation              | Style musical                                      | Exemples d'instruments / ambiance                  |
+|------------------------|----------------------------------------------------|----------------------------------------------------|
+| **Menu principal**     | Thème majestueux et accueillant                    | Cordes + harpe + chœur distant                     |
+| **Exploration / Paix** | Mélodies contemplatives et chaleureuses            | Lyre, flûte, cordes douces                         |
+| **Construction**       | Rythme régulier et positif                         | Percussions légères + oud                          |
+| **Bataille**           | Épique et tendu                                    | Cuivres, percussions puissantes, cordes agressives |
+| **Miracle**            | Montée progressive puis explosion lumineuse        | Chœur + cordes ascendantes + shofar                |
+| **Crise / Idolâtrie**  | Sombre, dissonant, oppressant                      | Duduk grave, percussions sourdes, cordes stridentes|
+| **Repentance / Restauration** | Passage de l'ombre à la lumière               | Retour progressif des instruments nobles           |
+| **Temple / Moments sacrés** | Solennel et élevé                               | Chœur a cappella + orgue léger ou harpe            |
+
+Ces 8 situations sont les 8 `MusicThemeData` créés dans
+`Assets/_Project/ScriptableObjects/Audio/Music/`.
+
+**Thèmes récurrents (Leitmotifs) :**
+- **Thème de l'Alliance** : mélodie douce et noble qui revient chaque fois que le joueur reste fidèle
+- **Thème de la Promesse** (Abraham) : simple et espérant
+- **Thème de la Libération** (Exode) : puissant et ascendant
+- **Thème de David** : héroïque et lyrique (avec harpe)
+- **Thème du Jugement** : lourd et inévitable
+- **Thème de l'Espérance** (Retour d'exil) : lumineux et résilient
+
+Chaque âge a sa propre couleur musicale tout en gardant une cohérence
+globale. Ces 6 thèmes sont les 6 `LeitmotifData` créés dans
+`Assets/_Project/ScriptableObjects/Audio/Leitmotifs/`, chacun rattaché à
+son `MusicThemeData` principal via `primaryLeitmotif` quand pertinent.
+
+---
+
+## 3. Ambiances (Ambient Soundscape)
+
+Les sons d'environnement sont très importants pour l'immersion :
+
+- **Désert** : vent, sable qui glisse, insectes lointains, chameaux
+- **Campement** : feux de camp, conversations murmurées, animaux, enfants
+- **Ville / Jérusalem** : pas sur la pierre, marchés, prières lointaines, oiseaux
+- **Temple** : silence presque sacré, léger écho, flamme des lampes, chants très lointains
+- **Bataille** : cris, métal, chevaux, vent de guerre
+- **Nuit** : grillons, vent doux, feu qui crépite
+
+Le volume des ambiances baisse intelligemment pendant les dialogues
+importants ou les moments de miracle. Ces 6 environnements sont les 6
+`AmbientSoundscapeData` créés dans
+`Assets/_Project/ScriptableObjects/Audio/Ambient/`.
+
+---
+
+## 4. Effets sonores (SFX)
+
+**Interface :**
+- Sons doux et nobles (clic sur parchemin, ouverture de menu comme un rouleau qui se déroule)
+- Validation positive : petite cloche ou note de lyre
+- Erreur / action impossible : son sourd et court
+
+**Construction :**
+- Pierres qui s'assemblent, bois taillé, outils
+- Quand un bâtiment important est terminé : petite fanfare douce + chœur très léger
+
+**Batailles :**
+- Impacts de métal réalistes mais pas excessivement violents
+- Cris de guerre hébreux stylisés
+- Mort des unités : son rapide et digne (pas de son gore)
+
+**Miracles (très importants) :**
+Chaque miracle a une signature sonore unique et mémorable :
+- Mer Rouge : rugissement d'eau + vent puissant + note de shofar
+- Feu du Carmel : silence puis explosion de flammes + chœur
+- Soleil arrêté : étirement du temps + note suspendue
+- Colonne de nuée/feu : souffle profond et lumineux
+
+Ces 4 signatures sont posées dans
+`MiracleData.audioSignatureDescription` sur les 4 miracles concernés ;
+le champ existe (vide) sur les 20 autres, prêt à être rempli au fur et à
+mesure des compositions.
+
+**Foi & Alliance :**
+- Quand la jauge de Foi augmente : note claire et chaude
+- Quand elle baisse : dissonance légère et inconfortable
+
+---
+
+## 5. Voix et narration
+
+**Options recommandées :**
+- Narrateur principal (voix masculine grave et posée, style documentaire noble)
+- Voix des personnages importants (Moïse, David, prophètes…) – pas forcément 100 % doublées, mais phrases clés
+- Lecture des versets : voix claire et respectueuse (possibilité de choisir entre plusieurs voix)
+
+**Langues :**
+- Français (priorité)
+- Anglais
+- Possibilité d'ajouter de l'hébreu pour certains chants ou lectures de versets (avec sous-titres)
+
+Les versets mémorisés peuvent être écoutés en boucle avec une musique
+très douce en fond.
+
+---
+
+## 6. Dynamique et mixage
+
+- La musique s'adapte en temps réel à la situation (système de layers)
+- Pendant les moments de forte Foi ou de miracle, la musique et les effets prennent plus d'espace
+- En cas de crise morale ou d'idolâtrie, le mixage devient plus étouffé et inconfortable
+- Sur mobile : compression intelligente pour garder la clarté même avec de petits haut-parleurs
+
+---
+
+## 7. Références sonores inspirantes
+
+- *Civilization VI* (thèmes de civilisations + adaptativité)
+- *The Bible* (mini-série 2013) – ton général
+- *Exodus: Gods and Kings* (Hans Zimmer) – aspects épiques et désertiques
+- *The Prince of Egypt* (chants et émotion)
+- Musiques traditionnelles juives et moyen-orientales (sans tomber dans le folklore excessif)
+- *Assassin's Creed Origins* (ambiances)
+
+---
+
+Ce style sonore doit donner au joueur le sentiment d'évoluer dans une
+**grande histoire sacrée**, à la fois humaine et transcendante.
+
+---
+
+## Implémentation
+
+Le mécanisme (pas seulement la direction artistique) est inséré dans le
+projet :
+
+- **`MusicThemeData`** (`Assets/_Project/Scripts/Audio/MusicThemeData.cs`)
+  — un `ScriptableObject` par situation du tableau de la section 2
+  (`MusicContext` : MainMenu, Exploration, Construction, Battle, Miracle,
+  Crisis, Repentance, Temple), avec instrumentation, ambiance et
+  leitmotiv principal en données. Clip audio laissé vide (`{fileID: 0}`)
+  jusqu'à ce qu'une vraie composition existe — même convention que les
+  champs `Sprite`/`icon` non illustrés ailleurs dans le projet.
+- **`LeitmotifData`** (`Assets/_Project/Scripts/Audio/LeitmotifData.cs`)
+  — un `ScriptableObject` par thème récurrent de la section 2, rattaché
+  à l'Âge où il apparaît et à sa description de récurrence.
+- **`AmbientSoundscapeData`** (`Assets/_Project/Scripts/Audio/AmbientSoundscapeData.cs`)
+  — un `ScriptableObject` par environnement de la section 3, avec la
+  liste des couches sonores à enregistrer/sourcer.
+- **`AudioManager`** (`Assets/_Project/Scripts/Audio/AudioManager.cs`)
+  — pilote le mixage dynamique (section 6) : crossfade entre les
+  `MusicThemeData` au chargement de chaque scène (`MainMenu`/`Kingdom`/
+  `Battle`), bascule automatique vers le contexte Crise quand l'Alliance
+  tombe à Low (et retour en fondu quand elle remonte), bascule vers le
+  contexte Miracle et ambiance étouffée (`duckedVolumeScale`) pendant
+  `MiracleManager.BeginPrayer`/`AdvancePrayerTurn`/`AccelerateWithFaith`,
+  et retour au contexte de la scène une fois le miracle résolu ou
+  annulé. `SetDialogueDucked` est prêt pour un futur système de dialogue
+  ou de cinématique.
+- **`MiracleData.audioSignatureDescription`** — la signature sonore
+  propre de chaque miracle (section 4), remplie pour Mer Rouge, Feu du
+  Carmel, Soleil Arrêté et Colonne de Nuée et de Feu.
+
+`AudioManager` vit sur le même GameObject persistant `GameManager` que
+les autres managers (scène `Bootstrap`), câblé par
+`Kingdom of God → Setup → Create All Scenes` — voir README.

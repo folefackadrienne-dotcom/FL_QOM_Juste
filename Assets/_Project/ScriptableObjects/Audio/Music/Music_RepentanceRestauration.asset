@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ca05556b5451e8daa234a8d86793c, type: 3}
+  m_Name: Music_RepentanceRestauration
+  m_EditorClassIdentifier:
+  displayName: Repentance / Restauration
+  context: 6
+  instrumentation: Retour progressif des instruments nobles.
+  moodDescription: Passage de l'ombre à la lumière.
+  primaryLeitmotif: {fileID: 11400000, guid: ceed09c2baca481093bc27658ff38e64, type: 3}
+  clip: {fileID: 0}

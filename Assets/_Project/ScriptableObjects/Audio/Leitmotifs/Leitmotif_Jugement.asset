@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae117ea83ed6438e8c5188c8200b5728, type: 3}
+  m_Name: Leitmotif_Jugement
+  m_EditorClassIdentifier:
+  displayName: Thème du Jugement
+  originAge: 5
+  description: >-
+    Lourd et inévitable : duduk grave, percussions sourdes en ostinato,
+    cordes tenues en dissonance légère — jamais mélodramatique, toujours
+    grave.
+  recurrenceDescription: >-
+    Domine les Royaumes Divisés (prophètes annonçant le jugement) et
+    ressurgit chaque fois qu'un miracle de Jugement est lancé sans
+    Justice suffisante.
+  clip: {fileID: 0}

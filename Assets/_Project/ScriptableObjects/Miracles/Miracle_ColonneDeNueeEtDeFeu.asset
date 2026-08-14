@@ -27,3 +27,4 @@ MonoBehaviour:
   allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}
+  audioSignatureDescription: Souffle profond et lumineux.

@@ -57,5 +57,8 @@ namespace KingdomOfGod.Miracles
 
         [TextArea] public string requiredPriorChoiceId;
         public Sprite icon;
+
+        [Tooltip("Unique sonic signature for this miracle's cast (GDD Audio Design section 4: 'Chaque miracle a une signature sonore unique et mémorable'). Left empty for miracles without a bespoke signature yet.")]
+        [TextArea] public string audioSignatureDescription;
     }
 }

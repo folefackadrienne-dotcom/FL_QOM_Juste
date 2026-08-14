@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using KingdomOfGod.Alliance;
+using KingdomOfGod.Audio;
 using KingdomOfGod.Battle;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Collectibles;
@@ -71,6 +72,7 @@ namespace KingdomOfGod.EditorTools
             var missionManager = root.AddComponent<MissionManager>();
             var saveManager = root.AddComponent<SaveManager>();
             var entitlementManager = root.AddComponent<EntitlementManager>();
+            var audioManager = root.AddComponent<AudioManager>();
             var gameManager = root.AddComponent<GameManager>();
             root.AddComponent<BootstrapLoader>();
 
@@ -88,6 +90,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "missionManager", missionManager);
             SetRef(gameManager, "saveManager", saveManager);
             SetRef(gameManager, "entitlementManager", entitlementManager);
+            SetRef(gameManager, "audioManager", audioManager);
 
             SetRef(ageManager, "contentGateBehaviour", entitlementManager);
 
@@ -104,6 +107,9 @@ namespace KingdomOfGod.EditorTools
             SetRef(verseManager, "resourceManager", resourceManager);
             SetRef(collectionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "resourceManager", resourceManager);
+
+            SetRef(audioManager, "miracleManager", miracleManager);
+            SetRef(audioManager, "allianceSystem", allianceSystem);
 
             var fullEdition = AssetDatabase.LoadAssetAtPath<ProductData>(EditionCompleteProductPath);
             if (fullEdition != null)

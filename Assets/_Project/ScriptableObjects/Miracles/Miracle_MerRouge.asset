@@ -28,3 +28,4 @@ MonoBehaviour:
   allianceCostOnCast: 8
   requiredPriorChoiceId:
   icon: {fileID: 0}
+  audioSignatureDescription: Rugissement d'eau + vent puissant + note de shofar.

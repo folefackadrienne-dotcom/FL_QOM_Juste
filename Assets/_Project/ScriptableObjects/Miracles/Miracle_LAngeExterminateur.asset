@@ -27,3 +27,4 @@ MonoBehaviour:
   allianceCostOnCast: 10
   requiredPriorChoiceId:
   icon: {fileID: 0}
+  audioSignatureDescription: 

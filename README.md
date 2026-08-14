@@ -16,7 +16,8 @@ rendu visuel de la grille hexagonale, et les prefabs de personnages/unités.
 
 Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
 [`docs/ArtDirection.md`](docs/ArtDirection.md) ·
-[`docs/Economy.md`](docs/Economy.md)
+[`docs/Economy.md`](docs/Economy.md) ·
+[`docs/AudioDesign.md`](docs/AudioDesign.md)
 
 ## Prérequis
 
@@ -65,16 +66,24 @@ Assets/_Project/
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
                     produits, seam IAP (stub Éditeur en attendant le vrai
                     store)
+    Audio/          Direction sonore : thèmes musicaux par contexte
+                    (MusicThemeData), leitmotifs récurrents
+                    (LeitmotifData), ambiances (AmbientSoundscapeData) et
+                    le mixage dynamique (AudioManager) — crossfade par
+                    scène, bascule en Crise sous Alliance basse, mise en
+                    sourdine de l'ambiance pendant la prière d'un miracle
     UI/             HUD, menu de prière, journal des versets
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Antagonists, Techs, Ages,
-                      Monetization) — les 7 Âges sont remplis (Buildings,
-                      Verses, Artifacts, Missions, Miracles), plus les 10
-                      leaders, 5 antagonistes majeurs et les 93 nœuds des
-                      3 arbres technologiques (Techs/)
+                      Monetization, Audio) — les 7 Âges sont remplis
+                      (Buildings, Verses, Artifacts, Missions, Miracles),
+                      plus les 10 leaders, 5 antagonistes majeurs, les 93
+                      nœuds des 3 arbres technologiques (Techs/) et la
+                      direction sonore complète (Audio/ : 8 thèmes
+                      musicaux, 6 leitmotifs, 6 ambiances)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -83,6 +92,8 @@ docs/
   ArtDirection.md      Direction artistique détaillée
   Economy.md           Système économique : ressources, bâtiments,
                         population, commerce, arbres technologiques
+  AudioDesign.md        Direction sonore : musique par contexte,
+                        leitmotifs, ambiances, SFX, voix, mixage
 ```
 
 Chaque système de gameplay est un composant indépendant (grid: `HexGrid`,
@@ -122,3 +133,9 @@ dans l'Éditeur, sans toucher au code.
 6. Remplacer `EditorIAPService` par une vraie intégration store (Unity IAP
    ou équivalent) une fois les fiches produit créées dans App Store
    Connect / Play Console — voir `Assets/_Project/Scripts/Monetization`.
+7. Composer/enregistrer les pistes audio décrites dans
+   `docs/AudioDesign.md` et les assigner aux champs `clip` (encore vides)
+   des `MusicThemeData`/`LeitmotifData`/`AmbientSoundscapeData` dans
+   `Assets/_Project/ScriptableObjects/Audio/` — `AudioManager` pilote déjà
+   le crossfade, le mixage dynamique et le déclenchement contextuel, il
+   ne manque que les fichiers son.
