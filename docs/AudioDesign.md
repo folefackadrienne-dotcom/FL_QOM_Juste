@@ -182,6 +182,27 @@ ne suivait les leaders débloqués/actifs. `TechTree` expose maintenant
 (`Assets/_Project/Scripts/Progression/LeaderManager.cs`, sur le même
 modèle que `MissionManager`) expose `LeaderUnlocked`/`LeaderActivated`.
 
+**Économie & Bâtiments :**
+
+Extension de la section « Ressources & Économie » du GDD (Population &
+Loyauté, Temple). 4 `SfxCueData` de catégorie `Economy` — Population en
+Hausse/Baisse (`PopulationSystem.PopulationChanged`, même traitement
+hausse/baisse que Foi & Alliance) et Murmures du Peuple / Rébellion
+Imminente (`LoyaltyLow`/`LoyaltyCritical` — « Pénurie = murmures et
+baisse de loyauté ») — plus 1 `SfxCueData` de catégorie `Construction`,
+Temple Amélioré, distinct de la fanfare de bâtiment important puisqu'il
+s'agit d'un Temple existant qui monte de niveau
+(`TempleSystem.LevelUpgraded`), pas d'une nouvelle pose.
+
+`PopulationSystem.Grow` ne déclenchait aucun événement de population
+(seule la Loyauté en avait) ; il expose maintenant `PopulationChanged`.
+Plus notable : `TempleSystem` — script complet avec ses propres coûts,
+niveaux et miracles débloqués par niveau — n'était jamais instancié
+nulle part dans `ProjectSceneSetup`, ni exposé par `GameManager`. Les
+deux ont été corrigés en même temps que l'ajout des SFX, sur le même
+modèle que les autres managers (`GameManager.Temple`, câblage dans
+`CreateBootstrapScene`).
+
 ---
 
 ## 5. Voix et narration
@@ -289,25 +310,29 @@ projet :
   Carmel, Soleil Arrêté et Colonne de Nuée et de Feu.
 - **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
-  musique/ambiance) : les 4 signaux d'Interface, les 2 de Construction,
-  les 3 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance et les 5
-  de Progression sont créés dans
-  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (25 au total).
+  musique/ambiance) : les 4 signaux d'Interface, les 3 de Construction,
+  les 3 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance, les 5 de
+  Progression et les 4 d'Economy sont créés dans
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (30 au total).
   `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
   et par `BattleManager` pour la Bataille (`SpawnUnit`/`TryAttack`/
   `OnUnitDied`), et automatiquement par `AudioManager` sur les
-  événements de `BuildingManager.BuildingPlaced` (Construction — fanfare
-  si le bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon),
-  de `MiracleManager` (Miracle — début de prière, interruption,
-  annulation, déclenchement), de `ResourceManager.ResourceChanged`
-  (filtré sur la Foi) / `AllianceSystem` (Foi & Alliance — hausse/baisse
-  de chaque jauge via `ValueChanged`, détectée en comparant à la
-  dernière valeur connue ; entrée en Crise/Faveur Élevée via
-  `StandingChanged` ; Repentance via l'événement dédié `Repented`), et
-  de `TechTree.TechUnlocked` (un chime par arbre) / `LeaderManager`
-  (Progression — `LeaderUnlocked`/`LeaderActivated`).
+  événements de `BuildingManager.BuildingPlaced` /
+  `TempleSystem.LevelUpgraded` (Construction — fanfare si le bâtiment
+  est `Spiritual`/`Special`, son de pose ordinaire sinon, montée dédiée
+  pour un Temple qui monte de niveau), de `MiracleManager` (Miracle —
+  début de prière, interruption, annulation, déclenchement), de
+  `ResourceManager.ResourceChanged` (filtré sur la Foi) /
+  `AllianceSystem` (Foi & Alliance — hausse/baisse de chaque jauge via
+  `ValueChanged`, détectée en comparant à la dernière valeur connue ;
+  entrée en Crise/Faveur Élevée via `StandingChanged` ; Repentance via
+  l'événement dédié `Repented`), de `TechTree.TechUnlocked` (un chime
+  par arbre) / `LeaderManager` (Progression —
+  `LeaderUnlocked`/`LeaderActivated`), et de `PopulationSystem`
+  (Economy — `PopulationChanged` hausse/baisse,
+  `LoyaltyLow`/`LoyaltyCritical`).
 
 - **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
   et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du

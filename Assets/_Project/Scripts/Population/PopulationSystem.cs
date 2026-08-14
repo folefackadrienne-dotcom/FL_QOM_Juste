@@ -18,6 +18,7 @@ namespace KingdomOfGod.Population
         public event Action LoyaltyLow;
         public event Action LoyaltyCritical;
         public event Action<float> LoyaltyChanged;
+        public event Action<int> PopulationChanged;
 
         private void Awake()
         {
@@ -36,6 +37,10 @@ namespace KingdomOfGod.Population
 
         public bool HasProductionBonus => Loyalty >= productionBonusThreshold;
 
-        public void Grow(int amount) => Population = Mathf.Max(0, Population + amount);
+        public void Grow(int amount)
+        {
+            Population = Mathf.Max(0, Population + amount);
+            PopulationChanged?.Invoke(Population);
+        }
     }
 }

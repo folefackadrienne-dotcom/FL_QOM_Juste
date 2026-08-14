@@ -29,6 +29,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private HexGrid hexGrid;
         [SerializeField] private BuildingManager buildingManager;
+        [SerializeField] private TempleSystem templeSystem;
         [SerializeField] private PopulationSystem populationSystem;
         [SerializeField] private AllianceSystem allianceSystem;
         [SerializeField] private MiracleManager miracleManager;
@@ -45,6 +46,7 @@ namespace KingdomOfGod.Core
         public ResourceManager Resources => resourceManager;
         public HexGrid Grid => hexGrid;
         public BuildingManager Buildings => buildingManager;
+        public TempleSystem Temple => templeSystem;
         public PopulationSystem Population => populationSystem;
         public AllianceSystem Alliance => allianceSystem;
         public MiracleManager Miracles => miracleManager;

@@ -4,6 +4,7 @@ using System.Linq;
 using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.Population;
 using KingdomOfGod.Progression;
 using KingdomOfGod.Resources;
 using KingdomOfGod.Verses;
@@ -28,6 +29,8 @@ namespace KingdomOfGod.Audio
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private TechTree techTree;
         [SerializeField] private LeaderManager leaderManager;
+        [SerializeField] private PopulationSystem populationSystem;
+        [SerializeField] private TempleSystem templeSystem;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
@@ -50,6 +53,7 @@ namespace KingdomOfGod.Audio
         private MusicContext? allianceOverride;
         private float lastFaithValue;
         private float lastAllianceValue;
+        private int lastPopulationValue;
 
         public MusicContext CurrentContext => allianceOverride ?? sceneContext;
 
@@ -111,6 +115,16 @@ namespace KingdomOfGod.Audio
                 leaderManager.LeaderUnlocked += OnLeaderUnlocked;
                 leaderManager.LeaderActivated += OnLeaderActivated;
             }
+
+            if (populationSystem != null)
+            {
+                lastPopulationValue = populationSystem.Population;
+                populationSystem.PopulationChanged += OnPopulationChanged;
+                populationSystem.LoyaltyLow += OnLoyaltyLow;
+                populationSystem.LoyaltyCritical += OnLoyaltyCritical;
+            }
+
+            if (templeSystem != null) templeSystem.LevelUpgraded += OnTempleLevelUpgraded;
         }
 
         private void OnDisable()
@@ -141,6 +155,15 @@ namespace KingdomOfGod.Audio
                 leaderManager.LeaderUnlocked -= OnLeaderUnlocked;
                 leaderManager.LeaderActivated -= OnLeaderActivated;
             }
+
+            if (populationSystem != null)
+            {
+                populationSystem.PopulationChanged -= OnPopulationChanged;
+                populationSystem.LoyaltyLow -= OnLoyaltyLow;
+                populationSystem.LoyaltyCritical -= OnLoyaltyCritical;
+            }
+
+            if (templeSystem != null) templeSystem.LevelUpgraded -= OnTempleLevelUpgraded;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -242,6 +265,29 @@ namespace KingdomOfGod.Audio
         private void OnLeaderActivated(LeaderData leader)
         {
             PlaySfx("Progression - Leader Actif");
+        }
+
+        private void OnPopulationChanged(int newValue)
+        {
+            if (newValue > lastPopulationValue) PlaySfx("Économie - Population en Hausse");
+            else if (newValue < lastPopulationValue) PlaySfx("Économie - Population en Baisse");
+            lastPopulationValue = newValue;
+        }
+
+        /// <summary>"Pénurie = murmures et baisse de loyauté" (GDD Economy) — loyalty dropping into the murmur band.</summary>
+        private void OnLoyaltyLow()
+        {
+            PlaySfx("Économie - Murmures du Peuple");
+        }
+
+        private void OnLoyaltyCritical()
+        {
+            PlaySfx("Économie - Rébellion Imminente");
+        }
+
+        private void OnTempleLevelUpgraded(int level)
+        {
+            PlaySfx("Bâtiments - Temple Amélioré");
         }
 
         /// <summary>Lets a future dialogue/cutscene system ask for the ambience to duck alongside miracles without the two stepping on each other's un-duck.</summary>

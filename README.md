@@ -47,8 +47,10 @@ Assets/_Project/
     Core/          GameManager, cycle des 7 Âges
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules)
-    Buildings/      Bâtiments, placement, Temple (niveaux 1-5)
-    Population/     Population & Loyauté
+    Buildings/      Bâtiments, placement, Temple (niveaux 1-5,
+                    TempleSystem.LevelUpgraded)
+    Population/     Population & Loyauté (PopulationChanged,
+                    LoyaltyLow/LoyaltyCritical)
     Battle/         Batailles tactiques tour par tour, unités, boss
                     (AntagonistData)
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
@@ -72,15 +74,17 @@ Assets/_Project/
                     (MusicThemeData), leitmotifs récurrents
                     (LeitmotifData), ambiances (AmbientSoundscapeData),
                     effets ponctuels d'Interface/Construction/Bataille/
-                    Miracle/Foi & Alliance (SfxCueData) et le mixage
-                    dynamique (AudioManager) — crossfade par scène,
-                    bascule en Crise sous Alliance basse, sourdine
-                    pendant la prière d'un miracle, SFX de
-                    clic/validation/erreur, de pose de bâtiment, de
-                    combat, de rituel et de variation des jauges de
-                    Foi/Alliance ; voix du Narrateur/des Personnages et
-                    lecture des versets (VoiceLineData, narrationClip*
-                    sur VerseData) avec sélection de langue FR/EN/HE
+                    Miracle/Foi & Alliance/Progression/Economy
+                    (SfxCueData) et le mixage dynamique (AudioManager) —
+                    crossfade par scène, bascule en Crise sous Alliance
+                    basse, sourdine pendant la prière d'un miracle, SFX
+                    de clic/validation/erreur, de pose/amélioration de
+                    bâtiment, de combat, de rituel, de variation des
+                    jauges de Foi/Alliance/Population et de
+                    déblocage tech/leader ; voix du Narrateur/des
+                    Personnages et lecture des versets (VoiceLineData,
+                    narrationClip* sur VerseData) avec sélection de
+                    langue FR/EN/HE
     UI/             HUD, menu de prière, journal des versets
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
@@ -92,11 +96,12 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 25 SFX
+                      musicaux, 6 leitmotifs, 6 ambiances, 30 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
-                      Alliance/Progression (dont Entrée en Crise, Faveur
-                      Élevée, Repentance et déblocages de tech/leader),
-                      3 lignes de voix Narrateur/Personnages)
+                      Alliance/Progression/Economy (dont Entrée en
+                      Crise, Faveur Élevée, Repentance, déblocages de
+                      tech/leader, variation de Population et Temple
+                      amélioré), 3 lignes de voix Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -153,6 +158,6 @@ dans l'Éditeur, sans toucher au code.
    champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
    (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique, le déclenchement contextuel
-   (y compris les 25 SFX d'Interface, Construction, Bataille, Miracle,
-   Foi & Alliance et Progression) et la lecture de voix multilingue, il
-   ne manque que les fichiers son.
+   (y compris les 30 SFX d'Interface, Construction, Bataille, Miracle,
+   Foi & Alliance, Progression et Economy) et la lecture de voix
+   multilingue, il ne manque que les fichiers son.

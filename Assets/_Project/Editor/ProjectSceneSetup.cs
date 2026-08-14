@@ -65,6 +65,7 @@ namespace KingdomOfGod.EditorTools
             var resourceManager = root.AddComponent<ResourceManager>();
             var hexGrid = root.AddComponent<HexGrid>();
             var buildingManager = root.AddComponent<BuildingManager>();
+            var templeSystem = root.AddComponent<TempleSystem>();
             var populationSystem = root.AddComponent<PopulationSystem>();
             var allianceSystem = root.AddComponent<AllianceSystem>();
             var miracleManager = root.AddComponent<MiracleManager>();
@@ -85,6 +86,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "resourceManager", resourceManager);
             SetRef(gameManager, "hexGrid", hexGrid);
             SetRef(gameManager, "buildingManager", buildingManager);
+            SetRef(gameManager, "templeSystem", templeSystem);
             SetRef(gameManager, "populationSystem", populationSystem);
             SetRef(gameManager, "allianceSystem", allianceSystem);
             SetRef(gameManager, "miracleManager", miracleManager);
@@ -102,6 +104,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(buildingManager, "grid", hexGrid);
             SetRef(buildingManager, "resourceManager", resourceManager);
             SetRef(buildingManager, "allianceSystem", allianceSystem);
+            SetRef(templeSystem, "resourceManager", resourceManager);
 
             SetRef(allianceSystem, "resourceManager", resourceManager);
             SetRef(miracleManager, "resourceManager", resourceManager);
@@ -120,6 +123,8 @@ namespace KingdomOfGod.EditorTools
             SetRef(audioManager, "resourceManager", resourceManager);
             SetRef(audioManager, "techTree", techTree);
             SetRef(audioManager, "leaderManager", leaderManager);
+            SetRef(audioManager, "populationSystem", populationSystem);
+            SetRef(audioManager, "templeSystem", templeSystem);
 
             var fullEdition = AssetDatabase.LoadAssetAtPath<ProductData>(EditionCompleteProductPath);
             if (fullEdition != null)
