@@ -7,11 +7,12 @@ Ce dépôt contient le **squelette du projet Unity** : l'architecture de code
 des systèmes de jeu décrits dans le design (ressources, grille hexagonale,
 bâtiments, batailles tactiques, miracles, Alliance, mémorisation de
 versets, collection d'objets, missions, progression, sauvegarde,
-monétisation freemium), avec les données de contenu des Âges 1 à 3 déjà
-remplies et un outil d'Éditeur qui génère automatiquement les 4 scènes de
-base entièrement câblées (voir « Ouvrir le projet » ci-dessous). Il manque
-encore l'art, le rendu visuel de la grille hexagonale, et le contenu des
-Âges 4 à 7.
+monétisation freemium), avec les données de contenu des **7 Âges de la
+campagne déjà remplies** (Patriarches → Exode → Conquête → Juges →
+Monarchie Unifiée → Royaumes Divisés → Exil et Retour) et un outil
+d'Éditeur qui génère automatiquement les 4 scènes de base entièrement
+câblées (voir « Ouvrir le projet » ci-dessous). Il manque encore l'art, le
+rendu visuel de la grille hexagonale, et les prefabs de personnages/unités.
 
 Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
 [`docs/ArtDirection.md`](docs/ArtDirection.md)
@@ -63,7 +64,9 @@ Assets/_Project/
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Techs, Ages, Monetization) —
-                      Âges 1 à 3 déjà remplis, Âges 4-7 à faire
+                      les 7 Âges de la campagne sont remplis (Buildings,
+                      Verses, Artifacts, Missions) ; Leaders/Techs/
+                      Miracles restent à créer
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -86,9 +89,9 @@ dans l'Éditeur, sans toucher au code.
    Create All Scenes** (voir ci-dessus) — les scènes ne sont pas encore
    validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
    première ouverture.
-2. Remplir les `ScriptableObject` des Âges 4 à 7 (Juges, Monarchie Unifiée,
-   Royaumes Divisés, Exil et Retour) — Âges 1-3 déjà faits (voir
-   `docs/GDD.md`).
+2. Créer les `MiracleData` référencés par les artefacts de chaque âge
+   (ex. le feu céleste débloqué par l'Autel du Carmel) — c'est le seul
+   type de contenu narratif encore vide pour les 7 Âges.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom`.
 4. Habiller visuellement le menu de prière et le journal des versets
