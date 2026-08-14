@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+
+namespace KingdomOfGod.SaveSystem
+{
+    /// <summary>Plain-data snapshot of everything needed to resume a game, serialized to JSON.</summary>
+    [Serializable]
+    public class SaveData
+    {
+        public string saveVersion = "0.1";
+        public int currentAge;
+        public List<int> unlockedAges = new List<int>();
+
+        public List<string> resourceTypes = new List<string>();
+        public List<float> resourceValues = new List<float>();
+
+        public float allianceValue;
+        public int templeLevel;
+        public int population;
+        public float loyalty;
+
+        public List<string> memorizedVerseIds = new List<string>();
+        public List<string> ownedArtifactIds = new List<string>();
+        public List<string> completedMissionIds = new List<string>();
+        public List<string> unlockedTechIds = new List<string>();
+
+        public DateTime savedAtUtc;
+    }
+}

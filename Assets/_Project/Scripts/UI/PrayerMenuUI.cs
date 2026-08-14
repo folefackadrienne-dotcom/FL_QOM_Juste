@@ -1,0 +1,50 @@
+using System.Collections.Generic;
+using KingdomOfGod.Miracles;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace KingdomOfGod.UI
+{
+    /// <summary>
+    /// "Menu de prière" (GDD 5. Système de Miracles): lists castable miracles, shows the
+    /// associated verse, and confirms the cast. Population of the list (buttons per miracle,
+    /// icons, verse text panel) is left to the concrete UI prefab.
+    /// </summary>
+    public class PrayerMenuUI : MonoBehaviour
+    {
+        [SerializeField] private MiracleManager miracleManager;
+        [SerializeField] private GameObject panelRoot;
+        [SerializeField] private Button confirmButton;
+
+        private MiracleData selectedMiracle;
+
+        public void Open() => panelRoot.SetActive(true);
+        public void Close() => panelRoot.SetActive(false);
+
+        public IReadOnlyList<MiracleData> GetCastableMiracles()
+        {
+            var castable = new List<MiracleData>();
+            foreach (var miracle in miracleManager.UnlockedMiracles)
+            {
+                if (miracleManager.CanCast(miracle)) castable.Add(miracle);
+            }
+            return castable;
+        }
+
+        public void Select(MiracleData miracle)
+        {
+            selectedMiracle = miracle;
+            if (confirmButton != null) confirmButton.interactable = miracle != null;
+        }
+
+        public void ConfirmCast()
+        {
+            if (selectedMiracle == null) return;
+
+            if (miracleManager.TryCast(selectedMiracle))
+            {
+                Close();
+            }
+        }
+    }
+}
