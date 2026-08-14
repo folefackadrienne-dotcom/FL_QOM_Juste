@@ -25,3 +25,4 @@ MonoBehaviour:
   healAmount: 0
   isUnlockable: 0
   unlockCondition:
+  antagonist: {fileID: 0}

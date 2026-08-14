@@ -1,3 +1,4 @@
+using KingdomOfGod.Core;
 using UnityEngine;
 
 namespace KingdomOfGod.UI
@@ -12,6 +13,14 @@ namespace KingdomOfGod.UI
 
         public void OpenPrayerMenu() => prayerMenu.Open();
         public void OpenVerseJournal() => verseJournal.Open();
-        public void ToggleProphecyJournal() => prophecyJournalPanel.SetActive(!prophecyJournalPanel.activeSelf);
+
+        public void ToggleProphecyJournal()
+        {
+            bool opening = !prophecyJournalPanel.activeSelf;
+            prophecyJournalPanel.SetActive(opening);
+            GameManager.Instance?.Audio.PlaySfx(opening
+                ? "Interface - Ouverture de Menu"
+                : "Interface - Fermeture de Menu");
+        }
     }
 }

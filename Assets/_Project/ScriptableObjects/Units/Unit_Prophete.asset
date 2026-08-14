@@ -27,3 +27,4 @@ MonoBehaviour:
   unlockCondition: >-
     Rare : débloqué par mission (ex. Débora, Élie) ou par un seuil de Foi
     élevé, avec des capacités spéciales propres à chaque prophète.
+  antagonist: {fileID: 0}

@@ -48,7 +48,9 @@ namespace KingdomOfGod.Battle
             unit.Died += OnUnitDied;
             units.Add(unit);
             battleGrid.PlaceUnit(unit, position);
-            GameManager.Instance?.Audio.PlaySfx("Bataille - Cri de Guerre");
+            GameManager.Instance?.Audio.PlaySfx(data.antagonist != null
+                ? "Antagonistes - Entrée en Scène du Boss"
+                : "Bataille - Cri de Guerre");
             return unit;
         }
 
@@ -105,7 +107,9 @@ namespace KingdomOfGod.Battle
         private void OnUnitDied(UnitInstance unit)
         {
             battleGrid.RemoveUnit(unit);
-            GameManager.Instance?.Audio.PlaySfx("Bataille - Mort d'une Unité");
+            GameManager.Instance?.Audio.PlaySfx(unit.Data.antagonist != null
+                ? "Antagonistes - Boss Vaincu"
+                : "Bataille - Mort d'une Unité");
             CheckVictory();
         }
 

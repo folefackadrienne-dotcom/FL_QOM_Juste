@@ -52,7 +52,8 @@ Assets/_Project/
     Population/     Population & Loyauté (PopulationChanged,
                     LoyaltyLow/LoyaltyCritical)
     Battle/         Batailles tactiques tour par tour, unités, boss
-                    (AntagonistData)
+                    (AntagonistData, lié à sa fiche UnitData via le
+                    champ optionnel UnitData.antagonist)
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût
@@ -80,8 +81,9 @@ Assets/_Project/
                     (SfxCueData) et le mixage dynamique (AudioManager) —
                     crossfade par scène, bascule en Crise sous Alliance
                     basse, sourdine pendant la prière d'un miracle, SFX
-                    de clic/validation/erreur, de pose/amélioration de
-                    bâtiment, de combat, de rituel, de variation des
+                    de clic/validation/erreur/fermeture de menu, de
+                    pose/amélioration de bâtiment, de combat (dont
+                    entrée/défaite de boss), de rituel, de variation des
                     jauges de Foi/Alliance/Population, de déblocage
                     tech/leader et de progression mission/verset ; voix
                     du Narrateur/des Personnages et lecture des versets
@@ -98,13 +100,14 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 34 SFX
+                      musicaux, 6 leitmotifs, 6 ambiances, 37 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
                       Alliance/Progression/Economy/Narrative (dont
                       Entrée en Crise, Faveur Élevée, Repentance,
                       déblocages de tech/leader, variation de
-                      Population, Temple amélioré et progression
-                      mission/verset), 3 lignes de voix
+                      Population, Temple amélioré, progression
+                      mission/verset, fermeture de menu et
+                      entrée/défaite de boss), 3 lignes de voix
                       Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
@@ -162,6 +165,6 @@ dans l'Éditeur, sans toucher au code.
    champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
    (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique, le déclenchement contextuel
-   (y compris les 34 SFX d'Interface, Construction, Bataille, Miracle,
+   (y compris les 37 SFX d'Interface, Construction, Bataille, Miracle,
    Foi & Alliance, Progression, Economy et Narrative) et la lecture de
    voix multilingue, il ne manque que les fichiers son.

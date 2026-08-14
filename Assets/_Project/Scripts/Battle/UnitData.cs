@@ -35,5 +35,8 @@ namespace KingdomOfGod.Battle
 
         public bool isUnlockable;
         [TextArea] public string unlockCondition;
+
+        [Tooltip("Set only for a boss's stat block — links back to the narrative AntagonistData so BattleManager can play a boss-specific cue instead of the regular unit spawn/death sound.")]
+        public AntagonistData antagonist;
     }
 }

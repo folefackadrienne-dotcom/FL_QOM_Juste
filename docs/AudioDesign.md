@@ -215,6 +215,30 @@ mémorisation est acquis). Contrairement aux rounds précédents,
 (`GameManager`, `ProjectSceneSetup`) et leurs événements existaient déjà
 — il ne manquait que l'abonnement côté `AudioManager`.
 
+**Menu & Antagonistes :**
+
+Deux compléments ciblés plutôt qu'une nouvelle catégorie :
+
+- **Menu** — l'Interface avait un signal d'ouverture (`PrayerMenuUI.Open`/
+  `VerseJournalUI.Open`) mais aucun de fermeture. Un `SfxCueData`
+  supplémentaire, Fermeture de Menu, comble ce trou et est câblé sur
+  `PrayerMenuUI.Close`/`VerseJournalUI.Close`. Au passage,
+  `HUDController.ToggleProphecyJournal` (le Journal Prophétique, un
+  troisième panneau qui n'avait jamais eu de retour sonore du tout)
+  reçoit désormais Ouverture/Fermeture de Menu selon le sens du bascule.
+- **Antagonistes** — 2 `SfxCueData` de catégorie `Battle` : Entrée en
+  Scène du Boss et Boss Vaincu, distincts du Cri de Guerre/Mort d'une
+  Unité génériques. `AntagonistData` (Pharaon, Goliath, Jézabel...)
+  n'avait jamais de lien avec le combat réel — aucune `UnitInstance` ne
+  pouvait être identifiée comme un boss. `UnitData` gagne un champ
+  optionnel `antagonist` (renseigné uniquement sur la fiche de
+  statistiques d'un boss) ; `BattleManager.SpawnUnit`/`OnUnitDied`
+  vérifient `data.antagonist != null` pour choisir le signal — même
+  logique de branchement que Construction (bâtiment ordinaire vs
+  important). Les 6 `UnitData` existantes ont le champ (vide) ; aucune
+  fiche de statistiques de boss n'est encore créée, cela reste à faire
+  quand un combat de boss sera assemblé.
+
 ---
 
 ## 5. Voix et narration
@@ -322,16 +346,19 @@ projet :
   Carmel, Soleil Arrêté et Colonne de Nuée et de Feu.
 - **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
-  musique/ambiance) : les 4 signaux d'Interface, les 3 de Construction,
-  les 3 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance, les 5 de
+  musique/ambiance) : les 5 signaux d'Interface, les 3 de Construction,
+  les 5 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance, les 5 de
   Progression, les 4 d'Economy et les 4 de Narrative sont créés dans
-  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (34 au total).
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (37 au total).
   `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
-  `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
-  et par `BattleManager` pour la Bataille (`SpawnUnit`/`TryAttack`/
-  `OnUnitDied`), et automatiquement par `AudioManager` sur les
-  événements de `BuildingManager.BuildingPlaced` /
+  `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController`/`HUDController`
+  pour l'Interface (ouverture/fermeture des 3 panneaux, clic,
+  validation, erreur) et par `BattleManager` pour la Bataille
+  (`SpawnUnit`/`TryAttack`/`OnUnitDied`, avec Entrée en Scène du
+  Boss/Boss Vaincu à la place des signaux génériques quand
+  `UnitData.antagonist` est renseigné), et automatiquement par
+  `AudioManager` sur les événements de `BuildingManager.BuildingPlaced` /
   `TempleSystem.LevelUpgraded` (Construction — fanfare si le bâtiment
   est `Spiritual`/`Special`, son de pose ordinaire sinon, montée dédiée
   pour un Temple qui monte de niveau), de `MiracleManager` (Miracle —

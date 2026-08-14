@@ -36,7 +36,11 @@ namespace KingdomOfGod.UI
             GameManager.Instance?.Audio.PlaySfx("Interface - Ouverture de Menu");
         }
 
-        public void Close() => panelRoot.SetActive(false);
+        public void Close()
+        {
+            panelRoot.SetActive(false);
+            GameManager.Instance?.Audio.PlaySfx("Interface - Fermeture de Menu");
+        }
 
         public IReadOnlyList<MiracleData> GetCastableMiracles()
         {

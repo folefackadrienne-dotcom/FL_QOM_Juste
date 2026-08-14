@@ -32,6 +32,7 @@ namespace KingdomOfGod.UI
         {
             panelRoot.SetActive(false);
             GameManager.Instance?.Audio.StopNarration();
+            GameManager.Instance?.Audio.PlaySfx("Interface - Fermeture de Menu");
         }
 
         public IReadOnlyCollection<VerseData> GetMemorizedVerses() => verseManager.MemorizedVerses;
