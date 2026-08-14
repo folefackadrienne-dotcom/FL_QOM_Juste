@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_ArcheDAlliance
+  m_EditorClassIdentifier:
+  displayName: Arche d'Alliance
+  biblicalReference: Josué 3–6
+  historicalContext: >-
+    Portée par les prêtres devant le peuple, l'Arche ouvre le passage du
+    Jourdain à sec puis mène la procession autour de Jéricho pendant sept
+    jours.
+  educationalComment: >-
+    L'objet clé de l'Âge de la Conquête : la présence de Dieu qui marche
+    en tête de l'armée d'Israël plutôt qu'une simple relique de camp.
+  rarity: 3
+  age: 2
+  icon: {fileID: 0}
+  passiveBonus:
+  - type: 4
+    amount: 8
+  activeAbilityDescription: >-
+    Devient une unité mobile ultra-puissante en bataille, avec un bonus de
+    moral massif pour les unités alliées à proximité.

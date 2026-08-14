@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age3_04_BatailleDeGabaon
+  m_EditorClassIdentifier:
+  missionId: age3_04_bataille_de_gabaon
+  displayName: La Bataille de Gabaon
+  summary: >-
+    Bataille longue contre la coalition des cinq rois amoréens, où le
+    miracle du soleil arrêté (Josué 10:12-14) prolonge le temps
+    disponible pour achever la victoire.
+  age: 2
+  type: 0
+  victoryCondition:
+    type: 0
+    turnsToSurvive: 0
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 4
+    amount: 20
+  - type: 6
+    amount: 15
+  battleSceneName: Battle_Gabaon

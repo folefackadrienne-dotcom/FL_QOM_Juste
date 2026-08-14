@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age3_03_AiLaDefaite
+  m_EditorClassIdentifier:
+  missionId: age3_03_ai_la_defaite
+  displayName: Aï – La Défaite
+  summary: >-
+    Mission d'échec volontaire : après une défaite à Aï, le joueur
+    découvre le péché d'Acan et doit purifier le camp avant de reprendre
+    la conquête.
+  age: 2
+  type: 2
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 1
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 6
+    amount: 20
+  battleSceneName:

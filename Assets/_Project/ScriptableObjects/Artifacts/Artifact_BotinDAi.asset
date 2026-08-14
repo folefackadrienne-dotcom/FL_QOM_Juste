@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_BotinDAi
+  m_EditorClassIdentifier:
+  displayName: Butin d'Aï (maudit)
+  biblicalReference: Josué 7
+  historicalContext: >-
+    Le manteau de Shinéar, l'argent et le lingot d'or qu'Acan a dérobés
+    au butin voué à l'anathème après la chute de Jéricho, cachés sous sa
+    tente.
+  educationalComment: >-
+    La cause cachée de la défaite d'Israël à Aï : ce que le péché d'un
+    seul homme fait porter à tout le camp, tant qu'il n'est pas révélé.
+  rarity: 2
+  age: 2
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Objet piégé : inflige une malédiction (défaites, baisse de moral) tant
+    qu'il n'a pas été découvert et détruit.

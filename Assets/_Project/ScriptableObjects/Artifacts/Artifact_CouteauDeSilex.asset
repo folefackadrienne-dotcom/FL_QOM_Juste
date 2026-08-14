@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_CouteauDeSilex
+  m_EditorClassIdentifier:
+  displayName: Couteau de silex (circoncision)
+  biblicalReference: Josué 5
+  historicalContext: >-
+    Les couteaux de silex utilisés à Guilgal pour circoncire la génération
+    née dans le désert, avant que le peuple ne célèbre la Pâque en Canaan.
+  educationalComment: >-
+    Ce rite renouvelle le signe de l'Alliance interrompu pendant la
+    traversée du désert, avant même le premier combat de la Conquête.
+  rarity: 1
+  age: 2
+  icon: {fileID: 0}
+  passiveBonus:
+  - type: 6
+    amount: 5
+  activeAbilityDescription: >-
+    Restaure la Justice après une période d'infidélité.

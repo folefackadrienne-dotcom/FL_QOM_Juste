@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age3_02_ChuteDeJericho
+  m_EditorClassIdentifier:
+  missionId: age3_02_chute_de_jericho
+  displayName: La Chute de Jéricho
+  summary: >-
+    Bataille emblématique : faire tourner le peuple autour de la ville
+    pendant 7 jours avant de pouvoir déclencher le miracle des murailles
+    qui s'effondrent.
+  age: 2
+  type: 0
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 7
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 4
+    amount: 25
+  - type: 3
+    amount: 20
+  battleSceneName: Battle_ChuteDeJericho

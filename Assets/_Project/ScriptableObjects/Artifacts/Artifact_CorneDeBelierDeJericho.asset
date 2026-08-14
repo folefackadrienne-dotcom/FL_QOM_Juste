@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_CorneDeBelierDeJericho
+  m_EditorClassIdentifier:
+  displayName: Corne de bélier de Jéricho
+  biblicalReference: Josué 6
+  historicalContext: >-
+    L'une des sept trompettes de corne de bélier sonnées par les
+    sacrificateurs au septième tour de la procession autour de Jéricho.
+  educationalComment: >-
+    Le son du chofar, plus qu'un simple signal militaire, marque
+    l'instant où l'obéissance du peuple rencontre la puissance de Dieu.
+  rarity: 2
+  age: 2
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Débloque le miracle « Chute des murailles ».
