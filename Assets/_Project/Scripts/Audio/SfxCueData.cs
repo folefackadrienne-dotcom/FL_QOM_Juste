@@ -4,10 +4,11 @@ namespace KingdomOfGod.Audio
 {
     /// <summary>
     /// The SFX families from the GDD "Direction Sonore" section 4, plus Progression, Economy,
-    /// Narrative and Meta — not named in the doc's own SFX list, but natural extensions covering
-    /// tech-tree unlocks and leaders (GDD "Progression & Metagame"), population/loyalty (GDD
-    /// "Ressources & Économie"), mission/verse milestones (GDD "Missions" and "Verses"), and
-    /// save/monetization feedback (GDD "Sauvegarde" and "Monétisation").
+    /// Narrative, Meta and Collectibles — not named in the doc's own SFX list, but natural
+    /// extensions covering tech-tree unlocks and leaders (GDD "Progression & Metagame"),
+    /// population/loyalty (GDD "Ressources & Économie"), mission/verse milestones (GDD "Missions"
+    /// and "Verses"), save/monetization feedback (GDD "Sauvegarde" and "Monétisation"), and
+    /// artifact pickups (GDD "Collectibles").
     /// </summary>
     public enum SfxCategory
     {
@@ -19,7 +20,8 @@ namespace KingdomOfGod.Audio
         Progression,
         Economy,
         Narrative,
-        Meta
+        Meta,
+        Collectibles
     }
 
     /// <summary>

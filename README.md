@@ -62,7 +62,8 @@ Assets/_Project/
                     de puissance des miracles
     Verses/         Mémorisation de versets (mini-jeu progressif,
                     VerseUnlocked/VerseMemorized)
-    Collectibles/   Artefacts bibliques (Commun → Légendaire)
+    Collectibles/   Artefacts bibliques (Commun → Légendaire),
+                    CollectionManager.ArtifactCollected/AgeCollectionCompleted
     Missions/       Définition & suivi des missions
                     (MissionStarted/MissionCompleted)
     Progression/    Leaders légendaires (LeaderManager : débloqués +
@@ -79,18 +80,20 @@ Assets/_Project/
                     (LeitmotifData), ambiances (AmbientSoundscapeData),
                     effets ponctuels d'Interface/Construction/Bataille/
                     Miracle/Foi & Alliance/Progression/Economy/Narrative/
-                    Meta (SfxCueData) et le mixage dynamique
-                    (AudioManager) — crossfade par scène, bascule en
-                    Crise sous Alliance basse, sourdine pendant la
-                    prière d'un miracle, SFX de clic/validation/erreur/
-                    fermeture de menu, de pose/amélioration de bâtiment,
-                    de combat (dont entrée/défaite de boss), de rituel,
-                    de variation des jauges de Foi/Alliance/Population,
-                    de déblocage tech/leader, de progression
-                    mission/verset et de sauvegarde/achat ; voix du
-                    Narrateur/des Personnages et lecture des versets
-                    (VoiceLineData, narrationClip* sur VerseData) avec
-                    sélection de langue FR/EN/HE
+                    Meta/Collectibles (SfxCueData) et le mixage
+                    dynamique (AudioManager) — crossfade par scène,
+                    bascule en Crise sous Alliance basse, sourdine
+                    pendant la prière d'un miracle, SFX de
+                    clic/validation/erreur/fermeture de menu, de
+                    pose/amélioration de bâtiment, de combat (dont
+                    entrée/défaite de boss), de rituel, de variation
+                    des jauges de Foi/Alliance/Population, de
+                    déblocage tech/leader, de progression
+                    mission/verset, de sauvegarde/achat et de
+                    collection d'artefact ; voix du Narrateur/des
+                    Personnages et lecture des versets (VoiceLineData,
+                    narrationClip* sur VerseData) avec sélection de
+                    langue FR/EN/HE
     UI/             HUD, menu de prière, journal des versets
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
@@ -102,15 +105,16 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 41 SFX
+                      musicaux, 6 leitmotifs, 6 ambiances, 44 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
-                      Alliance/Progression/Economy/Narrative/Meta (dont
-                      Entrée en Crise, Faveur Élevée, Repentance,
-                      déblocages de tech/leader, variation de
-                      Population, Temple amélioré, progression
-                      mission/verset, fermeture de menu,
-                      entrée/défaite de boss et sauvegarde/achat), 3
-                      lignes de voix Narrateur/Personnages)
+                      Alliance/Progression/Economy/Narrative/Meta/
+                      Collectibles (dont Entrée en Crise, Faveur
+                      Élevée, Repentance, déblocages de tech/leader,
+                      variation de Population, Temple amélioré,
+                      progression mission/verset, fermeture de menu,
+                      entrée/défaite de boss, sauvegarde/achat et
+                      artefact précieux trouvé), 3 lignes de voix
+                      Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -167,6 +171,7 @@ dans l'Éditeur, sans toucher au code.
    champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
    (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique, le déclenchement contextuel
-   (y compris les 41 SFX d'Interface, Construction, Bataille, Miracle,
-   Foi & Alliance, Progression, Economy, Narrative et Meta) et la
-   lecture de voix multilingue, il ne manque que les fichiers son.
+   (y compris les 44 SFX d'Interface, Construction, Bataille, Miracle,
+   Foi & Alliance, Progression, Economy, Narrative, Meta et
+   Collectibles) et la lecture de voix multilingue, il ne manque que
+   les fichiers son.

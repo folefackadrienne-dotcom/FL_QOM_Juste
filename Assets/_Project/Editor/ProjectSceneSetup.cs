@@ -129,6 +129,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(audioManager, "verseManager", verseManager);
             SetRef(audioManager, "saveManager", saveManager);
             SetRef(audioManager, "entitlementManager", entitlementManager);
+            SetRef(audioManager, "collectionManager", collectionManager);
 
             var fullEdition = AssetDatabase.LoadAssetAtPath<ProductData>(EditionCompleteProductPath);
             if (fullEdition != null)

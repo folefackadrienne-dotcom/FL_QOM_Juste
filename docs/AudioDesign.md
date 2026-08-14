@@ -259,6 +259,29 @@ scène ni un système de jeu mais l'application elle-même. 4 `SfxCueData` :
   ne manquait, comme pour Missions & Versets, que l'abonnement côté
   `AudioManager`.
 
+**Collectibles :**
+
+Dernier système de gameplay du GDD sans retour sonore. Nouvelle
+catégorie `Collectibles`, 3 `SfxCueData` :
+
+- Artefact Trouvé / Artefact Précieux Trouvé
+  (`CollectionManager.ArtifactCollected`) — le second, une résonance
+  dorée et solennelle, remplace le premier quand
+  `ArtifactData.rarity` vaut `Epic` ou `Legendary` ; même logique de
+  branchement par catégorie que Construction (bâtiment ordinaire vs
+  important) et Progression (chime par arbre technologique).
+- Collection d'Âge Complète (`CollectionManager.AgeCollectionCompleted`)
+  — fanfare ample, la plus marquée des trois, jouée une fois que tous
+  les artefacts d'un Âge sont réunis ; sert d'ancrage sonore au futur
+  bonus/cinématique que `CollectionManager` documente déjà comme un
+  crochet à exploiter.
+
+`CollectionManager` était, comme `SaveManager`/`EntitlementManager`,
+déjà entièrement câblé (`GameManager`, `ProjectSceneSetup`) avec des
+événements existants et inutilisés — dernier système de gameplay du
+GDD à recevoir son abonnement `AudioManager`, ce qui clôt la couverture
+SFX de tous les systèmes listés dans `GameManager`.
+
 ---
 
 ## 5. Voix et narration
@@ -368,9 +391,9 @@ projet :
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
   musique/ambiance) : les 5 signaux d'Interface, les 3 de Construction,
   les 5 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance, les 5 de
-  Progression, les 4 d'Economy, les 4 de Narrative et les 4 de Meta sont
-  créés dans `Assets/_Project/ScriptableObjects/Audio/Sfx/` (41 au
-  total).
+  Progression, les 4 d'Economy, les 4 de Narrative, les 4 de Meta et les
+  3 de Collectibles sont créés dans
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (44 au total).
   `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController`/`HUDController`
@@ -394,10 +417,12 @@ projet :
   `PopulationChanged` hausse/baisse, `LoyaltyLow`/`LoyaltyCritical`), de
   `MissionManager`/`VerseManager` (Narrative —
   `MissionStarted`/`MissionCompleted`,
-  `VerseUnlocked`/`VerseMemorized`), et de `SaveManager`/
+  `VerseUnlocked`/`VerseMemorized`), de `SaveManager`/
   `EntitlementManager` (Meta — `Saved`/`Loaded`, `ProductPurchased`, et
   `TierChanged` superposé à Achat Réussi uniquement quand le joueur
-  bascule sur `FullEdition`).
+  bascule sur `FullEdition`), et de `CollectionManager` (Collectibles —
+  `ArtifactCollected` avec un signal distinct pour les artefacts
+  `Epic`/`Legendary`, `AgeCollectionCompleted`).
 
 - **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
   et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du

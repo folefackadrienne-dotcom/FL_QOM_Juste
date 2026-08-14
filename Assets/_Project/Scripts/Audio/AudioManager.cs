@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
+using KingdomOfGod.Collectibles;
+using KingdomOfGod.Core;
 using KingdomOfGod.Miracles;
 using KingdomOfGod.Missions;
 using KingdomOfGod.Monetization;
@@ -38,6 +40,7 @@ namespace KingdomOfGod.Audio
         [SerializeField] private VerseManager verseManager;
         [SerializeField] private SaveManager saveManager;
         [SerializeField] private EntitlementManager entitlementManager;
+        [SerializeField] private CollectionManager collectionManager;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
@@ -156,6 +159,12 @@ namespace KingdomOfGod.Audio
                 entitlementManager.ProductPurchased += OnProductPurchased;
                 entitlementManager.TierChanged += OnTierChanged;
             }
+
+            if (collectionManager != null)
+            {
+                collectionManager.ArtifactCollected += OnArtifactCollected;
+                collectionManager.AgeCollectionCompleted += OnAgeCollectionCompleted;
+            }
         }
 
         private void OnDisable()
@@ -218,6 +227,12 @@ namespace KingdomOfGod.Audio
             {
                 entitlementManager.ProductPurchased -= OnProductPurchased;
                 entitlementManager.TierChanged -= OnTierChanged;
+            }
+
+            if (collectionManager != null)
+            {
+                collectionManager.ArtifactCollected -= OnArtifactCollected;
+                collectionManager.AgeCollectionCompleted -= OnAgeCollectionCompleted;
             }
         }
 
@@ -385,6 +400,19 @@ namespace KingdomOfGod.Audio
         private void OnTierChanged(EntitlementTier tier)
         {
             if (tier == EntitlementTier.FullEdition) PlaySfx("Monétisation - Édition Complète Débloquée");
+        }
+
+        /// <summary>"Rareté : Commun, Rare, Épique, Légendaire" (GDD Collectibles) — the top two tiers get a precious fanfare, the same "vary by category" treatment already used for Construction.</summary>
+        private void OnArtifactCollected(ArtifactData artifact)
+        {
+            bool precious = artifact.rarity == Rarity.Epic || artifact.rarity == Rarity.Legendary;
+            PlaySfx(precious ? "Collectibles - Artefact Précieux Trouvé" : "Collectibles - Artefact Trouvé");
+        }
+
+        /// <summary>The "bonus/cinematic hook" CollectionManager fires once every artifact of an Age is owned.</summary>
+        private void OnAgeCollectionCompleted(Age age)
+        {
+            PlaySfx("Collectibles - Collection d'Âge Complète");
         }
 
         /// <summary>Lets a future dialogue/cutscene system ask for the ambience to duck alongside miracles without the two stepping on each other's un-duck.</summary>
