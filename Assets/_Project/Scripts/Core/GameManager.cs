@@ -4,6 +4,7 @@ using KingdomOfGod.Collectibles;
 using KingdomOfGod.Grid;
 using KingdomOfGod.Miracles;
 using KingdomOfGod.Missions;
+using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
 using KingdomOfGod.Resources;
 using KingdomOfGod.SaveSystem;
@@ -33,6 +34,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private CollectionManager collectionManager;
         [SerializeField] private MissionManager missionManager;
         [SerializeField] private SaveManager saveManager;
+        [SerializeField] private EntitlementManager entitlementManager;
 
         public AgeManager Ages => ageManager;
         public ResourceManager Resources => resourceManager;
@@ -45,6 +47,7 @@ namespace KingdomOfGod.Core
         public CollectionManager Collection => collectionManager;
         public MissionManager Missions => missionManager;
         public SaveManager Save => saveManager;
+        public EntitlementManager Entitlements => entitlementManager;
 
         private void Awake()
         {

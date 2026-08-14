@@ -6,9 +6,10 @@ d'Israël dans l'Ancien Testament, sur PC et mobile.
 Ce dépôt contient le **squelette du projet Unity** : l'architecture de code
 des systèmes de jeu décrits dans le design (ressources, grille hexagonale,
 bâtiments, batailles tactiques, miracles, Alliance, mémorisation de
-versets, collection d'objets, missions, progression, sauvegarde), sans
-contenu jouable complet — pas encore de scènes, d'art, ni de données de jeu
-remplies.
+versets, collection d'objets, missions, progression, sauvegarde,
+monétisation freemium), avec les données de contenu des Âges 1 à 3 déjà
+remplies. Il manque encore les scènes Unity, l'art, et le contenu des
+Âges 4 à 7.
 
 Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
 [`docs/ArtDirection.md`](docs/ArtDirection.md)
@@ -45,10 +46,14 @@ Assets/_Project/
     Missions/       Définition & suivi des missions
     Progression/    Leaders légendaires, arbre technologique (3 branches)
     SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud)
+    Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
+                    produits, seam IAP (stub Éditeur en attendant le vrai
+                    store)
     UI/             HUD, menu de prière, journal des versets
-  ScriptableObjects/  Assets de données à créer dans l'Éditeur
+  ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
-                      Missions, Leaders, Techs, Ages)
+                      Missions, Leaders, Techs, Ages, Monetization) —
+                      Âges 1 à 3 déjà remplis, Âges 4-7 à faire
   Scenes/             Vide pour l'instant — voir le README du dossier
   Prefabs/, Art/, Audio/
 docs/
@@ -67,11 +72,14 @@ dans l'Éditeur, sans toucher au code.
 ## Prochaines étapes suggérées
 
 1. Créer les scènes `Bootstrap`, `Kingdom`, `Battle`, `MainMenu`.
-2. Remplir les premiers `ScriptableObject` pour l'Âge 1 (Les Patriarches) :
-   bâtiments de base, la mission "L'Appel d'Abraham", les versets et
-   artefacts associés (voir `docs/GDD.md`).
+2. Remplir les `ScriptableObject` des Âges 4 à 7 (Juges, Monarchie Unifiée,
+   Royaumes Divisés, Exil et Retour) — Âges 1-3 déjà faits (voir
+   `docs/GDD.md`).
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal).
 4. Implémenter le rendu du menu de prière et du journal des versets
    (`PrayerMenuUI`, `VerseJournalUI` ne sont que la logique, sans prefab
    UI pour l'instant).
+5. Remplacer `EditorIAPService` par une vraie intégration store (Unity IAP
+   ou équivalent) une fois les fiches produit créées dans App Store
+   Connect / Play Console — voir `Assets/_Project/Scripts/Monetization`.

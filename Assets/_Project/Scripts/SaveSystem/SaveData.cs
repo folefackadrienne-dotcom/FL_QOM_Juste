@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using KingdomOfGod.Monetization;
 
 namespace KingdomOfGod.SaveSystem
 {
@@ -10,6 +11,9 @@ namespace KingdomOfGod.SaveSystem
         public string saveVersion = "0.1";
         public int currentAge;
         public List<int> unlockedAges = new List<int>();
+
+        public EntitlementTier entitlementTier = EntitlementTier.Free;
+        public List<string> ownedProductIds = new List<string>();
 
         public List<string> resourceTypes = new List<string>();
         public List<float> resourceValues = new List<float>();

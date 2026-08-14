@@ -10,8 +10,14 @@ Persistent scene loaded first. Contains one `GameManager` GameObject with
 the manager components attached and wired in the Inspector:
 `AgeManager`, `ResourceManager`, `HexGrid`, `BuildingManager`,
 `PopulationSystem`, `AllianceSystem`, `MiracleManager`, `VerseManager`,
-`CollectionManager`, `MissionManager`, `SaveManager`. `GameManager` itself
-calls `DontDestroyOnLoad`, so this scene stays loaded for the whole session.
+`CollectionManager`, `MissionManager`, `SaveManager`, `EntitlementManager`.
+`GameManager` itself calls `DontDestroyOnLoad`, so this scene stays loaded
+for the whole session.
+
+Drag the `EntitlementManager` component into `AgeManager`'s
+`Content Gate Behaviour` field so free-tier players stop at the age limit
+(GDD: first 2-3 ages free). Leave it unassigned during early prototyping —
+`AgeManager` unlocks every age with no restriction when no gate is set.
 
 ## `Kingdom` (territory/management view)
 The hex-grid kingdom view. Needs a `HexGrid` component driving the visual

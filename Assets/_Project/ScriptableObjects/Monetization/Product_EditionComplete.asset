@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ab33f4e7614d9181838904ab337f58, type: 3}
+  m_Name: Product_EditionComplete
+  m_EditorClassIdentifier:
+  storeProductId: kingdomofgod.edition_complete
+  displayName: Édition Complète
+  description: >-
+    Achat unique qui débloque toute la campagne (Âges 3 à 7) ainsi que le
+    Mode Libre. N'affecte jamais l'équilibrage du jeu au-delà de l'accès
+    au contenu : aucun avantage de gameplay caché.
+  type: 0
+  icon: {fileID: 0}

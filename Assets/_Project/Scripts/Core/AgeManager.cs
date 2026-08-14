@@ -9,15 +9,23 @@ namespace KingdomOfGod.Core
     {
         [SerializeField] private Age startingAge = Age.Patriarchs;
 
+        [Tooltip("Optional component implementing IContentGate (e.g. EntitlementManager). "
+            + "Leave empty to unlock ages freely, with no monetization restriction.")]
+        [SerializeField] private MonoBehaviour contentGateBehaviour;
+
+        private IContentGate contentGate;
         private readonly HashSet<Age> unlockedAges = new HashSet<Age>();
 
         public Age CurrentAge { get; private set; }
 
         public event Action<Age> AgeChanged;
         public event Action<Age> AgeUnlocked;
+        public event Action<Age> AgeLocked;
 
         private void Awake()
         {
+            contentGate = contentGateBehaviour as IContentGate;
+
             CurrentAge = startingAge;
             UnlockAge(startingAge);
         }
@@ -26,10 +34,16 @@ namespace KingdomOfGod.Core
 
         public void UnlockAge(Age age)
         {
-            if (unlockedAges.Add(age))
+            if (unlockedAges.Contains(age)) return;
+
+            if (contentGate != null && !contentGate.CanUnlockAge(age))
             {
-                AgeUnlocked?.Invoke(age);
+                AgeLocked?.Invoke(age);
+                return;
             }
+
+            unlockedAges.Add(age);
+            AgeUnlocked?.Invoke(age);
         }
 
         public void SetCurrentAge(Age age)
