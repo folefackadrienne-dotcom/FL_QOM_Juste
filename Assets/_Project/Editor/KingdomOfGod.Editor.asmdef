@@ -1,13 +1,14 @@
 {
-    "name": "KingdomOfGod",
-    "rootNamespace": "KingdomOfGod",
+    "name": "KingdomOfGod.Editor",
+    "rootNamespace": "KingdomOfGod.EditorTools",
     "references": [
+        "KingdomOfGod",
         "Unity.TextMeshPro",
-        "Unity.InputSystem",
-        "Unity.Cinemachine",
         "UnityEngine.UI"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -8,7 +8,9 @@ des systèmes de jeu décrits dans le design (ressources, grille hexagonale,
 bâtiments, batailles tactiques, miracles, Alliance, mémorisation de
 versets, collection d'objets, missions, progression, sauvegarde,
 monétisation freemium), avec les données de contenu des Âges 1 à 3 déjà
-remplies. Il manque encore les scènes Unity, l'art, et le contenu des
+remplies et un outil d'Éditeur qui génère automatiquement les 4 scènes de
+base entièrement câblées (voir « Ouvrir le projet » ci-dessous). Il manque
+encore l'art, le rendu visuel de la grille hexagonale, et le contenu des
 Âges 4 à 7.
 
 Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
@@ -25,8 +27,14 @@ Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
 
 1. Ouvrir Unity Hub → Add → sélectionner ce dossier.
 2. Laisser Unity réimporter les packages (`Packages/manifest.json`).
-3. Créer les scènes de base — voir
-   [`Assets/_Project/Scenes/README.md`](Assets/_Project/Scenes/README.md).
+3. Lancer **Kingdom of God → Setup → Create All Scenes** dans le menu
+   Unity pour générer et câbler `Bootstrap`, `MainMenu`, `Kingdom` et
+   `Battle` d'un coup — voir
+   [`Assets/_Project/Scenes/README.md`](Assets/_Project/Scenes/README.md)
+   pour le détail de ce que chaque scène contient.
+4. Ouvrir `Bootstrap` et lancer Play : ça enchaîne automatiquement sur
+   `MainMenu`, où « Nouvelle Partie » ouvre `Kingdom` avec la barre de
+   ressources déjà vivante (Foi, Blé, Eau… avec leurs valeurs de départ).
 
 ## Structure
 
@@ -50,11 +58,14 @@ Assets/_Project/
                     produits, seam IAP (stub Éditeur en attendant le vrai
                     store)
     UI/             HUD, menu de prière, journal des versets
+  Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
+                  (menu Kingdom of God > Setup), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Techs, Ages, Monetization) —
                       Âges 1 à 3 déjà remplis, Âges 4-7 à faire
-  Scenes/             Vide pour l'instant — voir le README du dossier
+  Scenes/             Générées par Kingdom of God > Setup > Create All
+                      Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
 docs/
   GDD.md              Document de conception consolidé
@@ -71,15 +82,21 @@ dans l'Éditeur, sans toucher au code.
 
 ## Prochaines étapes suggérées
 
-1. Créer les scènes `Bootstrap`, `Kingdom`, `Battle`, `MainMenu`.
+1. Ouvrir le projet dans Unity et lancer **Kingdom of God → Setup →
+   Create All Scenes** (voir ci-dessus) — les scènes ne sont pas encore
+   validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
+   première ouverture.
 2. Remplir les `ScriptableObject` des Âges 4 à 7 (Juges, Monarchie Unifiée,
    Royaumes Divisés, Exil et Retour) — Âges 1-3 déjà faits (voir
    `docs/GDD.md`).
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
-   hexagonal).
-4. Implémenter le rendu du menu de prière et du journal des versets
-   (`PrayerMenuUI`, `VerseJournalUI` ne sont que la logique, sans prefab
-   UI pour l'instant).
-5. Remplacer `EditorIAPService` par une vraie intégration store (Unity IAP
+   hexagonal) dans la scène `Kingdom`.
+4. Habiller visuellement le menu de prière et le journal des versets
+   (`PrayerMenuUI`/`VerseJournalUI` ont leur logique et leurs panneaux
+   générés, mais pas encore de liste d'items/boutons par miracle ou verset).
+5. Créer des prefabs d'unités référençant les 6 `UnitData` de base
+   (`Assets/_Project/ScriptableObjects/Units`) pour peupler la scène
+   `Battle`.
+6. Remplacer `EditorIAPService` par une vraie intégration store (Unity IAP
    ou équivalent) une fois les fiches produit créées dans App Store
    Connect / Play Console — voir `Assets/_Project/Scripts/Monetization`.

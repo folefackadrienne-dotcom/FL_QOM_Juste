@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using KingdomOfGod.Core;
 using KingdomOfGod.Grid;
 using KingdomOfGod.Miracles;
 using UnityEngine;
@@ -29,6 +30,14 @@ namespace KingdomOfGod.Battle
 
         private void Awake()
         {
+            // miracleManager lives on the persistent Bootstrap GameManager, in a different
+            // scene from this battle — Inspector references can't cross scenes, so fall back
+            // to the running singleton when this field was left unassigned.
+            if (miracleManager == null && GameManager.Instance != null)
+            {
+                miracleManager = GameManager.Instance.Miracles;
+            }
+
             turnController = new TurnController(units);
         }
 

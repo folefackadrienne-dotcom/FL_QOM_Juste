@@ -1,40 +1,71 @@
 # Scenes — setup notes
 
-No `.unity` scene files are checked in yet: hand-authoring Unity's YAML
-scene format outside the Editor is fragile, so scenes are created directly
-in Unity instead. Suggested first scenes, matching the manager scripts
-already in `Assets/_Project/Scripts`:
+No `.unity` scene files are checked into this branch: hand-authoring
+Unity's YAML scene format outside the Editor is too fragile to trust
+without Unity available to open and verify it. Instead, the four base
+scenes are generated automatically by an Editor script.
 
-## `Bootstrap`
-Persistent scene loaded first. Contains one `GameManager` GameObject with
-the manager components attached and wired in the Inspector:
-`AgeManager`, `ResourceManager`, `HexGrid`, `BuildingManager`,
-`PopulationSystem`, `AllianceSystem`, `MiracleManager`, `VerseManager`,
-`CollectionManager`, `MissionManager`, `SaveManager`, `EntitlementManager`.
-`GameManager` itself calls `DontDestroyOnLoad`, so this scene stays loaded
-for the whole session.
+## One-click setup
 
-Drag the `EntitlementManager` component into `AgeManager`'s
-`Content Gate Behaviour` field so free-tier players stop at the age limit
-(GDD: first 2-3 ages free). Leave it unassigned during early prototyping —
-`AgeManager` unlocks every age with no restriction when no gate is set.
+Open this project in Unity, then run:
 
-## `Kingdom` (territory/management view)
-The hex-grid kingdom view. Needs a `HexGrid` component driving the visual
-tilemap/mesh, a `BuildingManager`-driven placement controller, and the HUD
-(`HUDController` + `ResourceBarUI` + `PrayerMenuUI` + `VerseJournalUI`)
-on a Canvas.
+**Kingdom of God → Setup → Create All Scenes**
 
-## `Battle`
-Loaded additively (or as its own scene) per mission. Needs a `BattleGrid`,
-a `BattleManager` with its `VictoryCondition` configured for the mission,
-and unit prefabs referencing `UnitData` assets.
+This builds and saves `Bootstrap.unity`, `MainMenu.unity`, `Kingdom.unity`
+and `Battle.unity` under this folder, wires every manager component's
+serialized references (the same way you'd drag them in the Inspector), and
+registers all four in Build Settings in that order. Individual scenes can
+also be (re)created one at a time from the same `Kingdom of God → Setup`
+menu. Re-running a command overwrites that scene file from scratch — treat
+these as regenerable scaffolding, not a place to build permanent
+hand-authored scene content; once you start adding real art/levels to a
+scene, stop regenerating it.
 
-## `MainMenu`
-Entry point: New Game / Continue (via `SaveManager.HasLocalSave()`) /
-Mode Libre (once unlocked) / Options.
+The generator script lives at
+[`Assets/_Project/Editor/ProjectSceneSetup.cs`](../Editor/ProjectSceneSetup.cs).
 
-Once these exist in the Editor, commit the generated `.unity` files (Unity
-will also generate matching `.meta` files for every asset in this project —
-those should be committed too, since Unity relies on them to keep GUID
-references stable).
+## What each scene contains
+
+### `Bootstrap`
+Persistent scene, loaded first. One `GameManager` GameObject carrying every
+manager component (`AgeManager`, `ResourceManager`, `HexGrid`,
+`BuildingManager`, `PopulationSystem`, `AllianceSystem`, `MiracleManager`,
+`VerseManager`, `CollectionManager`, `MissionManager`, `SaveManager`,
+`EntitlementManager`), all cross-wired, plus `BootstrapLoader` which loads
+`MainMenu` on `Start()`. `GameManager.Awake()` calls `DontDestroyOnLoad`, so
+this object (and its state) survives every later scene load.
+`AgeManager`'s content gate is wired to `EntitlementManager`, so free-tier
+players stop unlocking ages at the GDD's free limit (first 2-3 ages).
+Starting resources (Blé 50, Eau 50, Bois 30, Or 20, Foi 10, Sagesse 5,
+Justice 10) are pre-filled so the HUD shows real numbers immediately.
+
+### `MainMenu`
+Camera, EventSystem, Canvas with a title and two buttons (Nouvelle Partie /
+Continuer) wired to `MainMenuController`, which loads `Kingdom` and
+enables/disables Continuer based on `SaveManager.HasLocalSave()`.
+
+### `Kingdom` (territory/management view)
+Camera, EventSystem, Canvas with `HUDController` and a live resource bar
+(one label per resource). Its `ResourceBarUI`/`PrayerMenuUI`/
+`VerseJournalUI` leave their manager references unassigned in the
+scene — since Bootstrap and Kingdom are separate scenes, those references
+resolve at runtime via `GameManager.Instance` instead (Unity can't
+serialize cross-scene Inspector references). Still missing: the actual
+hex-grid visual (tilemap or mesh) — `HexGrid`'s data lives on the
+persistent Bootstrap object, this scene doesn't need its own.
+
+### `Battle`
+Camera, EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for
+tactical combat (radius 5, vs. the kingdom's default 10), and a
+`BattleManager`. `VictoryCondition` is left at its default and needs to be
+set per mission; `miracleManager` resolves via `GameManager.Instance` like
+the Kingdom scene's UI. No unit prefabs yet — see
+`Assets/_Project/ScriptableObjects/Units` for the 6 base `UnitData` assets
+to spawn from once prefabs exist.
+
+## After generating
+
+Unity will create `.meta` files for the new `.unity` scene files (and for
+any other asset in the project still missing one) the first time it opens
+this project — commit those too, since Unity relies on them to keep GUID
+references stable.

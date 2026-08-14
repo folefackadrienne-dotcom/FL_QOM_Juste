@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KingdomOfGod.Core;
 using KingdomOfGod.Miracles;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,17 @@ namespace KingdomOfGod.UI
         [SerializeField] private Button confirmButton;
 
         private MiracleData selectedMiracle;
+
+        private void Awake()
+        {
+            // miracleManager lives on the persistent Bootstrap GameManager, in a different
+            // scene from this menu — Inspector references can't cross scenes, so fall back to
+            // the running singleton when this field was left unassigned.
+            if (miracleManager == null && GameManager.Instance != null)
+            {
+                miracleManager = GameManager.Instance.Miracles;
+            }
+        }
 
         public void Open() => panelRoot.SetActive(true);
         public void Close() => panelRoot.SetActive(false);

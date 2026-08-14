@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KingdomOfGod.Core;
 using KingdomOfGod.Resources;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,14 @@ namespace KingdomOfGod.UI
 
         private void OnEnable()
         {
+            // resourceManager lives on the persistent Bootstrap GameManager, in a different
+            // scene from this HUD — Inspector references can't cross scenes, so fall back to
+            // the running singleton when this field was left unassigned.
+            if (resourceManager == null && GameManager.Instance != null)
+            {
+                resourceManager = GameManager.Instance.Resources;
+            }
+
             resourceManager.ResourceChanged += OnResourceChanged;
             foreach (var label in labels)
             {

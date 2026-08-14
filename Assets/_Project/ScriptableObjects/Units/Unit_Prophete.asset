@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71395abac9eb4e4d906facf425cbd3ca, type: 3}
+  m_Name: Unit_Prophete
+  m_EditorClassIdentifier:
+  displayName: Prophète
+  unitClass: 5
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
+  maxHealth: 8
+  attack: 3
+  defense: 2
+  movement: 2
+  attackRange: 2
+  canHeal: 0
+  healAmount: 0
+  isUnlockable: 1
+  unlockCondition: >-
+    Rare : débloqué par mission (ex. Débora, Élie) ou par un seuil de Foi
+    élevé, avec des capacités spéciales propres à chaque prophète.
