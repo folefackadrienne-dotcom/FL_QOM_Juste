@@ -75,7 +75,10 @@ Camera, EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for
 tactical combat (radius 5, vs. the kingdom's default 10), and a
 `BattleManager`. `VictoryCondition` is left at its default and needs to be
 set per mission; `miracleManager` resolves via `GameManager.Instance` like
-the Kingdom scene's UI. No unit prefabs yet — see
+the Kingdom scene's UI. `BattleManager.SpawnUnit`/`TryMove`/`OnUnitDied`
+instantiate, reposition and destroy `UnitData.prefab` (parented under
+`BattleGrid`) the same way `BuildingManager` does for buildings — but no
+unit has a prefab assigned yet, so it's still a no-op in practice. See
 `Assets/_Project/ScriptableObjects/Units` for the 6 base `UnitData` assets
 and the 5 `Unit_Boss*` stat blocks (one per major antagonist, `antagonist`
 already linked to their `AntagonistData`) to spawn from once prefabs exist.

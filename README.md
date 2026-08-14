@@ -56,7 +56,10 @@ Assets/_Project/
                     LoyaltyLow/LoyaltyCritical)
     Battle/         Batailles tactiques tour par tour, unités, boss
                     (AntagonistData, lié à sa fiche UnitData via le
-                    champ optionnel UnitData.antagonist)
+                    champ optionnel UnitData.antagonist) —
+                    BattleManager.SpawnUnit/TryMove/OnUnitDied
+                    instancient, déplacent et détruisent
+                    UnitData.prefab dès qu'un prefab existe
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût

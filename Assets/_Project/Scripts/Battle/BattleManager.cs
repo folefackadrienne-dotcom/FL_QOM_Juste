@@ -22,6 +22,7 @@ namespace KingdomOfGod.Battle
         [SerializeField] private MiracleManager miracleManager;
 
         private readonly List<UnitInstance> units = new List<UnitInstance>();
+        private readonly Dictionary<UnitInstance, GameObject> unitVisuals = new Dictionary<UnitInstance, GameObject>();
         private TurnController turnController;
         private bool miracleUsedThisBattle;
 
@@ -48,6 +49,7 @@ namespace KingdomOfGod.Battle
             unit.Died += OnUnitDied;
             units.Add(unit);
             battleGrid.PlaceUnit(unit, position);
+            SpawnVisual(unit);
             GameManager.Instance?.Audio.PlaySfx(data.antagonist != null
                 ? "Antagonistes - Entrée en Scène du Boss"
                 : "Bataille - Cri de Guerre");
@@ -81,6 +83,7 @@ namespace KingdomOfGod.Battle
             if (unit.Position.DistanceTo(destination) > unit.Data.movement) return false;
 
             battleGrid.PlaceUnit(unit, destination);
+            MoveVisual(unit);
             return true;
         }
 
@@ -107,10 +110,37 @@ namespace KingdomOfGod.Battle
         private void OnUnitDied(UnitInstance unit)
         {
             battleGrid.RemoveUnit(unit);
+            DespawnVisual(unit);
             GameManager.Instance?.Audio.PlaySfx(unit.Data.antagonist != null
                 ? "Antagonistes - Boss Vaincu"
                 : "Bataille - Mort d'une Unité");
             CheckVictory();
+        }
+
+        /// <summary>Instantiates UnitData.prefab at the cell's world position — a deliberate no-op until a prefab is assigned (no unit art exists yet).</summary>
+        private void SpawnVisual(UnitInstance unit)
+        {
+            if (unit.Data.prefab == null) return;
+
+            var worldPosition = unit.Position.ToWorldPosition(battleGrid.Grid.HexSize);
+            unitVisuals[unit] = Instantiate(unit.Data.prefab, worldPosition, Quaternion.identity, battleGrid.transform);
+        }
+
+        private void MoveVisual(UnitInstance unit)
+        {
+            if (unitVisuals.TryGetValue(unit, out var visual))
+            {
+                visual.transform.position = unit.Position.ToWorldPosition(battleGrid.Grid.HexSize);
+            }
+        }
+
+        private void DespawnVisual(UnitInstance unit)
+        {
+            if (unitVisuals.TryGetValue(unit, out var visual))
+            {
+                Destroy(visual);
+                unitVisuals.Remove(unit);
+            }
         }
 
         private void CheckVictory()
