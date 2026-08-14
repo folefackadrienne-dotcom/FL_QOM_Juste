@@ -8,14 +8,15 @@ namespace KingdomOfGod.UI
 {
     /// <summary>
     /// "Menu de prière" (GDD 5. Système de Miracles): lists castable miracles, shows the
-    /// associated verse, and confirms the cast. Population of the list (buttons per miracle,
-    /// icons, verse text panel) is left to the concrete UI prefab.
+    /// associated verse, and confirms the cast.
     /// </summary>
     public class PrayerMenuUI : MonoBehaviour
     {
         [SerializeField] private MiracleManager miracleManager;
         [SerializeField] private GameObject panelRoot;
         [SerializeField] private Button confirmButton;
+        [SerializeField] private Transform listContainer;
+        [SerializeField] private MiracleListItemUI listItemPrefab;
 
         private MiracleData selectedMiracle;
 
@@ -33,7 +34,24 @@ namespace KingdomOfGod.UI
         public void Open()
         {
             panelRoot.SetActive(true);
+            RefreshList();
             GameManager.Instance?.Audio.PlaySfx("Interface - Ouverture de Menu");
+        }
+
+        /// <summary>Repopulates the list with one MiracleListItemUI per castable miracle — left a no-op until listItemPrefab exists (art not yet produced).</summary>
+        private void RefreshList()
+        {
+            if (listContainer == null || listItemPrefab == null) return;
+
+            for (int i = listContainer.childCount - 1; i >= 0; i--)
+            {
+                Destroy(listContainer.GetChild(i).gameObject);
+            }
+
+            foreach (var miracle in GetCastableMiracles())
+            {
+                Instantiate(listItemPrefab, listContainer).Bind(miracle, this);
+            }
         }
 
         public void Close()

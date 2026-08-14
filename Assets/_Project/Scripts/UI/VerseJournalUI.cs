@@ -10,6 +10,8 @@ namespace KingdomOfGod.UI
     {
         [SerializeField] private VerseManager verseManager;
         [SerializeField] private GameObject panelRoot;
+        [SerializeField] private Transform listContainer;
+        [SerializeField] private VerseListItemUI listItemPrefab;
 
         private void Awake()
         {
@@ -25,7 +27,24 @@ namespace KingdomOfGod.UI
         public void Open()
         {
             panelRoot.SetActive(true);
+            RefreshList();
             GameManager.Instance?.Audio.PlaySfx("Interface - Ouverture de Menu");
+        }
+
+        /// <summary>Repopulates the list with one VerseListItemUI per memorized verse — left a no-op until listItemPrefab exists (art not yet produced).</summary>
+        private void RefreshList()
+        {
+            if (listContainer == null || listItemPrefab == null) return;
+
+            for (int i = listContainer.childCount - 1; i >= 0; i--)
+            {
+                Destroy(listContainer.GetChild(i).gameObject);
+            }
+
+            foreach (var verse in GetMemorizedVerses())
+            {
+                Instantiate(listItemPrefab, listContainer).Bind(verse, this);
+            }
         }
 
         public void Close()

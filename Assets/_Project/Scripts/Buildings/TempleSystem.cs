@@ -13,6 +13,7 @@ namespace KingdomOfGod.Buildings
         public float faithCapBonus;
         public List<ResourceAmount> upgradeCost = new List<ResourceAmount>();
         public List<MiracleData> miraclesUnlocked = new List<MiracleData>();
+        public GameObject prefab;
     }
 
     /// <summary>The unique Temple building: levels 1-5, each raising the Faith cap and unlocking miracles.</summary>

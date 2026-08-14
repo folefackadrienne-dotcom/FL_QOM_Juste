@@ -50,9 +50,14 @@ Camera, EventSystem, Canvas with `HUDController` and a live resource bar
 `VerseJournalUI` leave their manager references unassigned in the
 scene — since Bootstrap and Kingdom are separate scenes, those references
 resolve at runtime via `GameManager.Instance` instead (Unity can't
-serialize cross-scene Inspector references). Still missing: the actual
-hex-grid visual (tilemap or mesh) — `HexGrid`'s data lives on the
-persistent Bootstrap object, this scene doesn't need its own.
+serialize cross-scene Inspector references). `PrayerMenuUI`/
+`VerseJournalUI` each get an empty `ListContainer` child under their panel,
+wired to `listContainer` — their `RefreshList()` populates it with one
+`MiracleListItemUI`/`VerseListItemUI` per entry, but stays a no-op until a
+`listItemPrefab` is assigned (no such prefab exists yet, see
+`Assets/_Project/Prefabs/`). Still missing: the actual hex-grid visual
+(tilemap or mesh) — `HexGrid`'s data lives on the persistent Bootstrap
+object, this scene doesn't need its own.
 
 ### `Battle`
 Camera, EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for

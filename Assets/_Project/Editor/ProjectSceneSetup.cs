@@ -209,14 +209,20 @@ namespace KingdomOfGod.EditorTools
             prayerPanelGO.transform.SetParent(hudGO.transform, false);
             var prayerMenu = prayerPanelGO.AddComponent<PrayerMenuUI>();
             var prayerConfirm = CreateButton(prayerPanelGO.transform, "ConfirmButton", "Confirmer", Vector2.zero);
+            var prayerListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            prayerListContainer.transform.SetParent(prayerPanelGO.transform, false);
             SetRef(prayerMenu, "panelRoot", prayerPanelGO);
             SetRef(prayerMenu, "confirmButton", prayerConfirm);
+            SetRef(prayerMenu, "listContainer", prayerListContainer.transform);
             prayerPanelGO.SetActive(false);
 
             var versePanelGO = new GameObject("VerseJournalPanel", typeof(RectTransform));
             versePanelGO.transform.SetParent(hudGO.transform, false);
             var verseJournal = versePanelGO.AddComponent<VerseJournalUI>();
+            var verseListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            verseListContainer.transform.SetParent(versePanelGO.transform, false);
             SetRef(verseJournal, "panelRoot", versePanelGO);
+            SetRef(verseJournal, "listContainer", verseListContainer.transform);
             versePanelGO.SetActive(false);
 
             var prophecyPanelGO = new GameObject("ProphecyJournalPanel", typeof(RectTransform));

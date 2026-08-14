@@ -47,7 +47,8 @@ Assets/_Project/
     Core/          GameManager, cycle des 7 Âges
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules)
-    Buildings/      Bâtiments, placement, Temple (niveaux 1-5,
+    Buildings/      Bâtiments, placement, Temple (niveaux 1-5, un
+                    TempleLevelData.prefab par niveau,
                     TempleSystem.LevelUpgraded)
     Population/     Population & Loyauté (PopulationChanged,
                     LoyaltyLow/LoyaltyCritical)
@@ -94,7 +95,10 @@ Assets/_Project/
                     Personnages et lecture des versets (VoiceLineData,
                     narrationClip* sur VerseData) avec sélection de
                     langue FR/EN/HE
-    UI/             HUD, menu de prière, journal des versets
+    UI/             HUD, menu de prière, journal des versets —
+                    RefreshList() instancie un MiracleListItemUI/
+                    VerseListItemUI par entrée dès qu'un listItemPrefab
+                    est assigné
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
@@ -150,8 +154,11 @@ dans l'Éditeur, sans toucher au code.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom`.
 4. Habiller visuellement le menu de prière et le journal des versets
-   (`PrayerMenuUI`/`VerseJournalUI` ont leur logique et leurs panneaux
-   générés, mais pas encore de liste d'items/boutons par miracle ou verset).
+   (`PrayerMenuUI`/`VerseJournalUI` ont désormais leur boucle
+   d'instanciation de liste — `RefreshList()` peuple un
+   `MiracleListItemUI`/`VerseListItemUI` par miracle castable/verset
+   mémorisé — mais elle reste un no-op tant qu'aucun prefab d'item n'est
+   assigné à `listItemPrefab`, faute d'art produit).
    Le rituel complet de prière (`MiracleManager.BeginPrayer` /
    `AdvancePrayerTurn` / `AccelerateWithFaith` / `InterruptPrayer`) est déjà
    branché côté `Battle` via `TurnController` ; `PrayerMenuUI` utilise pour
