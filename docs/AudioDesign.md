@@ -203,6 +203,18 @@ deux ont été corrigés en même temps que l'ajout des SFX, sur le même
 modèle que les autres managers (`GameManager.Temple`, câblage dans
 `CreateBootstrapScene`).
 
+**Missions & Versets :**
+
+Extension des sections « Missions » et « Verses (memorization mini-
+game) » du GDD. 4 `SfxCueData` de catégorie `Narrative` : Mission
+Commencée/Accomplie (`MissionManager.MissionStarted`/`MissionCompleted`)
+et Verset Débloqué/Mémorisé (`VerseManager.VerseUnlocked`/
+`VerseMemorized` — ce dernier au moment où le bonus permanent de
+mémorisation est acquis). Contrairement aux rounds précédents,
+`MissionManager` et `VerseManager` étaient déjà entièrement câblés
+(`GameManager`, `ProjectSceneSetup`) et leurs événements existaient déjà
+— il ne manquait que l'abonnement côté `AudioManager`.
+
 ---
 
 ## 5. Voix et narration
@@ -312,8 +324,8 @@ projet :
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
   musique/ambiance) : les 4 signaux d'Interface, les 3 de Construction,
   les 3 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance, les 5 de
-  Progression et les 4 d'Economy sont créés dans
-  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (30 au total).
+  Progression, les 4 d'Economy et les 4 de Narrative sont créés dans
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (34 au total).
   `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
@@ -330,9 +342,11 @@ projet :
   entrée en Crise/Faveur Élevée via `StandingChanged` ; Repentance via
   l'événement dédié `Repented`), de `TechTree.TechUnlocked` (un chime
   par arbre) / `LeaderManager` (Progression —
-  `LeaderUnlocked`/`LeaderActivated`), et de `PopulationSystem`
-  (Economy — `PopulationChanged` hausse/baisse,
-  `LoyaltyLow`/`LoyaltyCritical`).
+  `LeaderUnlocked`/`LeaderActivated`), de `PopulationSystem` (Economy —
+  `PopulationChanged` hausse/baisse, `LoyaltyLow`/`LoyaltyCritical`), et
+  de `MissionManager`/`VerseManager` (Narrative —
+  `MissionStarted`/`MissionCompleted`,
+  `VerseUnlocked`/`VerseMemorized`).
 
 - **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
   et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du

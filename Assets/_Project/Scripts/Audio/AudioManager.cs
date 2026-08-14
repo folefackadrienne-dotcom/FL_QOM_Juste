@@ -4,6 +4,7 @@ using System.Linq;
 using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.Missions;
 using KingdomOfGod.Population;
 using KingdomOfGod.Progression;
 using KingdomOfGod.Resources;
@@ -31,6 +32,8 @@ namespace KingdomOfGod.Audio
         [SerializeField] private LeaderManager leaderManager;
         [SerializeField] private PopulationSystem populationSystem;
         [SerializeField] private TempleSystem templeSystem;
+        [SerializeField] private MissionManager missionManager;
+        [SerializeField] private VerseManager verseManager;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
@@ -125,6 +128,18 @@ namespace KingdomOfGod.Audio
             }
 
             if (templeSystem != null) templeSystem.LevelUpgraded += OnTempleLevelUpgraded;
+
+            if (missionManager != null)
+            {
+                missionManager.MissionStarted += OnMissionStarted;
+                missionManager.MissionCompleted += OnMissionCompleted;
+            }
+
+            if (verseManager != null)
+            {
+                verseManager.VerseUnlocked += OnVerseUnlocked;
+                verseManager.VerseMemorized += OnVerseMemorized;
+            }
         }
 
         private void OnDisable()
@@ -164,6 +179,18 @@ namespace KingdomOfGod.Audio
             }
 
             if (templeSystem != null) templeSystem.LevelUpgraded -= OnTempleLevelUpgraded;
+
+            if (missionManager != null)
+            {
+                missionManager.MissionStarted -= OnMissionStarted;
+                missionManager.MissionCompleted -= OnMissionCompleted;
+            }
+
+            if (verseManager != null)
+            {
+                verseManager.VerseUnlocked -= OnVerseUnlocked;
+                verseManager.VerseMemorized -= OnVerseMemorized;
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -288,6 +315,27 @@ namespace KingdomOfGod.Audio
         private void OnTempleLevelUpgraded(int level)
         {
             PlaySfx("Bâtiments - Temple Amélioré");
+        }
+
+        private void OnMissionStarted(MissionData mission)
+        {
+            PlaySfx("Missions - Mission Commencée");
+        }
+
+        private void OnMissionCompleted(MissionData mission)
+        {
+            PlaySfx("Missions - Mission Accomplie");
+        }
+
+        private void OnVerseUnlocked(VerseData verse)
+        {
+            PlaySfx("Versets - Verset Débloqué");
+        }
+
+        /// <summary>"Récompense : bonus permanent + accès Bibliothèque de la Torah" — the mini-game's completion moment.</summary>
+        private void OnVerseMemorized(VerseData verse)
+        {
+            PlaySfx("Versets - Verset Mémorisé");
         }
 
         /// <summary>Lets a future dialogue/cutscene system ask for the ambience to duck alongside miracles without the two stepping on each other's un-duck.</summary>
