@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_David
+  m_EditorClassIdentifier:
+  displayName: David – L'Homme selon le cœur de Dieu
+  age: 4
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    David est le personnage le plus humain et le plus complet du jeu.
+    Il passe de berger anonyme à héros national, puis à roi puissant,
+    avant de connaître une chute morale terrible et une longue
+    reconstruction. Le joueur vit avec lui la gloire, la passion, le
+    péché et la repentance.
+  appearance: >-
+    Jeune berger : beau, agile, cheveux bouclés sombres, regard
+    lumineux et presque innocent, simple tunique de berger, fronde à la
+    ceinture. Roi guerrier : barbe soignée, présence magnétique, armure
+    élégante mais pas excessive — on sent la confiance et le charisme.
+    Après le péché avec Bath-Shéba : son visage se ferme, des cernes
+    apparaissent, le regard devient plus lourd, il vieillit visiblement
+    plus vite. Vieillesse : roi fatigué mais apaisé, qui a retrouvé une
+    certaine paix.
+  personality: >-
+    Passionné dans tout ce qu'il fait (Dieu, l'amitié, l'amour, la
+    guerre, la musique). Capable d'une loyauté extraordinaire (Jonathan)
+    et d'une faiblesse tout aussi grande. Très sensible à la musique et
+    à la poésie (ses Psaumes sont intégrés dans le jeu). Sa plus grande
+    force est sa capacité à se repentir vraiment, contrairement à Saül.
+  gameplayRole: >-
+    Personnage le plus polyvalent du jeu. Sa harpe peut être utilisée
+    en dehors des combats pour calmer les murmures du peuple ou apaiser
+    Saül. En combat, il est excellent en duel et pour remonter le moral
+    des troupes.
+  signatureAbilityName: Cœur selon Dieu
+  signatureAbilityDescription: >-
+    Après un échec moral, David récupère de la Foi beaucoup plus vite
+    que les autres leaders si le joueur choisit la repentance sincère.
+  uniqueMechanicName:
+  uniqueMechanicDescription:
+  keyRelationships:
+  - 'Jonathan : amitié profonde, l''une des plus belles du jeu.'
+  - 'Saül : admiration puis tragédie.'
+  - 'Bath-Shéba : désir, péché, puis reconstruction d''une relation.'
+  - 'Absalom : amour paternel déchiré.'
+  - 'Nathan : le prophète qui ose le confronter.'
+  unlockCondition: >-
+    Débloqué à la mission « David et Goliath » (Âge 5).

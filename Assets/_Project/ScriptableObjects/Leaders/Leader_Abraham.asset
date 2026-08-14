@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Abraham
+  m_EditorClassIdentifier:
+  displayName: Abraham – Le Père de la foi
+  age: 0
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Abraham est le point de départ de toute l'histoire. Il incarne
+    l'appel, la promesse, l'attente, le doute et l'obéissance radicale.
+    Son parcours s'étend sur plusieurs décennies et le joueur ressent le
+    poids du temps qui passe.
+  appearance: >-
+    Début (Our des Chaldéens) : homme d'une cinquantaine d'années,
+    encore vigoureux, barbe sombre, regard inquisiteur, vêtements de
+    notable mésopotamien. Pendant les voyages : le visage se creuse, la
+    barbe blanchit progressivement ; il acquiert une dignité de
+    patriarche, et son bâton de voyageur devient un symbole. À la fin de
+    sa vie : très âgé, presque centenaire, dos légèrement voûté, mais un
+    calme extraordinaire dans les yeux — il dégage une paix profonde.
+  personality: >-
+    Homme de grande foi, mais pas un « super-héros » spirituel : il
+    doute, a peur, ment parfois (Sarah présentée comme sa sœur). Patient
+    dans l'attente d'Isaac, puis capable d'une obéissance extrême sur le
+    mont Morija. Cœur hospitalier (visite des trois hommes) et sens de
+    la justice (intercession pour Sodome). Sa relation avec Dieu est
+    faite d'écoute et de confiance progressive.
+  gameplayRole: >-
+    Faible militairement, très fort en Foi et en diplomatie.
+  signatureAbilityName: Intercession
+  signatureAbilityDescription: >-
+    Peut plaider auprès de Dieu pour éviter ou atténuer un jugement,
+    comme pour Sodome.
+  uniqueMechanicName: La Promesse
+  uniqueMechanicDescription: >-
+    Plus Abraham reste fidèle dans l'attente, plus les bonus futurs pour
+    ses descendants sont importants. Ses choix moraux ont des
+    conséquences qui se répercutent jusqu'aux âges suivants (héritage de
+    bénédiction ou de complications).
+  keyRelationships:
+  - 'Sarah : amour profond, mais relation marquée par l''attente douloureuse
+    de l''enfant.'
+  - 'Lot : neveu qu''il sauve à plusieurs reprises.'
+  - 'Isaac : le fils de la promesse, objet du plus grand test.'
+  - 'Agar et Ismaël : relation complexe et douloureuse.'
+  unlockCondition: >-
+    Leader de départ de la campagne, disponible dès l'Âge 1 (Les
+    Patriarches).

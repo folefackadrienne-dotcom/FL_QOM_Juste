@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Salomon
+  m_EditorClassIdentifier:
+  displayName: Salomon – Le Roi de la sagesse et de la chute
+  age: 4
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Salomon représente l'apogée du royaume… et le début de son déclin.
+    Le joueur vit avec lui la gloire, la richesse, la sagesse
+    extraordinaire, puis la lente dérive vers l'idolâtrie et la
+    division du royaume.
+  appearance: >-
+    Jeune roi : beau, élégant, regard intelligent et vif, vêtements
+    luxueux mais encore sobres. Au sommet de sa gloire : apparence
+    extrêmement riche (or, pourpre, bijoux), il dégage une aura de
+    majesté et de sagesse ; le Trône de Salomon est impressionnant. Vers
+    la fin : le visage se durcit, le regard devient plus las et
+    distant, les signes de l'excès apparaissent (embonpoint léger,
+    expression blasée).
+  personality: >-
+    Extraordinairement intelligent et curieux. Diplomate hors pair,
+    grand bâtisseur et administrateur. Capable d'une vraie humilité au
+    début (« Je ne suis qu'un jeune homme »). Progressivement séduit par
+    les femmes étrangères, la richesse et le pouvoir — sa chute est
+    lente et presque imperceptible au début. Il reste capable de
+    moments de lucidité, notamment dans l'écriture de l'Ecclésiaste.
+  gameplayRole: >-
+    Le meilleur leader en Sagesse et en gestion économique/diplomatique.
+    La construction du Temple est son grand projet, et le pic
+    émotionnel positif de son règne. Sa fin de règne prépare directement
+    la division du royaume (Âge 6).
+  signatureAbilityName: Cœur intelligent
+  signatureAbilityDescription: >-
+    Débloque des options de dialogue et de technologies uniques.
+  uniqueMechanicName: Cœur divisé
+  uniqueMechanicDescription: >-
+    Plus Salomon multiplie les alliances matrimoniales et les
+    richesses, plus sa jauge d'Alliance devient fragile.
+  keyRelationships:
+  - 'David : père qu''il admire et dont il reçoit la charge.'
+  - 'La reine de Séba : rencontre intellectuelle et diplomatique marquante.'
+  - 'Ses nombreuses femmes étrangères : source progressive d''idolâtrie.'
+  - 'Jéroboam : le futur adversaire que Salomon contribue à créer.'
+  unlockCondition: >-
+    Débloqué à la mission « Salomon et le Temple » (Âge 5).

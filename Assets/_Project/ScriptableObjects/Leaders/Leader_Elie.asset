@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Elie
+  m_EditorClassIdentifier:
+  displayName: Élie – Le Prophète de feu
+  age: 5
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Élie est le prophète de la crise. Il apparaît dans un royaume
+    presque entièrement gagné par l'idolâtrie. Son parcours va de la
+    confrontation spectaculaire (Carmel) à l'épuisement total (sous le
+    genêt), puis à la restauration douce de Dieu.
+  appearance: >-
+    Grand, maigre, presque ascétique. Manteau de poil rude, ceinture de
+    cuir. Barbe longue et sauvage, cheveux touffus. Visage taillé à la
+    serpe, yeux brûlants. Il dégage quelque chose d'intimidant et de
+    hors du temps.
+  personality: >-
+    Radical et intransigeant avec le péché. Capable d'une solitude
+    extrême. Sous sa dureté se cache une grande sensibilité : il tombe
+    dans un profond découragement après sa plus grande victoire. Il ne
+    cherche pas la popularité, seulement la fidélité.
+  gameplayRole: >-
+    Le plus puissant prophète du jeu en termes de miracles offensifs.
+  signatureAbilityName: Jusqu'à quand clocherez-vous des deux côtés ?
+  signatureAbilityDescription: >-
+    Force une confrontation morale avec le peuple ou les leaders
+    idolâtres.
+  uniqueMechanicName: Solitude
+  uniqueMechanicDescription: >-
+    Plus il est isolé, plus ses miracles sont puissants, mais plus il
+    risque l'épuisement spirituel. Après le Carmel, une mission
+    spéciale explore sa dépression et la façon dont Dieu le restaure
+    (vent, tremblement, feu… puis le murmure doux et léger).
+  keyRelationships:
+  - 'Élisée : disciple qui reçoit le manteau et le double d''esprit.'
+  - 'Jézabel : son ennemie jurée, presque son opposé parfait.'
+  - 'Les 7000 qui n''ont pas plié le genou : rappel que Dieu préserve
+    toujours un reste.'
+  unlockCondition: >-
+    Débloqué à la mission « Élie au Carmel » (Âge 6).

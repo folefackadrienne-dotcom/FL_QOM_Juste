@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Nehemie
+  m_EditorClassIdentifier:
+  displayName: Néhémie – Le Bâtisseur
+  age: 6
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Néhémie arrive à la fin de l'histoire, quand tout semble perdu.
+    Jérusalem est en ruines, le peuple est découragé et méprisé. Son
+    rôle est de restaurer non seulement les murs, mais aussi la dignité
+    et l'identité du peuple.
+  appearance: >-
+    Homme d'âge moyen (environ 40-45 ans), visage déterminé et
+    énergique, regard droit et résolu. Il porte d'abord les vêtements
+    de fonctionnaire de la cour perse, puis des habits plus simples et
+    pratiques de chantier. On le voit souvent avec une truelle d'une
+    main et une épée de l'autre.
+  personality: >-
+    Homme d'action et d'organisation. Très pieux, mais de manière
+    pragmatique : il prie et agit en même temps. Courageux face aux
+    menaces et aux moqueries. Capable de colère sainte (quand il chasse
+    les marchands ou confronte les nobles). Fort sens de la justice
+    sociale (il force les riches à relâcher les dettes des pauvres).
+    Leadership naturel : il sait motiver un peuple découragé.
+  gameplayRole: >-
+    Excellent en construction et en défense sous pression. Très bon
+    pour remonter rapidement le moral et la Loyauté d'une population
+    brisée.
+  signatureAbilityName: Une main à la truelle, une main à l'épée
+  signatureAbilityDescription: >-
+    Permet de construire tout en repoussant les attaques.
+  uniqueMechanicName: Opposition
+  uniqueMechanicDescription: >-
+    Plus les ennemis (Sanballat, Tobija…) se déchaînent, plus Néhémie
+    gagne en détermination et en bonus. Son grand projet est la
+    reconstruction de la muraille en un temps record, suivie de la
+    lecture publique de la Loi avec Esdras.
+  keyRelationships:
+  - 'Esdras : collaboration complémentaire — Esdras pour la Loi et
+    l''enseignement, Néhémie pour l''action et la protection.'
+  - 'Sanballat et Tobija : antagonistes persistants et manipulateurs.'
+  - 'Le peuple de Jérusalem : d''abord découragé, puis galvanisé par
+    son exemple.'
+  - 'Le roi Artaxerxès : soutien inattendu de la puissance païenne.'
+  unlockCondition: >-
+    Débloqué au début de l'Âge 7 (L'Exil et le Retour).

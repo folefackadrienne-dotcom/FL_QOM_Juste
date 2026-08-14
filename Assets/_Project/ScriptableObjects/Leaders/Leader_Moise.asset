@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Moise
+  m_EditorClassIdentifier:
+  displayName: Moïse – Le Libérateur
+  age: 1
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Moïse commence comme un homme brisé et hésitant (meurtrier en fuite,
+    berger dans le désert) et devient progressivement le plus grand
+    prophète et chef que le peuple ait connu. Son parcours est celui
+    d'un homme qui porte un fardeau trop lourd pour un humain.
+  appearance: >-
+    Début (buisson ardent) : visage marqué par le soleil et la
+    solitude, barbe encore sombre mêlée de gris, regard fuyant,
+    vêtements de berger usés. Pendant l'Exode : la barbe blanchit
+    rapidement, le visage se creuse sous le poids de la responsabilité,
+    le bâton devient presque une extension de son bras. Fin de sa vie :
+    très âgé, dos légèrement voûté, mais un feu intact dans les yeux —
+    il dégage une autorité tranquille et presque intimidante.
+  personality: >-
+    Humble par nature, mais capable de colères terribles (rocher
+    frappé, tables de la Loi brisées). Il doute souvent de lui-même
+    (« Je ne suis pas un homme éloquent »). Il aime profondément le
+    peuple, même quand celui-ci le rejette. Sa relation avec Dieu est
+    intime, presque amicale, mais jamais familière.
+  gameplayRole: >-
+    Moins bon en micro-gestion militaire pure, mais exceptionnel pour
+    les grands tournants narratifs et les miracles.
+  signatureAbilityName: Face à face
+  signatureAbilityDescription: >-
+    Une fois par mission, Moïse peut entrer dans une rencontre directe
+    avec Dieu qui restaure massivement la Foi et peut changer le cours
+    d'une crise.
+  uniqueMechanicName: Fardeau
+  uniqueMechanicDescription: >-
+    Plus la jauge de Fardeau est élevée, plus ses miracles sont
+    puissants… mais plus il risque de craquer moralement.
+  keyRelationships:
+  - 'Aaron : frère et porte-parole, plus diplomate, parfois trop conciliant.'
+  - 'Miriam : sœur, soutien puis moment de tension (lépreuse).'
+  - 'Josué : disciple et successeur, celui en qui il place son espoir.'
+  unlockCondition: >-
+    Débloqué au début de l'Âge 2 (L'Exode et le Désert).
