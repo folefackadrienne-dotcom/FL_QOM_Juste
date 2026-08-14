@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Gedeon
+  m_EditorClassIdentifier:
+  displayName: Gédéon – Le vaillant héros malgré lui
+  age: 3
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Trouvé en train de battre son blé en cachette dans un pressoir, de
+    peur des Madianites, Gédéon est le plus improbable des juges : le
+    plus petit clan de Manassé, le dernier de la maison de son père. Son
+    parcours va de la peur au doute méthodique (la toison mouillée, puis
+    sèche), jusqu'à une victoire remportée avec seulement 300 hommes pour
+    que la gloire ne revienne qu'à l'Éternel. Sa fin est plus ambiguë :
+    l'éphod d'or qu'il fabrique après la victoire devient un piège pour
+    tout Israël.
+  appearance: >-
+    Au pressoir, dans l'ombre : posture recroquevillée, gestes furtifs
+    d'un homme habitué à se cacher. Face à l'ange de l'Éternel : incrédule,
+    réclamant des signes avant de croire. Sur la colline de Harod, face à
+    ses 300 hommes armés de trompettes, de cruches et de torches : chef
+    improbable transformé par l'obéissance, la voix qui donne le signal
+    dans la nuit.
+  personality: >-
+    Prudent jusqu'au doute, il a besoin de preuves répétées avant d'agir
+    (les toisons, l'incursion nocturne dans le camp ennemi). Une fois
+    convaincu, il devient d'une discipline stratégique rigoureuse — réduire
+    son armée plutôt que la renforcer, pour que la victoire ne puisse être
+    attribuée qu'à Dieu. Sa faiblesse ressurgit après le triomphe : le
+    besoin d'un symbole visible de sa victoire (l'éphod) qui finit par
+    corrompre ce qu'il avait accompli.
+  gameplayRole: >-
+    Spécialiste des tactiques asymétriques et des victoires contre des
+    forces largement supérieures ; ses bonus grandissent à mesure que son
+    armée est réduite en nombre.
+  signatureAbilityName: Trompettes et cruches brisées
+  signatureAbilityDescription: >-
+    Déclenche une attaque de nuit surprise : panique et désorganise une
+    armée ennemie bien plus nombreuse, infligeant des dégâts de zone et
+    un malus de moral massif.
+  uniqueMechanicName: Le Signe de la Toison
+  uniqueMechanicDescription: >-
+    Avant une bataille clé, peut demander un signe divin pour révéler les
+    forces et faiblesses cachées de l'ennemi ; utiliser ce pouvoir avec
+    excès use cependant la confiance du peuple en son leadership.
+  keyRelationships:
+  - 'L''ange de l''Éternel : celui qui l''appelle « vaillant héros » avant
+    même qu''il ne le devienne.'
+  - 'Les 300 : l''élite choisie par leur manière de boire à la rivière,
+    dont dépend toute la victoire.'
+  - 'Éphod d''Ophra : le symbole de sa victoire qui se retourne contre
+    Israël après sa mort.'
+  - 'Abimélek : son fils, dont l''ambition sanglante ternira l''héritage
+    de son père.'
+  unlockCondition: >-
+    Débloqué à la mission « Gédéon et les 300 » (Âge 3).

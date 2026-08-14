@@ -68,7 +68,7 @@ Assets/_Project/
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Antagonists, Techs, Ages,
                       Monetization) — les 7 Âges sont remplis (Buildings,
-                      Verses, Artifacts, Missions, Miracles), plus les 6
+                      Verses, Artifacts, Missions, Miracles), plus les 10
                       leaders, 5 antagonistes majeurs et les 93 nœuds des
                       3 arbres technologiques (Techs/)
   Scenes/             Générées par Kingdom of God > Setup > Create All

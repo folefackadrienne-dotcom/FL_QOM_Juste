@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Debora
+  m_EditorClassIdentifier:
+  displayName: Débora – La mère en Israël
+  age: 3
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Seule femme juge et seule prophétesse à gouverner Israël dans le
+    livre des Juges, Débora se lève à une époque où « chacun faisait ce
+    qui lui semblait bon » et où aucun homme n'ose prendre les armes.
+    Son rôle n'est pas de combattre elle-même, mais de convaincre un
+    général hésitant que l'heure de la délivrance est venue — et de
+    partager, sans amertume, la gloire de la victoire avec une autre
+    femme.
+  appearance: >-
+    Assise sous le palmier de Débora, entre Rama et Béthel, où tout
+    Israël vient chercher son jugement : posture calme et autoritaire,
+    voix qui porte sans avoir besoin de s'élever. Sur le champ de
+    bataille aux côtés de Barac : présence sobre, plus prophétique que
+    guerrière, mais déterminante. Dans son cantique de victoire (Juges
+    5), elle se présente elle-même comme « une mère en Israël ».
+  personality: >-
+    Sage et décisive, dotée d'une autorité prophétique qui pousse les
+    autres à agir même quand ils hésitent. Capable de reprendre Barac
+    fermement (« la gloire n'en sera pas pour toi ») sans jamais céder
+    à l'orgueil personnel. Unit la justice et la louange : son jugement
+    sous le palmier et son cantique après la victoire relèvent de la
+    même fidélité.
+  gameplayRole: >-
+    Excelle en diplomatie, en moral et en direction prophétique plutôt
+    qu'au combat direct ; sa présence rend les autres généraux plus
+    efficaces qu'ils ne le seraient seuls.
+  signatureAbilityName: Lève-toi, voici le jour où l'Éternel a livré Sisera entre tes mains
+  signatureAbilityDescription: >-
+    Autorise une offensive immédiate : l'unité ou le général visé
+    reçoit un bonus d'attaque et d'initiative décisif pour ce tour.
+  uniqueMechanicName: Jugement sous le Palmier
+  uniqueMechanicDescription: >-
+    Rendre la justice régulièrement procure un bonus passif croissant de
+    Justice et de Loyauté dans toute la région où elle siège.
+  keyRelationships:
+  - 'Barac : le général qu''elle doit convaincre de combattre, et
+    qu''elle accompagne jusqu''au champ de bataille.'
+  - 'Jaël : l''héroïne inattendue qui achève la victoire à sa place.'
+  - 'Sisera : le chef de l''armée cananéenne, vaincu malgré ses chars
+    de fer.'
+  unlockCondition: >-
+    Débloquée à la mission « Débora et Barac » (Âge 4).

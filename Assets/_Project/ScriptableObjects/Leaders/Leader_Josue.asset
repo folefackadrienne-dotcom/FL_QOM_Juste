@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Josue
+  m_EditorClassIdentifier:
+  displayName: Josué – Celui qui achève la promesse
+  age: 2
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Josué commence dans l'ombre de Moïse : le plus jeune des douze
+    espions, l'un des deux seuls à croire que le pays promis pouvait
+    être pris. Quarante ans plus tard, c'est à lui de finir ce que
+    Moïse n'a pas pu commencer — faire entrer le peuple en Canaan. Son
+    parcours est celui d'un second qui doit apprendre à porter seul
+    l'autorité, sans jamais chercher à remplacer celui qui l'a formé.
+  appearance: >-
+    Jeune assistant de Moïse : silhouette vive et disciplinée, toujours
+    en retrait mais attentif, déjà marqué par le courage d'avoir
+    contredit la majorité au retour des espions. Chef de la Conquête :
+    posture martiale, regard décidé, une présence qui rassure une armée
+    entière avant chaque bataille. À la fin de sa vie : vieillard digne
+    rassemblant tout Israël à Sichem pour un dernier discours, la voix
+    encore ferme malgré l'âge.
+  personality: >-
+    Fidèle et courageux, direct dans ses jugements, à l'opposé des
+    hésitations que Moïse pouvait connaître. Méthodique plutôt que
+    téméraire : sept jours de procession avant Jéricho, des espions
+    envoyés avant chaque assaut, un partage soigneux du pays entre les
+    tribus. Pas exempt d'échec — la défaite d'Aï le force à reconnaître
+    que la fidélité de tout le camp dépend de chacun.
+  gameplayRole: >-
+    Le meilleur leader pour les campagnes de conquête à grande échelle et
+    les sièges ; sa présence renforce particulièrement les missions liées
+    à l'Arche d'Alliance.
+  signatureAbilityName: Fortifie-toi et prends courage
+  signatureAbilityDescription: >-
+    Une fois par mission, galvanise toute l'armée d'un bonus massif de
+    moral et d'attaque, en écho à l'ordre répété de l'Éternel à Josué
+    (Josué 1:9).
+  uniqueMechanicName: Vœu d'Anathème
+  uniqueMechanicDescription: >-
+    Peut vouer une ville ou une bataille à la destruction complète pour
+    un bonus de combat important ; mais si une unité conserve un butin
+    interdit (comme Acan à Aï), toute l'armée subit une pénalité jusqu'à
+    ce que le camp soit purifié.
+  keyRelationships:
+  - 'Moïse : le mentor dont il reçoit la charge et l''autorité.'
+  - 'Caleb : compagnon fidèle depuis l''exploration du pays, allié
+    jusqu''à la fin.'
+  - 'Rahab : alliée inattendue à Jéricho, épargnée pour sa foi.'
+  - 'Acan : le péché caché qui coûte la défaite d''Aï à tout le camp.'
+  unlockCondition: >-
+    Débloqué au début de l'Âge 3 (La Conquête), dès la mission « La
+    Chute de Jéricho ».

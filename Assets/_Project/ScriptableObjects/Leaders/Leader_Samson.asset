@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb90b0005554f95a708937d0fdddf79, type: 3}
+  m_Name: Leader_Samson
+  m_EditorClassIdentifier:
+  displayName: Samson – La force et la faiblesse
+  age: 3
+  portrait: {fileID: 0}
+  narrativeArc: >-
+    Consacré Naziréat dès avant sa naissance, annoncé par un ange à une
+    mère stérile, Samson porte en lui une force surhumaine liée à un vœu
+    qu'il finit par trahir sans même s'en rendre compte. Son histoire est
+    celle d'un don détourné par des désirs personnels — les femmes
+    philistines, la vengeance, l'orgueil — jusqu'à la trahison de Délila
+    qui le laisse aveugle et enchaîné. Sa fin est un sursaut de foi
+    tragique : une dernière prière, une dernière force, pour emporter ses
+    ennemis avec lui.
+  appearance: >-
+    Cheveux longs jamais coupés, silhouette imposante qui contraste avec
+    une inconstance de caractère. Dans sa jeunesse à Timna : assurance
+    physique presque insouciante. Enchaîné à Gaza, yeux crevés, tournant
+    la meule comme un esclave : image renversée de sa propre force, brisée
+    par sa propre faiblesse. Au temple de Dagon, bras tendus entre les
+    colonnes : dernière image, à la fois défaite et victoire.
+  personality: >-
+    Impulsif et charismatique, guidé autant par ses passions que par sa
+    mission ; sous-estime constamment le prix de ses compromis avec les
+    Philistins. Capable d'un courage et d'une force extraordinaires, mais
+    incapable de discernement dans ses relations. Sa dernière prière
+    révèle une humilité tardive : la reconnaissance que sa force n'a
+    jamais été la sienne.
+  gameplayRole: >-
+    Unité de combat individuel la plus puissante du jeu en un contre un,
+    mais fragile en stratégie collective et vulnérable à la trahison
+    d'alliés infiltrés.
+  signatureAbilityName: Mâchoire d'âne
+  signatureAbilityDescription: >-
+    Frappe dévastatrice à mains nues contre un groupe d'ennemis, sans
+    arme ni armure ; d'autant plus puissante que Samson combat seul.
+  uniqueMechanicName: Force du Naziréat
+  uniqueMechanicDescription: >-
+    Sa force est démultipliée tant que son vœu de Naziréat reste intact ;
+    toute compromission (relation avec un ennemi, secret révélé) réduit
+    progressivement sa puissance jusqu'à l'annuler complètement, jusqu'à
+    ce qu'un sacrifice final permette un ultime coup dévastateur au prix
+    de sa propre vie.
+  keyRelationships:
+  - 'Délila : celle à qui il finit par livrer le secret de sa force, causant
+    sa chute.'
+  - 'Les Philistins : l''ennemi qu''il combat seul, souvent par vengeance
+    personnelle plutôt que par mission collective.'
+  - 'Sa mère : la première à recevoir l''annonce de sa naissance et de
+    son vœu de Naziréat.'
+  - 'Sa dernière prière : le moment où sa force redevient consciemment un
+    don plutôt qu''un droit.'
+  unlockCondition: >-
+    Débloqué à la mission « Samson » (Âge 3).
