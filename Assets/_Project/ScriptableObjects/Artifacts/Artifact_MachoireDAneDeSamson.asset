@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_MachoireDAneDeSamson
+  m_EditorClassIdentifier:
+  displayName: Mâchoire d'âne de Samson
+  biblicalReference: Juges 15
+  historicalContext: >-
+    Une mâchoire d'âne encore fraîche, ramassée à mains nues par Samson
+    pour abattre mille Philistins après qu'il eut rompu ses liens.
+  educationalComment: >-
+    L'arme la plus improbable du jeu : la force de Samson transforme un
+    objet dérisoire en instrument de délivrance pour Israël.
+  rarity: 3
+  age: 3
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Arme légendaire à usage limité : dégâts massifs contre un groupe
+    d'ennemis, une seule fois par bataille.

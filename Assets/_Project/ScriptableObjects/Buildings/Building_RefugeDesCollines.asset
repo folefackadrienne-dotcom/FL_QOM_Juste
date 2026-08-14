@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaf6182527040f6a400404f2c6bc450, type: 3}
+  m_Name: Building_RefugeDesCollines
+  m_EditorClassIdentifier:
+  displayName: Refuge des Collines
+  description: >-
+    Retraites creusées dans les montagnes, les cavernes et les lieux
+    forts pour échapper aux razzias de Madian et des peuples de l'Est
+    (Juges 6:2).
+  category: 0
+  introducedInAge: 3
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
+  buildCost:
+  - type: 2
+    amount: 8
+  - type: 3
+    amount: 5
+  minFaithRequired: 0
+  minJusticeRequired: 0
+  productionPerTurn: []

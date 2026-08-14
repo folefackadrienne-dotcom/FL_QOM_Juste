@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_TorchesEtCruchesDeGedeon
+  m_EditorClassIdentifier:
+  displayName: Torches et cruches de Gédéon
+  biblicalReference: Juges 7
+  historicalContext: >-
+    Les cruches vides, les torches et les trompettes que les 300 hommes
+    de Gédéon brisent et font retentir dans la nuit, semant la panique
+    dans le camp madianite.
+  educationalComment: >-
+    La victoire ne vient ni du nombre ni des armes classiques, mais d'une
+    stratégie qui rend visible que « ce n'est pas par la force ».
+  rarity: 2
+  age: 3
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Permet de combattre efficacement avec très peu d'unités.

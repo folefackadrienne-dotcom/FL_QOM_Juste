@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age4_01_DeboraEtBarac
+  m_EditorClassIdentifier:
+  missionId: age4_01_debora_et_barac
+  displayName: Débora et Barac
+  summary: >-
+    Bataille aux côtés d'une prophétesse : convaincre Barac de mener le
+    combat contre Sisera et son armée de chars.
+  age: 3
+  type: 0
+  victoryCondition:
+    type: 0
+    turnsToSurvive: 0
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 4
+    amount: 15
+  - type: 6
+    amount: 10
+  battleSceneName: Battle_DeboraEtBarac

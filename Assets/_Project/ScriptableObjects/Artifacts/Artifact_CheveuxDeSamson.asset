@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_CheveuxDeSamson
+  m_EditorClassIdentifier:
+  displayName: Cheveux de Samson
+  biblicalReference: Juges 16
+  historicalContext: >-
+    Le signe de son vœu de naziréat : tant que ses cheveux ne sont pas
+    coupés, la force surhumaine de Samson demeure — jusqu'à la trahison
+    de Délila.
+  educationalComment: >-
+    Un objet à double tranchant par nature : source de puissance et
+    d'orgueil, mais fragile dès que l'Alliance est trahie en secret.
+  rarity: 3
+  age: 3
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Source de force surhumaine, mais fragile : perdue instantanément si
+    le porteur trahit son vœu ou est piégé.

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_Juges_16_28
+  m_EditorClassIdentifier:
+  reference: Juges 16:28
+  text: >-
+    Alors Samson invoqua l'Éternel, et dit : Seigneur Éternel ! souviens-toi
+    de moi, je te prie ; ô Dieu ! donne-moi de la force seulement cette
+    fois, et que d'un seul coup je tire vengeance des Philistins pour mes
+    deux yeux.
+  age: 3
+  contextComment: >-
+    La dernière prière de Samson dans le temple de Dagon, juste avant
+    qu'il ne fasse s'effondrer les colonnes sur lui et les Philistins.
+  permanentBonus:
+  - type: 6
+    amount: 8

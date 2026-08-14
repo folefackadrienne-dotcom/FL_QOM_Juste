@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age4_03_Samson
+  m_EditorClassIdentifier:
+  missionId: age4_03_samson
+  displayName: Samson
+  summary: >-
+    Campagne personnelle : gérer la force surhumaine de Samson et ses
+    faiblesses morales face à Délila.
+  age: 3
+  type: 2
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 5
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 6
+    amount: 10
+  - type: 4
+    amount: 10
+  battleSceneName:
