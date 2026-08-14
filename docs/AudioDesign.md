@@ -137,6 +137,14 @@ lumineuse » générique pour les miracles sans signature propre).
 - Quand la jauge de Foi augmente : note claire et chaude
 - Quand elle baisse : dissonance légère et inconfortable
 
+Le même traitement est appliqué à la jauge d'Alliance, nommée dans le
+titre de la section : 4 `SfxCueData` de catégorie `FaithAlliance`
+(Foi en Hausse/Baisse, Alliance en Hausse/Baisse). `AudioManager`
+s'abonne directement à `ResourceManager.ResourceChanged` (filtré sur
+`ResourceType.Faith`) et à `AllianceSystem.ValueChanged`, en gardant la
+dernière valeur connue de chaque jauge pour détecter le sens de la
+variation et jouer le bon signal.
+
 ---
 
 ## 5. Voix et narration
@@ -215,17 +223,20 @@ projet :
 - **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
   musique/ambiance) : les 4 signaux d'Interface, les 2 de Construction,
-  les 3 de Bataille et les 4 de Miracle de la section 4 sont créés dans
-  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (13 au total).
-  `AudioManager.PlaySfx` les déclenche en un coup
+  les 3 de Bataille, les 4 de Miracle et les 4 de Foi & Alliance de la
+  section 4 sont créés dans `Assets/_Project/ScriptableObjects/Audio/Sfx/`
+  (17 au total). `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
   et par `BattleManager` pour la Bataille (`SpawnUnit`/`TryAttack`/
   `OnUnitDied`), et automatiquement par `AudioManager` sur les
   événements de `BuildingManager.BuildingPlaced` (Construction — fanfare
-  si le bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon)
-  et de `MiracleManager` (Miracle — début de prière, interruption,
-  annulation, déclenchement).
+  si le bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon),
+  de `MiracleManager` (Miracle — début de prière, interruption,
+  annulation, déclenchement), et de `ResourceManager.ResourceChanged`
+  (filtré sur la Foi) / `AllianceSystem.ValueChanged` (Foi & Alliance —
+  hausse/baisse de chaque jauge, détectée en comparant à la dernière
+  valeur connue).
 
 `AudioManager` vit sur le même GameObject persistant `GameManager` que
 les autres managers (scène `Bootstrap`), câblé par

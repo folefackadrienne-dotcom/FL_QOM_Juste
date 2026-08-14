@@ -4,6 +4,7 @@ using System.Linq;
 using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.Resources;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,7 @@ namespace KingdomOfGod.Audio
         [SerializeField] private MiracleManager miracleManager;
         [SerializeField] private AllianceSystem allianceSystem;
         [SerializeField] private BuildingManager buildingManager;
+        [SerializeField] private ResourceManager resourceManager;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
@@ -40,6 +42,8 @@ namespace KingdomOfGod.Audio
 
         private MusicContext sceneContext = MusicContext.MainMenu;
         private MusicContext? allianceOverride;
+        private float lastFaithValue;
+        private float lastAllianceValue;
 
         public MusicContext CurrentContext => allianceOverride ?? sceneContext;
 
@@ -70,8 +74,20 @@ namespace KingdomOfGod.Audio
                 miracleManager.PrayerInterrupted += OnPrayerInterrupted;
             }
 
-            if (allianceSystem != null) allianceSystem.StandingChanged += OnAllianceStandingChanged;
+            if (allianceSystem != null)
+            {
+                lastAllianceValue = allianceSystem.Value;
+                allianceSystem.StandingChanged += OnAllianceStandingChanged;
+                allianceSystem.ValueChanged += OnAllianceValueChanged;
+            }
+
             if (buildingManager != null) buildingManager.BuildingPlaced += OnBuildingPlaced;
+
+            if (resourceManager != null)
+            {
+                lastFaithValue = resourceManager.Get(ResourceType.Faith);
+                resourceManager.ResourceChanged += OnResourceChanged;
+            }
         }
 
         private void OnDisable()
@@ -86,8 +102,14 @@ namespace KingdomOfGod.Audio
                 miracleManager.PrayerInterrupted -= OnPrayerInterrupted;
             }
 
-            if (allianceSystem != null) allianceSystem.StandingChanged -= OnAllianceStandingChanged;
+            if (allianceSystem != null)
+            {
+                allianceSystem.StandingChanged -= OnAllianceStandingChanged;
+                allianceSystem.ValueChanged -= OnAllianceValueChanged;
+            }
+
             if (buildingManager != null) buildingManager.BuildingPlaced -= OnBuildingPlaced;
+            if (resourceManager != null) resourceManager.ResourceChanged -= OnResourceChanged;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -108,6 +130,23 @@ namespace KingdomOfGod.Audio
         {
             allianceOverride = standing == AllianceStanding.Low ? MusicContext.Crisis : (MusicContext?)null;
             PlayContext(CurrentContext);
+        }
+
+        /// <summary>"Quand la jauge de Foi augmente : note claire et chaude / quand elle baisse : dissonance légère" — same treatment applied to the Alliance gauge.</summary>
+        private void OnAllianceValueChanged(float newValue)
+        {
+            if (newValue > lastAllianceValue) PlaySfx("Foi & Alliance - Alliance en Hausse");
+            else if (newValue < lastAllianceValue) PlaySfx("Foi & Alliance - Alliance en Baisse");
+            lastAllianceValue = newValue;
+        }
+
+        private void OnResourceChanged(ResourceType type, float newValue)
+        {
+            if (type != ResourceType.Faith) return;
+
+            if (newValue > lastFaithValue) PlaySfx("Foi & Alliance - Foi en Hausse");
+            else if (newValue < lastFaithValue) PlaySfx("Foi & Alliance - Foi en Baisse");
+            lastFaithValue = newValue;
         }
 
         private void OnPrayerStarted(MiracleData miracle)
