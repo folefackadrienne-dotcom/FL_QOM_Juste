@@ -65,8 +65,8 @@ Assets/_Project/
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Techs, Ages, Monetization) —
                       les 7 Âges de la campagne sont remplis (Buildings,
-                      Verses, Artifacts, Missions) ; Leaders/Techs/
-                      Miracles restent à créer
+                      Verses, Artifacts, Missions, Miracles) ;
+                      Leaders/Techs restent à créer
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -89,9 +89,10 @@ dans l'Éditeur, sans toucher au code.
    Create All Scenes** (voir ci-dessus) — les scènes ne sont pas encore
    validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
    première ouverture.
-2. Créer les `MiracleData` référencés par les artefacts de chaque âge
-   (ex. le feu céleste débloqué par l'Autel du Carmel) — c'est le seul
-   type de contenu narratif encore vide pour les 7 Âges.
+2. Créer les `LeaderData` et `TechNode` (leaders légendaires, arbre
+   technologique 3 branches) — derniers types de contenu narratif encore
+   vides ; Buildings/Verses/Artifacts/Missions/Miracles sont faits pour
+   les 7 Âges.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom`.
 4. Habiller visuellement le menu de prière et le journal des versets
