@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_Genese_50_20
+  m_EditorClassIdentifier:
+  reference: Genèse 50:20
+  text: >-
+    Vous aviez médité de me faire du mal : Dieu l'a changé en bien, pour
+    accomplir ce qui arrive aujourd'hui, pour sauver la vie à un peuple
+    nombreux.
+  age: 0
+  contextComment: >-
+    La conclusion de "Joseph en Égypte" : la providence de Dieu transforme
+    la trahison des frères de Joseph en salut pour toute la famille.
+  permanentBonus:
+  - type: 5
+    amount: 5

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_AnneauDePharaon
+  m_EditorClassIdentifier:
+  displayName: Anneau de Pharaon
+  biblicalReference: Genèse 41
+  historicalContext: >-
+    L'anneau que Pharaon retire de sa main pour l'offrir à Joseph, le
+    plaçant à la tête de toute l'Égypte après l'interprétation des songes.
+  educationalComment: >-
+    Symbole du renversement final de l'histoire de Joseph : l'esclave
+    devenu gouverneur, préfigurant le salut de toute sa famille.
+  rarity: 2
+  age: 0
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Débloque des options de commerce avancées.

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_TenteDeLaPromesse
+  m_EditorClassIdentifier:
+  displayName: Tente de la Promesse
+  biblicalReference: Genèse 12–13
+  historicalContext: >-
+    La tente d'Abraham, dressée entre Béthel et Aï, près de l'autel qu'il y
+    avait bâti — le foyer mobile de la famille de la promesse.
+  educationalComment: >-
+    Vivre sous la tente, plutôt que dans une ville fortifiée, exprime la foi
+    d'Abraham dans un pays qu'il ne possède pas encore (Hébreux 11:9).
+  rarity: 1
+  age: 0
+  icon: {fileID: 0}
+  passiveBonus:
+  - type: 4
+    amount: 3
+  activeAbilityDescription: >-
+    Augmente la Foi générée par les bâtiments du campement.

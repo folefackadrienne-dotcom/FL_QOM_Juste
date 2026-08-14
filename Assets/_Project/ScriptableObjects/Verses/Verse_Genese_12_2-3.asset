@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_Genese_12_2-3
+  m_EditorClassIdentifier:
+  reference: Genèse 12:2-3
+  text: >-
+    Je ferai de toi une grande nation, je te bénirai, je rendrai ton nom
+    grand, et tu seras une source de bénédiction. Je bénirai ceux qui te
+    béniront, et je maudirai ceux qui te maudiront ; et toutes les familles
+    de la terre seront bénies en toi.
+  age: 0
+  contextComment: >-
+    L'appel d'Abraham à Charan : la promesse fondatrice qui met en marche
+    toute l'histoire d'Israël, débloquée pendant la mission "L'Appel
+    d'Abraham".
+  permanentBonus:
+  - type: 4
+    amount: 5

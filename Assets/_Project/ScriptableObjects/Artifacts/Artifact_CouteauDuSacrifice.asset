@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_CouteauDuSacrifice
+  m_EditorClassIdentifier:
+  displayName: Couteau du Sacrifice
+  biblicalReference: Genèse 22
+  historicalContext: >-
+    Le couteau qu'Abraham porte sur le mont Moriya, prêt à offrir Isaac en
+    obéissance à l'ordre de Dieu, avant que l'ange n'arrête son geste.
+  educationalComment: >-
+    L'objet le plus lourd de sens de l'Âge 1 : il matérialise l'épreuve
+    ultime de la foi d'Abraham et la fidélité de Dieu à sa promesse.
+  rarity: 2
+  age: 0
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Débloque le choix moral du sacrifice d'Isaac dans la mission « Le
+    Sacrifice d'Isaac ».
