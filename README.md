@@ -95,11 +95,12 @@ dans l'Éditeur, sans toucher au code.
    Create All Scenes** (voir ci-dessus) — les scènes ne sont pas encore
    validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
    première ouverture.
-2. Créer les `BuildingData` génériques décrits dans `docs/Economy.md`
-   (Ferme, Puits, Scierie, Mine, Marché, Grenier, Réservoir…) — dernier
-   contenu narratif notable encore manquant ; le reste (Buildings/Verses/
-   Artifacts/Missions/Miracles/Leaders/Antagonists/Techs) est fait pour
-   les 7 Âges.
+2. Peupler `Assets/_Project/ScriptableObjects/Leaders`/`Techs` etc. dans
+   les scènes une fois le rendu visuel branché — le contenu narratif
+   (Buildings/Verses/Artifacts/Missions/Miracles/Leaders/Antagonists/
+   Techs, y compris les bâtiments génériques Ferme/Scierie/Mine/Marché/
+   Grenier/Réservoir/Grand Marché/Atelier de Charpentiers/Fonderie/
+   Tribunal) est fait pour les 7 Âges.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom`.
 4. Habiller visuellement le menu de prière et le journal des versets

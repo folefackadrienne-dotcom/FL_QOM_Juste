@@ -24,6 +24,9 @@ namespace KingdomOfGod.Buildings
         [Header("Production (per turn, optional)")]
         public List<ResourceAmount> productionPerTurn = new List<ResourceAmount>();
 
+        [Header("Storage (optional, applied once at placement)")]
+        public List<ResourceAmount> storageCapacityBonus = new List<ResourceAmount>();
+
         public bool MeetsRequirements(float currentFaith, float currentJustice)
         {
             return currentFaith >= minFaithRequired && currentJustice >= minJusticeRequired;

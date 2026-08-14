@@ -51,8 +51,15 @@ d'Or). Voir `Assets/_Project/Scripts/Buildings/TempleSystem.cs`.
 *Note : ces bâtiments de base sont génériques (utilisables dès l'Âge 1) et
 distincts des bâtiments thématiques déjà créés par âge dans
 `Assets/_Project/ScriptableObjects/Buildings/` (ex. Aire à Battre le Blé,
-Citerne de Siège) ; les créer comme assets `BuildingData` reste une étape
-à faire.*
+Citerne de Siège). Créés comme `BuildingData` : Ferme, Scierie, Mine,
+Marché, Grenier, Réservoir, Grand Marché (Comptoir commercial), Atelier de
+Charpentiers, Fonderie, Tribunal. Puits et École de scribes/prophètes ne
+sont pas dupliqués : `Building_Puits` (Âge 1) et `Building_EcoleDesScribes`/
+`Building_EcoleDesProphetes` (Âges 5-6) remplissent déjà ce rôle. Grenier
+et Réservoir utilisent le nouveau champ `storageCapacityBonus` de
+`BuildingData` (appliqué une fois à la pose via `BuildingManager.TryPlace`),
+le seul mécanisme d'augmentation de capacité de stockage qui existait
+jusqu'ici étant celui, dédié, du Temple (`TempleSystem`).*
 
 ## 3. Population, Loyauté et Économie
 

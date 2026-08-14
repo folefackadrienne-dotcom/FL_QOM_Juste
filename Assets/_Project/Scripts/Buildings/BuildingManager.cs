@@ -40,6 +40,11 @@ namespace KingdomOfGod.Buildings
             cell.Building = instance;
             buildings.Add(instance);
 
+            foreach (var bonus in data.storageCapacityBonus)
+            {
+                resourceManager.SetCap(bonus.type, resourceManager.GetCap(bonus.type) + bonus.amount);
+            }
+
             BuildingPlaced?.Invoke(instance);
             return true;
         }
