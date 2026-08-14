@@ -47,7 +47,8 @@ Assets/_Project/
     Grid/           Grille hexagonale (coordonnées axiales, cellules)
     Buildings/      Bâtiments, placement, Temple (niveaux 1-5)
     Population/     Population & Loyauté
-    Battle/         Batailles tactiques tour par tour
+    Battle/         Batailles tactiques tour par tour, unités, boss
+                    (AntagonistData)
     Miracles/       Miracles conditionnels (Foi, verset requis, choix moral)
     Alliance/       Jauge d'Alliance (0-100) & repentance
     Verses/         Mémorisation de versets (mini-jeu progressif)
@@ -63,10 +64,11 @@ Assets/_Project/
                   (menu Kingdom of God > Setup), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
-                      Missions, Leaders, Techs, Ages, Monetization) —
-                      les 7 Âges de la campagne sont remplis (Buildings,
-                      Verses, Artifacts, Missions, Miracles) ;
-                      Leaders/Techs restent à créer
+                      Missions, Leaders, Antagonists, Techs, Ages,
+                      Monetization) — les 7 Âges sont remplis (Buildings,
+                      Verses, Artifacts, Missions, Miracles), plus les 6
+                      leaders et 5 antagonistes majeurs ; Techs reste à
+                      créer
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -89,10 +91,9 @@ dans l'Éditeur, sans toucher au code.
    Create All Scenes** (voir ci-dessus) — les scènes ne sont pas encore
    validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
    première ouverture.
-2. Créer les `LeaderData` et `TechNode` (leaders légendaires, arbre
-   technologique 3 branches) — derniers types de contenu narratif encore
-   vides ; Buildings/Verses/Artifacts/Missions/Miracles sont faits pour
-   les 7 Âges.
+2. Créer les `TechNode` (arbre technologique 3 branches) — dernier type
+   de contenu narratif encore vide ; Buildings/Verses/Artifacts/Missions/
+   Miracles/Leaders/Antagonists sont faits.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom`.
 4. Habiller visuellement le menu de prière et le journal des versets
