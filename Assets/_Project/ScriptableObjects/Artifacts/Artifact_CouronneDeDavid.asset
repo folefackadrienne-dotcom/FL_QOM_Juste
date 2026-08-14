@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_CouronneDeDavid
+  m_EditorClassIdentifier:
+  displayName: Couronne de David
+  biblicalReference: 2 Samuel 5
+  historicalContext: >-
+    La couronne portée par David une fois oint roi sur tout Israël à
+    Hébron, puis établi sur son trône à Jérusalem.
+  educationalComment: >-
+    Le symbole de l'unité retrouvée d'Israël, après des années de guerre
+    civile contre la maison de Saül.
+  rarity: 3
+  age: 4
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    +20 % de loyauté du peuple et bonus de recrutement dans tout le
+    royaume.

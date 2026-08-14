@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_ArmureDeSaul
+  m_EditorClassIdentifier:
+  displayName: Armure de Saül
+  biblicalReference: 1 Samuel 17
+  historicalContext: >-
+    L'armure et l'épée que Saül propose à David avant le combat contre
+    Goliath, que le jeune berger essaie puis retire, n'y étant pas
+    habitué.
+  educationalComment: >-
+    L'armure d'un roi ne convient pas forcément à la mission d'un autre :
+    David choisit ses propres armes, celles de la foi plutôt que du fer.
+  rarity: 1
+  age: 4
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Lourde protection défensive, mais réduit fortement la mobilité de
+    l'unité qui la porte.

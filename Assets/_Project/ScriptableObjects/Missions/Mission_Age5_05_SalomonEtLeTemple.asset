@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age5_05_SalomonEtLeTemple
+  m_EditorClassIdentifier:
+  missionId: age5_05_salomon_et_le_temple
+  displayName: Salomon et le Temple
+  summary: >-
+    Grande mission de construction du Temple de Jérusalem, doublée
+    d'une gestion de la sagesse et des alliances diplomatiques du
+    royaume. Objet ultime de l'âge : le Temple au niveau maximum.
+  age: 4
+  type: 1
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 25
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 4
+    amount: 30
+  - type: 5
+    amount: 25
+  - type: 3
+    amount: 25
+  battleSceneName:

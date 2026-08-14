@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_FrondesDeDavid
+  m_EditorClassIdentifier:
+  displayName: Frondes de David
+  biblicalReference: 1 Samuel 17
+  historicalContext: >-
+    La fronde du jeune berger David, avec laquelle il abat Goliath d'une
+    seule pierre choisie dans le torrent, sans épée ni armure.
+  educationalComment: >-
+    L'objet symbole du jeu : Dieu choisit ce qui est faible aux yeux des
+    hommes pour confondre les puissants.
+  rarity: 3
+  age: 4
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Dégâts massifs contre les unités « géantes » et réduction importante
+    du moral ennemi.

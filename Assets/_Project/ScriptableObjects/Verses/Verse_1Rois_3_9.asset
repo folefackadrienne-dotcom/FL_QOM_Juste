@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_1Rois_3_9
+  m_EditorClassIdentifier:
+  reference: 1 Rois 3:9
+  text: >-
+    Accorde donc à ton serviteur un cœur intelligent pour juger ton
+    peuple, pour discerner le bien du mal ! Car qui pourrait juger ton
+    peuple, ce peuple si nombreux ?
+  age: 4
+  contextComment: >-
+    La prière de Salomon à Gabaon, où Dieu lui offre de choisir ce qu'il
+    désire et où il choisit la sagesse plutôt que la richesse ou la
+    longévité.
+  permanentBonus:
+  - type: 5
+    amount: 8

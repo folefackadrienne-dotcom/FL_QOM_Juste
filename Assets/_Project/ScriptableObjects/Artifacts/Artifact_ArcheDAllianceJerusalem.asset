@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_ArcheDAllianceJerusalem
+  m_EditorClassIdentifier:
+  displayName: Arche d'Alliance (Jérusalem)
+  biblicalReference: 2 Samuel 6
+  historicalContext: >-
+    L'Arche ramenée à Jérusalem par David au son des trompettes et de la
+    danse, après des années d'absence depuis la maison d'Abinadab.
+  educationalComment: >-
+    Version renforcée de l'Arche de la Conquête : elle s'installe enfin
+    dans la capitale du royaume unifié, au cœur du culte national.
+  rarity: 3
+  age: 4
+  icon: {fileID: 0}
+  passiveBonus:
+  - type: 4
+    amount: 12
+  activeAbilityDescription: >-
+    Version renforcée de l'Arche d'Alliance : bonus de Foi très élevé
+    pour tout le royaume.
