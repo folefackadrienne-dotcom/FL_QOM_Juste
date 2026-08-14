@@ -30,7 +30,12 @@ namespace KingdomOfGod.UI
             }
         }
 
-        public void Open() => panelRoot.SetActive(true);
+        public void Open()
+        {
+            panelRoot.SetActive(true);
+            GameManager.Instance?.Audio.PlaySfx("Interface - Ouverture de Menu");
+        }
+
         public void Close() => panelRoot.SetActive(false);
 
         public IReadOnlyList<MiracleData> GetCastableMiracles()
@@ -47,6 +52,7 @@ namespace KingdomOfGod.UI
         {
             selectedMiracle = miracle;
             if (confirmButton != null) confirmButton.interactable = miracle != null;
+            GameManager.Instance?.Audio.PlaySfx("Interface - Clic sur Parchemin");
         }
 
         /// <summary>
@@ -60,7 +66,12 @@ namespace KingdomOfGod.UI
 
             if (miracleManager.TryCast(selectedMiracle))
             {
+                GameManager.Instance?.Audio.PlaySfx("Interface - Validation Positive");
                 Close();
+            }
+            else
+            {
+                GameManager.Instance?.Audio.PlaySfx("Interface - Erreur / Action Impossible");
             }
         }
     }

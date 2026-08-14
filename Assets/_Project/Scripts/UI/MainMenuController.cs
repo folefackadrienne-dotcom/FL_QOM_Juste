@@ -17,10 +17,15 @@ namespace KingdomOfGod.UI
             if (continueButton != null) continueButton.interactable = hasSave;
         }
 
-        public void OnNewGame() => SceneManager.LoadScene(kingdomSceneName, LoadSceneMode.Single);
+        public void OnNewGame()
+        {
+            GameManager.Instance?.Audio.PlaySfx("Interface - Clic sur Parchemin");
+            SceneManager.LoadScene(kingdomSceneName, LoadSceneMode.Single);
+        }
 
         public void OnContinue()
         {
+            GameManager.Instance?.Audio.PlaySfx("Interface - Clic sur Parchemin");
             GameManager.Instance?.Save.LoadLocal();
             SceneManager.LoadScene(kingdomSceneName, LoadSceneMode.Single);
         }

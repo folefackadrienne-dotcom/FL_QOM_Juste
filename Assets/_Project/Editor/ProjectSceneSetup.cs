@@ -110,6 +110,7 @@ namespace KingdomOfGod.EditorTools
 
             SetRef(audioManager, "miracleManager", miracleManager);
             SetRef(audioManager, "allianceSystem", allianceSystem);
+            SetRef(audioManager, "buildingManager", buildingManager);
 
             var fullEdition = AssetDatabase.LoadAssetAtPath<ProductData>(EditionCompleteProductPath);
             if (fullEdition != null)

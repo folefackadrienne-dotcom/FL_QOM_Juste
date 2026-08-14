@@ -88,9 +88,20 @@ importants ou les moments de miracle. Ces 6 environnements sont les 6
 - Validation positive : petite cloche ou note de lyre
 - Erreur / action impossible : son sourd et court
 
+Ces 4 signaux sont les `SfxCueData` de catégorie `Interface` dans
+`Assets/_Project/ScriptableObjects/Audio/Sfx/`, déclenchés par
+`AudioManager.PlaySfx` depuis `PrayerMenuUI`/`VerseJournalUI`
+(ouverture de menu, sélection, validation, erreur) et
+`MainMenuController` (clic).
+
 **Construction :**
 - Pierres qui s'assemblent, bois taillé, outils
 - Quand un bâtiment important est terminé : petite fanfare douce + chœur très léger
+
+Ces 2 signaux sont les `SfxCueData` de catégorie `Construction` ;
+`AudioManager` s'abonne à `BuildingManager.BuildingPlaced` et choisit
+automatiquement la fanfare (bâtiments `Spiritual`/`Special`) ou le son
+de pose ordinaire selon la catégorie du bâtiment placé.
 
 **Batailles :**
 - Impacts de métal réalistes mais pas excessivement violents
@@ -188,6 +199,16 @@ projet :
 - **`MiracleData.audioSignatureDescription`** — la signature sonore
   propre de chaque miracle (section 4), remplie pour Mer Rouge, Feu du
   Carmel, Soleil Arrêté et Colonne de Nuée et de Feu.
+- **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
+  `ScriptableObject` par effet ponctuel (par opposition aux boucles
+  musique/ambiance) : les 4 signaux d'Interface et les 2 de Construction
+  de la section 4 sont créés dans
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/`. `AudioManager.PlaySfx`
+  les déclenche en un coup (`AudioSource.PlayOneShot`), appelé
+  directement par `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController`
+  pour l'Interface, et automatiquement par `AudioManager` sur
+  `BuildingManager.BuildingPlaced` pour la Construction (fanfare si le
+  bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon).
 
 `AudioManager` vit sur le même GameObject persistant `GameManager` que
 les autres managers (scène `Bootstrap`), câblé par

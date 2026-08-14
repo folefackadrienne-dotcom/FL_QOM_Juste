@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using KingdomOfGod.Alliance;
+using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,9 +21,11 @@ namespace KingdomOfGod.Audio
     {
         [SerializeField] private MiracleManager miracleManager;
         [SerializeField] private AllianceSystem allianceSystem;
+        [SerializeField] private BuildingManager buildingManager;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
+        [SerializeField] private List<SfxCueData> sfxCues = new List<SfxCueData>();
 
         [SerializeField] private float crossfadeSeconds = 2f;
         [SerializeField] private float duckedVolumeScale = 0.35f;
@@ -31,6 +34,7 @@ namespace KingdomOfGod.Audio
         private AudioSource musicSourceB;
         private AudioSource activeMusicSource;
         private AudioSource ambientSource;
+        private AudioSource sfxSource;
         private Coroutine crossfadeRoutine;
         private int duckRequests;
 
@@ -49,6 +53,9 @@ namespace KingdomOfGod.Audio
 
             ambientSource = GetComponent<AudioSource>();
             ambientSource.loop = true;
+
+            sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.loop = false;
         }
 
         private void OnEnable()
@@ -63,6 +70,7 @@ namespace KingdomOfGod.Audio
             }
 
             if (allianceSystem != null) allianceSystem.StandingChanged += OnAllianceStandingChanged;
+            if (buildingManager != null) buildingManager.BuildingPlaced += OnBuildingPlaced;
         }
 
         private void OnDisable()
@@ -77,6 +85,7 @@ namespace KingdomOfGod.Audio
             }
 
             if (allianceSystem != null) allianceSystem.StandingChanged -= OnAllianceStandingChanged;
+            if (buildingManager != null) buildingManager.BuildingPlaced -= OnBuildingPlaced;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -111,6 +120,13 @@ namespace KingdomOfGod.Audio
             PlayContext(CurrentContext);
         }
 
+        /// <summary>"Quand un bâtiment important est terminé : petite fanfare douce + chœur très léger" — Spiritual/Special buildings get the fanfare cue, everything else the plain placement cue.</summary>
+        private void OnBuildingPlaced(BuildingInstance instance)
+        {
+            bool important = instance.Data.category == BuildingCategory.Spiritual || instance.Data.category == BuildingCategory.Special;
+            PlaySfx(important ? "Construction - Bâtiment Important Terminé" : "Construction - Placement d'un Bâtiment");
+        }
+
         /// <summary>Lets a future dialogue/cutscene system ask for the ambience to duck alongside miracles without the two stepping on each other's un-duck.</summary>
         public void SetDialogueDucked(bool ducked) => SetDucked(ducked);
 
@@ -142,6 +158,17 @@ namespace KingdomOfGod.Audio
 
             ambientSource.clip = soundscape.clip;
             ambientSource.Play();
+        }
+
+        public void PlaySfx(SfxCueData cue)
+        {
+            if (cue == null || cue.clip == null) return;
+            sfxSource.PlayOneShot(cue.clip);
+        }
+
+        public void PlaySfx(string displayName)
+        {
+            PlaySfx(sfxCues.FirstOrDefault(s => s.displayName == displayName));
         }
 
         private IEnumerator Crossfade(AudioSource from, AudioSource to)

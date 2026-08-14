@@ -22,7 +22,12 @@ namespace KingdomOfGod.UI
             }
         }
 
-        public void Open() => panelRoot.SetActive(true);
+        public void Open()
+        {
+            panelRoot.SetActive(true);
+            GameManager.Instance?.Audio.PlaySfx("Interface - Ouverture de Menu");
+        }
+
         public void Close() => panelRoot.SetActive(false);
 
         public IReadOnlyCollection<VerseData> GetMemorizedVerses() => verseManager.MemorizedVerses;
