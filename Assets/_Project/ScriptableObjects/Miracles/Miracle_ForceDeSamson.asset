@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42758e5bf29f4641958618ec9ecb5fdf, type: 3}
+  m_Name: Miracle_ForceDeSamson
+  m_EditorClassIdentifier:
+  displayName: Force de Samson
+  effectDescription: >-
+    Décuple temporairement la force d'une unité, au risque de
+    l'épuiser si elle trahit son vœu de naziréat.
+  context: 0
+  faithCost: 20
+  requiredVerse: {fileID: 11400000, guid: 5a825ed9c23b474195754cf1db65f13b, type: 3}
+  requiredPriorChoiceId:
+  icon: {fileID: 0}

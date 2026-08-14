@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42758e5bf29f4641958618ec9ecb5fdf, type: 3}
+  m_Name: Miracle_AchevementDeLaMuraille
+  m_EditorClassIdentifier:
+  displayName: Achèvement de la Muraille
+  effectDescription: >-
+    Termine instantanément la construction en cours, malgré
+    l'opposition ennemie active, comme la muraille bâtie en 52 jours.
+  context: 1
+  faithCost: 30
+  requiredVerse: {fileID: 11400000, guid: bbf52db25a5e404cb6f99c1a1b6e89d0, type: 3}
+  requiredPriorChoiceId:
+  icon: {fileID: 0}

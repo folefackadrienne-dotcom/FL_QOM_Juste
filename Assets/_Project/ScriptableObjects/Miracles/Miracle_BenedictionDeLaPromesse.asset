@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42758e5bf29f4641958618ec9ecb5fdf, type: 3}
+  m_Name: Miracle_BenedictionDeLaPromesse
+  m_EditorClassIdentifier:
+  displayName: Bénédiction de la Promesse
+  effectDescription: >-
+    Accélère la croissance de la population et des ressources pendant
+    plusieurs tours, en écho à la promesse faite à Abraham.
+  context: 1
+  faithCost: 10
+  requiredVerse: {fileID: 11400000, guid: 3af41dd943994957aa5cf8357453d93b, type: 3}
+  requiredPriorChoiceId:
+  icon: {fileID: 0}

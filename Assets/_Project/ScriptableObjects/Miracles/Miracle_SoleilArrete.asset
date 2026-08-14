@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42758e5bf29f4641958618ec9ecb5fdf, type: 3}
+  m_Name: Miracle_SoleilArrete
+  m_EditorClassIdentifier:
+  displayName: Soleil Arrêté
+  effectDescription: >-
+    Donne un tour supplémentaire pour achever la bataille avant la
+    tombée de la nuit, comme à Gabaon devant Josué (Josué 10:12-14).
+  context: 0
+  faithCost: 30
+  requiredVerse: {fileID: 0}
+  requiredPriorChoiceId:
+  icon: {fileID: 0}
