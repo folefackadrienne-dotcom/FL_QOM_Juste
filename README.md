@@ -76,7 +76,9 @@ Assets/_Project/
                     pendant la prière d'un miracle, SFX de
                     clic/validation/erreur, de pose de bâtiment, de
                     combat, de rituel et de variation des jauges de
-                    Foi/Alliance
+                    Foi/Alliance ; voix du Narrateur/des Personnages et
+                    lecture des versets (VoiceLineData, narrationClip*
+                    sur VerseData) avec sélection de langue FR/EN/HE
     UI/             HUD, menu de prière, journal des versets
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
@@ -90,7 +92,7 @@ Assets/_Project/
                       direction sonore complète (Audio/ : 8 thèmes
                       musicaux, 6 leitmotifs, 6 ambiances, 17 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
-                      Alliance)
+                      Alliance, 3 lignes de voix Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -142,8 +144,11 @@ dans l'Éditeur, sans toucher au code.
    Connect / Play Console — voir `Assets/_Project/Scripts/Monetization`.
 7. Composer/enregistrer les pistes audio décrites dans
    `docs/AudioDesign.md` et les assigner aux champs `clip` (encore vides)
-   des `MusicThemeData`/`LeitmotifData`/`AmbientSoundscapeData`/`SfxCueData`
-   dans `Assets/_Project/ScriptableObjects/Audio/` — `AudioManager` pilote
-   déjà le crossfade, le mixage dynamique et le déclenchement contextuel
+   des `MusicThemeData`/`LeitmotifData`/`AmbientSoundscapeData`/`SfxCueData`/
+   `VoiceLineData` dans `Assets/_Project/ScriptableObjects/Audio/`, et aux
+   champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
+   (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
+   déjà le crossfade, le mixage dynamique, le déclenchement contextuel
    (y compris les 17 SFX d'Interface, Construction, Bataille, Miracle et
-   Foi & Alliance), il ne manque que les fichiers son.
+   Foi & Alliance) et la lecture de voix multilingue, il ne manque que
+   les fichiers son.

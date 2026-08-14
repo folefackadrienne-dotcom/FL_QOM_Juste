@@ -162,6 +162,36 @@ variation et jouer le bon signal.
 Les versets mémorisés peuvent être écoutés en boucle avec une musique
 très douce en fond.
 
+Implémentation : `VoiceLineData` (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
+couvre le Narrateur et les Personnages — un `ScriptableObject` par ligne
+avec un rôle (`VoiceRole.Narrator`/`Character`), un `speaker` optionnel
+(`LeaderData`), une référence optionnelle au verset biblique source
+(`relatedVerse`), le texte de la ligne, et un clip par langue
+(`clipFrench`/`clipEnglish`/`clipHebrew`) — laissés vides jusqu'à un
+vrai enregistrement, comme les autres champs `AudioClip` du projet.
+3 instances créées dans `Assets/_Project/ScriptableObjects/Audio/Voice/`
+comme exemples du mécanisme : un placeholder Narrateur (style de
+référence, sans texte inventé), et 2 lignes de personnage réutilisant
+des paroles bibliques déjà présentes dans le jeu plutôt que d'en
+inventer — Josué (« Fortifie-toi et prends courage », Josué 1:9) et
+Élie (« Jusqu'à quand clocherez-vous des deux côtés ? », 1 Rois 18:21),
+toutes deux tirées mot pour mot des `VerseData` correspondants.
+
+« Lecture des versets » réutilise directement `VerseData`, qui porte
+déjà le texte biblique exact (`text`) : 3 champs
+`narrationClipFrench`/`narrationClipEnglish`/`narrationClipHebrew` y ont
+été ajoutés (sur les 34 versets existants) plutôt que de dupliquer le
+contenu dans une structure séparée.
+
+`AudioManager` porte la langue courante (`CurrentLanguage`, Français par
+défaut — « priorité » — réglable via `SetLanguage`, avec repli sur le
+français si le clip de la langue choisie manque) et expose
+`PlayVoiceLine` (une ligne, une fois) et `PlayVerseNarration` (en
+boucle, avec mise en sourdine des autres pistes le temps de l'écoute —
+`StopNarration` les restaure). `VerseJournalUI` (Bibliothèque de la
+Torah / Mode Méditation) y est câblé : `PlayNarration`/`StopNarration`,
+et `Close` arrête automatiquement la lecture en cours.
+
 ---
 
 ## 6. Dynamique et mixage
@@ -237,6 +267,15 @@ projet :
   (filtré sur la Foi) / `AllianceSystem.ValueChanged` (Foi & Alliance —
   hausse/baisse de chaque jauge, détectée en comparant à la dernière
   valeur connue).
+
+- **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
+  et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du
+  Narrateur/des Personnages et lecture des versets, avec sélection de
+  langue (`AudioManager.CurrentLanguage`/`SetLanguage`,
+  `PlayVoiceLine`/`PlayVerseNarration`/`StopNarration`) et repli sur le
+  français si le clip demandé manque. 3 `VoiceLineData` créées dans
+  `Assets/_Project/ScriptableObjects/Audio/Voice/` en exemples du
+  mécanisme, câblées à `VerseJournalUI`.
 
 `AudioManager` vit sur le même GameObject persistant `GameManager` que
 les autres managers (scène `Bootstrap`), câblé par

@@ -5,6 +5,7 @@ using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
 using KingdomOfGod.Resources;
+using KingdomOfGod.Verses;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,8 +38,10 @@ namespace KingdomOfGod.Audio
         private AudioSource activeMusicSource;
         private AudioSource ambientSource;
         private AudioSource sfxSource;
+        private AudioSource voiceSource;
         private Coroutine crossfadeRoutine;
         private int duckRequests;
+        private bool narrationActive;
 
         private MusicContext sceneContext = MusicContext.MainMenu;
         private MusicContext? allianceOverride;
@@ -46,6 +49,11 @@ namespace KingdomOfGod.Audio
         private float lastAllianceValue;
 
         public MusicContext CurrentContext => allianceOverride ?? sceneContext;
+
+        /// <summary>GDD "Direction Sonore" section 5: "Français (priorité)", English, and Hebrew are the 3 supported voice languages.</summary>
+        public VoiceLanguage CurrentLanguage { get; private set; } = VoiceLanguage.French;
+
+        public void SetLanguage(VoiceLanguage language) => CurrentLanguage = language;
 
         private void Awake()
         {
@@ -60,6 +68,9 @@ namespace KingdomOfGod.Audio
 
             sfxSource = gameObject.AddComponent<AudioSource>();
             sfxSource.loop = false;
+
+            voiceSource = gameObject.AddComponent<AudioSource>();
+            voiceSource.loop = false;
         }
 
         private void OnEnable()
@@ -225,6 +236,59 @@ namespace KingdomOfGod.Audio
         public void PlaySfx(string displayName)
         {
             PlaySfx(sfxCues.FirstOrDefault(s => s.displayName == displayName));
+        }
+
+        /// <summary>Plays a narrator or character line once, in <see cref="CurrentLanguage"/> (falling back to French if that language's clip is missing).</summary>
+        public void PlayVoiceLine(VoiceLineData line)
+        {
+            if (line == null) return;
+
+            var clip = PickLanguageClip(line.clipFrench, line.clipEnglish, line.clipHebrew);
+            if (clip == null) return;
+
+            voiceSource.loop = false;
+            voiceSource.clip = clip;
+            voiceSource.Play();
+        }
+
+        /// <summary>"Les versets mémorisés peuvent être écoutés en boucle avec une musique très douce en fond" — loops the reading and ducks the other audio layers for the duration.</summary>
+        public void PlayVerseNarration(VerseData verse)
+        {
+            if (verse == null) return;
+
+            var clip = PickLanguageClip(verse.narrationClipFrench, verse.narrationClipEnglish, verse.narrationClipHebrew);
+            if (clip == null) return;
+
+            voiceSource.loop = true;
+            voiceSource.clip = clip;
+            voiceSource.Play();
+
+            if (!narrationActive)
+            {
+                narrationActive = true;
+                SetDucked(true);
+            }
+        }
+
+        public void StopNarration()
+        {
+            if (!narrationActive) return;
+
+            voiceSource.Stop();
+            narrationActive = false;
+            SetDucked(false);
+        }
+
+        private AudioClip PickLanguageClip(AudioClip french, AudioClip english, AudioClip hebrew)
+        {
+            var preferred = CurrentLanguage switch
+            {
+                VoiceLanguage.English => english,
+                VoiceLanguage.Hebrew => hebrew,
+                _ => french
+            };
+
+            return preferred != null ? preferred : french;
         }
 
         private IEnumerator Crossfade(AudioSource from, AudioSource to)

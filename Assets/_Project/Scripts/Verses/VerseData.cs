@@ -16,5 +16,11 @@ namespace KingdomOfGod.Verses
 
         [Header("Reward")]
         public List<ResourceAmount> permanentBonus = new List<ResourceAmount>();
+
+        [Header("Narration (GDD Audio Design 5: \"Lecture des versets\")")]
+        [Tooltip("A clear, respectful reading of `text`, one per supported language — left unassigned until a real recording exists.")]
+        public AudioClip narrationClipFrench;
+        public AudioClip narrationClipEnglish;
+        public AudioClip narrationClipHebrew;
     }
 }

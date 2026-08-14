@@ -28,8 +28,17 @@ namespace KingdomOfGod.UI
             GameManager.Instance?.Audio.PlaySfx("Interface - Ouverture de Menu");
         }
 
-        public void Close() => panelRoot.SetActive(false);
+        public void Close()
+        {
+            panelRoot.SetActive(false);
+            GameManager.Instance?.Audio.StopNarration();
+        }
 
         public IReadOnlyCollection<VerseData> GetMemorizedVerses() => verseManager.MemorizedVerses;
+
+        /// <summary>"Les versets mémorisés peuvent être écoutés en boucle avec une musique très douce en fond" — Mode Méditation's read-aloud.</summary>
+        public void PlayNarration(VerseData verse) => GameManager.Instance?.Audio.PlayVerseNarration(verse);
+
+        public void StopNarration() => GameManager.Instance?.Audio.StopNarration();
     }
 }
