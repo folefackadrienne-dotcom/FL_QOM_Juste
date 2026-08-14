@@ -108,6 +108,11 @@ de pose ordinaire selon la catégorie du bâtiment placé.
 - Cris de guerre hébreux stylisés
 - Mort des unités : son rapide et digne (pas de son gore)
 
+Ces 3 signaux sont les `SfxCueData` de catégorie `Battle`, déclenchés
+directement par `BattleManager` : `SpawnUnit` (cri de guerre à l'entrée
+en combat), `TryAttack` (impact à chaque coup résolu) et `OnUnitDied`
+(mort d'une unité).
+
 **Miracles (très importants) :**
 Chaque miracle a une signature sonore unique et mémorable :
 - Mer Rouge : rugissement d'eau + vent puissant + note de shofar
@@ -119,6 +124,14 @@ Ces 4 signatures sont posées dans
 `MiracleData.audioSignatureDescription` sur les 4 miracles concernés ;
 le champ existe (vide) sur les 20 autres, prêt à être rempli au fur et à
 mesure des compositions.
+
+Au-delà de ces signatures propres à chaque miracle, 4 `SfxCueData` de
+catégorie `Miracle` couvrent les moments structurels communs à tout
+rituel de prière, déclenchés par `AudioManager` sur les événements de
+`MiracleManager` : Début de Prière (`PrayerStarted`), Interruption
+(`PrayerInterrupted`, sans couper la prière en cours), Annulation
+(`PrayerCancelled`) et Déclenchement (`MiracleCast` — l'« explosion
+lumineuse » générique pour les miracles sans signature propre).
 
 **Foi & Alliance :**
 - Quand la jauge de Foi augmente : note claire et chaude
@@ -201,14 +214,18 @@ projet :
   Carmel, Soleil Arrêté et Colonne de Nuée et de Feu.
 - **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
-  musique/ambiance) : les 4 signaux d'Interface et les 2 de Construction
-  de la section 4 sont créés dans
-  `Assets/_Project/ScriptableObjects/Audio/Sfx/`. `AudioManager.PlaySfx`
-  les déclenche en un coup (`AudioSource.PlayOneShot`), appelé
-  directement par `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController`
-  pour l'Interface, et automatiquement par `AudioManager` sur
-  `BuildingManager.BuildingPlaced` pour la Construction (fanfare si le
-  bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon).
+  musique/ambiance) : les 4 signaux d'Interface, les 2 de Construction,
+  les 3 de Bataille et les 4 de Miracle de la section 4 sont créés dans
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (13 au total).
+  `AudioManager.PlaySfx` les déclenche en un coup
+  (`AudioSource.PlayOneShot`), appelé directement par
+  `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
+  et par `BattleManager` pour la Bataille (`SpawnUnit`/`TryAttack`/
+  `OnUnitDied`), et automatiquement par `AudioManager` sur les
+  événements de `BuildingManager.BuildingPlaced` (Construction — fanfare
+  si le bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon)
+  et de `MiracleManager` (Miracle — début de prière, interruption,
+  annulation, déclenchement).
 
 `AudioManager` vit sur le même GameObject persistant `GameManager` que
 les autres managers (scène `Bootstrap`), câblé par

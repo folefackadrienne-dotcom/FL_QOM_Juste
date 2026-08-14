@@ -65,8 +65,9 @@ namespace KingdomOfGod.Audio
             if (miracleManager != null)
             {
                 miracleManager.PrayerStarted += OnPrayerStarted;
-                miracleManager.MiracleCast += OnPrayerResolved;
-                miracleManager.PrayerCancelled += OnPrayerResolved;
+                miracleManager.MiracleCast += OnMiracleCast;
+                miracleManager.PrayerCancelled += OnPrayerCancelled;
+                miracleManager.PrayerInterrupted += OnPrayerInterrupted;
             }
 
             if (allianceSystem != null) allianceSystem.StandingChanged += OnAllianceStandingChanged;
@@ -80,8 +81,9 @@ namespace KingdomOfGod.Audio
             if (miracleManager != null)
             {
                 miracleManager.PrayerStarted -= OnPrayerStarted;
-                miracleManager.MiracleCast -= OnPrayerResolved;
-                miracleManager.PrayerCancelled -= OnPrayerResolved;
+                miracleManager.MiracleCast -= OnMiracleCast;
+                miracleManager.PrayerCancelled -= OnPrayerCancelled;
+                miracleManager.PrayerInterrupted -= OnPrayerInterrupted;
             }
 
             if (allianceSystem != null) allianceSystem.StandingChanged -= OnAllianceStandingChanged;
@@ -111,12 +113,27 @@ namespace KingdomOfGod.Audio
         private void OnPrayerStarted(MiracleData miracle)
         {
             SetDucked(true);
+            PlaySfx("Miracle - Début de Prière");
             PlayContext(MusicContext.Miracle);
         }
 
-        private void OnPrayerResolved(MiracleData miracle)
+        /// <summary>Doesn't un-duck or leave the Miracle context — the ritual is still in progress, just set back a turn.</summary>
+        private void OnPrayerInterrupted(MiracleData miracle)
+        {
+            PlaySfx("Miracle - Interruption");
+        }
+
+        private void OnMiracleCast(MiracleData miracle)
         {
             SetDucked(false);
+            PlaySfx("Miracle - Déclenchement");
+            PlayContext(CurrentContext);
+        }
+
+        private void OnPrayerCancelled(MiracleData miracle)
+        {
+            SetDucked(false);
+            PlaySfx("Miracle - Annulation");
             PlayContext(CurrentContext);
         }
 

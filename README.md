@@ -69,11 +69,12 @@ Assets/_Project/
     Audio/          Direction sonore : thèmes musicaux par contexte
                     (MusicThemeData), leitmotifs récurrents
                     (LeitmotifData), ambiances (AmbientSoundscapeData),
-                    effets ponctuels d'Interface et de Construction
-                    (SfxCueData) et le mixage dynamique (AudioManager) —
-                    crossfade par scène, bascule en Crise sous Alliance
-                    basse, sourdine pendant la prière d'un miracle, SFX
-                    de clic/validation/erreur/pose de bâtiment
+                    effets ponctuels d'Interface/Construction/Bataille/
+                    Miracle (SfxCueData) et le mixage dynamique
+                    (AudioManager) — crossfade par scène, bascule en
+                    Crise sous Alliance basse, sourdine pendant la
+                    prière d'un miracle, SFX de clic/validation/erreur,
+                    de pose de bâtiment, de combat et de rituel
     UI/             HUD, menu de prière, journal des versets
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
@@ -85,8 +86,8 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 6 SFX
-                      d'Interface/Construction)
+                      musicaux, 6 leitmotifs, 6 ambiances, 13 SFX
+                      d'Interface/Construction/Bataille/Miracle)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -141,5 +142,5 @@ dans l'Éditeur, sans toucher au code.
    des `MusicThemeData`/`LeitmotifData`/`AmbientSoundscapeData`/`SfxCueData`
    dans `Assets/_Project/ScriptableObjects/Audio/` — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique et le déclenchement contextuel
-   (y compris les SFX d'Interface et de Construction), il ne manque que
-   les fichiers son.
+   (y compris les 13 SFX d'Interface, Construction, Bataille et Miracle),
+   il ne manque que les fichiers son.

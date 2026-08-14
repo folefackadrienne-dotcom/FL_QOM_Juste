@@ -48,6 +48,7 @@ namespace KingdomOfGod.Battle
             unit.Died += OnUnitDied;
             units.Add(unit);
             battleGrid.PlaceUnit(unit, position);
+            GameManager.Instance?.Audio.PlaySfx("Bataille - Cri de Guerre");
             return unit;
         }
 
@@ -59,6 +60,7 @@ namespace KingdomOfGod.Battle
             int terrainBonus = battleGrid.GetTerrainDefenseBonus(defender.Position);
             defender.TakeDamage(attacker.Data.attack - terrainBonus);
             attacker.HasActedThisTurn = true;
+            GameManager.Instance?.Audio.PlaySfx("Bataille - Impact de Métal");
 
             // "Pendant le temps de prière, le joueur est vulnérable" (GDD) — an enemy landing a
             // hit on a praying player's unit disrupts the ritual in progress.
@@ -103,6 +105,7 @@ namespace KingdomOfGod.Battle
         private void OnUnitDied(UnitInstance unit)
         {
             battleGrid.RemoveUnit(unit);
+            GameManager.Instance?.Audio.PlaySfx("Bataille - Mort d'une Unité");
             CheckVictory();
         }
 
