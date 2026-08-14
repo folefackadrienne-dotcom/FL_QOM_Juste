@@ -17,7 +17,13 @@ MonoBehaviour:
     Accélère la croissance de la population et des ressources pendant
     plusieurs tours, en écho à la promesse faite à Abraham.
   context: 1
+  category: 2
   faithCost: 10
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 3af41dd943994957aa5cf8357453d93b, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

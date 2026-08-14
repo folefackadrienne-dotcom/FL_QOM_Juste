@@ -17,7 +17,13 @@ MonoBehaviour:
     Ouvre un passage à travers un cours d'eau devant l'Arche
     d'Alliance, comme au passage du Jourdain (Josué 3-4).
   context: 2
+  category: 0
   faithCost: 20
+  prayerDurationTurns: 2
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 11400000, guid: 41cde6432a8c49afaa27c528d3d13dde, type: 3}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

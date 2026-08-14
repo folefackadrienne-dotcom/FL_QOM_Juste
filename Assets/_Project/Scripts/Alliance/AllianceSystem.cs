@@ -28,6 +28,14 @@ namespace KingdomOfGod.Alliance
         public float Value { get; private set; }
         public AllianceStanding Standing { get; private set; }
 
+        /// <summary>Alliance multiplies the power of miracles (GDD "Mécaniques des Miracles" section 8): stronger while High, dampened while Low.</summary>
+        public float MiraclePowerMultiplier => Standing switch
+        {
+            AllianceStanding.High => 1.5f,
+            AllianceStanding.Low => 0.75f,
+            _ => 1f
+        };
+
         public event Action<float> ValueChanged;
         public event Action<AllianceStanding> StandingChanged;
 

@@ -17,7 +17,13 @@ MonoBehaviour:
     Confirme un signe divin avant la bataille, en écho au test de la
     toison de Gédéon (Juges 6:36-40).
   context: 1
+  category: 3
   faithCost: 10
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

@@ -78,10 +78,21 @@ protéger un personnage, capturer un point.
 
 ### Miracles
 
-Conditionnels : niveau de Foi minimum, parfois un verset mémorisé
-spécifique, parfois un objet possédé, parfois un choix moral préalable.
-Exemples : Mer Rouge, Chute de Jéricho, Soleil arrêté, Feu du Carmel, Manne,
-Guérison.
+Jamais gratuits ni automatiques. Chaque miracle repose sur 4 piliers :
+coût en Foi, conditions d'activation (niveau de Foi, verset mémorisé,
+objet possédé, standing d'Alliance, choix moral préalable), un temps de
+prière (1 à 4 tours selon la puissance) pendant lequel le joueur est
+vulnérable — une attaque ennemie peut faire régresser la jauge ou annuler
+le rituel — et des conséquences (certains miracles ne sont utilisables
+qu'une fois par campagne, et les plus spectaculaires font baisser
+l'Alliance après usage, le peuple devenant trop dépendant des signes). Un
+seul miracle majeur peut être en préparation à la fois. Classés en 5
+catégories (Délivrance, Jugement, Provision, Puissance, Restauration) ;
+un miracle de Jugement lancé sans assez de Justice en stock fait baisser
+l'Alliance. Dans les Âges sombres (Royaumes Divisés, Exil), Foi et durée
+de prière requises sont majorées. Exemples : Mer Rouge, Chute de Jéricho,
+Soleil arrêté, Feu du Carmel, Manne, Guérison. Implémentation :
+`MiracleData`/`MiracleManager` (`Assets/_Project/Scripts/Miracles/`).
 
 ### Verses (memorization mini-game)
 
@@ -101,9 +112,10 @@ objet a une fiche : texte biblique exact, contexte historique, commentaire
 
 Jauge d'Alliance (0-100) : augmente par obéissance, justice, prière,
 mémorisation de versets ; diminue par idolâtrie, injustice, orgueil,
-alliances interdites. Haute Alliance → miracles plus puissants, événements
-positifs. Basse Alliance → malédictions, invasions, rébellions. Le joueur
-peut toujours se repentir (restauration avec coût).
+alliances interdites. Haute Alliance → miracles plus puissants
+(`AllianceSystem.MiraclePowerMultiplier`, ×1.5 en High, ×0.75 en Low),
+événements positifs. Basse Alliance → malédictions, invasions, rébellions.
+Le joueur peut toujours se repentir (restauration avec coût).
 
 ### Progression & Metagame
 

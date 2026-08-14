@@ -17,7 +17,13 @@ MonoBehaviour:
     Donne un tour supplémentaire pour achever la bataille avant la
     tombée de la nuit, comme à Gabaon devant Josué (Josué 10:12-14).
   context: 0
+  category: 3
   faithCost: 30
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 1
+  allianceCostOnCast: 10
   requiredPriorChoiceId:
   icon: {fileID: 0}

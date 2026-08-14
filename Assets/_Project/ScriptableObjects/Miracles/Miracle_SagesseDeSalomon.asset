@@ -17,7 +17,13 @@ MonoBehaviour:
     Révèle instantanément la meilleure décision possible dans un
     dilemme diplomatique ou judiciaire du royaume.
   context: 1
+  category: 1
   faithCost: 20
+  prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: bfeb8d07f7364c50bec971c7c157d6a3, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

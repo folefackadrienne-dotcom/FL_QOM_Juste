@@ -17,7 +17,13 @@ MonoBehaviour:
     Décuple temporairement la force d'une unité, au risque de
     l'épuiser si elle trahit son vœu de naziréat.
   context: 0
+  category: 3
   faithCost: 20
+  prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: 5a825ed9c23b474195754cf1db65f13b, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

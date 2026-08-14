@@ -17,7 +17,13 @@ MonoBehaviour:
     Détruit les murailles adverses après 7 tours de procession autour
     de la ville assiégée, débloqué par la corne de bélier de Jéricho.
   context: 0
+  category: 3
   faithCost: 25
+  prayerDurationTurns: 4
   requiredVerse: {fileID: 11400000, guid: 729e706d1b744c55afdce6c038f08c96, type: 3}
+  requiredArtifact: {fileID: 11400000, guid: 41cde6432a8c49afaa27c528d3d13dde, type: 3}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 1
+  allianceCostOnCast: 8
   requiredPriorChoiceId:
   icon: {fileID: 0}

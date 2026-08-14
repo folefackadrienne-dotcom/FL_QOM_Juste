@@ -17,7 +17,13 @@ MonoBehaviour:
     Fournit une ressource de secours immédiate, rappelant le bélier
     substitué au sacrifice d'Isaac dans le fourré.
   context: 1
+  category: 2
   faithCost: 15
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 43dcd9d77ccc483bb305f869c1fbb290, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

@@ -17,7 +17,13 @@ MonoBehaviour:
     Guide et protège le camp : masque les déplacements le jour,
     illumine et rassure la nuit, et réduit les murmures du peuple.
   context: 2
+  category: 0
   faithCost: 20
+  prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: fbd91616b5d24e5390251d5f5ed1349a, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

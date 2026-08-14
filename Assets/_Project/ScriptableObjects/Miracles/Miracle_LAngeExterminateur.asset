@@ -17,7 +17,13 @@ MonoBehaviour:
     Anéantit une armée assiégeante en une seule nuit, sans combat
     direct, comme devant Sennachérib à Jérusalem.
   context: 0
+  category: 0
   faithCost: 35
+  prayerDurationTurns: 4
   requiredVerse: {fileID: 11400000, guid: 6b788654f357464ab6fa59b920cb2b16, type: 3}
+  requiredArtifact: {fileID: 11400000, guid: af9efe39174d437ea155c70364efef90, type: 3}
+  minAllianceRequired: 70
+  usableOncePerCampaign: 1
+  allianceCostOnCast: 10
   requiredPriorChoiceId:
   icon: {fileID: 0}

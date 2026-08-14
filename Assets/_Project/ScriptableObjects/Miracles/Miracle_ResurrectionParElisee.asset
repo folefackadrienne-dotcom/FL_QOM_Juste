@@ -17,7 +17,13 @@ MonoBehaviour:
     Ramène à la vie un personnage ou une unité alliée tombée, comme le
     fils de la Sunamite (2 Rois 4).
   context: 1
+  category: 4
   faithCost: 25
+  prayerDurationTurns: 3
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

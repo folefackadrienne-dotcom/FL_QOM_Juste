@@ -49,6 +49,11 @@ namespace KingdomOfGod.UI
             if (confirmButton != null) confirmButton.interactable = miracle != null;
         }
 
+        /// <summary>
+        /// Casts instantly rather than going through MiracleManager's multi-turn prayer gauge,
+        /// since the Kingdom scene has no turn-advance loop yet to drive it — Battle already
+        /// drives the full ritual (BeginPrayer/AdvancePrayerTurn) via its TurnController.
+        /// </summary>
         public void ConfirmCast()
         {
             if (selectedMiracle == null) return;

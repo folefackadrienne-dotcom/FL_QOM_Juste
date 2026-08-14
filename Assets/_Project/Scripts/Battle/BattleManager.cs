@@ -39,6 +39,7 @@ namespace KingdomOfGod.Battle
             }
 
             turnController = new TurnController(units);
+            turnController.TurnAdvanced += OnTurnAdvanced;
         }
 
         public UnitInstance SpawnUnit(UnitData data, Allegiance allegiance, HexCoordinates position)
@@ -59,6 +60,13 @@ namespace KingdomOfGod.Battle
             defender.TakeDamage(attacker.Data.attack - terrainBonus);
             attacker.HasActedThisTurn = true;
 
+            // "Pendant le temps de prière, le joueur est vulnérable" (GDD) — an enemy landing a
+            // hit on a praying player's unit disrupts the ritual in progress.
+            if (defender.Allegiance == Allegiance.Player && miracleManager != null && miracleManager.IsPraying)
+            {
+                miracleManager.InterruptPrayer();
+            }
+
             CheckVictory();
             return true;
         }
@@ -72,17 +80,25 @@ namespace KingdomOfGod.Battle
             return true;
         }
 
-        /// <summary>Casts one miracle for the battle (GDD: "1 miracle par bataille, coût en Foi").</summary>
+        /// <summary>Begins the prayer ritual for one miracle for the battle (GDD: "1 miracle par bataille, coût en Foi") — resolves after its prayer duration in turns, and can be interrupted by enemy attacks in the meantime.</summary>
         public bool TryCastMiracle(MiracleData miracle)
         {
             if (miracleUsedThisBattle) return false;
-            if (!miracleManager.TryCast(miracle)) return false;
+            if (!miracleManager.BeginPrayer(miracle)) return false;
 
             miracleUsedThisBattle = true;
             return true;
         }
 
         public void EndPlayerPhase() => turnController.EndPhase();
+
+        private void OnTurnAdvanced(int turnNumber)
+        {
+            if (miracleManager != null && miracleManager.IsPraying)
+            {
+                miracleManager.AdvancePrayerTurn();
+            }
+        }
 
         private void OnUnitDied(UnitInstance unit)
         {

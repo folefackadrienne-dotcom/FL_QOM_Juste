@@ -17,7 +17,13 @@ MonoBehaviour:
     Dégâts de zone et démoralisation massive des unités idolâtres
     présentes sur le champ de bataille, débloqué par l'autel du Carmel.
   context: 2
+  category: 1
   faithCost: 30
+  prayerDurationTurns: 3
   requiredVerse: {fileID: 11400000, guid: e0564828396547978c4c8bd243956cbe, type: 3}
+  requiredArtifact: {fileID: 11400000, guid: 4b3e1dd6fb9241b9ae3a3a727651389c, type: 3}
+  minAllianceRequired: 70
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 6
   requiredPriorChoiceId:
   icon: {fileID: 0}

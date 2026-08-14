@@ -17,7 +17,13 @@ MonoBehaviour:
     Soigne toutes les unités alliées ; rappelle la promesse de
     l'Éternel qui guérit (Exode 15:26).
   context: 2
+  category: 4
   faithCost: 20
+  prayerDurationTurns: 2
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

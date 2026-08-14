@@ -98,6 +98,9 @@ namespace KingdomOfGod.EditorTools
             SetRef(allianceSystem, "resourceManager", resourceManager);
             SetRef(miracleManager, "resourceManager", resourceManager);
             SetRef(miracleManager, "verseManager", verseManager);
+            SetRef(miracleManager, "allianceSystem", allianceSystem);
+            SetRef(miracleManager, "collectionManager", collectionManager);
+            SetRef(miracleManager, "ageManager", ageManager);
             SetRef(verseManager, "resourceManager", resourceManager);
             SetRef(collectionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "resourceManager", resourceManager);

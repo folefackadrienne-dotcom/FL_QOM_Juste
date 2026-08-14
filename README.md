@@ -50,8 +50,12 @@ Assets/_Project/
     Population/     Population & Loyauté
     Battle/         Batailles tactiques tour par tour, unités, boss
                     (AntagonistData)
-    Miracles/       Miracles conditionnels (Foi, verset requis, choix moral)
-    Alliance/       Jauge d'Alliance (0-100) & repentance
+    Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
+                    objet/Alliance requis, jauge de prière 1-4 tours
+                    interruptible, limite à 1 usage unique et coût
+                    d'Alliance pour les plus puissants)
+    Alliance/       Jauge d'Alliance (0-100), repentance & multiplicateur
+                    de puissance des miracles
     Verses/         Mémorisation de versets (mini-jeu progressif)
     Collectibles/   Artefacts bibliques (Commun → Légendaire)
     Missions/       Définition & suivi des missions
@@ -106,6 +110,12 @@ dans l'Éditeur, sans toucher au code.
 4. Habiller visuellement le menu de prière et le journal des versets
    (`PrayerMenuUI`/`VerseJournalUI` ont leur logique et leurs panneaux
    générés, mais pas encore de liste d'items/boutons par miracle ou verset).
+   Le rituel complet de prière (`MiracleManager.BeginPrayer` /
+   `AdvancePrayerTurn` / `AccelerateWithFaith` / `InterruptPrayer`) est déjà
+   branché côté `Battle` via `TurnController` ; `PrayerMenuUI` utilise pour
+   l'instant `TryCast` (résolution instantanée) faute de boucle de tours
+   explicite côté `Kingdom` — à rebrancher sur le rituel complet une fois
+   cette boucle ajoutée.
 5. Créer des prefabs d'unités référençant les 6 `UnitData` de base
    (`Assets/_Project/ScriptableObjects/Units`) pour peupler la scène
    `Battle`.

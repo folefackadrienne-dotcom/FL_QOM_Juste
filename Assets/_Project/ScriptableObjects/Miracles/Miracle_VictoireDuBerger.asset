@@ -17,7 +17,13 @@ MonoBehaviour:
     Dégâts massifs garantis contre une unité « géante » isolée, quel
     que soit son niveau de défense.
   context: 0
+  category: 3
   faithCost: 15
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 908ff1abe3574f9cbb08db200a4bdcc2, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

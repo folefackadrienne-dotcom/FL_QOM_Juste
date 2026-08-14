@@ -17,7 +17,13 @@ MonoBehaviour:
     Consume instantanément une offrande ou une cible adverse par le
     feu jailli du rocher, confirmant l'appel de Gédéon.
   context: 2
+  category: 1
   faithCost: 15
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 16c32970fadf45348010844099977923, type: 3}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

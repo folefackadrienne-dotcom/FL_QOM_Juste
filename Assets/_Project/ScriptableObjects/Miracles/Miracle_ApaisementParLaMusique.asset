@@ -17,7 +17,13 @@ MonoBehaviour:
     Calme les esprits troublés et restaure le moral du royaume, comme
     la harpe de David apaisait Saül.
   context: 1
+  category: 4
   faithCost: 10
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

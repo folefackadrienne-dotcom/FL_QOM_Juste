@@ -17,7 +17,13 @@ MonoBehaviour:
     Nourrit gratuitement la population et l'armée pendant plusieurs
     tours, tant que rien n'en est amassé pour le lendemain (Exode 16).
   context: 1
+  category: 2
   faithCost: 15
+  prayerDurationTurns: 1
   requiredVerse: {fileID: 0}
+  requiredArtifact: {fileID: 0}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 0
+  allianceCostOnCast: 0
   requiredPriorChoiceId:
   icon: {fileID: 0}

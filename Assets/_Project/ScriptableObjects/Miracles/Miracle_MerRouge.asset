@@ -18,7 +18,13 @@ MonoBehaviour:
     traverser à pied sec ou de refermer les eaux sur l'ennemi qui s'y
     engage.
   context: 0
+  category: 0
   faithCost: 30
+  prayerDurationTurns: 4
   requiredVerse: {fileID: 11400000, guid: 8eb1d3f15edb4042b20b8e2bbe6dac85, type: 3}
+  requiredArtifact: {fileID: 11400000, guid: c609bd4014214e9aabefc20cbe9b3d2a, type: 3}
+  minAllianceRequired: 0
+  usableOncePerCampaign: 1
+  allianceCostOnCast: 8
   requiredPriorChoiceId:
   icon: {fileID: 0}
