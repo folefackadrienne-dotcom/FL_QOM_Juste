@@ -60,8 +60,10 @@ Assets/_Project/
     Verses/         Mémorisation de versets (mini-jeu progressif)
     Collectibles/   Artefacts bibliques (Commun → Légendaire)
     Missions/       Définition & suivi des missions
-    Progression/    Leaders légendaires, arbre technologique (3 arbres ×
-                    5 branches : Économique, Militaire, Spirituel)
+    Progression/    Leaders légendaires (LeaderManager : débloqués +
+                    leader actif), arbre technologique (3 arbres × 5
+                    branches : Économique, Militaire, Spirituel ;
+                    TechTree.TechUnlocked)
     SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud)
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
                     produits, seam IAP (stub Éditeur en attendant le vrai
@@ -90,10 +92,11 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 20 SFX
+                      musicaux, 6 leitmotifs, 6 ambiances, 25 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
-                      Alliance (dont Entrée en Crise, Faveur Élevée et
-                      Repentance), 3 lignes de voix Narrateur/Personnages)
+                      Alliance/Progression (dont Entrée en Crise, Faveur
+                      Élevée, Repentance et déblocages de tech/leader),
+                      3 lignes de voix Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -150,6 +153,6 @@ dans l'Éditeur, sans toucher au code.
    champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
    (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique, le déclenchement contextuel
-   (y compris les 20 SFX d'Interface, Construction, Bataille, Miracle et
-   Foi & Alliance) et la lecture de voix multilingue, il ne manque que
-   les fichiers son.
+   (y compris les 25 SFX d'Interface, Construction, Bataille, Miracle,
+   Foi & Alliance et Progression) et la lecture de voix multilingue, il
+   ne manque que les fichiers son.

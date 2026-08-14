@@ -2,14 +2,19 @@ using UnityEngine;
 
 namespace KingdomOfGod.Audio
 {
-    /// <summary>The SFX families from the GDD "Direction Sonore" section 4.</summary>
+    /// <summary>
+    /// The SFX families from the GDD "Direction Sonore" section 4, plus Progression — not named
+    /// in the doc's own SFX list, but a natural extension covering tech-tree unlocks and leaders
+    /// (GDD section "Progression & Metagame").
+    /// </summary>
     public enum SfxCategory
     {
         Interface,
         Construction,
         Battle,
         Miracle,
-        FaithAlliance
+        FaithAlliance,
+        Progression
     }
 
     /// <summary>

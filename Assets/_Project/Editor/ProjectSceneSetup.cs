@@ -11,6 +11,7 @@ using KingdomOfGod.Miracles;
 using KingdomOfGod.Missions;
 using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
+using KingdomOfGod.Progression;
 using KingdomOfGod.Resources;
 using KingdomOfGod.SaveSystem;
 using KingdomOfGod.UI;
@@ -70,6 +71,8 @@ namespace KingdomOfGod.EditorTools
             var verseManager = root.AddComponent<VerseManager>();
             var collectionManager = root.AddComponent<CollectionManager>();
             var missionManager = root.AddComponent<MissionManager>();
+            var techTree = root.AddComponent<TechTree>();
+            var leaderManager = root.AddComponent<LeaderManager>();
             var saveManager = root.AddComponent<SaveManager>();
             var entitlementManager = root.AddComponent<EntitlementManager>();
             var audioManager = root.AddComponent<AudioManager>();
@@ -88,6 +91,8 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "verseManager", verseManager);
             SetRef(gameManager, "collectionManager", collectionManager);
             SetRef(gameManager, "missionManager", missionManager);
+            SetRef(gameManager, "techTree", techTree);
+            SetRef(gameManager, "leaderManager", leaderManager);
             SetRef(gameManager, "saveManager", saveManager);
             SetRef(gameManager, "entitlementManager", entitlementManager);
             SetRef(gameManager, "audioManager", audioManager);
@@ -107,11 +112,14 @@ namespace KingdomOfGod.EditorTools
             SetRef(verseManager, "resourceManager", resourceManager);
             SetRef(collectionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "resourceManager", resourceManager);
+            SetRef(techTree, "resourceManager", resourceManager);
 
             SetRef(audioManager, "miracleManager", miracleManager);
             SetRef(audioManager, "allianceSystem", allianceSystem);
             SetRef(audioManager, "buildingManager", buildingManager);
             SetRef(audioManager, "resourceManager", resourceManager);
+            SetRef(audioManager, "techTree", techTree);
+            SetRef(audioManager, "leaderManager", leaderManager);
 
             var fullEdition = AssetDatabase.LoadAssetAtPath<ProductData>(EditionCompleteProductPath);
             if (fullEdition != null)

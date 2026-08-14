@@ -162,6 +162,26 @@ signal plutôt que la simple note de hausse/baisse (GDD sections 3
   reste identifiable même si d'autres gains d'Alliance surviennent
   ailleurs pour la même quantité.
 
+**Progression & Leaders :**
+
+Catégorie non nommée dans le document d'origine, mais une extension
+naturelle de la section « Progression & Metagame » du GDD (arbre
+technologique, leaders légendaires déblocables). 5 `SfxCueData` de
+catégorie `Progression` :
+- Un chime par arbre technologique (Économique/Militaire/Spirituel),
+  chacun coloré comme le domaine qu'il représente — même principe que
+  la variation par catégorie déjà utilisée en Construction.
+- Leader Débloqué (fanfare à l'arrivée d'un nouveau leader légendaire)
+  et Leader Actif (flourish plus discret quand un leader déjà débloqué
+  est mis en commandement).
+
+Ces événements n'avaient pas encore de point d'ancrage dans le code :
+`TechTree.TryUnlock` ne déclenchait aucun événement, et aucun manager
+ne suivait les leaders débloqués/actifs. `TechTree` expose maintenant
+`TechUnlocked`, et un nouveau `LeaderManager`
+(`Assets/_Project/Scripts/Progression/LeaderManager.cs`, sur le même
+modèle que `MissionManager`) expose `LeaderUnlocked`/`LeaderActivated`.
+
 ---
 
 ## 5. Voix et narration
@@ -270,9 +290,10 @@ projet :
 - **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
   musique/ambiance) : les 4 signaux d'Interface, les 2 de Construction,
-  les 3 de Bataille, les 4 de Miracle et les 7 de Foi & Alliance de la
-  section 4 sont créés dans `Assets/_Project/ScriptableObjects/Audio/Sfx/`
-  (20 au total). `AudioManager.PlaySfx` les déclenche en un coup
+  les 3 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance et les 5
+  de Progression sont créés dans
+  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (25 au total).
+  `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
   et par `BattleManager` pour la Bataille (`SpawnUnit`/`TryAttack`/
@@ -280,11 +301,13 @@ projet :
   événements de `BuildingManager.BuildingPlaced` (Construction — fanfare
   si le bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon),
   de `MiracleManager` (Miracle — début de prière, interruption,
-  annulation, déclenchement), et de `ResourceManager.ResourceChanged`
+  annulation, déclenchement), de `ResourceManager.ResourceChanged`
   (filtré sur la Foi) / `AllianceSystem` (Foi & Alliance — hausse/baisse
   de chaque jauge via `ValueChanged`, détectée en comparant à la
   dernière valeur connue ; entrée en Crise/Faveur Élevée via
-  `StandingChanged` ; Repentance via l'événement dédié `Repented`).
+  `StandingChanged` ; Repentance via l'événement dédié `Repented`), et
+  de `TechTree.TechUnlocked` (un chime par arbre) / `LeaderManager`
+  (Progression — `LeaderUnlocked`/`LeaderActivated`).
 
 - **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
   et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du

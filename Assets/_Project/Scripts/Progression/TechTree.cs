@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using KingdomOfGod.Resources;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace KingdomOfGod.Progression
         [SerializeField] private List<TechNode> allNodes = new List<TechNode>();
 
         private readonly HashSet<TechNode> unlocked = new HashSet<TechNode>();
+
+        public event Action<TechNode> TechUnlocked;
 
         public bool IsUnlocked(TechNode node) => unlocked.Contains(node);
 
@@ -31,6 +34,7 @@ namespace KingdomOfGod.Progression
         {
             if (!CanUnlock(node) || !resourceManager.TrySpend(node.cost)) return false;
             unlocked.Add(node);
+            TechUnlocked?.Invoke(node);
             return true;
         }
     }

@@ -7,6 +7,7 @@ using KingdomOfGod.Miracles;
 using KingdomOfGod.Missions;
 using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
+using KingdomOfGod.Progression;
 using KingdomOfGod.Resources;
 using KingdomOfGod.SaveSystem;
 using KingdomOfGod.Verses;
@@ -34,6 +35,8 @@ namespace KingdomOfGod.Core
         [SerializeField] private VerseManager verseManager;
         [SerializeField] private CollectionManager collectionManager;
         [SerializeField] private MissionManager missionManager;
+        [SerializeField] private TechTree techTree;
+        [SerializeField] private LeaderManager leaderManager;
         [SerializeField] private SaveManager saveManager;
         [SerializeField] private EntitlementManager entitlementManager;
         [SerializeField] private AudioManager audioManager;
@@ -48,6 +51,8 @@ namespace KingdomOfGod.Core
         public VerseManager Verses => verseManager;
         public CollectionManager Collection => collectionManager;
         public MissionManager Missions => missionManager;
+        public TechTree Tech => techTree;
+        public LeaderManager Leaders => leaderManager;
         public SaveManager Save => saveManager;
         public EntitlementManager Entitlements => entitlementManager;
         public AudioManager Audio => audioManager;

@@ -4,6 +4,7 @@ using System.Linq;
 using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.Progression;
 using KingdomOfGod.Resources;
 using KingdomOfGod.Verses;
 using UnityEngine;
@@ -25,6 +26,8 @@ namespace KingdomOfGod.Audio
         [SerializeField] private AllianceSystem allianceSystem;
         [SerializeField] private BuildingManager buildingManager;
         [SerializeField] private ResourceManager resourceManager;
+        [SerializeField] private TechTree techTree;
+        [SerializeField] private LeaderManager leaderManager;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
@@ -100,6 +103,14 @@ namespace KingdomOfGod.Audio
                 lastFaithValue = resourceManager.Get(ResourceType.Faith);
                 resourceManager.ResourceChanged += OnResourceChanged;
             }
+
+            if (techTree != null) techTree.TechUnlocked += OnTechUnlocked;
+
+            if (leaderManager != null)
+            {
+                leaderManager.LeaderUnlocked += OnLeaderUnlocked;
+                leaderManager.LeaderActivated += OnLeaderActivated;
+            }
         }
 
         private void OnDisable()
@@ -123,6 +134,13 @@ namespace KingdomOfGod.Audio
 
             if (buildingManager != null) buildingManager.BuildingPlaced -= OnBuildingPlaced;
             if (resourceManager != null) resourceManager.ResourceChanged -= OnResourceChanged;
+            if (techTree != null) techTree.TechUnlocked -= OnTechUnlocked;
+
+            if (leaderManager != null)
+            {
+                leaderManager.LeaderUnlocked -= OnLeaderUnlocked;
+                leaderManager.LeaderActivated -= OnLeaderActivated;
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -203,6 +221,27 @@ namespace KingdomOfGod.Audio
         {
             bool important = instance.Data.category == BuildingCategory.Spiritual || instance.Data.category == BuildingCategory.Special;
             PlaySfx(important ? "Construction - Bâtiment Important Terminé" : "Construction - Placement d'un Bâtiment");
+        }
+
+        /// <summary>One chime per tech tree, matching its character — the same "vary by category" treatment already used for Construction.</summary>
+        private void OnTechUnlocked(TechNode node)
+        {
+            PlaySfx(node.category switch
+            {
+                TechTreeCategory.Military => "Progression - Technologie Militaire Débloquée",
+                TechTreeCategory.Spiritual => "Progression - Technologie Spirituelle Débloquée",
+                _ => "Progression - Technologie Économique Débloquée"
+            });
+        }
+
+        private void OnLeaderUnlocked(LeaderData leader)
+        {
+            PlaySfx("Progression - Leader Débloqué");
+        }
+
+        private void OnLeaderActivated(LeaderData leader)
+        {
+            PlaySfx("Progression - Leader Actif");
         }
 
         /// <summary>Lets a future dialogue/cutscene system ask for the ambience to duck alongside miracles without the two stepping on each other's un-duck.</summary>
