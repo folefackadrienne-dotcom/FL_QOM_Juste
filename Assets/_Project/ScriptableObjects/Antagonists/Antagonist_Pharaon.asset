@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a296d03ffc924b4b8fcc6e91e02d43e7, type: 3}
+  m_Name: Antagonist_Pharaon
+  m_EditorClassIdentifier:
+  displayName: Pharaon
+  age: 1
+  role: >-
+    Antagoniste principal de l'Âge 2. Nom dans le jeu : « Pharaon » — le
+    joueur ne connaît jamais son nom personnel, ce qui renforce son
+    caractère d'institution plus que d'individu.
+  portrait: {fileID: 0}
+  appearance: >-
+    Homme d'âge mûr, visage fier et impassible. Yeux lourdement
+    maquillés de khôl, peau bronzée. Coiffe de pharaon imposante
+    (némès), colliers d'or massifs, large collerette. Il dégage une
+    aura de puissance absolue et d'intouchabilité. Au fur et à mesure
+    des plaies, son visage se crispe, des signes de fatigue et de rage
+    apparaissent, mais il refuse de montrer de la faiblesse.
+  personality: >-
+    Orgueilleux jusqu'à l'autodestruction. Considère Moïse et les
+    Hébreux comme une simple nuisance d'abord, puis comme une insulte
+    personnelle à sa divinité. Capable de moments de recul quand la
+    douleur est trop forte, mais son cœur se durcit à chaque fois. Il
+    incarne la résistance humaine à la volonté de Dieu.
+  heroicContrast: >-
+    L'orgueil de Pharaon face à l'humilité de Moïse.
+  encounterType: 0
+  encounterDescription: >-
+    Bataille multi-phases et confrontation morale, boss de fin d'Âge 2.
+    Phase 1 – Les Plaies : avant la bataille finale, le joueur déclenche
+    plusieurs plaies (mini-événements) ; chaque plaie réussie affaiblit
+    l'armée égyptienne ou réduit la jauge de Cœur endurci de Pharaon.
+    Phase 2 – Bataille rangée : combat tactique classique contre
+    l'armée égyptienne (chars, archers, fantassins d'élite). Phase 3 –
+    Endurcissement : plus le joueur gagne de tours, plus Pharaon devient
+    résistant aux dégâts et aux miracles. Pharaon n'est pas une unité
+    sur le champ de bataille au début ; il dirige depuis l'arrière et
+    lance toutes les 3-4 tours un ordre spécial (renforts, fanatisme des
+    troupes, malédiction légère sur les Israélites).
+  uniqueMechanicName: Cœur endurci
+  uniqueMechanicDescription: >-
+    Plus le joueur le pousse dans ses retranchements, plus Pharaon
+    devient résistant aux dégâts et aux miracles… jusqu'à un point de
+    rupture.
+  victoryCondition: >-
+    Survivre jusqu'à l'activation du miracle de la Mer Rouge (Foi
+    élevée, verset mémorisé, survie d'un certain nombre de tours), puis
+    anéantir ou mettre en déroute l'armée égyptienne.
+  requiredMiracle: {fileID: 11400000, guid: ea01d2ed03ae4f7fa68f22149286e6d1, type: 3}

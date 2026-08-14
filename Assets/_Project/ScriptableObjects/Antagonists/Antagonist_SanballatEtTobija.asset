@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a296d03ffc924b4b8fcc6e91e02d43e7, type: 3}
+  m_Name: Antagonist_SanballatEtTobija
+  m_EditorClassIdentifier:
+  displayName: Sanballat et Tobija
+  age: 6
+  role: >-
+    Antagonistes principaux de l'Âge 7, en opposition à Néhémie.
+  portrait: {fileID: 0}
+  appearance: >-
+    Sanballat : homme d'âge mûr, visage rusé et moqueur, vêtements de
+    gouverneur perse assez riches, sourire condescendant permanent.
+    Tobija l'Ammonite : plus agressif et méprisant que Sanballat,
+    complice constant.
+  personality: >-
+    Sanballat est un politicien habile et persévérant, qui utilise la
+    moquerie, la manipulation, les fausses rumeurs et la menace ; il
+    n'attaque presque jamais de front au début, préférant décourager et
+    diviser. Tobija est plus direct dans son mépris, mais tout aussi
+    constant dans son opposition.
+  heroicContrast: >-
+    Les moqueries de Sanballat face à la persévérance de Néhémie.
+  encounterType: 4
+  encounterDescription: >-
+    Harcèlement permanent et attaques ponctuelles pendant la
+    construction, sans boss classique unique. Système de pression
+    constante : moqueries et rumeurs qui font baisser la Loyauté,
+    tentatives de diversion obligeant le joueur à envoyer des unités
+    enquêter, attaques surprises sur les ouvriers qui construisent la
+    muraille. En milieu ou fin d'âge, Sanballat et Tobija lancent une
+    offensive coordonnée avec des alliés, tentant de briser les
+    sections de muraille les plus faibles à l'aide de tirailleurs et
+    d'archers.
+  uniqueMechanicName: Démoralisation
+  uniqueMechanicDescription: >-
+    Ils lancent régulièrement des campagnes de moqueries et de rumeurs
+    qui font baisser la Loyauté du peuple ; la mécanique de Néhémie
+    « Une main à la truelle, une main à l'épée » permet de construire
+    et de se défendre dans le même tour, avec un malus.
+  victoryCondition: >-
+    Terminer la reconstruction de la muraille malgré la pression, puis
+    repousser l'attaque finale. Sanballat n'est pas forcément tué : sa
+    défaite est politique et morale, il est humilié.
+  requiredMiracle: {fileID: 0}

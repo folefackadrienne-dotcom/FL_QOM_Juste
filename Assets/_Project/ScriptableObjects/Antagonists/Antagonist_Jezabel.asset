@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a296d03ffc924b4b8fcc6e91e02d43e7, type: 3}
+  m_Name: Antagonist_Jezabel
+  m_EditorClassIdentifier:
+  displayName: Jézabel
+  age: 5
+  role: >-
+    Antagoniste principale de l'Âge 6, aux côtés de son mari Achab.
+  portrait: {fileID: 0}
+  appearance: >-
+    Femme d'une grande beauté froide et calculée. Maquillage
+    sophistiqué, yeux soulignés, lèvres rouges. Vêtements phéniciens
+    luxueux (pourpre, or, bijoux lourds). Elle se déplace avec une
+    grâce souveraine et intimidante. Même dans les moments de rage, elle
+    reste maîtrisée et dangereuse.
+  personality: >-
+    Intelligente, manipulatrice et impitoyable. Profondément attachée
+    aux dieux de son pays (Baal et Ashéra). Elle considère Élie comme
+    son ennemi personnel. Elle domine clairement son mari Achab. Cruelle
+    sans être hystérique : ses décisions sont froides et stratégiques
+    (élimination de Naboth, chasse aux prophètes).
+  heroicContrast: >-
+    La manipulation de Jézabel face à la radicalité d'Élie.
+  encounterType: 2
+  encounterDescription: >-
+    Combat politique et batailles ponctuelles menant à un boss final.
+    Jézabel n'est presque jamais présente physiquement sur le champ de
+    bataille au début : elle agit par Corruption, convertissant une
+    unité israélite (ou réduisant fortement sa loyauté) toutes les X
+    tours si la jauge d'Alliance est trop basse. Elle envoie des
+    assassins et des prophètes de Baal qui tentent d'éliminer les
+    unités prophètes du joueur, et les troupes d'Achab/Jézabel ont un
+    bonus tant que des autels de Baal sont actifs sur la carte. Près de
+    sa mort, elle apparaît enfin en personne, protégée par une garde
+    d'élite et des prêtres de Baal ; elle possède une capacité
+    « Regard de domination » qui peut geler une unité alliée pendant 1
+    tour, et invoque régulièrement des renforts fanatiques.
+  uniqueMechanicName: Corruption
+  uniqueMechanicDescription: >-
+    Elle répand progressivement l'idolâtrie dans le royaume, faisant
+    baisser la jauge d'Alliance du joueur si on ne réagit pas.
+  victoryCondition: >-
+    Réduire ses points de vie à zéro tout en résistant à la corruption.
+    Sa mort (défenestrée) déclenche un événement narratif fort.
+  requiredMiracle: {fileID: 0}

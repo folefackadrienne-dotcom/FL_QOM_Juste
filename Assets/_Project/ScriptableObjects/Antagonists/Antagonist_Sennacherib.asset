@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a296d03ffc924b4b8fcc6e91e02d43e7, type: 3}
+  m_Name: Antagonist_Sennacherib
+  m_EditorClassIdentifier:
+  displayName: Sennachérib
+  age: 5
+  role: >-
+    Antagoniste majeur de la fin de l'Âge 6, lors du siège de Jérusalem
+    sous Ézéchias.
+  portrait: {fileID: 0}
+  appearance: >-
+    Roi assyrien imposant, barbe longue très travaillée (style assyrien
+    caractéristique), cheveux bouclés. Armure lourde richement décorée.
+    Regard cruel et confiant. Il dégage une impression de puissance
+    militaire écrasante.
+  personality: >-
+    Orgueilleux et blasphématoire. Il se moque ouvertement du Dieu
+    d'Israël dans ses lettres et discours. Stratège militaire brillant
+    et impitoyable. Il incarne la superpuissance mondiale qui défie
+    Dieu.
+  heroicContrast: >-
+    La puissance de Sennachérib face à la dépendance d'Ézéchias envers
+    Dieu.
+  encounterType: 3
+  encounterDescription: >-
+    Grand siège défensif : le joueur défend Jérusalem contre une armée
+    assyrienne massivement supérieure en nombre. Sennachérib n'est pas
+    sur le champ de bataille directement, mais son aura de terreur est
+    permanente. Vagues successives très denses (infanterie lourde,
+    archers, machines de siège, cavaliers) ; toutes les 5 tours, il
+    envoie un message blasphématoire qui fait baisser encore le moral et
+    la Foi, sauf si le joueur a prié ou mémorisé certains versets. Le
+    joueur doit protéger les murailles et le Temple le plus longtemps
+    possible.
+  uniqueMechanicName: Terreur assyrienne
+  uniqueMechanicDescription: >-
+    Toutes les unités israélites commencent avec un malus de moral, qui
+    augmente avec le temps.
+  victoryCondition: >-
+    Survivre un certain nombre de tours jusqu'à ce que les conditions
+    du miracle soient remplies (prière d'Ézéchias + Foi élevée).
+    L'ange de l'Éternel intervient alors et anéantit une grande partie
+    de l'armée assyrienne.
+  requiredMiracle: {fileID: 11400000, guid: 76abda6b494c439c84ae0895fdac140c, type: 3}

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a296d03ffc924b4b8fcc6e91e02d43e7, type: 3}
+  m_Name: Antagonist_Goliath
+  m_EditorClassIdentifier:
+  displayName: Goliath
+  age: 4
+  role: >-
+    Antagoniste emblématique du début de l'Âge 5, boss de la mission
+    « David et Goliath ».
+  portrait: {fileID: 0}
+  appearance: >-
+    Géant (environ 2,90 m dans le jeu), extrêmement musclé. Armure de
+    bronze massive qui brille au soleil. Visage brutal, barbe épaisse,
+    regard méprisant. Il porte une lance énorme dont le fer est
+    impressionnant. Sa simple présence sur le champ de bataille fait
+    reculer le moral des troupes israélites.
+  personality: >-
+    Arrogant, provocateur, presque théâtral. Il méprise ouvertement les
+    Israélites et leur Dieu. Il n'a aucun doute sur sa victoire.
+  heroicContrast: >-
+    La force brute de Goliath face à la foi de David.
+  encounterType: 1
+  encounterDescription: >-
+    Duel légendaire qui influence le moral de toute l'armée. Goliath
+    apparaît seul au centre du champ de bataille et provoque Israël ;
+    tant que personne ne l'affronte, il active régulièrement « Défi
+    méprisant », une baisse importante du moral de toutes les unités
+    israélites. Goliath est une unité unique extrêmement puissante
+    (énormes points de vie, grande portée avec sa lance, forte défense)
+    et ne peut pas être ciblé normalement par les archers de loin,
+    protégé par son bouclier. Seul David (ou une unité très spécifique)
+    peut l'engager en duel direct de manière optimale ; quand David
+    l'affronte, le combat passe en mode « duel », les deux champions
+    s'affrontant pendant que le reste de l'armée regarde.
+  uniqueMechanicName: Frondes de David
+  uniqueMechanicDescription: >-
+    Quand David l'affronte, il ignore une grande partie de l'armure de
+    Goliath.
+  victoryCondition: >-
+    Vaincre Goliath en duel. Sa mort provoque une déroute immédiate de
+    l'armée philistine, avec un bonus de moral massif pour Israël.
+  requiredMiracle: {fileID: 0}
