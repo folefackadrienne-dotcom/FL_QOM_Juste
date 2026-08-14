@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_BatonDElisee
+  m_EditorClassIdentifier:
+  displayName: Bâton d'Élisée
+  biblicalReference: 2 Rois 4
+  historicalContext: >-
+    Le bâton confié à Guéhazi pour le poser sur le visage de l'enfant
+    mort de la Sunamite — sans effet tant qu'Élisée lui-même n'intervient
+    pas en personne.
+  educationalComment: >-
+    Un rappel que le symbole ne remplace pas la présence : la
+    résurrection vient finalement d'Élisée lui-même, corps contre corps.
+  rarity: 2
+  age: 5
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Peut ressusciter une unité alliée, une fois par bataille.

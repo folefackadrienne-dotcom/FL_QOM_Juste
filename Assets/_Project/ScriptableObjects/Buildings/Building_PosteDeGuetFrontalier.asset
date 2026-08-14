@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaf6182527040f6a400404f2c6bc450, type: 3}
+  m_Name: Building_PosteDeGuetFrontalier
+  m_EditorClassIdentifier:
+  displayName: Poste de Guet Frontalier
+  description: >-
+    Tour de guet postée aux frontières mouvantes entre Israël et Juda,
+    et face aux menaces croissantes d'Aram puis d'Assyrie.
+  category: 2
+  introducedInAge: 5
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
+  buildCost:
+  - type: 2
+    amount: 15
+  - type: 3
+    amount: 10
+  minFaithRequired: 0
+  minJusticeRequired: 0
+  productionPerTurn: []

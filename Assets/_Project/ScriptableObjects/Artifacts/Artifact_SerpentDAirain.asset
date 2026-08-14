@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_SerpentDAirain
+  m_EditorClassIdentifier:
+  displayName: Serpent d'airain (détruit)
+  biblicalReference: 2 Rois 18
+  historicalContext: >-
+    Le serpent d'airain façonné par Moïse au désert (Nombres 21), conservé
+    pendant des siècles jusqu'à ce qu'Ézéchias le mette en pièces parce
+    que le peuple lui offrait de l'encens.
+  educationalComment: >-
+    Un objet saint à l'origine peut devenir une idole : même les
+    souvenirs des miracles doivent parfois être détruits pour protéger
+    l'Alliance.
+  rarity: 1
+  age: 5
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Objet à double tranchant : guérit d'abord, puis devient un piège
+    d'idolâtrie s'il est conservé trop longtemps.

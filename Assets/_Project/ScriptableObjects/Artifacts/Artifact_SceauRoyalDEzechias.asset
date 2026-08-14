@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_SceauRoyalDEzechias
+  m_EditorClassIdentifier:
+  displayName: Sceau royal d'Ézéchias
+  biblicalReference: 2 Rois 18–20
+  historicalContext: >-
+    Le sceau du roi Ézéchias, qui déchire ses vêtements et étend devant
+    l'Éternel les lettres menaçantes de Sennachérib avant de prier pour
+    la délivrance de Jérusalem.
+  educationalComment: >-
+    L'autorité royale mise au service de la prière plutôt que de la
+    seule stratégie militaire, face à l'empire assyrien.
+  rarity: 2
+  age: 5
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Réduit fortement le coût en Foi des miracles de protection.

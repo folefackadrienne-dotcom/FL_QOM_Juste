@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age6_04_LaChuteDeSamarie
+  m_EditorClassIdentifier:
+  missionId: age6_04_la_chute_de_samarie
+  displayName: La Chute de Samarie
+  summary: >-
+    Mission défensive désespérée : le siège et la chute du royaume du
+    Nord face à l'Assyrie (2 Rois 17).
+  age: 5
+  type: 4
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 8
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 6
+    amount: 10
+  battleSceneName:
