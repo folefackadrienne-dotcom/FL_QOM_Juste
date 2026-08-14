@@ -90,9 +90,10 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 17 SFX
+                      musicaux, 6 leitmotifs, 6 ambiances, 20 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
-                      Alliance, 3 lignes de voix Narrateur/Personnages)
+                      Alliance (dont Entrée en Crise, Faveur Élevée et
+                      Repentance), 3 lignes de voix Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -149,6 +150,6 @@ dans l'Éditeur, sans toucher au code.
    champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
    (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique, le déclenchement contextuel
-   (y compris les 17 SFX d'Interface, Construction, Bataille, Miracle et
+   (y compris les 20 SFX d'Interface, Construction, Bataille, Miracle et
    Foi & Alliance) et la lecture de voix multilingue, il ne manque que
    les fichiers son.

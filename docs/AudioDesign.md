@@ -145,6 +145,23 @@ s'abonne directement à `ResourceManager.ResourceChanged` (filtré sur
 dernière valeur connue de chaque jauge pour détecter le sens de la
 variation et jouer le bon signal.
 
+Au-delà de ces variations continues, 3 `SfxCueData` supplémentaires
+couvrent les moments Alliance/Repentance qui méritent leur propre
+signal plutôt que la simple note de hausse/baisse (GDD sections 3
+« Alliance & Moralité » et 2, ligne Repentance / Restauration) :
+- **Entrée en Crise** — joué une seule fois quand `AllianceSystem.Standing`
+  franchit le seuil bas (devient `Low`), en plus du crossfade déjà en
+  place vers le contexte musical Crise.
+- **Faveur Élevée** — joué une seule fois quand `Standing` franchit le
+  seuil haut (devient `High`).
+- **Repentance / Restauration** — « passage de l'ombre à la lumière »,
+  joué spécifiquement quand le joueur se repent
+  (`AllianceSystem.TryRepent`), en plus de — et non à la place de — la
+  note de hausse générique : `AllianceSystem` expose un événement dédié
+  `Repented`, distinct de `ValueChanged`, pour que ce moment délibéré
+  reste identifiable même si d'autres gains d'Alliance surviennent
+  ailleurs pour la même quantité.
+
 ---
 
 ## 5. Voix et narration
@@ -253,9 +270,9 @@ projet :
 - **`SfxCueData`** (`Assets/_Project/Scripts/Audio/SfxCueData.cs`) — un
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
   musique/ambiance) : les 4 signaux d'Interface, les 2 de Construction,
-  les 3 de Bataille, les 4 de Miracle et les 4 de Foi & Alliance de la
+  les 3 de Bataille, les 4 de Miracle et les 7 de Foi & Alliance de la
   section 4 sont créés dans `Assets/_Project/ScriptableObjects/Audio/Sfx/`
-  (17 au total). `AudioManager.PlaySfx` les déclenche en un coup
+  (20 au total). `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController` pour l'Interface
   et par `BattleManager` pour la Bataille (`SpawnUnit`/`TryAttack`/
@@ -264,9 +281,10 @@ projet :
   si le bâtiment est `Spiritual`/`Special`, son de pose ordinaire sinon),
   de `MiracleManager` (Miracle — début de prière, interruption,
   annulation, déclenchement), et de `ResourceManager.ResourceChanged`
-  (filtré sur la Foi) / `AllianceSystem.ValueChanged` (Foi & Alliance —
-  hausse/baisse de chaque jauge, détectée en comparant à la dernière
-  valeur connue).
+  (filtré sur la Foi) / `AllianceSystem` (Foi & Alliance — hausse/baisse
+  de chaque jauge via `ValueChanged`, détectée en comparant à la
+  dernière valeur connue ; entrée en Crise/Faveur Élevée via
+  `StandingChanged` ; Repentance via l'événement dédié `Repented`).
 
 - **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
   et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du

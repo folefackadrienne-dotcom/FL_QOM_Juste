@@ -39,6 +39,9 @@ namespace KingdomOfGod.Alliance
         public event Action<float> ValueChanged;
         public event Action<AllianceStanding> StandingChanged;
 
+        /// <summary>Fired specifically on a successful repentance, distinct from ValueChanged, so listeners (e.g. audio) can tell a deliberate act of repentance apart from any other Alliance gain.</summary>
+        public event Action Repented;
+
         private void Awake()
         {
             Value = startingValue;
@@ -70,6 +73,7 @@ namespace KingdomOfGod.Alliance
             if (!resourceManager.TrySpend(new[] { repentanceCost })) return false;
 
             Modify(repentanceRestoreAmount, "repentance");
+            Repented?.Invoke();
             return true;
         }
     }

@@ -90,6 +90,7 @@ namespace KingdomOfGod.Audio
                 lastAllianceValue = allianceSystem.Value;
                 allianceSystem.StandingChanged += OnAllianceStandingChanged;
                 allianceSystem.ValueChanged += OnAllianceValueChanged;
+                allianceSystem.Repented += OnRepented;
             }
 
             if (buildingManager != null) buildingManager.BuildingPlaced += OnBuildingPlaced;
@@ -117,6 +118,7 @@ namespace KingdomOfGod.Audio
             {
                 allianceSystem.StandingChanged -= OnAllianceStandingChanged;
                 allianceSystem.ValueChanged -= OnAllianceValueChanged;
+                allianceSystem.Repented -= OnRepented;
             }
 
             if (buildingManager != null) buildingManager.BuildingPlaced -= OnBuildingPlaced;
@@ -136,11 +138,20 @@ namespace KingdomOfGod.Audio
             PlayContext(CurrentContext);
         }
 
-        /// <summary>"En cas de crise morale ou d'idolâtrie, le mixage devient plus étouffé" — Low Alliance overrides whatever context the scene would otherwise play.</summary>
+        /// <summary>"En cas de crise morale ou d'idolâtrie, le mixage devient plus étouffé" — Low Alliance overrides whatever context the scene would otherwise play, plus a one-shot sting for crossing into or out of the extreme bands.</summary>
         private void OnAllianceStandingChanged(AllianceStanding standing)
         {
             allianceOverride = standing == AllianceStanding.Low ? MusicContext.Crisis : (MusicContext?)null;
             PlayContext(CurrentContext);
+
+            if (standing == AllianceStanding.Low) PlaySfx("Alliance - Entrée en Crise");
+            else if (standing == AllianceStanding.High) PlaySfx("Alliance - Faveur Élevée");
+        }
+
+        /// <summary>"Passage de l'ombre à la lumière" — plays in addition to (not instead of) the generic Alliance-en-Hausse tick from OnAllianceValueChanged, since a deliberate repentance is a distinct, more significant moment.</summary>
+        private void OnRepented()
+        {
+            PlaySfx("Alliance - Repentance / Restauration");
         }
 
         /// <summary>"Quand la jauge de Foi augmente : note claire et chaude / quand elle baisse : dissonance légère" — same treatment applied to the Alliance gauge.</summary>
