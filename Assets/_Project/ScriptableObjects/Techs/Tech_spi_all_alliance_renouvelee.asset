@@ -19,7 +19,7 @@ MonoBehaviour:
   effectDescription: "Permet de restaurer une grande quantité d'Alliance après une période de déclin (au prix d'un effort important)"
   recommendedAge: "6-7"
   prerequisiteIds:
-  - spi_all_cur_non_partage
+  - spi_all_coeur_non_partage
   additionalRequirement: 
   cost:
   - type: 5

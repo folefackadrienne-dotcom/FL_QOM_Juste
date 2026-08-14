@@ -19,7 +19,7 @@ MonoBehaviour:
   effectDescription: "Même dans les périodes très sombres, la Foi ne peut plus descendre en dessous d'un certain seuil"
   recommendedAge: "6-7"
   prerequisiteIds:
-  - spi_foi_cur_affermi
+  - spi_foi_coeur_affermi
   additionalRequirement: 
   cost:
   - type: 5

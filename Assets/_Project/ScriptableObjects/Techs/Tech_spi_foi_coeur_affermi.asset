@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
-  m_Name: Tech_spi_all_cur_non_partage
+  m_Name: Tech_spi_foi_coeur_affermi
   m_EditorClassIdentifier:
-  techId: spi_all_cur_non_partage
-  displayName: "Cœur non partagé"
+  techId: spi_foi_coeur_affermi
+  displayName: "Cœur affermi"
   category: 2
-  branch: "Alliance & Sainteté"
-  effectDescription: "Réduit fortement les pertes d'Alliance liées aux compromis"
+  branch: "Foi & Vie Spirituelle"
+  effectDescription: "Réduit la perte de Foi lors des événements négatifs"
   recommendedAge: "5-6"
   prerequisiteIds:
-  - spi_all_crainte_de_l_eternel
+  - spi_foi_meditation_de_la_torah
   additionalRequirement: 
   cost:
   - type: 5
-    amount: 42
+    amount: 50
   - type: 4
-    amount: 32
+    amount: 38
