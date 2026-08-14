@@ -1,6 +1,7 @@
 :root {
-  --bg1: #fff3d6;
-  --bg2: #ffd6e8;
+  --bg1: #ffb56b;
+  --bg2: #ff7aa2;
+  --bg3: #a672e0;
   --purple: #6c4ab6;
   --purple-dark: #4b2e91;
   --pink: #ff6f91;
@@ -17,7 +18,7 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: "Comic Sans MS", "Baloo 2", "Trebuchet MS", sans-serif;
-  background: linear-gradient(160deg, var(--bg1), var(--bg2));
+  background: linear-gradient(160deg, var(--bg1), var(--bg2) 55%, var(--bg3));
   color: #3a2a5d;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
@@ -298,7 +299,7 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
 .verse-preview {
   margin-top: 14px;
   font-size: .8rem;
-  color: #7a5fb0;
+  color: var(--purple-dark);
   text-align: center;
   font-style: italic;
 }
@@ -365,7 +366,7 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
 }
 .library-item .ref { font-weight: bold; color: var(--purple); }
 .library-item .txt { margin-top: 4px; font-size: .95rem; }
-.library-empty { text-align: center; color: #8a76b8; margin-top: 30px; }
+.library-empty { text-align: center; color: var(--purple-dark); margin-top: 30px; }
 
 .help-card p { text-align: left; line-height: 1.5; }
 .help-verse { text-align: center !important; font-style: italic; color: var(--purple); margin-top: 16px; }
