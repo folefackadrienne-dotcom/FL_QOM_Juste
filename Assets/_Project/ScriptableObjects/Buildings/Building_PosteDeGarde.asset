@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaf6182527040f6a400404f2c6bc450, type: 3}
+  m_Name: Building_PosteDeGarde
+  m_EditorClassIdentifier:
+  displayName: Poste de Garde
+  description: >-
+    Premier bâtiment militaire du peuple en marche, formant les hommes qui
+    repoussent l'attaque d'Amalek à Rephidim (Exode 17:8-13).
+  category: 2
+  introducedInAge: 1
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
+  buildCost:
+  - type: 2
+    amount: 15
+  - type: 3
+    amount: 10
+  minFaithRequired: 0
+  minJusticeRequired: 0
+  productionPerTurn: []

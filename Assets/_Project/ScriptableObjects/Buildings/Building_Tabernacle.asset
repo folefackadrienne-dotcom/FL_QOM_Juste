@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaf6182527040f6a400404f2c6bc450, type: 3}
+  m_Name: Building_Tabernacle
+  m_EditorClassIdentifier:
+  displayName: Tabernacle
+  description: >-
+    Bâtiment signature de l'Âge 2 : la demeure mobile de Dieu au milieu du
+    camp, bâtie selon les plans exacts donnés à Moïse (Exode 25-27),
+    aboutissement de la mission « Le Tabernacle ».
+  category: 4
+  introducedInAge: 1
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
+  buildCost:
+  - type: 2
+    amount: 40
+  - type: 3
+    amount: 50
+  minFaithRequired: 20
+  minJusticeRequired: 10
+  productionPerTurn:
+  - type: 4
+    amount: 10

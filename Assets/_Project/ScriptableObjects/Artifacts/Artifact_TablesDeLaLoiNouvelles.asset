@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_TablesDeLaLoiNouvelles
+  m_EditorClassIdentifier:
+  displayName: Tables de la Loi (nouvelles)
+  biblicalReference: Exode 34
+  historicalContext: >-
+    Les secondes tables, taillées par Moïse sur l'ordre de Dieu et
+    réécrites sur le Sinaï après l'intercession de Moïse pour le peuple.
+  educationalComment: >-
+    Le signe de l'Alliance restaurée : Dieu renouvelle sa Loi malgré la
+    faute du Veau d'Or, préfigurant la mécanique de repentance du jeu.
+  rarity: 3
+  age: 1
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    +20 % de génération de Foi et de Justice tant que les tables sont
+    conservées dans le Tabernacle.

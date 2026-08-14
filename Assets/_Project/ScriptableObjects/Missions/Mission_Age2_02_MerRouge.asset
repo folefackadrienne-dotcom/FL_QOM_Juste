@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age2_02_MerRouge
+  m_EditorClassIdentifier:
+  missionId: age2_02_mer_rouge
+  displayName: La Mer Rouge
+  summary: >-
+    Bataille tactique et miracle spectaculaire. Le joueur doit survivre
+    jusqu'à pouvoir ouvrir la mer.
+  age: 1
+  type: 0
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 6
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 4
+    amount: 30
+  battleSceneName: Battle_MerRouge

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_BatonDeMoise
+  m_EditorClassIdentifier:
+  displayName: Bâton de Moïse
+  biblicalReference: Exode 4 & 14
+  historicalContext: >-
+    Le bâton de berger de Moïse, changé en serpent devant Pharaon puis
+    levé sur la mer Rouge pour en ouvrir les eaux.
+  educationalComment: >-
+    L'objet le plus emblématique de l'Exode : simple bâton de berger,
+    devenu l'instrument visible de la puissance de Dieu à travers Moïse.
+  rarity: 3
+  age: 1
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Permet d'activer plusieurs miracles liés à l'eau et au serpent
+    (Mer Rouge, plaies, eau du rocher).

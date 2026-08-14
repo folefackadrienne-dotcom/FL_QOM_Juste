@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_MenorahDuTabernacle
+  m_EditorClassIdentifier:
+  displayName: Menorah du Tabernacle
+  biblicalReference: Exode 25
+  historicalContext: >-
+    Le chandelier d'or pur à sept branches, façonné d'une seule pièce
+    martelée selon le modèle montré à Moïse sur la montagne.
+  educationalComment: >-
+    Sa lumière continuelle dans le lieu saint symbolise la présence de
+    Dieu veillant sur son peuple, jour et nuit.
+  rarity: 2
+  age: 1
+  icon: {fileID: 0}
+  passiveBonus:
+  - type: 4
+    amount: 6
+  activeAbilityDescription: >-
+    Augmente fortement la Foi générée par le Tabernacle.

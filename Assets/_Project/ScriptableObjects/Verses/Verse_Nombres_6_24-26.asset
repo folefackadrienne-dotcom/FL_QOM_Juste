@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_Nombres_6_24-26
+  m_EditorClassIdentifier:
+  reference: Nombres 6:24-26
+  text: >-
+    Que l'Éternel te bénisse, et qu'il te garde ! Que l'Éternel fasse
+    luire sa face sur toi, et qu'il t'accorde sa grâce ! Que l'Éternel
+    tourne sa face vers toi, et qu'il te donne la paix !
+  age: 1
+  contextComment: >-
+    La bénédiction sacerdotale d'Aaron, confiée aux prêtres pour bénir le
+    peuple au nom de l'Éternel — la formule de bénédiction du jeu.
+  permanentBonus:
+  - type: 5
+    amount: 5
