@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
+  m_Name: Tech_mil_tir_tir_de_precision
+  m_EditorClassIdentifier:
+  techId: mil_tir_tir_de_precision
+  displayName: "Tir de précision"
+  category: 1
+  branch: "Tir & Support"
+  effectDescription: "+15 % chances de coup critique pour les unités à distance"
+  recommendedAge: "5"
+  prerequisiteIds:
+  - mil_tir_frondeurs_entraines
+  additionalRequirement: 
+  cost:
+  - type: 5
+    amount: 34

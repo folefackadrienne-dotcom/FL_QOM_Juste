@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
+  m_Name: Tech_eco_eau_gestion_de_la_secheresse
+  m_EditorClassIdentifier:
+  techId: eco_eau_gestion_de_la_secheresse
+  displayName: "Gestion de la sécheresse"
+  category: 0
+  branch: "Eau & Survie"
+  effectDescription: "Réduit fortement les pénalités des événements de sécheresse"
+  recommendedAge: "6"
+  prerequisiteIds:
+  - eco_eau_aqueducs
+  additionalRequirement: "Sagesse"
+  cost:
+  - type: 5
+    amount: 42

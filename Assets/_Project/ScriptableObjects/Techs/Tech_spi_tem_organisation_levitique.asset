@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
+  m_Name: Tech_spi_tem_organisation_levitique
+  m_EditorClassIdentifier:
+  techId: spi_tem_organisation_levitique
+  displayName: "Organisation lévitique"
+  category: 2
+  branch: "Temple & Culte"
+  effectDescription: "Les prêtres et lévites donnent de meilleurs bonus"
+  recommendedAge: "2-3"
+  prerequisiteIds:
+  - spi_tem_tabernacle_tech
+  additionalRequirement: 
+  cost:
+  - type: 5
+    amount: 18
+  - type: 4
+    amount: 14

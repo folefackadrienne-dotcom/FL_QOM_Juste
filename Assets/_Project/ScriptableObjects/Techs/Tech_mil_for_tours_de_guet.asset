@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
+  m_Name: Tech_mil_for_tours_de_guet
+  m_EditorClassIdentifier:
+  techId: mil_for_tours_de_guet
+  displayName: "Tours de guet"
+  category: 1
+  branch: "Fortifications & Siège"
+  effectDescription: "Augmente la vision et permet des tirs défensifs"
+  recommendedAge: "3-4"
+  prerequisiteIds:
+  - mil_for_murailles_de_pierre
+  additionalRequirement: 
+  cost:
+  - type: 5
+    amount: 26

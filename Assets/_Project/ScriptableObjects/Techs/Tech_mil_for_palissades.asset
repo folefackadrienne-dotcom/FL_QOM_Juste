@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
+  m_Name: Tech_mil_for_palissades
+  m_EditorClassIdentifier:
+  techId: mil_for_palissades
+  displayName: "Palissades"
+  category: 1
+  branch: "Fortifications & Siège"
+  effectDescription: "Débloque les fortifications de base en bois"
+  recommendedAge: "1-2"
+  prerequisiteIds: []
+  additionalRequirement: 
+  cost:
+  - type: 5
+    amount: 10

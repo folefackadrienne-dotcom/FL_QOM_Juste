@@ -4,24 +4,6 @@ using UnityEngine;
 
 namespace KingdomOfGod.Progression
 {
-    /// <summary>The 3 technology branches (GDD: Militaire, Spirituelle, Civile).</summary>
-    public enum TechBranch
-    {
-        Military,
-        Spiritual,
-        Civil
-    }
-
-    [CreateAssetMenu(fileName = "Tech_", menuName = "Kingdom of God/Tech Node", order = 80)]
-    public class TechNode : ScriptableObject
-    {
-        public string displayName;
-        public TechBranch branch;
-        [TextArea] public string effectDescription;
-        public List<ResourceAmount> cost = new List<ResourceAmount>();
-        public List<TechNode> prerequisites = new List<TechNode>();
-    }
-
     /// <summary>Tracks which tech nodes have been researched and enforces prerequisite chains.</summary>
     public class TechTree : MonoBehaviour
     {
@@ -36,9 +18,11 @@ namespace KingdomOfGod.Progression
         {
             if (IsUnlocked(node)) return false;
             if (!resourceManager.CanAfford(node.cost)) return false;
-            foreach (var prereq in node.prerequisites)
+
+            foreach (var prereqId in node.prerequisiteIds)
             {
-                if (!unlocked.Contains(prereq)) return false;
+                var prereqNode = allNodes.Find(n => n.techId == prereqId);
+                if (prereqNode == null || !unlocked.Contains(prereqNode)) return false;
             }
             return true;
         }

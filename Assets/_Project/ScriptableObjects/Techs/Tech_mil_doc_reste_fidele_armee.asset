@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208748a6b6a4beabdae073ab6ec7d7f, type: 3}
+  m_Name: Tech_mil_doc_reste_fidele_armee
+  m_EditorClassIdentifier:
+  techId: mil_doc_reste_fidele_armee
+  displayName: "Reste fidèle (armée)"
+  category: 1
+  branch: "Doctrine & Guerre Sacrée"
+  effectDescription: "Même en cas de défaite numérique, l'armée garde un moral minimum"
+  recommendedAge: "6-7"
+  prerequisiteIds:
+  - mil_doc_confiance_en_l_eternel
+  additionalRequirement: 
+  cost:
+  - type: 5
+    amount: 58
+  - type: 4
+    amount: 44

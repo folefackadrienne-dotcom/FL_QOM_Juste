@@ -15,7 +15,8 @@ câblées (voir « Ouvrir le projet » ci-dessous). Il manque encore l'art, le
 rendu visuel de la grille hexagonale, et les prefabs de personnages/unités.
 
 Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
-[`docs/ArtDirection.md`](docs/ArtDirection.md)
+[`docs/ArtDirection.md`](docs/ArtDirection.md) ·
+[`docs/Economy.md`](docs/Economy.md)
 
 ## Prérequis
 
@@ -54,7 +55,8 @@ Assets/_Project/
     Verses/         Mémorisation de versets (mini-jeu progressif)
     Collectibles/   Artefacts bibliques (Commun → Légendaire)
     Missions/       Définition & suivi des missions
-    Progression/    Leaders légendaires, arbre technologique (3 branches)
+    Progression/    Leaders légendaires, arbre technologique (3 arbres ×
+                    5 branches : Économique, Militaire, Spirituel)
     SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud)
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
                     produits, seam IAP (stub Éditeur en attendant le vrai
@@ -67,14 +69,16 @@ Assets/_Project/
                       Missions, Leaders, Antagonists, Techs, Ages,
                       Monetization) — les 7 Âges sont remplis (Buildings,
                       Verses, Artifacts, Missions, Miracles), plus les 6
-                      leaders et 5 antagonistes majeurs ; Techs reste à
-                      créer
+                      leaders, 5 antagonistes majeurs et les 93 nœuds des
+                      3 arbres technologiques (Techs/)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
 docs/
   GDD.md              Document de conception consolidé
   ArtDirection.md      Direction artistique détaillée
+  Economy.md           Système économique : ressources, bâtiments,
+                        population, commerce, arbres technologiques
 ```
 
 Chaque système de gameplay est un composant indépendant (grid: `HexGrid`,
@@ -91,9 +95,11 @@ dans l'Éditeur, sans toucher au code.
    Create All Scenes** (voir ci-dessus) — les scènes ne sont pas encore
    validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
    première ouverture.
-2. Créer les `TechNode` (arbre technologique 3 branches) — dernier type
-   de contenu narratif encore vide ; Buildings/Verses/Artifacts/Missions/
-   Miracles/Leaders/Antagonists sont faits.
+2. Créer les `BuildingData` génériques décrits dans `docs/Economy.md`
+   (Ferme, Puits, Scierie, Mine, Marché, Grenier, Réservoir…) — dernier
+   contenu narratif notable encore manquant ; le reste (Buildings/Verses/
+   Artifacts/Missions/Miracles/Leaders/Antagonists/Techs) est fait pour
+   les 7 Âges.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom`.
 4. Habiller visuellement le menu de prière et le journal des versets
