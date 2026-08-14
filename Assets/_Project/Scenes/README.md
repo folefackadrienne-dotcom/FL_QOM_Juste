@@ -66,7 +66,8 @@ tactical combat (radius 5, vs. the kingdom's default 10), and a
 set per mission; `miracleManager` resolves via `GameManager.Instance` like
 the Kingdom scene's UI. No unit prefabs yet — see
 `Assets/_Project/ScriptableObjects/Units` for the 6 base `UnitData` assets
-to spawn from once prefabs exist.
+and the 5 `Unit_Boss*` stat blocks (one per major antagonist, `antagonist`
+already linked to their `AntagonistData`) to spawn from once prefabs exist.
 
 ## After generating
 

@@ -235,9 +235,12 @@ Deux compléments ciblés plutôt qu'une nouvelle catégorie :
   statistiques d'un boss) ; `BattleManager.SpawnUnit`/`OnUnitDied`
   vérifient `data.antagonist != null` pour choisir le signal — même
   logique de branchement que Construction (bâtiment ordinaire vs
-  important). Les 6 `UnitData` existantes ont le champ (vide) ; aucune
-  fiche de statistiques de boss n'est encore créée, cela reste à faire
-  quand un combat de boss sera assemblé.
+  important). Les 6 `UnitData` de base ont le champ (vide) ; les 5
+  antagonistes majeurs ont depuis chacun leur propre fiche de statistiques
+  de boss (`Unit_Boss*` dans `Assets/_Project/ScriptableObjects/Units/`),
+  `antagonist` renseigné vers leur `AntagonistData` — les deux SFX ci-dessus
+  jouent donc déjà dès qu'un de ces 5 boss apparaît/tombe en combat. Seuls
+  `prefab`/`icon` restent vides, faute d'art produit.
 
 **Sauvegarde & Monétisation :**
 

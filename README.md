@@ -106,7 +106,9 @@ Assets/_Project/
                       Missions, Leaders, Antagonists, Techs, Ages,
                       Monetization, Audio) — les 7 Âges sont remplis
                       (Buildings, Verses, Artifacts, Missions, Miracles),
-                      plus les 10 leaders, 5 antagonistes majeurs, les 93
+                      plus les 10 leaders, 5 antagonistes majeurs — chacun
+                      avec sa fiche de statistiques de boss dans Units/
+                      (Unit_Boss*, UnitData.antagonist renseigné) —, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
                       musicaux, 6 leitmotifs, 6 ambiances, 44 SFX
