@@ -239,6 +239,26 @@ Deux compléments ciblés plutôt qu'une nouvelle catégorie :
   fiche de statistiques de boss n'est encore créée, cela reste à faire
   quand un combat de boss sera assemblé.
 
+**Sauvegarde & Monétisation :**
+
+Nouvelle catégorie `Meta`, pour des retours qui ne concernent ni une
+scène ni un système de jeu mais l'application elle-même. 4 `SfxCueData` :
+
+- Partie Sauvegardée / Partie Chargée (`SaveManager.Saved`/`Loaded`) —
+  confirmation discrète à chaque écriture réussie sur disque, et
+  ouverture plus ample à la relecture (lancement, « Continuer »).
+- Achat Réussi (`EntitlementManager.ProductPurchased`) — confirmation
+  positive et sobre pour tout produit (cosmétique, Battle Pass, Édition
+  Complète), jamais tapageuse pour rester cohérente avec le ton du GDD.
+- Édition Complète Débloquée — jouée en plus (pas à la place) d'Achat
+  Réussi, uniquement quand `EntitlementManager.TierChanged` bascule sur
+  `FullEdition` : même logique de superposition que Repentance /
+  Restauration au-dessus d'Alliance en Hausse. `SaveManager` et
+  `EntitlementManager` étaient déjà entièrement câblés (`GameManager`,
+  `ProjectSceneSetup`) avec des événements existants et inutilisés — il
+  ne manquait, comme pour Missions & Versets, que l'abonnement côté
+  `AudioManager`.
+
 ---
 
 ## 5. Voix et narration
@@ -348,8 +368,9 @@ projet :
   `ScriptableObject` par effet ponctuel (par opposition aux boucles
   musique/ambiance) : les 5 signaux d'Interface, les 3 de Construction,
   les 5 de Bataille, les 4 de Miracle, les 7 de Foi & Alliance, les 5 de
-  Progression, les 4 d'Economy et les 4 de Narrative sont créés dans
-  `Assets/_Project/ScriptableObjects/Audio/Sfx/` (37 au total).
+  Progression, les 4 d'Economy, les 4 de Narrative et les 4 de Meta sont
+  créés dans `Assets/_Project/ScriptableObjects/Audio/Sfx/` (41 au
+  total).
   `AudioManager.PlaySfx` les déclenche en un coup
   (`AudioSource.PlayOneShot`), appelé directement par
   `PrayerMenuUI`/`VerseJournalUI`/`MainMenuController`/`HUDController`
@@ -370,10 +391,13 @@ projet :
   l'événement dédié `Repented`), de `TechTree.TechUnlocked` (un chime
   par arbre) / `LeaderManager` (Progression —
   `LeaderUnlocked`/`LeaderActivated`), de `PopulationSystem` (Economy —
-  `PopulationChanged` hausse/baisse, `LoyaltyLow`/`LoyaltyCritical`), et
-  de `MissionManager`/`VerseManager` (Narrative —
+  `PopulationChanged` hausse/baisse, `LoyaltyLow`/`LoyaltyCritical`), de
+  `MissionManager`/`VerseManager` (Narrative —
   `MissionStarted`/`MissionCompleted`,
-  `VerseUnlocked`/`VerseMemorized`).
+  `VerseUnlocked`/`VerseMemorized`), et de `SaveManager`/
+  `EntitlementManager` (Meta — `Saved`/`Loaded`, `ProductPurchased`, et
+  `TierChanged` superposé à Achat Réussi uniquement quand le joueur
+  bascule sur `FullEdition`).
 
 - **`VoiceLineData`** (`Assets/_Project/Scripts/Audio/VoiceLineData.cs`)
   et les 3 champs `narrationClip*` de `VerseData` (section 5) — voix du

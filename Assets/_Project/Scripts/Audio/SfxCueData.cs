@@ -3,10 +3,11 @@ using UnityEngine;
 namespace KingdomOfGod.Audio
 {
     /// <summary>
-    /// The SFX families from the GDD "Direction Sonore" section 4, plus Progression, Economy and
-    /// Narrative — not named in the doc's own SFX list, but natural extensions covering tech-tree
-    /// unlocks and leaders (GDD "Progression & Metagame"), population/loyalty (GDD "Ressources &
-    /// Économie"), and mission/verse milestones (GDD "Missions" and "Verses").
+    /// The SFX families from the GDD "Direction Sonore" section 4, plus Progression, Economy,
+    /// Narrative and Meta — not named in the doc's own SFX list, but natural extensions covering
+    /// tech-tree unlocks and leaders (GDD "Progression & Metagame"), population/loyalty (GDD
+    /// "Ressources & Économie"), mission/verse milestones (GDD "Missions" and "Verses"), and
+    /// save/monetization feedback (GDD "Sauvegarde" and "Monétisation").
     /// </summary>
     public enum SfxCategory
     {
@@ -17,7 +18,8 @@ namespace KingdomOfGod.Audio
         FaithAlliance,
         Progression,
         Economy,
-        Narrative
+        Narrative,
+        Meta
     }
 
     /// <summary>

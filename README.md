@@ -69,24 +69,26 @@ Assets/_Project/
                     leader actif), arbre technologique (3 arbres × 5
                     branches : Économique, Militaire, Spirituel ;
                     TechTree.TechUnlocked)
-    SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud)
+    SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud),
+                    SaveManager.Saved/Loaded
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
                     produits, seam IAP (stub Éditeur en attendant le vrai
-                    store)
+                    store), EntitlementManager.ProductPurchased/TierChanged
     Audio/          Direction sonore : thèmes musicaux par contexte
                     (MusicThemeData), leitmotifs récurrents
                     (LeitmotifData), ambiances (AmbientSoundscapeData),
                     effets ponctuels d'Interface/Construction/Bataille/
-                    Miracle/Foi & Alliance/Progression/Economy/Narrative
-                    (SfxCueData) et le mixage dynamique (AudioManager) —
-                    crossfade par scène, bascule en Crise sous Alliance
-                    basse, sourdine pendant la prière d'un miracle, SFX
-                    de clic/validation/erreur/fermeture de menu, de
-                    pose/amélioration de bâtiment, de combat (dont
-                    entrée/défaite de boss), de rituel, de variation des
-                    jauges de Foi/Alliance/Population, de déblocage
-                    tech/leader et de progression mission/verset ; voix
-                    du Narrateur/des Personnages et lecture des versets
+                    Miracle/Foi & Alliance/Progression/Economy/Narrative/
+                    Meta (SfxCueData) et le mixage dynamique
+                    (AudioManager) — crossfade par scène, bascule en
+                    Crise sous Alliance basse, sourdine pendant la
+                    prière d'un miracle, SFX de clic/validation/erreur/
+                    fermeture de menu, de pose/amélioration de bâtiment,
+                    de combat (dont entrée/défaite de boss), de rituel,
+                    de variation des jauges de Foi/Alliance/Population,
+                    de déblocage tech/leader, de progression
+                    mission/verset et de sauvegarde/achat ; voix du
+                    Narrateur/des Personnages et lecture des versets
                     (VoiceLineData, narrationClip* sur VerseData) avec
                     sélection de langue FR/EN/HE
     UI/             HUD, menu de prière, journal des versets
@@ -100,15 +102,15 @@ Assets/_Project/
                       plus les 10 leaders, 5 antagonistes majeurs, les 93
                       nœuds des 3 arbres technologiques (Techs/) et la
                       direction sonore complète (Audio/ : 8 thèmes
-                      musicaux, 6 leitmotifs, 6 ambiances, 37 SFX
+                      musicaux, 6 leitmotifs, 6 ambiances, 41 SFX
                       d'Interface/Construction/Bataille/Miracle/Foi &
-                      Alliance/Progression/Economy/Narrative (dont
+                      Alliance/Progression/Economy/Narrative/Meta (dont
                       Entrée en Crise, Faveur Élevée, Repentance,
                       déblocages de tech/leader, variation de
                       Population, Temple amélioré, progression
-                      mission/verset, fermeture de menu et
-                      entrée/défaite de boss), 3 lignes de voix
-                      Narrateur/Personnages)
+                      mission/verset, fermeture de menu,
+                      entrée/défaite de boss et sauvegarde/achat), 3
+                      lignes de voix Narrateur/Personnages)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -165,6 +167,6 @@ dans l'Éditeur, sans toucher au code.
    champs `narrationClipFrench`/`English`/`Hebrew` des 34 `VerseData`
    (`Assets/_Project/ScriptableObjects/Verses/`) — `AudioManager` pilote
    déjà le crossfade, le mixage dynamique, le déclenchement contextuel
-   (y compris les 37 SFX d'Interface, Construction, Bataille, Miracle,
-   Foi & Alliance, Progression, Economy et Narrative) et la lecture de
-   voix multilingue, il ne manque que les fichiers son.
+   (y compris les 41 SFX d'Interface, Construction, Bataille, Miracle,
+   Foi & Alliance, Progression, Economy, Narrative et Meta) et la
+   lecture de voix multilingue, il ne manque que les fichiers son.

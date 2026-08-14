@@ -5,9 +5,11 @@ using KingdomOfGod.Alliance;
 using KingdomOfGod.Buildings;
 using KingdomOfGod.Miracles;
 using KingdomOfGod.Missions;
+using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
 using KingdomOfGod.Progression;
 using KingdomOfGod.Resources;
+using KingdomOfGod.SaveSystem;
 using KingdomOfGod.Verses;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,6 +36,8 @@ namespace KingdomOfGod.Audio
         [SerializeField] private TempleSystem templeSystem;
         [SerializeField] private MissionManager missionManager;
         [SerializeField] private VerseManager verseManager;
+        [SerializeField] private SaveManager saveManager;
+        [SerializeField] private EntitlementManager entitlementManager;
 
         [SerializeField] private List<MusicThemeData> musicThemes = new List<MusicThemeData>();
         [SerializeField] private List<AmbientSoundscapeData> ambientSoundscapes = new List<AmbientSoundscapeData>();
@@ -140,6 +144,18 @@ namespace KingdomOfGod.Audio
                 verseManager.VerseUnlocked += OnVerseUnlocked;
                 verseManager.VerseMemorized += OnVerseMemorized;
             }
+
+            if (saveManager != null)
+            {
+                saveManager.Saved += OnSaved;
+                saveManager.Loaded += OnLoaded;
+            }
+
+            if (entitlementManager != null)
+            {
+                entitlementManager.ProductPurchased += OnProductPurchased;
+                entitlementManager.TierChanged += OnTierChanged;
+            }
         }
 
         private void OnDisable()
@@ -190,6 +206,18 @@ namespace KingdomOfGod.Audio
             {
                 verseManager.VerseUnlocked -= OnVerseUnlocked;
                 verseManager.VerseMemorized -= OnVerseMemorized;
+            }
+
+            if (saveManager != null)
+            {
+                saveManager.Saved -= OnSaved;
+                saveManager.Loaded -= OnLoaded;
+            }
+
+            if (entitlementManager != null)
+            {
+                entitlementManager.ProductPurchased -= OnProductPurchased;
+                entitlementManager.TierChanged -= OnTierChanged;
             }
         }
 
@@ -336,6 +364,27 @@ namespace KingdomOfGod.Audio
         private void OnVerseMemorized(VerseData verse)
         {
             PlaySfx("Versets - Verset Mémorisé");
+        }
+
+        private void OnSaved(SaveData data)
+        {
+            PlaySfx("Sauvegarde - Partie Sauvegardée");
+        }
+
+        private void OnLoaded(SaveData data)
+        {
+            PlaySfx("Sauvegarde - Partie Chargée");
+        }
+
+        private void OnProductPurchased(ProductData product)
+        {
+            PlaySfx("Monétisation - Achat Réussi");
+        }
+
+        /// <summary>Plays in addition to (not instead of) Achat Réussi from OnProductPurchased, since crossing into Full Edition is a distinct, more significant moment — same layering as OnRepented over the generic Alliance-en-Hausse tick.</summary>
+        private void OnTierChanged(EntitlementTier tier)
+        {
+            if (tier == EntitlementTier.FullEdition) PlaySfx("Monétisation - Édition Complète Débloquée");
         }
 
         /// <summary>Lets a future dialogue/cutscene system ask for the ambience to duck alongside miracles without the two stepping on each other's un-duck.</summary>
