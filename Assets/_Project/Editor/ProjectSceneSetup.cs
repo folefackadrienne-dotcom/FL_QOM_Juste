@@ -44,6 +44,8 @@ namespace KingdomOfGod.EditorTools
         private const string EditionCompleteProductPath =
             "Assets/_Project/ScriptableObjects/Monetization/Product_EditionComplete.asset";
 
+        private const string UIThemePath = "Assets/_Project/ScriptableObjects/UI/UITheme.asset";
+
         [MenuItem("Kingdom of God/Setup/Create All Scenes", priority = 0)]
         public static void CreateAllScenes()
         {
@@ -148,16 +150,26 @@ namespace KingdomOfGod.EditorTools
         public static void CreateMainMenuScene()
         {
             var scene = NewScene();
+            var theme = LoadTheme();
 
             CreateCamera();
             CreateEventSystem();
             var canvas = CreateCanvas();
 
-            CreateLabel(canvas.transform, "Title", "Kingdom of God", 48, TextAlignmentOptions.Center,
-                new Vector2(0, 300), new Vector2(600, 80));
+            var backgroundGO = new GameObject("Background", typeof(RectTransform));
+            backgroundGO.transform.SetParent(canvas.transform, false);
+            var backgroundRect = backgroundGO.GetComponent<RectTransform>();
+            backgroundRect.anchorMin = Vector2.zero;
+            backgroundRect.anchorMax = Vector2.one;
+            backgroundRect.sizeDelta = Vector2.zero;
+            var background = backgroundGO.AddComponent<Image>();
+            background.color = theme != null ? theme.deepBlue : new Color(0.05f, 0.05f, 0.08f);
 
-            var newGameButton = CreateButton(canvas.transform, "NewGameButton", "Nouvelle Partie", new Vector2(0, 40));
-            var continueButton = CreateButton(canvas.transform, "ContinueButton", "Continuer", new Vector2(0, -30));
+            CreateLabel(canvas.transform, "Title", "Kingdom of God", 48, TextAlignmentOptions.Center,
+                new Vector2(0, 300), new Vector2(600, 80), theme != null ? theme.divineLight : (Color?)null);
+
+            var newGameButton = CreateButton(canvas.transform, "NewGameButton", "Nouvelle Partie", new Vector2(0, 40), theme);
+            var continueButton = CreateButton(canvas.transform, "ContinueButton", "Continuer", new Vector2(0, -30), theme);
 
             var controllerGO = new GameObject("MainMenuController");
             controllerGO.transform.SetParent(canvas.transform, false);
@@ -174,10 +186,24 @@ namespace KingdomOfGod.EditorTools
         public static void CreateKingdomScene()
         {
             var scene = NewScene();
+            var theme = LoadTheme();
 
             CreateCamera();
             CreateEventSystem();
             var canvas = CreateCanvas();
+
+            var moodOverlayGO = new GameObject("WorldMoodOverlay", typeof(RectTransform));
+            moodOverlayGO.transform.SetParent(canvas.transform, false);
+            var moodOverlayRect = moodOverlayGO.GetComponent<RectTransform>();
+            moodOverlayRect.anchorMin = Vector2.zero;
+            moodOverlayRect.anchorMax = Vector2.one;
+            moodOverlayRect.sizeDelta = Vector2.zero;
+            var moodOverlay = moodOverlayGO.AddComponent<Image>();
+            moodOverlay.color = new Color(0f, 0f, 0f, 0f);
+            moodOverlay.raycastTarget = false;
+            var worldMood = moodOverlayGO.AddComponent<WorldMoodUI>();
+            SetRef(worldMood, "theme", theme);
+            SetRef(worldMood, "moodOverlay", moodOverlay);
 
             var hudGO = new GameObject("HUD", typeof(RectTransform));
             hudGO.transform.SetParent(canvas.transform, false);
@@ -197,7 +223,8 @@ namespace KingdomOfGod.EditorTools
             for (int i = 0; i < resourceOrder.Length; i++)
             {
                 var label = CreateLabel(resourceBarGO.transform, resourceOrder[i] + "Label", $"{resourceOrder[i]}: 0",
-                    18, TextAlignmentOptions.MidlineLeft, new Vector2(0, -i * 26), new Vector2(180, 24));
+                    18, TextAlignmentOptions.MidlineLeft, new Vector2(0, -i * 26), new Vector2(180, 24),
+                    theme != null ? theme.ivoryWhite : (Color?)null);
                 label.rectTransform.anchorMin = new Vector2(0f, 1f);
                 label.rectTransform.anchorMax = new Vector2(0f, 1f);
                 label.rectTransform.pivot = new Vector2(0f, 1f);
@@ -207,8 +234,9 @@ namespace KingdomOfGod.EditorTools
 
             var prayerPanelGO = new GameObject("PrayerMenuPanel", typeof(RectTransform));
             prayerPanelGO.transform.SetParent(hudGO.transform, false);
+            AddParchmentBackground(prayerPanelGO, theme);
             var prayerMenu = prayerPanelGO.AddComponent<PrayerMenuUI>();
-            var prayerConfirm = CreateButton(prayerPanelGO.transform, "ConfirmButton", "Confirmer", Vector2.zero);
+            var prayerConfirm = CreateButton(prayerPanelGO.transform, "ConfirmButton", "Confirmer", Vector2.zero, theme);
             var prayerListContainer = new GameObject("ListContainer", typeof(RectTransform));
             prayerListContainer.transform.SetParent(prayerPanelGO.transform, false);
             SetRef(prayerMenu, "panelRoot", prayerPanelGO);
@@ -218,6 +246,7 @@ namespace KingdomOfGod.EditorTools
 
             var versePanelGO = new GameObject("VerseJournalPanel", typeof(RectTransform));
             versePanelGO.transform.SetParent(hudGO.transform, false);
+            AddParchmentBackground(versePanelGO, theme);
             var verseJournal = versePanelGO.AddComponent<VerseJournalUI>();
             var verseListContainer = new GameObject("ListContainer", typeof(RectTransform));
             verseListContainer.transform.SetParent(versePanelGO.transform, false);
@@ -227,6 +256,7 @@ namespace KingdomOfGod.EditorTools
 
             var prophecyPanelGO = new GameObject("ProphecyJournalPanel", typeof(RectTransform));
             prophecyPanelGO.transform.SetParent(hudGO.transform, false);
+            AddParchmentBackground(prophecyPanelGO, theme);
             prophecyPanelGO.SetActive(false);
 
             SetRef(hud, "resourceBar", resourceBar);
@@ -313,7 +343,7 @@ namespace KingdomOfGod.EditorTools
         }
 
         private static TextMeshProUGUI CreateLabel(Transform parent, string name, string text, float fontSize,
-            TextAlignmentOptions alignment, Vector2 anchoredPosition, Vector2 size)
+            TextAlignmentOptions alignment, Vector2 anchoredPosition, Vector2 size, Color? color = null)
         {
             var go = new GameObject(name, typeof(RectTransform));
             go.transform.SetParent(parent, false);
@@ -322,7 +352,7 @@ namespace KingdomOfGod.EditorTools
             label.text = text;
             label.fontSize = fontSize;
             label.alignment = alignment;
-            label.color = Color.white;
+            label.color = color ?? Color.white;
 
             var rect = go.GetComponent<RectTransform>();
             rect.sizeDelta = size;
@@ -331,7 +361,8 @@ namespace KingdomOfGod.EditorTools
             return label;
         }
 
-        private static Button CreateButton(Transform parent, string name, string label, Vector2 anchoredPosition)
+        /// <summary>Flat-color chrome per docs/ArtDirection.md section 6 ("bordures dorées fines") — an Outline effect stands in for a real 9-slice border sprite until one exists.</summary>
+        private static Button CreateButton(Transform parent, string name, string label, Vector2 anchoredPosition, UIThemeData theme = null)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
             go.transform.SetParent(parent, false);
@@ -341,14 +372,46 @@ namespace KingdomOfGod.EditorTools
             rect.anchoredPosition = anchoredPosition;
 
             var image = go.GetComponent<Image>();
-            image.color = new Color(0.15f, 0.1f, 0.05f, 0.9f);
+            image.color = theme != null ? theme.deepBlue : new Color(0.15f, 0.1f, 0.05f, 0.9f);
+
+            if (theme != null)
+            {
+                var outline = go.AddComponent<Outline>();
+                outline.effectColor = theme.goldBorder;
+                outline.effectDistance = new Vector2(2f, 2f);
+            }
 
             var button = go.GetComponent<Button>();
             button.targetGraphic = image;
 
-            CreateLabel(go.transform, "Text", label, 22, TextAlignmentOptions.Center, Vector2.zero, rect.sizeDelta);
+            CreateLabel(go.transform, "Text", label, 22, TextAlignmentOptions.Center, Vector2.zero, rect.sizeDelta,
+                theme != null ? theme.ivoryWhite : (Color?)null);
 
             return button;
+        }
+
+        /// <summary>"Fond semi-transparent en parchemin ou pierre claire" — docs/ArtDirection.md section 6.</summary>
+        private static Image AddParchmentBackground(GameObject go, UIThemeData theme)
+        {
+            var image = go.AddComponent<Image>();
+            if (theme != null)
+            {
+                image.color = theme.parchmentBackground;
+                var outline = go.AddComponent<Outline>();
+                outline.effectColor = theme.goldBorder;
+                outline.effectDistance = new Vector2(2f, 2f);
+            }
+            return image;
+        }
+
+        private static UIThemeData LoadTheme()
+        {
+            var theme = AssetDatabase.LoadAssetAtPath<UIThemeData>(UIThemePath);
+            if (theme == null)
+            {
+                Debug.LogWarning($"Kingdom of God setup: could not find {UIThemePath} — generated UI falls back to default colors.");
+            }
+            return theme;
         }
 
         private static void SetStartingResources(ResourceManager resourceManager)

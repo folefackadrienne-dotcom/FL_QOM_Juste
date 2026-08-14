@@ -98,7 +98,10 @@ Assets/_Project/
     UI/             HUD, menu de prière, journal des versets —
                     RefreshList() instancie un MiracleListItemUI/
                     VerseListItemUI par entrée dès qu'un listItemPrefab
-                    est assigné
+                    est assigné ; UIThemeData applique en couleurs plates
+                    la palette de docs/ArtDirection.md (boutons, panneaux,
+                    libellés) et WorldMoodUI teinte l'écran de Kingdom
+                    selon AllianceSystem.StandingChanged
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
@@ -120,7 +123,9 @@ Assets/_Project/
                       progression mission/verset, fermeture de menu,
                       entrée/défaite de boss, sauvegarde/achat et
                       artefact précieux trouvé), 3 lignes de voix
-                      Narrateur/Personnages)
+                      Narrateur/Personnages), et UI/UITheme.asset — la
+                      palette de couleurs de docs/ArtDirection.md
+                      traduite en valeurs concrètes (UIThemeData)
   Scenes/             Générées par Kingdom of God > Setup > Create All
                       Scenes — voir le README du dossier
   Prefabs/, Art/, Audio/
@@ -184,3 +189,9 @@ dans l'Éditeur, sans toucher au code.
    Foi & Alliance, Progression, Economy, Narrative, Meta et
    Collectibles) et la lecture de voix multilingue, il ne manque que
    les fichiers son.
+8. Remplacer les couleurs plates de `UIThemeData`/`ProjectSceneSetup` par
+   de vraies textures/sprites 9-slice une fois l'art produit (bordures
+   dorées, fond parchemin texturé, icônes symboliques du blé/eau/flamme/
+   rouleau de Torah décrites dans `docs/ArtDirection.md`) — la palette de
+   couleurs elle-même (`Assets/_Project/ScriptableObjects/UI/UITheme.asset`)
+   n'a pas besoin d'attendre l'art et est déjà appliquée.

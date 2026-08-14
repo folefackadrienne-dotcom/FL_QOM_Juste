@@ -40,24 +40,31 @@ Starting resources (Blé 50, Eau 50, Bois 30, Or 20, Foi 10, Sagesse 5,
 Justice 10) are pre-filled so the HUD shows real numbers immediately.
 
 ### `MainMenu`
-Camera, EventSystem, Canvas with a title and two buttons (Nouvelle Partie /
-Continuer) wired to `MainMenuController`, which loads `Kingdom` and
-enables/disables Continuer based on `SaveManager.HasLocalSave()`.
+Camera, EventSystem, Canvas with a full-screen background Image, a title
+and two buttons (Nouvelle Partie / Continuer) wired to `MainMenuController`,
+which loads `Kingdom` and enables/disables Continuer based on
+`SaveManager.HasLocalSave()`. Background, title and buttons are colored
+from `UITheme.asset` (`UIThemeData` — see `docs/ArtDirection.md`) when it's
+found at `Assets/_Project/ScriptableObjects/UI/UITheme.asset`, falling back
+to the previous flat defaults otherwise.
 
 ### `Kingdom` (territory/management view)
-Camera, EventSystem, Canvas with `HUDController` and a live resource bar
-(one label per resource). Its `ResourceBarUI`/`PrayerMenuUI`/
-`VerseJournalUI` leave their manager references unassigned in the
-scene — since Bootstrap and Kingdom are separate scenes, those references
-resolve at runtime via `GameManager.Instance` instead (Unity can't
-serialize cross-scene Inspector references). `PrayerMenuUI`/
-`VerseJournalUI` each get an empty `ListContainer` child under their panel,
-wired to `listContainer` — their `RefreshList()` populates it with one
-`MiracleListItemUI`/`VerseListItemUI` per entry, but stays a no-op until a
-`listItemPrefab` is assigned (no such prefab exists yet, see
-`Assets/_Project/Prefabs/`). Still missing: the actual hex-grid visual
-(tilemap or mesh) — `HexGrid`'s data lives on the persistent Bootstrap
-object, this scene doesn't need its own.
+Camera, EventSystem, Canvas with a full-screen `WorldMoodOverlay` (transparent
+by default, wired to `WorldMoodUI` + `UITheme.asset`), `HUDController` and a
+live resource bar (one label per resource). Its `ResourceBarUI`/
+`PrayerMenuUI`/`VerseJournalUI` leave their manager references unassigned in
+the scene — since Bootstrap and Kingdom are separate scenes, those
+references resolve at runtime via `GameManager.Instance` instead (Unity
+can't serialize cross-scene Inspector references); `WorldMoodUI` does the
+same for `AllianceSystem`. `PrayerMenuUI`/`VerseJournalUI`/
+`ProphecyJournalPanel` each get a parchment-colored background (`Image` +
+gold `Outline`, from `UITheme.asset`) and, for the first two, an empty
+`ListContainer` child under their panel, wired to `listContainer` — their
+`RefreshList()` populates it with one `MiracleListItemUI`/`VerseListItemUI`
+per entry, but stays a no-op until a `listItemPrefab` is assigned (no such
+prefab exists yet, see `Assets/_Project/Prefabs/`). Still missing: the
+actual hex-grid visual (tilemap or mesh) — `HexGrid`'s data lives on the
+persistent Bootstrap object, this scene doesn't need its own.
 
 ### `Battle`
 Camera, EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for

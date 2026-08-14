@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0785a4691fda451f9fc646c73570f500, type: 3}
+  m_Name: UITheme
+  m_EditorClassIdentifier:
+  ochre: {r: 0.8, g: 0.467, b: 0.133, a: 1}
+  warmGold: {r: 0.831, g: 0.627, b: 0.09, a: 1}
+  deepBlue: {r: 0.09, g: 0.196, b: 0.31, a: 1}
+  purpleRed: {r: 0.42, g: 0.118, b: 0.235, a: 1}
+  oliveGreen: {r: 0.42, g: 0.478, b: 0.227, a: 1}
+  ivoryWhite: {r: 0.961, g: 0.941, b: 0.882, a: 1}
+  divineLight: {r: 0.957, g: 0.769, b: 0.188, a: 1}
+  crisisRed: {r: 0.361, g: 0.102, b: 0.102, a: 1}
+  restorationAmber: {r: 0.788, g: 0.545, b: 0.231, a: 1}
+  goldBorder: {r: 0.831, g: 0.627, b: 0.09, a: 1}
+  parchmentBackground: {r: 0.922, g: 0.871, b: 0.753, a: 0.92}
+  panelText: {r: 0.2, g: 0.133, b: 0.078, a: 1}
+  ageAccents:
+  - age: 0
+    accent: {r: 0.89, g: 0.722, b: 0.451, a: 1}
+  - age: 1
+    accent: {r: 0.89, g: 0.722, b: 0.451, a: 1}
+  - age: 2
+    accent: {r: 0.549, g: 0.353, b: 0.235, a: 1}
+  - age: 3
+    accent: {r: 0.549, g: 0.353, b: 0.235, a: 1}
+  - age: 4
+    accent: {r: 0.788, g: 0.592, b: 0.11, a: 1}
+  - age: 5
+    accent: {r: 0.431, g: 0.361, b: 0.306, a: 1}
+  - age: 6
+    accent: {r: 0.549, g: 0.514, b: 0.439, a: 1}
