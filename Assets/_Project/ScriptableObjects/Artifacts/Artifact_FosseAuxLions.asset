@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_FosseAuxLions
+  m_EditorClassIdentifier:
+  displayName: Fosse aux lions
+  biblicalReference: Daniel 6
+  historicalContext: >-
+    La fosse où Daniel est jeté pour avoir continué à prier trois fois
+    par jour tourné vers Jérusalem, malgré l'interdiction du roi Darius.
+  educationalComment: >-
+    La fidélité de Daniel dans la prière, même sous peine de mort,
+    devient un témoignage jusque devant les nations.
+  rarity: 3
+  age: 6
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    Débloque une mission spéciale de survie, avec une récompense de
+    protection divine à la clé.

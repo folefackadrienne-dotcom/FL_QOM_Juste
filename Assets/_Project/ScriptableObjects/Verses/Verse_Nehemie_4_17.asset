@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_Nehemie_4_17
+  m_EditorClassIdentifier:
+  reference: Néhémie 4:17
+  text: >-
+    Ceux qui bâtissaient la muraille, et ceux qui portaient ou
+    chargeaient les fardeaux, travaillaient d'une main et tenaient une
+    arme de l'autre.
+  age: 6
+  contextComment: >-
+    L'image emblématique du chantier de la muraille de Jérusalem, mené
+    sous la menace constante des ennemis de Néhémie.
+  permanentBonus:
+  - type: 6
+    amount: 5

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_FournaiseDeBabylone
+  m_EditorClassIdentifier:
+  displayName: Fournaise de Babylone
+  biblicalReference: Daniel 3
+  historicalContext: >-
+    La fournaise chauffée sept fois plus que d'habitude, dans laquelle
+    Shadrac, Méschac et Abed-Nego sont jetés — et où un quatrième,
+    semblable à un fils des dieux, marche avec eux.
+  educationalComment: >-
+    Le feu ne laisse ni brûlure, ni odeur : le symbole le plus fort de
+    fidélité de tout l'Ancien Testament face à l'idolâtrie imposée.
+  rarity: 3
+  age: 6
+  icon: {fileID: 0}
+  passiveBonus:
+  - type: 4
+    amount: 12
+  activeAbilityDescription: >-
+    Symbole de fidélité : bonus massif de Foi si le joueur résiste à la
+    pression d'idolâtrie sans céder.

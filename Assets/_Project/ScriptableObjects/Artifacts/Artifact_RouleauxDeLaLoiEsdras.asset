@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0006ce71052d4375b447e2ce57721a99, type: 3}
+  m_Name: Artifact_RouleauxDeLaLoiEsdras
+  m_EditorClassIdentifier:
+  displayName: Rouleaux de la Loi (Esdras)
+  biblicalReference: Néhémie 8
+  historicalContext: >-
+    Le livre de la Loi de Moïse, lu par Esdras devant toute l'assemblée
+    sur la place, du matin jusqu'à midi, expliqué pour que le peuple
+    comprenne.
+  educationalComment: >-
+    La lecture publique de la Loi devient le socle de la restauration :
+    le peuple retrouve son identité en réentendant la parole de Dieu.
+  rarity: 3
+  age: 6
+  icon: {fileID: 0}
+  passiveBonus: []
+  activeAbilityDescription: >-
+    +25 % de génération de Sagesse et débloque des réformes majeures.

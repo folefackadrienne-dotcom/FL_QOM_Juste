@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb123400ea54da7934a172a5af25f70, type: 3}
+  m_Name: Mission_Age7_04_EsdrasLeRetourDeLaLoi
+  m_EditorClassIdentifier:
+  missionId: age7_04_esdras_le_retour_de_la_loi
+  displayName: 'Esdras : Le Retour de la Loi'
+  summary: >-
+    Mission axée sur l'enseignement et la purification : Esdras restaure
+    l'étude et l'application de la Loi au sein du peuple revenu.
+  age: 6
+  type: 1
+  victoryCondition:
+    type: 1
+    turnsToSurvive: 10
+    protectedUnitId:
+    capturePoint:
+      q: 0
+      r: 0
+  rewards:
+  - type: 5
+    amount: 25
+  - type: 6
+    amount: 15
+  battleSceneName:

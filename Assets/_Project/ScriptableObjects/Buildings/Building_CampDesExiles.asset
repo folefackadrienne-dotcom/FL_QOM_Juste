@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaf6182527040f6a400404f2c6bc450, type: 3}
+  m_Name: Building_CampDesExiles
+  m_EditorClassIdentifier:
+  displayName: Camp des Exilés
+  description: >-
+    Maisons bâties par les déportés à Babylone, suivant l'ordre de
+    Jérémie : « Bâtissez des maisons, et habitez-les ; plantez des
+    jardins, et mangez-en les fruits » (Jérémie 29:5).
+  category: 0
+  introducedInAge: 6
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
+  buildCost:
+  - type: 2
+    amount: 10
+  - type: 3
+    amount: 8
+  minFaithRequired: 0
+  minJusticeRequired: 0
+  productionPerTurn: []

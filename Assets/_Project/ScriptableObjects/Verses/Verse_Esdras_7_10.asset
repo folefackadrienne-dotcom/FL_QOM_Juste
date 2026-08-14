@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fb6331696344c8b7d2f68849c5f4c2, type: 3}
+  m_Name: Verse_Esdras_7_10
+  m_EditorClassIdentifier:
+  reference: Esdras 7:10
+  text: >-
+    Car Esdras avait appliqué son cœur à étudier et à mettre en pratique
+    la loi de l'Éternel, et à enseigner au milieu d'Israël les lois et
+    les ordonnances.
+  age: 6
+  contextComment: >-
+    Le portrait du scribe Esdras, qui unit étude, obéissance et
+    enseignement — modèle de la restauration spirituelle du peuple revenu.
+  permanentBonus:
+  - type: 5
+    amount: 8
