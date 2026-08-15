@@ -109,9 +109,11 @@ Assets/_Project/
                     selon AllianceSystem.StandingChanged
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
-                  — importe en masse des enregistrements de narration au
-                  nom générique (ex. exports ElevenLabs "audio (7).mp3")
-                  et les assigne aux 34 VerseData.narrationClip* (menu
+                  — importe en masse des enregistrements de narration
+                  nommés "audio <Référence>" (ex. "audio Genese 12,2-3.mp3")
+                  et les assigne au bon VerseData.narrationClip* en
+                  faisant correspondre la référence extraite du nom de
+                  fichier (accents/virgule-deux-points ignorés) (menu
                   Kingdom of God > Setup > Import Voice Narrations),
                   assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
@@ -198,12 +200,14 @@ dans l'Éditeur, sans toucher au code.
    (y compris les 44 SFX d'Interface, Construction, Bataille, Miracle,
    Foi & Alliance, Progression, Economy, Narrative, Meta et
    Collectibles) et la lecture de voix multilingue, il ne manque que
-   les fichiers son. Pour les narrations de versets exportées avec des
-   noms génériques (ex. ElevenLabs "audio (7).mp3"), voir
+   les fichiers son. Pour les narrations de versets nommées
+   "audio <Référence>" (ex. "audio Genese 12,2-3.mp3"), voir
    **Kingdom of God → Setup → Import Voice Narrations**
-   (`VoiceNarrationImporter.cs`) qui les importe, les associe aux 34
-   `VerseData` par ordre de date de création (à vérifier/réordonner
-   avant de valider) et les renomme.
+   (`VoiceNarrationImporter.cs`) qui les importe, les associe
+   automatiquement au bon `VerseData` par correspondance de référence
+   (accents/virgule-deux-points ignorés) et les renomme — à vérifier
+   avant de valider, les fichiers non reconnus restent assignables à
+   la main.
 8. Remplacer les couleurs plates de `UIThemeData`/`ProjectSceneSetup` par
    de vraies textures/sprites 9-slice une fois l'art produit (bordures
    dorées, fond parchemin texturé, icônes symboliques du blé/eau/flamme/
