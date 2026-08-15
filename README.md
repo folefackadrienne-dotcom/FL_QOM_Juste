@@ -121,7 +121,13 @@ Assets/_Project/
                   SfxCueData par recoupement de mots-clés avec sa
                   description (un même fichier peut être suggéré et
                   assigné à plusieurs SFX) (menu Kingdom of God > Setup >
-                  Import Sound Effects), assembly Editor-only
+                  Import Sound Effects) ; MusicVideoImporter.cs — extrait
+                  la piste audio de vidéos nommées "musique <Thème>"
+                  (ex. "musique Menu Principal.mp4") via ffmpeg (requis
+                  sur le poste) et l'assigne au MusicThemeData/
+                  LeitmotifData/AmbientSoundscapeData dont le nom
+                  correspond exactement (menu Kingdom of God > Setup >
+                  Import Music Videos), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Antagonists, Techs, Ages,
@@ -220,7 +226,13 @@ dans l'Éditeur, sans toucher au code.
    recoupant les mots-clés de sa description — un même fichier peut
    être assigné à plusieurs SFX (ex. un cri de guerre servant aussi
    d'entrée en scène de boss) ; toujours vérifier/écouter avant
-   d'assigner, l'appariement reste une heuristique.
+   d'assigner, l'appariement reste une heuristique. Pour les musiques
+   enregistrées en vidéo et nommées "musique <Thème>" (ex. "musique
+   Menu Principal.mp4"), voir **Kingdom of God → Setup → Import Music
+   Videos** (`MusicVideoImporter.cs`, nécessite ffmpeg installé sur le
+   poste) qui en extrait la piste audio et l'associe au
+   `MusicThemeData`/`LeitmotifData`/`AmbientSoundscapeData` dont le nom
+   correspond exactement.
 8. Remplacer les couleurs plates de `UIThemeData`/`ProjectSceneSetup` par
    de vraies textures/sprites 9-slice une fois l'art produit (bordures
    dorées, fond parchemin texturé, icônes symboliques du blé/eau/flamme/
