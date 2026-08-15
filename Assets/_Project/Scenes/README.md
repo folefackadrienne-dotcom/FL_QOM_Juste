@@ -71,11 +71,18 @@ references resolve at runtime via `GameManager.Instance` instead (Unity
 can't serialize cross-scene Inspector references); `WorldMoodUI` does the
 same for `AllianceSystem`. `PrayerMenuUI`/`VerseJournalUI`/
 `ProphecyJournalPanel` each get a parchment-colored background (`Image` +
-gold `Outline`, from `UITheme.asset`) and, for the first two, an empty
-`ListContainer` child under their panel, wired to `listContainer` — their
-`RefreshList()` populates it with one `MiracleListItemUI`/`VerseListItemUI`
-per entry, but stays a no-op until a `listItemPrefab` is assigned (no such
-prefab exists yet, see `Assets/_Project/Prefabs/`). `HexGrid`'s data lives
+gold `Outline`, from `UITheme.asset`). `VerseJournalUI` still has an empty
+`ListContainer` child under its panel, wired to `listContainer` — its
+`RefreshList()` populates it with one `VerseListItemUI` per memorized
+verse, but stays a no-op until a `listItemPrefab` is assigned (no such
+prefab exists yet, see `Assets/_Project/Prefabs/`). `PrayerMenuUI` no
+longer needs one: it has two child views, `SelectionView` (a
+`ListContainer` of runtime-generated `UITheme`-colored buttons, one per
+castable `MiracleData` — same code-generated-button pattern as
+`BuildingPaletteUI`, `MiracleListItemUI` is gone) and `RitualView`
+(`RitualStatusText` + `AccelerateButton` + `AbandonButton`), toggled by
+`MiracleManager.IsPraying`; see the `EndTurnButton` paragraph below for the
+full ritual wiring. `HexGrid`'s data lives
 on the persistent Bootstrap object, this scene doesn't need its own — but
 it now has a local `HexGridVisual` GameObject carrying `HexGridRenderer`,
 which resolves that same Bootstrap `HexGrid` via `GameManager.Instance` and
@@ -162,7 +169,8 @@ so `CanUpgrade`/`TryUpgrade` (both pre-existing, real methods) could never
 succeed regardless of a UI calling them. Bottom-right, an `EndTurnButton`
 ("Fin de Tour") calls `HUDController.EndTurn` → `KingdomTurnManager.
 EndTurn` — this scene's only source of a turn advancing at all — next to a
-`TurnLabel` ("Tour N") that updates on `KingdomTurnManager.TurnAdvanced`.
+`TurnLabel` ("Tour N") that updates on `KingdomTurnManager.TurnAdvanced`
+and a `PrayerStatusLabel` that tracks an in-progress ritual.
 `KingdomTurnManager` itself lives on the persistent Bootstrap `GameManager`
 (cross-scene-resolved by `HUDController`/`TempleUI` like every other
 manager here) and, on each `EndTurn`, runs `BuildingManager.
@@ -175,7 +183,24 @@ grants a further +1 Loyalty (on top of the upkeep step's own bonus/penalty)
 once Justice and Faith stock both clear 0.5 per capita — docs/Economy.md
 §3's "Justice et Foi maintiennent la Loyauté," deliberately one-sided (no
 penalty for falling short, since Justice-producing buildings don't exist
-before Age 2).
+before Age 2). A fourth step advances an active prayer:
+`MiracleManager.BeginPrayer`/`AdvancePrayerTurn`/`AccelerateWithFaith`/
+`InterruptPrayer` already existed (used by `Battle`'s `TurnController`),
+but `Kingdom` had no turn loop to drive them until `KingdomTurnManager`,
+so `PrayerMenuUI` used the instant `TryCast` instead — now that the loop
+exists, `EndTurn` calls `AdvancePrayerTurn` whenever
+`MiracleManager.IsPraying`. `KingdomTurnManager` also subscribes to
+`PopulationSystem.LoyaltyCritical` (already fired by `ModifyLoyalty` in the
+rebellion band, previously with no Kingdom-side consumer) and calls
+`InterruptPrayer` on it — the territory-management equivalent of Battle's
+"an enemy attack can set the prayer gauge back," since there's no enemy
+unit on the Kingdom map to do it directly; an `interruptedThisTurn` flag
+stops the same turn from also calling `AdvancePrayerTurn` right after.
+The `PrayerStatusLabel` mentioned above lives on `HUDController`, not on
+`PrayerMenuUI` itself, because `PrayerMenuUI.Close()` disables its own
+GameObject (doubling as `panelRoot`), which would also disable
+`OnEnable`-subscribed event handlers — the same reasoning already behind
+`TurnLabel` living on `HUDController` rather than some per-panel widget.
 
 ### `Battle`
 Same elevated camera + `HexCameraController` as `Kingdom`, plus

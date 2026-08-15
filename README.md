@@ -56,7 +56,11 @@ Assets/_Project/
                     conséquence d'une pénurie sur la Loyauté existaient
                     déjà en code mais rien ne les appelait ; EndTurn()
                     (bouton "Fin de Tour" du HUD) les enchaîne désormais
-                    à chaque tour
+                    à chaque tour, et fait aussi avancer une prière en
+                    cours (MiracleManager.AdvancePrayerTurn) — sauf si
+                    PopulationSystem.LoyaltyCritical (bande de rébellion)
+                    l'a déjà interrompue ce tour-ci, l'équivalent côté
+                    Kingdom d'une attaque ennemie perturbant le rituel
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules),
                     HexCoordinates.FromWorldPosition (inverse de
@@ -219,9 +223,19 @@ Assets/_Project/
                     narrationClip* sur VerseData) avec sélection de
                     langue FR/EN/HE
     UI/             HUD, menu de prière, journal des versets —
-                    RefreshList() instancie un MiracleListItemUI/
-                    VerseListItemUI par entrée dès qu'un listItemPrefab
-                    est assigné ; UIThemeData applique en couleurs plates
+                    PrayerMenuUI a deux vues (sélection/rituel) commutées
+                    sur MiracleManager.IsPraying : la liste des miracles
+                    castables est générée en code (un bouton UITheme par
+                    MiracleData, comme BuildingPaletteUI, plus besoin de
+                    MiracleListItemUI/prefab, classe supprimée) et
+                    ConfirmCast appelle désormais BeginPrayer (jauge
+                    multi-tours) au lieu de TryCast (résolution
+                    instantanée) ; la vue rituel affiche la progression
+                    et un bouton Accélérer (AccelerateWithFaith) et
+                    Abandonner (InterruptPrayer) ; VerseJournalUI
+                    instancie encore un VerseListItemUI par entrée dès
+                    qu'un listItemPrefab est assigné ; UIThemeData
+                    applique en couleurs plates
                     la palette de docs/ArtDirection.md (boutons, panneaux,
                     libellés) et WorldMoodUI teinte l'écran de Kingdom
                     selon AllianceSystem.StandingChanged ;
@@ -344,22 +358,30 @@ dans l'Éditeur, sans toucher au code.
    l'UI de combat (`BattleHUDController` : stats d'unité, Fin de Tour,
    liste de miracles, Victoire/Défaite) existent toutes les deux, il ne
    leur manque que des icônes une fois l'art produit.
-4. Habiller visuellement le menu de prière et le journal des versets
-   (`PrayerMenuUI`/`VerseJournalUI` ont désormais leur boucle
-   d'instanciation de liste — `RefreshList()` peuple un
-   `MiracleListItemUI`/`VerseListItemUI` par miracle castable/verset
-   mémorisé — mais elle reste un no-op tant qu'aucun prefab d'item n'est
-   assigné à `listItemPrefab`, faute d'art produit).
+4. Habiller visuellement le journal des versets (`VerseJournalUI` a
+   toujours sa boucle d'instanciation de liste — `RefreshList()` peuple un
+   `VerseListItemUI` par verset mémorisé — mais elle reste un no-op tant
+   qu'aucun prefab d'item n'est assigné à `listItemPrefab`, faute d'art
+   produit). `PrayerMenuUI`, elle, n'a plus besoin de prefab : sa liste de
+   miracles castables est générée en code (comme `BuildingPaletteUI`).
    Le rituel complet de prière (`MiracleManager.BeginPrayer` /
-   `AdvancePrayerTurn` / `AccelerateWithFaith` / `InterruptPrayer`) est déjà
-   branché côté `Battle` via `TurnController` ; `PrayerMenuUI` utilise pour
-   l'instant `TryCast` (résolution instantanée). `Kingdom` a désormais sa
-   propre boucle de tours (`KingdomTurnManager`, voir `Core/` ci-dessus) —
-   la précondition qui manquait pour rebrancher `PrayerMenuUI` sur le
-   rituel complet existe maintenant, mais le rebranchement lui-même (barre
-   de progression, annulation, `AdvancePrayerTurn` appelé depuis
-   `KingdomTurnManager.EndTurn` quand une prière est en cours) reste à
-   faire — pas tenté ici, changement de comportement UI à part entière.
+   `AdvancePrayerTurn` / `AccelerateWithFaith` / `InterruptPrayer`) était déjà
+   branché côté `Battle` via `TurnController` ; `Kingdom` avait sa propre
+   boucle de tours (`KingdomTurnManager`) mais `PrayerMenuUI` utilisait
+   encore `TryCast` (résolution instantanée) faute de vue pour piloter un
+   rituel qui dure plusieurs tours. C'est fait : `PrayerMenuUI` a
+   maintenant une vue sélection (liste + `ConfirmCast` → `BeginPrayer`) et
+   une vue rituel (progression, `Accélérer` → `AccelerateWithFaith`,
+   `Abandonner` → `InterruptPrayer`), commutées sur
+   `MiracleManager.IsPraying`. `KingdomTurnManager.EndTurn` appelle
+   `AdvancePrayerTurn` chaque tour quand une prière est en cours, et
+   `PopulationSystem.LoyaltyCritical` (bande de rébellion) l'interrompt —
+   l'équivalent côté Kingdom de « une attaque ennemie peut faire régresser
+   la jauge » côté Battle, puisqu'il n'y a pas d'ennemi sur la carte du
+   Royaume. Un `PrayerStatusLabel` persistant sur `HUDController` (et non
+   sur `PrayerMenuUI`, dont le GameObject se désactive avec le panneau, ce
+   qui couperait ses abonnements aux événements) garde la progression
+   visible même panneau fermé, sur le même principe que `turnLabel`.
 5. Créer des prefabs d'unités référençant les 6 `UnitData` de base
    (`Assets/_Project/ScriptableObjects/Units`) pour peupler la scène
    `Battle`.

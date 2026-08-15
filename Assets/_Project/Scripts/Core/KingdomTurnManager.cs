@@ -1,5 +1,6 @@
 using System;
 using KingdomOfGod.Buildings;
+using KingdomOfGod.Miracles;
 using KingdomOfGod.Population;
 using KingdomOfGod.Resources;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private BuildingManager buildingManager;
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private PopulationSystem populationSystem;
+        [SerializeField] private MiracleManager miracleManager;
 
         [SerializeField] private float shortageLoyaltyPenalty = 5f;
         [SerializeField] private float wellFedLoyaltyBonus = 2f;
@@ -33,15 +35,48 @@ namespace KingdomOfGod.Core
         [SerializeField] private float devoutFaithPerCapita = 0.5f;
         [SerializeField] private float devoutLoyaltyBonus = 1f;
 
+        // Set by OnLoyaltyCritical when a rebellion-band Loyalty hit interrupts an active prayer
+        // this turn, so EndTurn doesn't also advance the same ritual straight past that setback.
+        private bool interruptedThisTurn;
+
         public int TurnNumber { get; private set; } = 1;
 
         public event Action<int> TurnAdvanced;
+
+        private void OnEnable()
+        {
+            if (populationSystem != null) populationSystem.LoyaltyCritical += OnLoyaltyCritical;
+        }
+
+        private void OnDisable()
+        {
+            if (populationSystem != null) populationSystem.LoyaltyCritical -= OnLoyaltyCritical;
+        }
+
+        /// <summary>
+        /// Kingdom's analogue of Battle's "pendant le temps de prière, le joueur est vulnérable —
+        /// une attaque ennemie peut faire régresser la jauge ou annuler le rituel" (GDD): there is
+        /// no enemy on the Kingdom map, but a rebellion-band Loyalty crisis is the equivalent
+        /// existential threat, so it disrupts an in-progress prayer the same way.
+        /// </summary>
+        private void OnLoyaltyCritical()
+        {
+            if (miracleManager == null || !miracleManager.IsPraying) return;
+            miracleManager.InterruptPrayer();
+            interruptedThisTurn = true;
+        }
 
         public void EndTurn()
         {
             buildingManager.ProcessTurnProduction();
             ApplyPopulationUpkeep();
             ApplyGovernanceLoyalty();
+
+            if (miracleManager != null && miracleManager.IsPraying && !interruptedThisTurn)
+            {
+                miracleManager.AdvancePrayerTurn();
+            }
+            interruptedThisTurn = false;
 
             TurnNumber++;
             TurnAdvanced?.Invoke(TurnNumber);

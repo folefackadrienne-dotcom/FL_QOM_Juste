@@ -116,6 +116,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(kingdomTurnManager, "buildingManager", buildingManager);
             SetRef(kingdomTurnManager, "resourceManager", resourceManager);
             SetRef(kingdomTurnManager, "populationSystem", populationSystem);
+            SetRef(kingdomTurnManager, "miracleManager", miracleManager);
 
             SetRef(allianceSystem, "resourceManager", resourceManager);
             SetRef(miracleManager, "resourceManager", resourceManager);
@@ -283,16 +284,42 @@ namespace KingdomOfGod.EditorTools
             turnLabel.rectTransform.pivot = new Vector2(1f, 0f);
             SetRef(hud, "turnLabel", turnLabel);
 
+            var prayerStatusLabel = CreateLabel(canvas.transform, "PrayerStatusLabel", "", 16, TextAlignmentOptions.Center,
+                new Vector2(-140f, 112f), new Vector2(260f, 26f), theme != null ? theme.ivoryWhite : (Color?)null);
+            prayerStatusLabel.rectTransform.anchorMin = new Vector2(1f, 0f);
+            prayerStatusLabel.rectTransform.anchorMax = new Vector2(1f, 0f);
+            prayerStatusLabel.rectTransform.pivot = new Vector2(1f, 0f);
+            SetRef(hud, "prayerStatusLabel", prayerStatusLabel);
+
             var prayerPanelGO = new GameObject("PrayerMenuPanel", typeof(RectTransform));
             prayerPanelGO.transform.SetParent(hudGO.transform, false);
             AddParchmentBackground(prayerPanelGO, theme);
             var prayerMenu = prayerPanelGO.AddComponent<PrayerMenuUI>();
-            var prayerConfirm = CreateButton(prayerPanelGO.transform, "ConfirmButton", "Confirmer", Vector2.zero, theme);
+
+            var prayerSelectionGO = new GameObject("SelectionView", typeof(RectTransform));
+            prayerSelectionGO.transform.SetParent(prayerPanelGO.transform, false);
+            var prayerConfirm = CreateButton(prayerSelectionGO.transform, "ConfirmButton", "Commencer la Prière", Vector2.zero, theme);
             var prayerListContainer = new GameObject("ListContainer", typeof(RectTransform));
-            prayerListContainer.transform.SetParent(prayerPanelGO.transform, false);
+            prayerListContainer.transform.SetParent(prayerSelectionGO.transform, false);
+
+            var prayerRitualGO = new GameObject("RitualView", typeof(RectTransform));
+            prayerRitualGO.transform.SetParent(prayerPanelGO.transform, false);
+            var prayerRitualStatus = CreateLabel(prayerRitualGO.transform, "RitualStatusText", "Prière en cours", 16,
+                TextAlignmentOptions.Center, new Vector2(0f, 40f), new Vector2(260f, 30f), theme != null ? theme.ivoryWhite : (Color?)null);
+            var prayerAccelerateButton = CreateButton(prayerRitualGO.transform, "AccelerateButton", "Accélérer (+Foi)", new Vector2(0f, 0f), theme);
+            var prayerAbandonButton = CreateButton(prayerRitualGO.transform, "AbandonButton", "Abandonner", new Vector2(0f, -50f), theme);
+            prayerRitualGO.SetActive(false);
+
+            SetRef(prayerMenu, "theme", theme);
             SetRef(prayerMenu, "panelRoot", prayerPanelGO);
+            SetRef(prayerMenu, "selectionView", prayerSelectionGO);
             SetRef(prayerMenu, "confirmButton", prayerConfirm);
             SetRef(prayerMenu, "listContainer", prayerListContainer.transform);
+            SetRef(prayerMenu, "ritualView", prayerRitualGO);
+            SetRef(prayerMenu, "ritualStatusText", prayerRitualStatus);
+            SetRef(prayerMenu, "accelerateButton", prayerAccelerateButton);
+            SetRef(prayerMenu, "abandonButton", prayerAbandonButton);
+            UnityEventTools.AddPersistentListener(prayerConfirm.onClick, prayerMenu.ConfirmCast);
             prayerPanelGO.SetActive(false);
 
             var versePanelGO = new GameObject("VerseJournalPanel", typeof(RectTransform));
