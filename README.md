@@ -155,7 +155,16 @@ Assets/_Project/
     Progression/    Leaders légendaires (LeaderManager : débloqués +
                     leader actif), arbre technologique (3 arbres × 5
                     branches : Économique, Militaire, Spirituel ;
-                    TechTree.TechUnlocked)
+                    TechTree.TechUnlocked) — CanUnlock/TryUnlock sont du
+                    code réel mais TechTree.allNodes était une liste
+                    vide, rendant tout prérequis infranchissable quel
+                    que soit le coût ; peuplée désormais par
+                    ProjectSceneSetup.SetTechNodeList. Coûts des 93
+                    TechNode rechiffrés (voir docs/Economy.md
+                    « Coûts ») après simulation : la formule d'origine
+                    laissait 10 technologies définitivement hors de
+                    portée faute de Sagesse (seuls 3 des 39 bâtiments
+                    en produisent, aucun avant l'Âge 4)
     SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud),
                     SaveManager.Saved/Loaded
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
@@ -417,8 +426,25 @@ dans l'Éditeur, sans toucher au code.
     tours contre les 39 bâtiments déjà chiffrés (voir la note de chiffrage
     dans `docs/Economy.md` §3) plutôt que devinées au hasard — mais jamais
     testées en jeu réel, aucun Éditeur Unity n'étant disponible dans cet
-    environnement. Reste ouvert : les coûts des 93 technologies
-    (`docs/Economy.md`, formule `10 + (palier - 1) × 8`) n'ont pas été
-    inclus dans la simulation ; et `TempleLevelData.miraclesUnlocked`
-    reste vide faute de champ de niveau de Temple sur `MiracleData` pour
-    établir la correspondance.
+    environnement. `TempleLevelData.miraclesUnlocked` reste vide faute de
+    champ de niveau de Temple sur `MiracleData` pour établir la
+    correspondance.
+11. Les coûts des 93 `TechNode` (`docs/Economy.md` « Coûts ») ont été
+    inclus dans la même simulation Python et rechiffrés : la formule
+    d'origine (`10 + (palier - 1) × 8` Sagesse) laissait 10 technologies
+    définitivement inatteignables quelle que soit la stratégie de jeu,
+    parce que seuls 3 des 39 `BuildingData` produisent de la Sagesse et
+    aucun avant l'Âge 4 — la Sagesse reste bloquée à sa valeur de départ
+    pendant 4 Âges sur 7, la recherche ne progressant que par à-coups
+    via les récompenses ponctuelles de missions. Nouvelle formule (`8 +
+    (palier - 1) × 6`, alignée sur celle déjà utilisée pour la Foi) :
+    les 93 sont désormais atteignables en fin de simulation. Un vrai bug
+    de câblage corrigé au passage : `TechTree.allNodes` était une liste
+    vide, donc `CanUnlock`/`TryUnlock` (du code réel et correct)
+    renvoyaient toujours `false` pour toute technologie ayant un
+    prérequis — peuplée désormais par
+    `ProjectSceneSetup.SetTechNodeList`. Reste ouvert : aucune UI ne
+    permet encore de parcourir/lancer une recherche parmi les 93 nœuds
+    (3 arbres × 5 branches) — contrairement au Temple ou aux missions,
+    ce serait un vrai morceau d'UI à construire, hors du périmètre de ce
+    chiffrage.

@@ -23,4 +23,4 @@ MonoBehaviour:
   additionalRequirement: "Justice"
   cost:
   - type: 5
-    amount: 26
+    amount: 20

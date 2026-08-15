@@ -128,6 +128,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(missionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "allianceSystem", allianceSystem);
             SetRef(techTree, "resourceManager", resourceManager);
+            SetTechNodeList(techTree, "Assets/_Project/ScriptableObjects/Techs");
 
             SetRef(audioManager, "miracleManager", miracleManager);
             SetRef(audioManager, "allianceSystem", allianceSystem);
@@ -753,6 +754,27 @@ namespace KingdomOfGod.EditorTools
                 costElement.FindPropertyRelative("type").intValue = (int)cost[i].type;
                 costElement.FindPropertyRelative("amount").floatValue = cost[i].amount;
             }
+        }
+
+        /// <summary>
+        /// Populates TechTree.allNodes from every TechNode asset in the given folder. Was never
+        /// called before this round — CanUnlock/TryUnlock are real, correct methods (they even
+        /// resolve prerequisiteIds against allNodes correctly), but with allNodes empty,
+        /// allNodes.Find(prereqId) always returned null, so CanUnlock returned false for every
+        /// node that has at least one prerequisite — nearly all of them — regardless of cost.
+        /// </summary>
+        private static void SetTechNodeList(TechTree tree, string folder)
+        {
+            var guids = AssetDatabase.FindAssets("t:TechNode", new[] { folder });
+            var so = new SerializedObject(tree);
+            var listProp = so.FindProperty("allNodes");
+            listProp.arraySize = guids.Length;
+            for (int i = 0; i < guids.Length; i++)
+            {
+                var node = AssetDatabase.LoadAssetAtPath<TechNode>(AssetDatabase.GUIDToAssetPath(guids[i]));
+                listProp.GetArrayElementAtIndex(i).objectReferenceValue = node;
+            }
+            so.ApplyModifiedProperties();
         }
 
         /// <summary>Populates BuildingPaletteUI.allBuildings from every BuildingData asset in the given folder, so the palette doesn't need 39 assets dragged in by hand.</summary>

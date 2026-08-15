@@ -23,6 +23,6 @@ MonoBehaviour:
   additionalRequirement: 
   cost:
   - type: 5
-    amount: 26
+    amount: 20
   - type: 4
     amount: 20

@@ -22,4 +22,4 @@ MonoBehaviour:
   additionalRequirement: "Débloqué automatiquement à l'Âge 7"
   cost:
   - type: 5
-    amount: 58
+    amount: 44

@@ -245,12 +245,48 @@ de conception.
 
 Les coûts de recherche (`cost`) n'étaient pas chiffrés dans le document
 source ; ils suivent une formule simple et transparente plutôt que des
-valeurs inventées au cas par cas : `10 + (palier - 1) × 8` Sagesse, où le
-palier est la position de la technologie dans sa branche (1 pour la
-première, 2 pour la suivante, etc.), plus `8 + (palier - 1) × 6` Foi pour
-les technologies spirituelles et celles de la branche Doctrine & Guerre
-Sacrée. À ajuster une fois le reste de l'équilibrage économique testé en
-jeu.
+valeurs inventées au cas par cas, où le palier est la position de la
+technologie dans sa branche (1 pour la première, 2 pour la suivante,
+etc.) : `8 + (palier - 1) × 6` Sagesse pour toutes, plus `8 + (palier -
+1) × 6` Foi en plus pour les technologies spirituelles et celles de la
+branche Doctrine & Guerre Sacrée (coût cumulé, donc, pour ces deux
+groupes de branches — deux ressources à réunir, pas une seule).
+
+**Chiffrage validé, et corrigé une fois** : la formule Sagesse d'origine
+(`10 + (palier - 1) × 8`, plus chère) a été simulée en Python sur 420
+tours contre l'économie réelle — bâtiments, missions et Temple, tous
+committés aux rounds précédents — et laissait 10 des 93 technologies
+définitivement hors de portée, quelle que soit la stratégie de jeu
+testée (gloutonne, orientée branche, avec ou sans priorité sur le
+Temple). Cause : seuls 3 des 39 `BuildingData` produisent de la Sagesse
+(École des Scribes, École des Prophètes, Palais Royal), et aucun avant
+l'Âge 4 — la Sagesse reste donc bloquée à sa valeur de départ (5) tout
+au long des Âges 0 à 3, la recherche ne progressant que par à-coups
+grâce aux récompenses ponctuelles de missions (≈ 80 Sagesse cumulées sur
+ces 4 Âges, toutes missions confondues). Un rythme de recherche lent en
+tout début de partie colle au thème de la Sagesse comme ressource rare
+(GDD : « débloque des choix stratégiques »), mais 10 technologies
+jamais atteignables même en fin de partie, elles, ne collent à rien —
+c'est un vrai défaut de calibrage, pas un choix de rythme. La formule
+allégée (alignée sur la forme déjà utilisée pour la Foi) a été revalidée
+sur la même simulation : les 93 sont désormais atteignables, la
+dernière autour du tour 408/420 — un arbre qui se termine tout juste en
+fin de partie pour un joueur qui s'y consacre, plutôt que jamais.
+
+`TechTree.allNodes` était par ailleurs une liste vide — `CanUnlock`/
+`TryUnlock` sont du code réel et correct (ils résolvent bien
+`prerequisiteIds` contre `allNodes`), mais avec la liste vide,
+`allNodes.Find(prereqId)` renvoyait toujours `null`, donc `CanUnlock`
+renvoyait `false` pour toute technologie ayant au moins un prérequis —
+la quasi-totalité — indépendamment de son coût. `ProjectSceneSetup.
+SetTechNodeList` la peuple désormais (même mécanisme que
+`SetBuildingList`/`SetMissionList`). Aucune UI de recherche n'existe
+encore pour autant — contrairement au Temple (`TempleUI`) ou aux
+missions (`MissionListUI`), parcourir/lancer une recherche parmi 93
+nœuds répartis en 3 arbres × 5 branches est un vrai morceau d'UI à part
+entière, hors du périmètre de ce chiffrage des coûts ; `CanUnlock`/
+`TryUnlock` sont maintenant utilisables en code, mais rien ne les
+appelle encore côté joueur.
 
 ### Exemples de synergies (du document source)
 

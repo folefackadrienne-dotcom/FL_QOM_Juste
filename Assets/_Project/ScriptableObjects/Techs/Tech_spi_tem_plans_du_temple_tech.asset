@@ -23,6 +23,6 @@ MonoBehaviour:
   additionalRequirement: "Haute Sagesse"
   cost:
   - type: 5
-    amount: 34
+    amount: 26
   - type: 4
     amount: 26

@@ -38,6 +38,10 @@ this object (and its state) survives every later scene load.
 players stop unlocking ages at the GDD's free limit (first 2-3 ages).
 Starting resources (Blé 50, Eau 50, Bois 30, Or 20, Foi 10, Sagesse 5,
 Justice 10) are pre-filled so the HUD shows real numbers immediately.
+`TechTree.allNodes` is populated here too, from every `TechNode` asset
+under `Assets/_Project/ScriptableObjects/Techs` — previously left empty,
+which made `CanUnlock`/`TryUnlock` unable to ever pass a prerequisite
+check regardless of cost.
 
 ### `MainMenu`
 Camera, EventSystem, Canvas with a full-screen background Image, a title
