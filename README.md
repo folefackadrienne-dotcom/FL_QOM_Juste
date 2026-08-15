@@ -29,7 +29,11 @@ Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
 ## Ouvrir le projet
 
 1. Ouvrir Unity Hub → Add → sélectionner ce dossier.
-2. Laisser Unity réimporter les packages (`Packages/manifest.json`).
+2. Laisser Unity réimporter les packages (`Packages/manifest.json`) — le
+   package Input System étant déjà déclaré, Unity peut proposer une
+   boîte de dialogue « activer le nouveau système d'entrée (redémarrage
+   requis) » à la première ouverture : accepter, c'est nécessaire pour
+   la caméra et les clics sur la grille (voir Interaction/ ci-dessous).
 3. Lancer **Kingdom of God → Setup → Create All Scenes** dans le menu
    Unity pour générer et câbler `Bootstrap`, `MainMenu`, `Kingdom` et
    `Battle` d'un coup — voir
@@ -37,7 +41,9 @@ Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
    pour le détail de ce que chaque scène contient.
 4. Ouvrir `Bootstrap` et lancer Play : ça enchaîne automatiquement sur
    `MainMenu`, où « Nouvelle Partie » ouvre `Kingdom` avec la barre de
-   ressources déjà vivante (Foi, Blé, Eau… avec leurs valeurs de départ).
+   ressources déjà vivante (Foi, Blé, Eau… avec leurs valeurs de départ)
+   et une caméra libre (WASD/flèches pour se déplacer, molette pour
+   zoomer).
 
 ## Structure
 
@@ -46,7 +52,18 @@ Assets/_Project/
   Scripts/
     Core/          GameManager, cycle des 7 Âges
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
-    Grid/           Grille hexagonale (coordonnées axiales, cellules)
+    Grid/           Grille hexagonale (coordonnées axiales, cellules),
+                    HexCoordinates.FromWorldPosition (inverse de
+                    ToWorldPosition, pour le clic-pour-sélectionner)
+    Interaction/    Caméra RTS libre (HexCameraController : WASD/flèches
+                    + molette) et clic-pour-jouer sur la grille —
+                    KingdomInputController (pose de bâtiment via
+                    BuildingManager.TryPlace) et BattleInputController
+                    (sélection/déplacement/attaque d'unité via
+                    BattleManager) ; aucune palette de sélection de
+                    bâtiment n'existe encore (BuildingData.icon vide),
+                    selectedBuilding se règle pour l'instant à la main
+                    dans l'Inspecteur
     Buildings/      Bâtiments, placement — BuildingManager.TryPlace
                     instancie BuildingData.prefab à la position de la
                     cellule dès qu'un prefab existe —, Temple (niveaux
@@ -183,7 +200,13 @@ dans l'Éditeur, sans toucher au code.
    Grenier/Réservoir/Grand Marché/Atelier de Charpentiers/Fonderie/
    Tribunal) est fait pour les 7 Âges.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
-   hexagonal) dans la scène `Kingdom`.
+   hexagonal) dans la scène `Kingdom` — la caméra bouge et les clics se
+   résolvent déjà en `HexCoordinates` (`Interaction/`), mais rien
+   n'affiche encore les cellules elles-mêmes. Ajouter aussi une vraie
+   palette de sélection de bâtiment (`KingdomInputController.
+   selectedBuilding` se règle pour l'instant à la main dans l'Inspecteur)
+   et une UI de combat (sélection d'unité, boutons d'action) — les deux
+   attendent surtout des icônes de bâtiments/unités.
 4. Habiller visuellement le menu de prière et le journal des versets
    (`PrayerMenuUI`/`VerseJournalUI` ont désormais leur boucle
    d'instanciation de liste — `RefreshList()` peuple un

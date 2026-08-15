@@ -7,6 +7,7 @@ using KingdomOfGod.Buildings;
 using KingdomOfGod.Collectibles;
 using KingdomOfGod.Core;
 using KingdomOfGod.Grid;
+using KingdomOfGod.Interaction;
 using KingdomOfGod.Miracles;
 using KingdomOfGod.Missions;
 using KingdomOfGod.Monetization;
@@ -188,7 +189,10 @@ namespace KingdomOfGod.EditorTools
             var scene = NewScene();
             var theme = LoadTheme();
 
-            CreateCamera();
+            var kingdomCamera = CreateHexGridCamera();
+            var kingdomInput = kingdomCamera.gameObject.AddComponent<KingdomInputController>();
+            SetRef(kingdomInput, "targetCamera", kingdomCamera);
+
             CreateEventSystem();
             var canvas = CreateCanvas();
 
@@ -272,7 +276,7 @@ namespace KingdomOfGod.EditorTools
         {
             var scene = NewScene();
 
-            CreateCamera();
+            var battleCamera = CreateHexGridCamera();
             CreateEventSystem();
 
             var gridGO = new GameObject("BattleGrid");
@@ -284,6 +288,11 @@ namespace KingdomOfGod.EditorTools
             var battleManagerGO = new GameObject("BattleManager");
             var battleManager = battleManagerGO.AddComponent<BattleManager>();
             SetRef(battleManager, "battleGrid", battleGrid);
+
+            var battleInput = battleCamera.gameObject.AddComponent<BattleInputController>();
+            SetRef(battleInput, "battleManager", battleManager);
+            SetRef(battleInput, "battleGrid", battleGrid);
+            SetRef(battleInput, "targetCamera", battleCamera);
 
             SaveScene(scene, BattlePath);
         }
@@ -318,10 +327,21 @@ namespace KingdomOfGod.EditorTools
             Debug.Log($"Kingdom of God setup: saved {path}");
         }
 
-        private static void CreateCamera()
+        private static Camera CreateCamera()
         {
             var cameraGO = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener));
             cameraGO.tag = "MainCamera";
+            return cameraGO.GetComponent<Camera>();
+        }
+
+        /// <summary>Elevated RTS-style angle looking down at the grid origin, with HexCameraController attached for WASD pan / scroll zoom.</summary>
+        private static Camera CreateHexGridCamera()
+        {
+            var camera = CreateCamera();
+            camera.transform.position = new Vector3(0f, 14f, -10f);
+            camera.transform.rotation = Quaternion.Euler(55f, 0f, 0f);
+            camera.gameObject.AddComponent<HexCameraController>();
+            return camera;
         }
 
         private static void CreateEventSystem()

@@ -40,6 +40,31 @@ namespace KingdomOfGod.Grid
             return new Vector3(x, 0f, z);
         }
 
+        /// <summary>
+        /// Inverse of <see cref="ToWorldPosition"/> — the nearest cell to a world point (e.g. a
+        /// mouse-to-ground-plane hit), for click-to-select input. Cube-coordinate rounding per
+        /// redblobgames.com/grids/hexagons/#rounding.
+        /// </summary>
+        public static HexCoordinates FromWorldPosition(Vector3 position, float hexSize)
+        {
+            float qf = position.x / (1.5f * hexSize);
+            float rf = position.z / (Mathf.Sqrt(3f) * hexSize) - qf / 2f;
+            float sf = -qf - rf;
+
+            int roundedQ = Mathf.RoundToInt(qf);
+            int roundedR = Mathf.RoundToInt(rf);
+            int roundedS = Mathf.RoundToInt(sf);
+
+            float qDiff = Mathf.Abs(roundedQ - qf);
+            float rDiff = Mathf.Abs(roundedR - rf);
+            float sDiff = Mathf.Abs(roundedS - sf);
+
+            if (qDiff > rDiff && qDiff > sDiff) roundedQ = -roundedR - roundedS;
+            else if (rDiff > sDiff) roundedR = -roundedQ - roundedS;
+
+            return new HexCoordinates(roundedQ, roundedR);
+        }
+
         public static HexCoordinates operator +(HexCoordinates a, HexCoordinates b) => new HexCoordinates(a.q + b.q, a.r + b.r);
         public static HexCoordinates operator -(HexCoordinates a, HexCoordinates b) => new HexCoordinates(a.q - b.q, a.r - b.r);
 

@@ -49,9 +49,20 @@ found at `Assets/_Project/ScriptableObjects/UI/UITheme.asset`, falling back
 to the previous flat defaults otherwise.
 
 ### `Kingdom` (territory/management view)
-Camera, EventSystem, Canvas with a full-screen `WorldMoodOverlay` (transparent
-by default, wired to `WorldMoodUI` + `UITheme.asset`), `HUDController` and a
-live resource bar (one label per resource). Its `ResourceBarUI`/
+Camera positioned above and behind the grid origin (elevated ~55° RTS angle)
+with `HexCameraController` (WASD/arrow-key pan, scroll-wheel zoom) and
+`KingdomInputController` attached — left-click resolves through
+`HexCoordinates.FromWorldPosition` (a mouse-to-ground-plane raycast against
+the mathematical y=0 plane, since no grid mesh/collider exists yet) and
+calls `BuildingManager.TryPlace` with `selectedBuilding`, a field with no
+selection-palette UI to drive it yet — set it by hand in the Inspector to
+playtest placement, or call `KingdomInputController.SelectBuilding(...)`
+once a real palette exists. `buildingManager`/`grid` resolve at runtime via
+`GameManager.Instance`, same cross-scene pattern as the rest of this
+scene's UI. EventSystem, Canvas with a full-screen `WorldMoodOverlay`
+(transparent by default, wired to `WorldMoodUI` + `UITheme.asset`),
+`HUDController` and a live resource bar (one label per resource). Its
+`ResourceBarUI`/
 `PrayerMenuUI`/`VerseJournalUI` leave their manager references unassigned in
 the scene — since Bootstrap and Kingdom are separate scenes, those
 references resolve at runtime via `GameManager.Instance` instead (Unity
@@ -71,7 +82,14 @@ but stays a no-op until a building has a prefab assigned — none of the 39
 `BuildingData` assets do yet.
 
 ### `Battle`
-Camera, EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for
+Same elevated camera + `HexCameraController` as `Kingdom`, plus
+`BattleInputController` (fully wired locally — `battleManager`/`battleGrid`
+live in this same scene, no cross-scene fallback needed here): first
+left-click on a cell occupied by a `Allegiance.Player` unit selects it, a
+second click resolves through `BattleManager` — an enemy-occupied cell
+attacks, an empty one (within movement range) moves, anything else just
+deselects; a failed attack/move plays "Interface - Erreur / Action
+Impossible". EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for
 tactical combat (radius 5, vs. the kingdom's default 10), and a
 `BattleManager`. `VictoryCondition` is left at its default and needs to be
 set per mission; `miracleManager` resolves via `GameManager.Instance` like
