@@ -114,8 +114,14 @@ Assets/_Project/
                   et les assigne au bon VerseData.narrationClip* en
                   faisant correspondre la référence extraite du nom de
                   fichier (accents/virgule-deux-points ignorés) (menu
-                  Kingdom of God > Setup > Import Voice Narrations),
-                  assembly Editor-only
+                  Kingdom of God > Setup > Import Voice Narrations) ;
+                  SfxImporter.cs — importe des effets sonores nommés
+                  "sound effects - <description>" (ex. "sound effects -
+                  male cry.mp3") et suggère un clip pour chacun des 44
+                  SfxCueData par recoupement de mots-clés avec sa
+                  description (un même fichier peut être suggéré et
+                  assigné à plusieurs SFX) (menu Kingdom of God > Setup >
+                  Import Sound Effects), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Antagonists, Techs, Ages,
@@ -207,7 +213,14 @@ dans l'Éditeur, sans toucher au code.
    automatiquement au bon `VerseData` par correspondance de référence
    (accents/virgule-deux-points ignorés) et les renomme — à vérifier
    avant de valider, les fichiers non reconnus restent assignables à
-   la main.
+   la main. Pour les effets sonores nommés "sound effects -
+   <description>" (ex. "sound effects - male cry.mp3"), voir
+   **Kingdom of God → Setup → Import Sound Effects**
+   (`SfxImporter.cs`) qui suggère un clip par `SfxCueData` en
+   recoupant les mots-clés de sa description — un même fichier peut
+   être assigné à plusieurs SFX (ex. un cri de guerre servant aussi
+   d'entrée en scène de boss) ; toujours vérifier/écouter avant
+   d'assigner, l'appariement reste une heuristique.
 8. Remplacer les couleurs plates de `UIThemeData`/`ProjectSceneSetup` par
    de vraies textures/sprites 9-slice une fois l'art produit (bordures
    dorées, fond parchemin texturé, icônes symboliques du blé/eau/flamme/
