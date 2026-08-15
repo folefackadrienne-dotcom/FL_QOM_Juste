@@ -291,6 +291,20 @@ namespace KingdomOfGod.EditorTools
             selectedBuildingLabel.rectTransform.pivot = new Vector2(0f, 1f);
             SetRef(buildingPalette, "selectedBuildingLabel", selectedBuildingLabel);
 
+            var missionPanelGO = new GameObject("MissionListPanel", typeof(RectTransform));
+            missionPanelGO.transform.SetParent(hudGO.transform, false);
+            AddParchmentBackground(missionPanelGO, theme);
+            var missionList = missionPanelGO.AddComponent<MissionListUI>();
+            var missionListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            missionListContainer.transform.SetParent(missionPanelGO.transform, false);
+            var missionCloseButton = CreateButton(missionPanelGO.transform, "CloseButton", "Fermer", Vector2.zero, theme);
+            SetRef(missionList, "theme", theme);
+            SetRef(missionList, "panelRoot", missionPanelGO);
+            SetRef(missionList, "listContainer", missionListContainer.transform);
+            SetRef(missionList, "closeButton", missionCloseButton);
+            SetMissionList(missionList, "Assets/_Project/ScriptableObjects/Missions");
+            missionPanelGO.SetActive(false);
+
             var toolbarGO = new GameObject("Toolbar", typeof(RectTransform), typeof(HorizontalLayoutGroup));
             toolbarGO.transform.SetParent(hudGO.transform, false);
             var toolbarRect = toolbarGO.GetComponent<RectTransform>();
@@ -298,7 +312,7 @@ namespace KingdomOfGod.EditorTools
             toolbarRect.anchorMax = new Vector2(0.5f, 0f);
             toolbarRect.pivot = new Vector2(0.5f, 0f);
             toolbarRect.anchoredPosition = new Vector2(0f, 20f);
-            toolbarRect.sizeDelta = new Vector2(600f, 50f);
+            toolbarRect.sizeDelta = new Vector2(750f, 50f);
             var toolbarLayout = toolbarGO.GetComponent<HorizontalLayoutGroup>();
             toolbarLayout.spacing = 10f;
             toolbarLayout.childForceExpandWidth = false;
@@ -312,12 +326,15 @@ namespace KingdomOfGod.EditorTools
             UnityEventTools.AddPersistentListener(prophecyToolbarButton.onClick, hud.ToggleProphecyJournal);
             var buildingToolbarButton = CreateButton(toolbarGO.transform, "BuildingButton", "Bâtiments", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(buildingToolbarButton.onClick, hud.OpenBuildingPalette);
+            var missionToolbarButton = CreateButton(toolbarGO.transform, "MissionButton", "Missions", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(missionToolbarButton.onClick, hud.OpenMissionList);
 
             SetRef(hud, "resourceBar", resourceBar);
             SetRef(hud, "prayerMenu", prayerMenu);
             SetRef(hud, "verseJournal", verseJournal);
             SetRef(hud, "prophecyJournalPanel", prophecyPanelGO);
             SetRef(hud, "buildingPalette", buildingPalette);
+            SetRef(hud, "missionList", missionList);
 
             SaveScene(scene, KingdomPath);
         }
@@ -347,6 +364,12 @@ namespace KingdomOfGod.EditorTools
             var battleManagerGO = new GameObject("BattleManager");
             var battleManager = battleManagerGO.AddComponent<BattleManager>();
             SetRef(battleManager, "battleGrid", battleGrid);
+
+            var missionBattleSetup = battleManagerGO.AddComponent<MissionBattleSetup>();
+            SetRef(missionBattleSetup, "battleManager", battleManager);
+            SetRef(missionBattleSetup, "battleGrid", battleGrid);
+            SetRef(missionBattleSetup, "defaultPlayerUnit", LoadUnit("Unit_Fantassin"));
+            SetRef(missionBattleSetup, "defaultEnemyUnit", LoadUnit("Unit_Fantassin"));
 
             var battleInput = battleCamera.gameObject.AddComponent<BattleInputController>();
             SetRef(battleInput, "battleManager", battleManager);
@@ -547,6 +570,17 @@ namespace KingdomOfGod.EditorTools
             return theme;
         }
 
+        private static UnitData LoadUnit(string assetName)
+        {
+            var path = $"Assets/_Project/ScriptableObjects/Units/{assetName}.asset";
+            var unit = AssetDatabase.LoadAssetAtPath<UnitData>(path);
+            if (unit == null)
+            {
+                Debug.LogWarning($"Kingdom of God setup: could not find {path} — MissionBattleSetup's fallback squad will stay empty until it's assigned by hand.");
+            }
+            return unit;
+        }
+
         private static void SetStartingResources(ResourceManager resourceManager)
         {
             var starting = new (ResourceType type, float amount)[]
@@ -599,6 +633,30 @@ namespace KingdomOfGod.EditorTools
             {
                 var building = AssetDatabase.LoadAssetAtPath<BuildingData>(AssetDatabase.GUIDToAssetPath(guids[i]));
                 listProp.GetArrayElementAtIndex(i).objectReferenceValue = building;
+            }
+            so.ApplyModifiedProperties();
+        }
+
+        /// <summary>Populates MissionListUI.allBattleMissions from every MissionType.Battle MissionData asset in the given folder — the other five mission types have no resolution UI yet, so they're deliberately excluded rather than listed as if they worked.</summary>
+        private static void SetMissionList(MissionListUI list, string folder)
+        {
+            var guids = AssetDatabase.FindAssets("t:MissionData", new[] { folder });
+            var battleMissions = new List<MissionData>();
+            foreach (var guid in guids)
+            {
+                var mission = AssetDatabase.LoadAssetAtPath<MissionData>(AssetDatabase.GUIDToAssetPath(guid));
+                if (mission != null && mission.type == MissionType.Battle)
+                {
+                    battleMissions.Add(mission);
+                }
+            }
+
+            var so = new SerializedObject(list);
+            var listProp = so.FindProperty("allBattleMissions");
+            listProp.arraySize = battleMissions.Count;
+            for (int i = 0; i < battleMissions.Count; i++)
+            {
+                listProp.GetArrayElementAtIndex(i).objectReferenceValue = battleMissions[i];
             }
             so.ApplyModifiedProperties();
         }

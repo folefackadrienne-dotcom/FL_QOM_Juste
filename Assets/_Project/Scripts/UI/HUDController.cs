@@ -11,10 +11,12 @@ namespace KingdomOfGod.UI
         [SerializeField] private VerseJournalUI verseJournal;
         [SerializeField] private GameObject prophecyJournalPanel;
         [SerializeField] private BuildingPaletteUI buildingPalette;
+        [SerializeField] private MissionListUI missionList;
 
         public void OpenPrayerMenu() => prayerMenu.Open();
         public void OpenVerseJournal() => verseJournal.Open();
         public void OpenBuildingPalette() => buildingPalette.Open();
+        public void OpenMissionList() => missionList.Open();
 
         public void ToggleProphecyJournal()
         {

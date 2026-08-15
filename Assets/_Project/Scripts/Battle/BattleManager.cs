@@ -43,6 +43,9 @@ namespace KingdomOfGod.Battle
             turnController.TurnAdvanced += OnTurnAdvanced;
         }
 
+        /// <summary>Overrides the edit-time default victoryCondition — MissionBattleSetup calls this with the active mission's own condition before any unit spawns.</summary>
+        public void Configure(VictoryCondition condition) => victoryCondition = condition;
+
         public UnitInstance SpawnUnit(UnitData data, Allegiance allegiance, HexCoordinates position)
         {
             var unit = new UnitInstance(data, allegiance, position);

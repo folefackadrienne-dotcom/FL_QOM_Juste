@@ -29,7 +29,8 @@ namespace KingdomOfGod.Missions
         public VictoryCondition victoryCondition;
         public List<ResourceAmount> rewards = new List<ResourceAmount>();
 
-        [Header("Optional battle scene to load")]
-        public string battleSceneName;
+        [Header("Optional hand-authored battle roster — MissionBattleSetup falls back to a generic squad on each side when left empty")]
+        public List<UnitData> playerUnits = new List<UnitData>();
+        public List<UnitData> enemyUnits = new List<UnitData>();
     }
 }

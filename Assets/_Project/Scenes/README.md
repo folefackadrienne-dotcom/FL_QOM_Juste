@@ -104,13 +104,29 @@ panel, always visible: a `SelectedBuildingLabel` showing "En cours de pose
 both track `KingdomInputController.BuildingSelected` even while the palette
 itself is closed, so an in-progress placement is never silently forgotten.
 
-A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 4 buttons — Prière /
-Versets / Prophétie / Bâtiments) opens `PrayerMenuUI`/`VerseJournalUI`/
-`ProphecyJournalPanel`/`BuildingPalettePanel` via
-`HUDController.OpenPrayerMenu`/`OpenVerseJournal`/`ToggleProphecyJournal`/
-`OpenBuildingPalette`. Those `HUDController` methods already existed, but
-until now nothing in this scene ever wired a clickable `Button` to any of
-them — this toolbar is the first one.
+A `MissionListPanel` (parchment `Image` + gold `Outline`, hidden by
+default) holds a `ListContainer` populated by `MissionListUI`: one
+runtime-generated `UITheme`-colored button per `MissionType.Battle`
+`MissionData` under `Assets/_Project/ScriptableObjects/Missions` (assigned
+into `allBattleMissions` by `ProjectSceneSetup`, filtered at edit time to
+`MissionType.Battle` — same reasoning as `BuildingPaletteUI.allBuildings`),
+further filtered at runtime to an unlocked `Age`
+(`AgeManager.IsUnlocked`) that isn't already completed
+(`MissionManager.IsCompleted`). Clicking one calls
+`MissionManager.StartMission`, which for a Battle mission loads the
+`Battle` scene right away — see that scene's entry below for what happens
+next. Only `MissionType.Battle` missions (8 of the 34) are listed: the
+other five types have no resolution UI yet, so listing them would look
+like a working feature they aren't. A `CloseButton` dismisses the panel
+without starting anything.
+
+A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 5 buttons — Prière /
+Versets / Prophétie / Bâtiments / Missions) opens `PrayerMenuUI`/
+`VerseJournalUI`/`ProphecyJournalPanel`/`BuildingPalettePanel`/
+`MissionListPanel` via `HUDController.OpenPrayerMenu`/`OpenVerseJournal`/
+`ToggleProphecyJournal`/`OpenBuildingPalette`/`OpenMissionList`. The first
+four `HUDController` methods already existed, but until an earlier round
+nothing in this scene ever wired a clickable `Button` to any of them.
 
 ### `Battle`
 Same elevated camera + `HexCameraController` as `Kingdom`, plus
@@ -129,7 +145,24 @@ directly to the local `HexGrid` here instead of resolving one via
 tiles plus a mouse-following hover tile, both reused by
 `BattleInputController` even though the two-click select/attack/move logic
 itself is unaffected; it's purely the missing visual feedback that's fixed.
-`VictoryCondition` is left at its default and needs to be set per mission;
+`VictoryCondition` is left at its default at edit time — `MissionBattleSetup`
+(on the same GameObject as `BattleManager`) overrides it at runtime via the
+new `BattleManager.Configure`, but only when this scene was reached through
+`MissionManager.StartMission`: it reads `GameManager.Instance.Missions.
+ActiveMission` in `Start()` and, if one is set, applies that mission's own
+`victoryCondition` and spawns `MissionData.playerUnits`/`enemyUnits` along
+the grid's west/east edge columns (falling back to 3 copies of
+`Unit_Fantassin` per side — wired from `Assets/_Project/ScriptableObjects/
+Units/Unit_Fantassin.asset` — when a mission hasn't authored its own
+roster, so an empty roster can't auto-win an `AnnihilateEnemy` battle or
+soft-lock a `CapturePoint` one). It then listens for
+`BattleManager.BattleEnded` and reports back to `MissionManager` —
+`CompleteActiveMission` on Victory (grants `MissionData.rewards`),
+`FailActiveMission` on Defeat — something nothing did before, since the
+outcome panel's return button previously just loaded `Kingdom` without
+telling `MissionManager` anything happened. Opening `Battle` directly
+(`ActiveMission` unset, e.g. to playtest the scene on its own) leaves
+`MissionBattleSetup` a no-op, same as before this round.
 `miracleManager` resolves via `GameManager.Instance` like the Kingdom
 scene's UI.
 `BattleManager.SpawnUnit`/`TryMove`/`OnUnitDied` instantiate, reposition

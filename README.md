@@ -82,7 +82,10 @@ Assets/_Project/
                     instancient, déplacent et détruisent
                     UnitData.prefab dès qu'un prefab existe ;
                     CheckBattleEnd (ex-CheckVictory) déclare aussi
-                    Défaite désormais, pas seulement Victoire
+                    Défaite désormais, pas seulement Victoire ;
+                    BattleManager.Configure(VictoryCondition) permet de
+                    remplacer à l'exécution la condition de victoire
+                    réglée à l'édition (voir Missions/MissionBattleSetup)
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût
@@ -94,7 +97,17 @@ Assets/_Project/
     Collectibles/   Artefacts bibliques (Commun → Légendaire),
                     CollectionManager.ArtifactCollected/AgeCollectionCompleted
     Missions/       Définition & suivi des missions
-                    (MissionStarted/MissionCompleted)
+                    (MissionStarted/MissionCompleted/MissionFailed) —
+                    MissionManager.StartMission charge désormais la scène
+                    Battle partagée pour une mission de type Battle (8 des
+                    34 missions), et MissionBattleSetup (câblé dans la
+                    scène Battle) reprend l'ActiveMission côté Battle pour
+                    configurer BattleManager.victoryCondition et faire
+                    apparaître MissionData.playerUnits/enemyUnits (avec un
+                    escadron générique de repli si une mission n'a pas
+                    encore de composition dédiée), puis rapporte
+                    Victoire/Défaite à CompleteActiveMission/
+                    FailActiveMission quand la bataille se termine
     Progression/    Leaders légendaires (LeaderManager : débloqués +
                     leader actif), arbre technologique (3 arbres × 5
                     branches : Économique, Militaire, Spirituel ;
@@ -141,10 +154,15 @@ Assets/_Project/
                     en code comme les boutons de miracle, sélection ->
                     KingdomInputController.SelectBuilding, avec un
                     libellé et un bouton Annuler toujours visibles hors
-                    du panneau ; barre d'outils à 4 boutons (Prière /
-                    Versets / Prophétie / Bâtiments) qui ouvrait
-                    jusque-là zéro UI malgré des méthodes HUDController
-                    déjà prêtes
+                    du panneau ; MissionListUI — liste des missions de
+                    type Battle débloquées et non terminées, un bouton
+                    par mission appelant MissionManager.StartMission
+                    (les 5 autres types de mission n'ont encore aucune
+                    UI de résolution, donc volontairement absents de
+                    cette liste) ; barre d'outils à 5 boutons (Prière /
+                    Versets / Prophétie / Bâtiments / Missions) qui
+                    n'ouvrait jusque-là aucune UI malgré des méthodes
+                    HUDController déjà prêtes pour les 4 premiers
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
                   — importe en masse des enregistrements de narration
@@ -284,3 +302,22 @@ dans l'Éditeur, sans toucher au code.
    rouleau de Torah décrites dans `docs/ArtDirection.md`) — la palette de
    couleurs elle-même (`Assets/_Project/ScriptableObjects/UI/UITheme.asset`)
    n'a pas besoin d'attendre l'art et est déjà appliquée.
+9. La transition Mission → Battle fonctionne désormais de bout en bout
+   pour les 8 missions de type `Battle` (`MissionListUI` → 
+   `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`
+   configure `BattleManager.victoryCondition` et fait apparaître
+   `MissionData.playerUnits`/`enemyUnits`, avec un escadron générique de
+   3 `Unit_Fantassin` de repli tant qu'une mission n'a pas sa propre
+   composition — puis rapporte Victoire/Défaite à `MissionManager` au
+   retour). Reste ouvert : composer un vrai `playerUnits`/`enemyUnits`
+   par mission (actuellement tous vides, donc tout le monde combat avec
+   l'escadron de repli) ; les 26 missions des 5 autres types
+   (Construction/MoralChoice/Diplomacy/Survival/Sandbox) n'ont encore
+   aucune UI de résolution — `MissionManager.StartMission` fonctionne
+   pour elles aussi mais rien ne se passe ensuite, donc `MissionListUI`
+   les exclut volontairement pour l'instant ; et
+   `VictoryConditionType.ProtectUnit` reste incomplet — son commentaire
+   dit "vérifié séparément via `UnitInstance.Died`" mais rien
+   n'implémente cette vérification (`UnitInstance` n'a pas d'identifiant
+   à faire correspondre à `protectedUnitId`) ; aucune des 34 missions
+   actuelles ne l'utilise, donc ce n'est pas bloquant aujourd'hui.
