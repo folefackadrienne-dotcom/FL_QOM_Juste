@@ -62,6 +62,7 @@ namespace KingdomOfGod.EditorTools
         public static void CreateBootstrapScene()
         {
             var scene = NewScene();
+            var theme = LoadTheme();
 
             var root = new GameObject("GameManager");
             var ageManager = root.AddComponent<AgeManager>();
@@ -110,6 +111,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(buildingManager, "resourceManager", resourceManager);
             SetRef(buildingManager, "allianceSystem", allianceSystem);
             SetRef(buildingManager, "populationSystem", populationSystem);
+            SetRef(buildingManager, "theme", theme);
             SetRef(templeSystem, "resourceManager", resourceManager);
             SetTempleLevels(templeSystem);
 

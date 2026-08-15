@@ -96,9 +96,20 @@ brighter tile that follows the mouse via the same ground-plane raycast
 `KingdomInputController` already used for clicks — so hovering a cell now
 shows something, not just resolves silently. `BuildingManager.TryPlace`
 (Bootstrap) now instantiates `BuildingData.prefab` at the placed cell's
-world position via `HexCoordinates.ToWorldPosition`, but stays a no-op
-until a building has a prefab assigned — none of the 39 `BuildingData`
-assets do yet.
+world position via `HexCoordinates.ToWorldPosition` — or, since none of the
+39 `BuildingData` assets have a `prefab` assigned, falls through to
+`SpawnPlaceholderVisual`: a Unity primitive (`Cube`/`Cylinder`/`Sphere`)
+scaled to the hex footprint, shaped/sized/colored by `BuildingCategory` via
+the `theme` field now wired onto `BuildingManager` itself (`Habitat` →
+short pale cube, `Production` → ochre cylinder, `Military` → tall dark
+cube, `Spiritual` → tall gold cylinder, `Special` → blue sphere), plus a
+`TextMeshPro` `NameLabel` that stays facing the camera via a new
+`BillboardLabel` component. This is scene-agnostic (`BuildingManager` lives
+on the persistent Bootstrap `GameManager`, so `CreateBootstrapScene` now
+also calls `LoadTheme()` — it didn't before, having no visual concerns of
+its own until this). Swapping in real building art later is just assigning
+`BuildingData.prefab`; the placeholder branch stops being reached
+automatically, no code change needed.
 
 A `BuildingPalettePanel` (parchment `Image` + gold `Outline`, hidden by
 default) holds a `ListContainer` populated by `BuildingPaletteUI`: one

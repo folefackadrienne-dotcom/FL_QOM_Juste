@@ -80,7 +80,19 @@ Assets/_Project/
                     d'unité via BattleManager)
     Buildings/      Bâtiments, placement — BuildingManager.TryPlace
                     instancie BuildingData.prefab à la position de la
-                    cellule dès qu'un prefab existe —, Temple (niveaux
+                    cellule dès qu'un prefab existe, sinon (les 39
+                    BuildingData actuels n'en ont aucun) génère un
+                    placeholder en code : une primitive Unity
+                    (Cube/Cylindre/Sphère) mise à l'échelle de la
+                    tuile, forme/hauteur/couleur selon BuildingCategory
+                    via UITheme (cubes pâles bas pour Habitat,
+                    cylindres ochre pour Production, cubes sombres
+                    hauts pour Militaire, cylindres dorés hauts pour
+                    Spirituel, sphère bleue pour Spécial), plus un
+                    libellé TextMeshPro flottant qui fait toujours face
+                    à la caméra (BillboardLabel, nouveau). Remplacer
+                    l'art se fera juste en assignant BuildingData.prefab,
+                    sans toucher au code. Temple (niveaux
                     1-5, un TempleLevelData.prefab par niveau,
                     TempleSystem.LevelUpgraded ; TempleSystem.levels
                     est désormais peuplé — CanUpgrade/TryUpgrade
@@ -357,7 +369,15 @@ dans l'Éditeur, sans toucher au code.
    n'existe). La palette de sélection de bâtiment (`BuildingPaletteUI`) et
    l'UI de combat (`BattleHUDController` : stats d'unité, Fin de Tour,
    liste de miracles, Victoire/Défaite) existent toutes les deux, il ne
-   leur manque que des icônes une fois l'art produit.
+   leur manque que des icônes une fois l'art produit. `BuildingManager.
+   TryPlace` pose désormais quelque chose de visible même sans art : les 39
+   `BuildingData` n'ont aucun `prefab` assigné, donc `SpawnVisual` génère un
+   placeholder en code (primitive Unity mise à l'échelle de la tuile,
+   forme/hauteur/couleur selon `BuildingCategory` via `UITheme`, libellé
+   `TextMeshPro` qui suit toujours la caméra via `BillboardLabel`) — même
+   discipline UITheme-au-lieu-d'art que `HexGridRenderer`/`BuildingPaletteUI`.
+   Remplacer par le vrai art se fera juste en assignant `BuildingData.prefab`,
+   sans toucher au code.
 4. Habiller visuellement le journal des versets (`VerseJournalUI` a
    toujours sa boucle d'instanciation de liste — `RefreshList()` peuple un
    `VerseListItemUI` par verset mémorisé — mais elle reste un no-op tant
