@@ -31,4 +31,11 @@ MonoBehaviour:
     amount: 25
   - type: 6
     amount: 15
-  battleSceneName:
+  optionA:
+    label: Rester fidèle malgré la fournaise
+    allianceDelta: 20
+    rewardOverride: []
+  optionB:
+    label: Se conformer discrètement
+    allianceDelta: -15
+    rewardOverride: []

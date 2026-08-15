@@ -8,27 +8,26 @@ using UnityEngine.UI;
 namespace KingdomOfGod.UI
 {
     /// <summary>
-    /// Mission selection list for the Kingdom scene, filtered to MissionType.Battle missions from
-    /// an unlocked Age that aren't already completed (allBattleMissions populated by
-    /// ProjectSceneSetup from Assets/_Project/ScriptableObjects/Missions/ — same
-    /// no-manual-dragging reasoning as BuildingPaletteUI.allBuildings). Selecting one calls
-    /// MissionManager.StartMission, which for a Battle mission loads the Battle scene right away —
-    /// this panel's job ends the moment a mission is picked. Only MissionType.Battle missions are
-    /// listed: MissionManager.StartMission works for the other five types too, but nothing yet
-    /// resolves what happens next for them (no Construction/MoralChoice/Diplomacy/Survival/Sandbox
-    /// flow exists), so surfacing them here would look like a working feature it isn't.
+    /// Mission selection list for the Kingdom scene: every MissionData from an unlocked Age that
+    /// isn't already completed (allMissions populated by ProjectSceneSetup from
+    /// Assets/_Project/ScriptableObjects/Missions/ — same no-manual-dragging reasoning as
+    /// BuildingPaletteUI.allBuildings). Selecting one calls MissionManager.StartMission — for a
+    /// MissionType.Battle mission that loads the Battle scene right away, for every other type it
+    /// opens resolutionUI (MissionResolutionUI) so the mission can actually be resolved instead of
+    /// StartMission just setting ActiveMission and nothing else ever happening.
     /// </summary>
     public class MissionListUI : MonoBehaviour
     {
         [SerializeField] private MissionManager missionManager;
         [SerializeField] private AgeManager ageManager;
         [SerializeField] private UIThemeData theme;
+        [SerializeField] private MissionResolutionUI resolutionUI;
 
         [SerializeField] private GameObject panelRoot;
         [SerializeField] private Transform listContainer;
         [SerializeField] private Button closeButton;
 
-        [SerializeField] private List<MissionData> allBattleMissions = new List<MissionData>();
+        [SerializeField] private List<MissionData> allMissions = new List<MissionData>();
 
         private void Awake()
         {
@@ -77,7 +76,7 @@ namespace KingdomOfGod.UI
                 Destroy(listContainer.GetChild(i).gameObject);
             }
 
-            foreach (var mission in allBattleMissions)
+            foreach (var mission in allMissions)
             {
                 if (mission == null) continue;
                 if (ageManager != null && !ageManager.IsUnlocked(mission.age)) continue;
@@ -120,6 +119,12 @@ namespace KingdomOfGod.UI
         {
             GameManager.Instance?.Audio.PlaySfx("Interface - Clic sur Parchemin");
             missionManager.StartMission(mission);
+
+            if (mission.type != MissionType.Battle && resolutionUI != null)
+            {
+                Close();
+                resolutionUI.Open(mission);
+            }
         }
     }
 }

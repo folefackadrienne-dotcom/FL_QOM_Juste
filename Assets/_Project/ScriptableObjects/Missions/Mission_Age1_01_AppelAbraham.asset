@@ -31,4 +31,8 @@ MonoBehaviour:
     amount: 10
   - type: 3
     amount: 20
-  battleSceneName:
+  constructionCost:
+  - type: 0
+    amount: 20
+  - type: 2
+    amount: 10

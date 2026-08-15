@@ -29,4 +29,11 @@ MonoBehaviour:
   rewards:
   - type: 4
     amount: 20
-  battleSceneName:
+  optionA:
+    label: Obéir
+    allianceDelta: 25
+    rewardOverride: []
+  optionB:
+    label: Refuser
+    allianceDelta: -25
+    rewardOverride: []

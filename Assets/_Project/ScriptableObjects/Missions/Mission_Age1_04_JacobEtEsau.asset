@@ -31,4 +31,17 @@ MonoBehaviour:
     amount: 10
   - type: 3
     amount: 15
-  battleSceneName:
+  optionA:
+    label: Réconciliation sincère avec Ésaü
+    allianceDelta: 0
+    rewardOverride:
+    - type: 5
+      amount: 15
+    - type: 6
+      amount: 10
+  optionB:
+    label: Ruse prudente
+    allianceDelta: 0
+    rewardOverride:
+    - type: 3
+      amount: 25

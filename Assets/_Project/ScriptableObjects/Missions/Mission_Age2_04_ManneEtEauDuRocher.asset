@@ -31,4 +31,8 @@ MonoBehaviour:
     amount: 20
   - type: 1
     amount: 20
-  battleSceneName:
+  survivalRequirement:
+  - type: 0
+    amount: 25
+  - type: 1
+    amount: 25

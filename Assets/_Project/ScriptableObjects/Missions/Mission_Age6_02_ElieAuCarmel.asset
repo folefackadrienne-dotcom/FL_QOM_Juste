@@ -31,4 +31,11 @@ MonoBehaviour:
     amount: 25
   - type: 6
     amount: 15
-  battleSceneName: Battle_ElieAuCarmel
+  optionA:
+    label: Confronter Baal ouvertement
+    allianceDelta: 25
+    rewardOverride: []
+  optionB:
+    label: Éviter la confrontation
+    allianceDelta: -15
+    rewardOverride: []

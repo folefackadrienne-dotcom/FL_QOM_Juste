@@ -29,4 +29,3 @@ MonoBehaviour:
   rewards:
   - type: 4
     amount: 30
-  battleSceneName: Battle_MerRouge

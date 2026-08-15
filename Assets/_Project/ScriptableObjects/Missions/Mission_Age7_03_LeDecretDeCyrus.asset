@@ -31,4 +31,19 @@ MonoBehaviour:
     amount: 25
   - type: 5
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Négocier un retour rapide à Jérusalem
+    allianceDelta: 0
+    rewardOverride:
+    - type: 3
+      amount: 20
+    - type: 4
+      amount: 15
+  optionB:
+    label: Organiser un retour progressif et prudent
+    allianceDelta: 0
+    rewardOverride:
+    - type: 5
+      amount: 20
+    - type: 6
+      amount: 10

@@ -106,19 +106,40 @@ itself is closed, so an in-progress placement is never silently forgotten.
 
 A `MissionListPanel` (parchment `Image` + gold `Outline`, hidden by
 default) holds a `ListContainer` populated by `MissionListUI`: one
-runtime-generated `UITheme`-colored button per `MissionType.Battle`
-`MissionData` under `Assets/_Project/ScriptableObjects/Missions` (assigned
-into `allBattleMissions` by `ProjectSceneSetup`, filtered at edit time to
-`MissionType.Battle` — same reasoning as `BuildingPaletteUI.allBuildings`),
-further filtered at runtime to an unlocked `Age`
-(`AgeManager.IsUnlocked`) that isn't already completed
+runtime-generated `UITheme`-colored button per `MissionData` under
+`Assets/_Project/ScriptableObjects/Missions` (all 35, assigned into
+`allMissions` by `ProjectSceneSetup` — same reasoning as
+`BuildingPaletteUI.allBuildings`), filtered at runtime to an unlocked
+`Age` (`AgeManager.IsUnlocked`) that isn't already completed
 (`MissionManager.IsCompleted`). Clicking one calls
-`MissionManager.StartMission`, which for a Battle mission loads the
-`Battle` scene right away — see that scene's entry below for what happens
-next. Only `MissionType.Battle` missions (8 of the 34) are listed: the
-other five types have no resolution UI yet, so listing them would look
-like a working feature they aren't. A `CloseButton` dismisses the panel
-without starting anything.
+`MissionManager.StartMission`: for the 8 `MissionType.Battle` missions
+that loads the `Battle` scene right away (see that scene's entry below);
+for the other 27, across the 5 remaining types, it also opens a second
+panel — `MissionResolutionPanel`, holding `MissionResolutionUI` — right
+on top of `Kingdom`, no scene change needed. A `CloseButton` on each panel
+dismisses it without starting/resolving anything.
+
+`MissionResolutionUI` shows the picked mission's title and summary, then
+rebuilds a small `ActionContainer` of runtime-generated buttons (same
+`UITheme`-colored pattern as everywhere else in this scene) based on
+`MissionData.type`: `Construction` shows the resource cost and a
+"Contribuer" button (`MissionManager.TryResolveConstruction`, spends
+`constructionCost` via `ResourceManager.TrySpend`); `Survival` shows the
+resource requirement and a "Vérifier" button
+(`MissionManager.TryResolveSurvival`, checks `survivalRequirement` via
+`ResourceManager.CanAfford` without spending anything — failing leaves the
+mission active so the player can stock up and try again); `MoralChoice`
+and `Diplomacy` each show two buttons labeled from `MissionData.optionA`/
+`optionB` (`MissionManager.ResolveMoralChoice` applies the chosen option's
+`allianceDelta` via `AllianceSystem.Modify` and grants the mission's base
+rewards either way — the weight is spiritual; `MissionManager.
+ResolveDiplomacy` instead grants the chosen option's own `rewardOverride`
+in place of the base rewards — the weight is practical); `Sandbox` shows a
+single unconditional "Terminer" button
+(`MissionManager.ResolveSandbox`). All four resolution paths funnel
+through a shared `MissionManager.Complete` that marks the mission
+completed and grants whichever reward list applies — something that
+simply didn't exist before this round for anything but `Battle` missions.
 
 A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 5 buttons — Prière /
 Versets / Prophétie / Bâtiments / Missions) opens `PrayerMenuUI`/

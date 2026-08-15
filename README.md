@@ -100,14 +100,36 @@ Assets/_Project/
                     (MissionStarted/MissionCompleted/MissionFailed) —
                     MissionManager.StartMission charge désormais la scène
                     Battle partagée pour une mission de type Battle (8 des
-                    34 missions), et MissionBattleSetup (câblé dans la
+                    35 missions), et MissionBattleSetup (câblé dans la
                     scène Battle) reprend l'ActiveMission côté Battle pour
                     configurer BattleManager.victoryCondition et faire
                     apparaître MissionData.playerUnits/enemyUnits (avec un
                     escadron générique de repli si une mission n'a pas
                     encore de composition dédiée), puis rapporte
                     Victoire/Défaite à CompleteActiveMission/
-                    FailActiveMission quand la bataille se termine
+                    FailActiveMission quand la bataille se termine. Les
+                    27 missions des 5 autres types se résolvent
+                    directement dans Kingdom sans changer de scène, via
+                    MissionResolutionUI (UI/) et 4 nouvelles méthodes de
+                    résolution : TryResolveConstruction (dépense
+                    MissionData.constructionCost via
+                    ResourceManager.TrySpend), TryResolveSurvival
+                    (vérifie que MissionData.survivalRequirement est
+                    actuellement en réserve via ResourceManager.
+                    CanAfford, sans rien dépenser — la mission reste
+                    active tant que ce n'est pas le cas), ResolveMoralChoice
+                    (applique le delta d'Alliance de MissionData.optionA/
+                    optionB choisi via AllianceSystem.Modify, récompenses
+                    de base dans tous les cas — l'enjeu est spirituel) et
+                    ResolveDiplomacy (accorde le rewardOverride de
+                    l'option choisie à la place des récompenses de base —
+                    l'enjeu est pratique) ; ResolveSandbox complète sans
+                    condition (1 seule mission de ce type). Les 26
+                    missions concernées (hors la seule Sandbox) ont leurs
+                    valeurs réelles renseignées dans leurs .asset — coûts/
+                    seuils de ressources et libellés/deltas/récompenses
+                    d'options plausibles au vu du récit de chaque
+                    mission, non playtestés/équilibrés
     Progression/    Leaders légendaires (LeaderManager : débloqués +
                     leader actif), arbre technologique (3 arbres × 5
                     branches : Économique, Militaire, Spirituel ;
@@ -154,12 +176,20 @@ Assets/_Project/
                     en code comme les boutons de miracle, sélection ->
                     KingdomInputController.SelectBuilding, avec un
                     libellé et un bouton Annuler toujours visibles hors
-                    du panneau ; MissionListUI — liste des missions de
-                    type Battle débloquées et non terminées, un bouton
-                    par mission appelant MissionManager.StartMission
-                    (les 5 autres types de mission n'ont encore aucune
-                    UI de résolution, donc volontairement absents de
-                    cette liste) ; barre d'outils à 5 boutons (Prière /
+                    du panneau ; MissionListUI — liste les 35 missions
+                    débloquées et non terminées, un bouton par mission
+                    appelant MissionManager.StartMission (charge la
+                    scène Battle pour une mission de combat, ouvre
+                    MissionResolutionUI pour les 5 autres types) ;
+                    MissionResolutionUI — panneau qui reconstruit ses
+                    boutons d'action selon MissionType : coût en
+                    ressources + bouton Contribuer (Construction),
+                    seuil de ressources + bouton Vérifier (Survival,
+                    vérifié sans être dépensé), deux boutons d'option
+                    nommés (MoralChoice → AllianceSystem.Modify,
+                    Diplomacy → jeu de récompenses différent par choix),
+                    bouton Terminer inconditionnel (Sandbox) ; barre
+                    d'outils à 5 boutons (Prière /
                     Versets / Prophétie / Bâtiments / Missions) qui
                     n'ouvrait jusque-là aucune UI malgré des méthodes
                     HUDController déjà prêtes pour les 4 premiers
@@ -302,22 +332,27 @@ dans l'Éditeur, sans toucher au code.
    rouleau de Torah décrites dans `docs/ArtDirection.md`) — la palette de
    couleurs elle-même (`Assets/_Project/ScriptableObjects/UI/UITheme.asset`)
    n'a pas besoin d'attendre l'art et est déjà appliquée.
-9. La transition Mission → Battle fonctionne désormais de bout en bout
-   pour les 8 missions de type `Battle` (`MissionListUI` → 
+9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
+   `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`
-   configure `BattleManager.victoryCondition` et fait apparaître
-   `MissionData.playerUnits`/`enemyUnits`, avec un escadron générique de
+   (configure `BattleManager.victoryCondition`, fait apparaître
+   `MissionData.playerUnits`/`enemyUnits` avec un escadron générique de
    3 `Unit_Fantassin` de repli tant qu'une mission n'a pas sa propre
-   composition — puis rapporte Victoire/Défaite à `MissionManager` au
-   retour). Reste ouvert : composer un vrai `playerUnits`/`enemyUnits`
-   par mission (actuellement tous vides, donc tout le monde combat avec
-   l'escadron de repli) ; les 26 missions des 5 autres types
-   (Construction/MoralChoice/Diplomacy/Survival/Sandbox) n'ont encore
-   aucune UI de résolution — `MissionManager.StartMission` fonctionne
-   pour elles aussi mais rien ne se passe ensuite, donc `MissionListUI`
-   les exclut volontairement pour l'instant ; et
+   composition, rapporte Victoire/Défaite à `MissionManager` au retour) ;
+   les 27 des 5 autres types via `MissionResolutionUI`, ouvert
+   directement dans `Kingdom` sans changer de scène — `Construction`
+   dépense `MissionData.constructionCost`, `Survival` vérifie
+   `survivalRequirement` sans le dépenser, `MoralChoice` applique le
+   delta d'Alliance de l'option choisie (`AllianceSystem.Modify`),
+   `Diplomacy` accorde le jeu de récompenses de l'option choisie à la
+   place des récompenses de base, `Sandbox` (1 mission) complète sans
+   condition. Reste ouvert : composer un vrai `playerUnits`/`enemyUnits`
+   par mission de combat (actuellement tous vides, donc tout le monde
+   combat avec l'escadron de repli) ; les valeurs de coût/seuil/option
+   des 26 missions non-Sandbox sont plausibles au vu du récit de chaque
+   mission mais pas playtestées/équilibrées ; et
    `VictoryConditionType.ProtectUnit` reste incomplet — son commentaire
    dit "vérifié séparément via `UnitInstance.Died`" mais rien
    n'implémente cette vérification (`UnitInstance` n'a pas d'identifiant
-   à faire correspondre à `protectedUnitId`) ; aucune des 34 missions
+   à faire correspondre à `protectedUnitId`) ; aucune des 35 missions
    actuelles ne l'utilise, donc ce n'est pas bloquant aujourd'hui.

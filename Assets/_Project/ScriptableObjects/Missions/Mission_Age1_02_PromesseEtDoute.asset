@@ -31,4 +31,11 @@ MonoBehaviour:
     amount: 15
   - type: 5
     amount: 5
-  battleSceneName:
+  optionA:
+    label: Faire confiance à la promesse
+    allianceDelta: 10
+    rewardOverride: []
+  optionB:
+    label: Prendre les choses en main avec Agar
+    allianceDelta: -10
+    rewardOverride: []

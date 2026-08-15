@@ -31,4 +31,19 @@ MonoBehaviour:
     amount: 10
   - type: 6
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Jouer Roboam et garder Juda
+    allianceDelta: 0
+    rewardOverride:
+    - type: 3
+      amount: 20
+    - type: 6
+      amount: 10
+  optionB:
+    label: Jouer Jéroboam et fonder Israël
+    allianceDelta: 0
+    rewardOverride:
+    - type: 0
+      amount: 20
+    - type: 5
+      amount: 10

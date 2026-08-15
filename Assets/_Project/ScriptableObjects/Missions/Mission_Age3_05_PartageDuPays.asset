@@ -34,4 +34,17 @@ MonoBehaviour:
     amount: 25
   - type: 6
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Tirage au sort strict devant l'Éternel
+    allianceDelta: 0
+    rewardOverride:
+    - type: 6
+      amount: 25
+    - type: 5
+      amount: 15
+  optionB:
+    label: Négociation entre les tribus
+    allianceDelta: 0
+    rewardOverride:
+    - type: 3
+      amount: 35

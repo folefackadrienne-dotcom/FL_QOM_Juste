@@ -29,4 +29,8 @@ MonoBehaviour:
   rewards:
   - type: 6
     amount: 10
-  battleSceneName:
+  survivalRequirement:
+  - type: 0
+    amount: 20
+  - type: 6
+    amount: 15

@@ -30,4 +30,11 @@ MonoBehaviour:
   rewards:
   - type: 6
     amount: 20
-  battleSceneName:
+  optionA:
+    label: Purifier le camp
+    allianceDelta: 15
+    rewardOverride: []
+  optionB:
+    label: Ignorer la faute d'Acan
+    allianceDelta: -15
+    rewardOverride: []

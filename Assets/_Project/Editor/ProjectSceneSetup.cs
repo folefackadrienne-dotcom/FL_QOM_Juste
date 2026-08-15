@@ -118,6 +118,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(verseManager, "resourceManager", resourceManager);
             SetRef(collectionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "resourceManager", resourceManager);
+            SetRef(missionManager, "allianceSystem", allianceSystem);
             SetRef(techTree, "resourceManager", resourceManager);
 
             SetRef(audioManager, "miracleManager", miracleManager);
@@ -291,6 +292,39 @@ namespace KingdomOfGod.EditorTools
             selectedBuildingLabel.rectTransform.pivot = new Vector2(0f, 1f);
             SetRef(buildingPalette, "selectedBuildingLabel", selectedBuildingLabel);
 
+            var resolutionPanelGO = new GameObject("MissionResolutionPanel", typeof(RectTransform));
+            resolutionPanelGO.transform.SetParent(hudGO.transform, false);
+            AddParchmentBackground(resolutionPanelGO, theme);
+            var missionResolution = resolutionPanelGO.AddComponent<MissionResolutionUI>();
+            var resolutionTitle = CreateLabel(resolutionPanelGO.transform, "Title", "", 22,
+                TextAlignmentOptions.Center, new Vector2(0f, 90f), new Vector2(360f, 30f),
+                theme != null ? theme.panelText : (Color?)null);
+            var resolutionSummary = CreateLabel(resolutionPanelGO.transform, "Summary", "", 15,
+                TextAlignmentOptions.Center, new Vector2(0f, 40f), new Vector2(360f, 60f),
+                theme != null ? theme.panelText : (Color?)null);
+            var resolutionDetail = CreateLabel(resolutionPanelGO.transform, "Detail", "", 15,
+                TextAlignmentOptions.Center, new Vector2(0f, -10f), new Vector2(360f, 40f),
+                theme != null ? theme.panelText : (Color?)null);
+            var resolutionActions = new GameObject("ActionContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
+            resolutionActions.transform.SetParent(resolutionPanelGO.transform, false);
+            var resolutionActionsRect = resolutionActions.GetComponent<RectTransform>();
+            resolutionActionsRect.anchoredPosition = new Vector2(0f, -70f);
+            resolutionActionsRect.sizeDelta = new Vector2(280f, 120f);
+            var resolutionActionsLayout = resolutionActions.GetComponent<VerticalLayoutGroup>();
+            resolutionActionsLayout.spacing = 8f;
+            resolutionActionsLayout.childForceExpandHeight = false;
+            resolutionActionsLayout.childControlHeight = false;
+            resolutionActionsLayout.childAlignment = TextAnchor.UpperCenter;
+            var resolutionCloseButton = CreateButton(resolutionPanelGO.transform, "CloseButton", "Fermer", new Vector2(0f, -150f), theme);
+            SetRef(missionResolution, "theme", theme);
+            SetRef(missionResolution, "panelRoot", resolutionPanelGO);
+            SetRef(missionResolution, "titleText", resolutionTitle);
+            SetRef(missionResolution, "summaryText", resolutionSummary);
+            SetRef(missionResolution, "detailText", resolutionDetail);
+            SetRef(missionResolution, "actionContainer", resolutionActions.transform);
+            SetRef(missionResolution, "closeButton", resolutionCloseButton);
+            resolutionPanelGO.SetActive(false);
+
             var missionPanelGO = new GameObject("MissionListPanel", typeof(RectTransform));
             missionPanelGO.transform.SetParent(hudGO.transform, false);
             AddParchmentBackground(missionPanelGO, theme);
@@ -302,6 +336,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(missionList, "panelRoot", missionPanelGO);
             SetRef(missionList, "listContainer", missionListContainer.transform);
             SetRef(missionList, "closeButton", missionCloseButton);
+            SetRef(missionList, "resolutionUI", missionResolution);
             SetMissionList(missionList, "Assets/_Project/ScriptableObjects/Missions");
             missionPanelGO.SetActive(false);
 
@@ -637,26 +672,26 @@ namespace KingdomOfGod.EditorTools
             so.ApplyModifiedProperties();
         }
 
-        /// <summary>Populates MissionListUI.allBattleMissions from every MissionType.Battle MissionData asset in the given folder — the other five mission types have no resolution UI yet, so they're deliberately excluded rather than listed as if they worked.</summary>
+        /// <summary>Populates MissionListUI.allMissions from every MissionData asset in the given folder, so the list doesn't need 35 assets dragged in by hand — every MissionType now has a real resolution path (Battle scene, or MissionResolutionUI for the other five).</summary>
         private static void SetMissionList(MissionListUI list, string folder)
         {
             var guids = AssetDatabase.FindAssets("t:MissionData", new[] { folder });
-            var battleMissions = new List<MissionData>();
+            var missions = new List<MissionData>();
             foreach (var guid in guids)
             {
                 var mission = AssetDatabase.LoadAssetAtPath<MissionData>(AssetDatabase.GUIDToAssetPath(guid));
-                if (mission != null && mission.type == MissionType.Battle)
+                if (mission != null)
                 {
-                    battleMissions.Add(mission);
+                    missions.Add(mission);
                 }
             }
 
             var so = new SerializedObject(list);
-            var listProp = so.FindProperty("allBattleMissions");
-            listProp.arraySize = battleMissions.Count;
-            for (int i = 0; i < battleMissions.Count; i++)
+            var listProp = so.FindProperty("allMissions");
+            listProp.arraySize = missions.Count;
+            for (int i = 0; i < missions.Count; i++)
             {
-                listProp.GetArrayElementAtIndex(i).objectReferenceValue = battleMissions[i];
+                listProp.GetArrayElementAtIndex(i).objectReferenceValue = missions[i];
             }
             so.ApplyModifiedProperties();
         }

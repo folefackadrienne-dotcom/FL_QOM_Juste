@@ -29,4 +29,11 @@ MonoBehaviour:
   rewards:
   - type: 6
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Se repentir publiquement devant Nathan
+    allianceDelta: 15
+    rewardOverride: []
+  optionB:
+    label: Dissimuler la faute
+    allianceDelta: -25
+    rewardOverride: []

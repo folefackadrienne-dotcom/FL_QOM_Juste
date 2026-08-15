@@ -31,4 +31,11 @@ MonoBehaviour:
     amount: 10
   - type: 4
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Résister à la tentation
+    allianceDelta: 15
+    rewardOverride: []
+  optionB:
+    label: Céder à Délila
+    allianceDelta: -20
+    rewardOverride: []

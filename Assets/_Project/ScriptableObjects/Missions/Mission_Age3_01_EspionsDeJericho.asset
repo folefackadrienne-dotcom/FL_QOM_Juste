@@ -31,4 +31,17 @@ MonoBehaviour:
     amount: 10
   - type: 3
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Négocier une alliance avec Rahab
+    allianceDelta: 0
+    rewardOverride:
+    - type: 5
+      amount: 15
+    - type: 6
+      amount: 5
+  optionB:
+    label: Approche discrète sans alliance
+    allianceDelta: 0
+    rewardOverride:
+    - type: 3
+      amount: 20

@@ -32,4 +32,11 @@ MonoBehaviour:
     amount: 15
   - type: 4
     amount: 10
-  battleSceneName:
+  optionA:
+    label: Détruire l'idole et rétablir l'Alliance
+    allianceDelta: 20
+    rewardOverride: []
+  optionB:
+    label: Tolérer le compromis
+    allianceDelta: -20
+    rewardOverride: []

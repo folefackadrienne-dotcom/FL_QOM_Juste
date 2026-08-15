@@ -29,4 +29,11 @@ MonoBehaviour:
   rewards:
   - type: 6
     amount: 20
-  battleSceneName: Battle_GuerreCivileBenjamin
+  optionA:
+    label: Exiger justice pour le crime
+    allianceDelta: 10
+    rewardOverride: []
+  optionB:
+    label: Fermer les yeux
+    allianceDelta: -20
+    rewardOverride: []
