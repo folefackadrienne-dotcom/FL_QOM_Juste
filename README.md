@@ -58,12 +58,10 @@ Assets/_Project/
     Interaction/    Caméra RTS libre (HexCameraController : WASD/flèches
                     + molette) et clic-pour-jouer sur la grille —
                     KingdomInputController (pose de bâtiment via
-                    BuildingManager.TryPlace) et BattleInputController
-                    (sélection/déplacement/attaque d'unité via
-                    BattleManager) ; aucune palette de sélection de
-                    bâtiment n'existe encore (BuildingData.icon vide),
-                    selectedBuilding se règle pour l'instant à la main
-                    dans l'Inspecteur
+                    BuildingManager.TryPlace, selectedBuilding piloté par
+                    BuildingPaletteUI plutôt que réglé à la main) et
+                    BattleInputController (sélection/déplacement/attaque
+                    d'unité via BattleManager)
     Buildings/      Bâtiments, placement — BuildingManager.TryPlace
                     instancie BuildingData.prefab à la position de la
                     cellule dès qu'un prefab existe —, Temple (niveaux
@@ -132,7 +130,15 @@ Assets/_Project/
                     (pas besoin de prefab, juste des boutons UITheme) via
                     BattleManager.TryCastMiracle, panneau Victoire/Défaite
                     sur BattleManager.BattleEnded (jusque-là sans aucun
-                    auditeur)
+                    auditeur) ; BuildingPaletteUI — un bouton par
+                    BuildingData débloqué (AgeManager.IsUnlocked), généré
+                    en code comme les boutons de miracle, sélection ->
+                    KingdomInputController.SelectBuilding, avec un
+                    libellé et un bouton Annuler toujours visibles hors
+                    du panneau ; barre d'outils à 4 boutons (Prière /
+                    Versets / Prophétie / Bâtiments) qui ouvrait
+                    jusque-là zéro UI malgré des méthodes HUDController
+                    déjà prêtes
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
                   — importe en masse des enregistrements de narration
@@ -211,12 +217,11 @@ dans l'Éditeur, sans toucher au code.
 3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
    hexagonal) dans la scène `Kingdom` — la caméra bouge et les clics se
    résolvent déjà en `HexCoordinates` (`Interaction/`), mais rien
-   n'affiche encore les cellules elles-mêmes. Ajouter aussi une vraie
-   palette de sélection de bâtiment (`KingdomInputController.
-   selectedBuilding` se règle pour l'instant à la main dans l'Inspecteur)
-   — l'UI de combat existe (`BattleHUDController` : stats d'unité, Fin
-   de Tour, liste de miracles, Victoire/Défaite), il ne lui manque que
-   des icônes une fois l'art produit.
+   n'affiche encore les cellules elles-mêmes. La palette de sélection de
+   bâtiment (`BuildingPaletteUI`) et l'UI de combat
+   (`BattleHUDController` : stats d'unité, Fin de Tour, liste de
+   miracles, Victoire/Défaite) existent toutes les deux, il ne leur
+   manque que des icônes une fois l'art produit.
 4. Habiller visuellement le menu de prière et le journal des versets
    (`PrayerMenuUI`/`VerseJournalUI` ont désormais leur boucle
    d'instanciation de liste — `RefreshList()` peuple un

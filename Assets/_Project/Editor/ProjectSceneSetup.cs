@@ -263,10 +263,56 @@ namespace KingdomOfGod.EditorTools
             AddParchmentBackground(prophecyPanelGO, theme);
             prophecyPanelGO.SetActive(false);
 
+            var buildingPanelGO = new GameObject("BuildingPalettePanel", typeof(RectTransform));
+            buildingPanelGO.transform.SetParent(hudGO.transform, false);
+            AddParchmentBackground(buildingPanelGO, theme);
+            var buildingPalette = buildingPanelGO.AddComponent<BuildingPaletteUI>();
+            var buildingListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            buildingListContainer.transform.SetParent(buildingPanelGO.transform, false);
+            var buildingCancelButton = CreateButton(buildingPanelGO.transform, "CancelButton", "Annuler", Vector2.zero, theme);
+            SetRef(buildingPalette, "inputController", kingdomInput);
+            SetRef(buildingPalette, "theme", theme);
+            SetRef(buildingPalette, "panelRoot", buildingPanelGO);
+            SetRef(buildingPalette, "listContainer", buildingListContainer.transform);
+            SetRef(buildingPalette, "cancelButton", buildingCancelButton);
+            SetBuildingList(buildingPalette, "Assets/_Project/ScriptableObjects/Buildings");
+            buildingPanelGO.SetActive(false);
+
+            var selectedBuildingLabel = CreateLabel(hudGO.transform, "SelectedBuildingLabel", "", 16,
+                TextAlignmentOptions.MidlineLeft, new Vector2(220, 0), new Vector2(360, 24),
+                theme != null ? theme.ivoryWhite : (Color?)null);
+            selectedBuildingLabel.rectTransform.anchorMin = new Vector2(0f, 1f);
+            selectedBuildingLabel.rectTransform.anchorMax = new Vector2(0f, 1f);
+            selectedBuildingLabel.rectTransform.pivot = new Vector2(0f, 1f);
+            SetRef(buildingPalette, "selectedBuildingLabel", selectedBuildingLabel);
+
+            var toolbarGO = new GameObject("Toolbar", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            toolbarGO.transform.SetParent(hudGO.transform, false);
+            var toolbarRect = toolbarGO.GetComponent<RectTransform>();
+            toolbarRect.anchorMin = new Vector2(0.5f, 0f);
+            toolbarRect.anchorMax = new Vector2(0.5f, 0f);
+            toolbarRect.pivot = new Vector2(0.5f, 0f);
+            toolbarRect.anchoredPosition = new Vector2(0f, 20f);
+            toolbarRect.sizeDelta = new Vector2(600f, 50f);
+            var toolbarLayout = toolbarGO.GetComponent<HorizontalLayoutGroup>();
+            toolbarLayout.spacing = 10f;
+            toolbarLayout.childForceExpandWidth = false;
+            toolbarLayout.childControlWidth = false;
+
+            var prayerToolbarButton = CreateButton(toolbarGO.transform, "PrayerButton", "Prière", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(prayerToolbarButton.onClick, hud.OpenPrayerMenu);
+            var verseToolbarButton = CreateButton(toolbarGO.transform, "VerseButton", "Versets", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(verseToolbarButton.onClick, hud.OpenVerseJournal);
+            var prophecyToolbarButton = CreateButton(toolbarGO.transform, "ProphecyButton", "Prophétie", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(prophecyToolbarButton.onClick, hud.ToggleProphecyJournal);
+            var buildingToolbarButton = CreateButton(toolbarGO.transform, "BuildingButton", "Bâtiments", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(buildingToolbarButton.onClick, hud.OpenBuildingPalette);
+
             SetRef(hud, "resourceBar", resourceBar);
             SetRef(hud, "prayerMenu", prayerMenu);
             SetRef(hud, "verseJournal", verseJournal);
             SetRef(hud, "prophecyJournalPanel", prophecyPanelGO);
+            SetRef(hud, "buildingPalette", buildingPalette);
 
             SaveScene(scene, KingdomPath);
         }
@@ -527,6 +573,21 @@ namespace KingdomOfGod.EditorTools
                 var element = labelsProp.GetArrayElementAtIndex(i);
                 element.FindPropertyRelative("type").intValue = (int)entries[i].type;
                 element.FindPropertyRelative("valueText").objectReferenceValue = entries[i].text;
+            }
+            so.ApplyModifiedProperties();
+        }
+
+        /// <summary>Populates BuildingPaletteUI.allBuildings from every BuildingData asset in the given folder, so the palette doesn't need 39 assets dragged in by hand.</summary>
+        private static void SetBuildingList(BuildingPaletteUI palette, string folder)
+        {
+            var guids = AssetDatabase.FindAssets("t:BuildingData", new[] { folder });
+            var so = new SerializedObject(palette);
+            var listProp = so.FindProperty("allBuildings");
+            listProp.arraySize = guids.Length;
+            for (int i = 0; i < guids.Length; i++)
+            {
+                var building = AssetDatabase.LoadAssetAtPath<BuildingData>(AssetDatabase.GUIDToAssetPath(guids[i]));
+                listProp.GetArrayElementAtIndex(i).objectReferenceValue = building;
             }
             so.ApplyModifiedProperties();
         }

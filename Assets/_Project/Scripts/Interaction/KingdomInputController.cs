@@ -9,10 +9,9 @@ namespace KingdomOfGod.Interaction
     /// <summary>
     /// Click-to-place input for the Kingdom scene's territory grid: resolves a mouse click to a
     /// HexCoordinates via HexInputUtility, then places selectedBuilding through
-    /// BuildingManager.TryPlace. No building-selection palette UI exists yet (needs the 39
-    /// BuildingData icons, which need real art) — selectedBuilding is exposed both as an
-    /// Inspector field for manual playtesting and as SelectBuilding(BuildingData) for a future
-    /// palette to call.
+    /// BuildingManager.TryPlace. Driven by BuildingPaletteUI's selection buttons — icons on those
+    /// buttons still wait on real art (BuildingData.icon), but the click-to-place loop itself no
+    /// longer needs a hand-set Inspector field.
     /// </summary>
     public class KingdomInputController : MonoBehaviour
     {
@@ -20,9 +19,10 @@ namespace KingdomOfGod.Interaction
         [SerializeField] private HexGrid grid;
         [SerializeField] private Camera targetCamera;
 
-        [Tooltip("Building placed on left-click, until a real selection palette exists. Assign one of the BuildingData assets to playtest placement.")]
         [SerializeField] private BuildingData selectedBuilding;
 
+        public BuildingData SelectedBuilding => selectedBuilding;
+        public event System.Action<BuildingData> BuildingSelected;
         public event System.Action<HexCoordinates> CellClicked;
 
         private void Awake()
@@ -44,7 +44,11 @@ namespace KingdomOfGod.Interaction
             }
         }
 
-        public void SelectBuilding(BuildingData data) => selectedBuilding = data;
+        public void SelectBuilding(BuildingData data)
+        {
+            selectedBuilding = data;
+            BuildingSelected?.Invoke(data);
+        }
 
         private void Update()
         {

@@ -54,15 +54,13 @@ with `HexCameraController` (WASD/arrow-key pan, scroll-wheel zoom) and
 `KingdomInputController` attached — left-click resolves through
 `HexCoordinates.FromWorldPosition` (a mouse-to-ground-plane raycast against
 the mathematical y=0 plane, since no grid mesh/collider exists yet) and
-calls `BuildingManager.TryPlace` with `selectedBuilding`, a field with no
-selection-palette UI to drive it yet — set it by hand in the Inspector to
-playtest placement, or call `KingdomInputController.SelectBuilding(...)`
-once a real palette exists. `buildingManager`/`grid` resolve at runtime via
-`GameManager.Instance`, same cross-scene pattern as the rest of this
-scene's UI. EventSystem, Canvas with a full-screen `WorldMoodOverlay`
-(transparent by default, wired to `WorldMoodUI` + `UITheme.asset`),
-`HUDController` and a live resource bar (one label per resource). Its
-`ResourceBarUI`/
+calls `BuildingManager.TryPlace` with `selectedBuilding`, now driven by
+`BuildingPaletteUI` rather than a hand-set Inspector field.
+`buildingManager`/`grid` resolve at runtime via `GameManager.Instance`, same
+cross-scene pattern as the rest of this scene's UI. EventSystem, Canvas with
+a full-screen `WorldMoodOverlay` (transparent by default, wired to
+`WorldMoodUI` + `UITheme.asset`), `HUDController` and a live resource bar
+(one label per resource). Its `ResourceBarUI`/
 `PrayerMenuUI`/`VerseJournalUI` leave their manager references unassigned in
 the scene — since Bootstrap and Kingdom are separate scenes, those
 references resolve at runtime via `GameManager.Instance` instead (Unity
@@ -80,6 +78,29 @@ persistent Bootstrap object, this scene doesn't need its own.
 at the placed cell's world position via `HexCoordinates.ToWorldPosition`,
 but stays a no-op until a building has a prefab assigned — none of the 39
 `BuildingData` assets do yet.
+
+A `BuildingPalettePanel` (parchment `Image` + gold `Outline`, hidden by
+default) holds a `ListContainer` populated by `BuildingPaletteUI`: one
+runtime-generated `UITheme`-colored button per `BuildingData` under
+`Assets/_Project/ScriptableObjects/Buildings` (assigned into
+`allBuildings` by `ProjectSceneSetup`, same reasoning as
+`BattleHUDController`'s miracle list — no icon art needed to be
+functional), filtered to buildings from an unlocked `Age`
+(`AgeManager.IsUnlocked`, resolved at runtime via `GameManager.Instance`
+like the rest of this scene). Clicking one calls
+`KingdomInputController.SelectBuilding` and closes the panel. Outside the
+panel, always visible: a `SelectedBuildingLabel` showing "En cours de pose
+: <bâtiment>" (or nothing) and a `CancelButton` that clears the selection —
+both track `KingdomInputController.BuildingSelected` even while the palette
+itself is closed, so an in-progress placement is never silently forgotten.
+
+A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 4 buttons — Prière /
+Versets / Prophétie / Bâtiments) opens `PrayerMenuUI`/`VerseJournalUI`/
+`ProphecyJournalPanel`/`BuildingPalettePanel` via
+`HUDController.OpenPrayerMenu`/`OpenVerseJournal`/`ToggleProphecyJournal`/
+`OpenBuildingPalette`. Those `HUDController` methods already existed, but
+until now nothing in this scene ever wired a clickable `Button` to any of
+them — this toolbar is the first one.
 
 ### `Battle`
 Same elevated camera + `HexCameraController` as `Kingdom`, plus
