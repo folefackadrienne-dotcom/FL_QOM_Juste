@@ -193,6 +193,11 @@ namespace KingdomOfGod.EditorTools
             var kingdomInput = kingdomCamera.gameObject.AddComponent<KingdomInputController>();
             SetRef(kingdomInput, "targetCamera", kingdomCamera);
 
+            var kingdomGridVisualGO = new GameObject("HexGridVisual");
+            var kingdomGridVisual = kingdomGridVisualGO.AddComponent<HexGridRenderer>();
+            SetRef(kingdomGridVisual, "theme", theme);
+            SetRef(kingdomGridVisual, "targetCamera", kingdomCamera);
+
             CreateEventSystem();
             var canvas = CreateCanvas();
 
@@ -332,6 +337,12 @@ namespace KingdomOfGod.EditorTools
             SetInt(hexGrid, "radius", 5);
             var battleGrid = gridGO.AddComponent<BattleGrid>();
             SetRef(battleGrid, "grid", hexGrid);
+
+            var battleGridVisualGO = new GameObject("HexGridVisual");
+            var battleGridVisual = battleGridVisualGO.AddComponent<HexGridRenderer>();
+            SetRef(battleGridVisual, "grid", hexGrid);
+            SetRef(battleGridVisual, "theme", theme);
+            SetRef(battleGridVisual, "targetCamera", battleCamera);
 
             var battleManagerGO = new GameObject("BattleManager");
             var battleManager = battleManagerGO.AddComponent<BattleManager>();

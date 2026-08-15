@@ -54,7 +54,13 @@ Assets/_Project/
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules),
                     HexCoordinates.FromWorldPosition (inverse de
-                    ToWorldPosition, pour le clic-pour-sélectionner)
+                    ToWorldPosition, pour le clic-pour-sélectionner) —
+                    HexGridRenderer affiche enfin la grille (tuiles hexagonales
+                    plates générées en code, sans art : une couleur par
+                    HexCell.TerrainType puisée dans UIThemeData, la teinte
+                    « Plain » suivant l'Âge en cours via
+                    UIThemeData.GetAgeAccent, plus une tuile de survol qui
+                    suit la souris) au lieu de rien du tout
     Interaction/    Caméra RTS libre (HexCameraController : WASD/flèches
                     + molette) et clic-pour-jouer sur la grille —
                     KingdomInputController (pose de bâtiment via
@@ -209,19 +215,20 @@ dans l'Éditeur, sans toucher au code.
    validées dans un vrai Éditeur Unity, donc à vérifier/ajuster à la
    première ouverture.
 2. Peupler `Assets/_Project/ScriptableObjects/Leaders`/`Techs` etc. dans
-   les scènes une fois le rendu visuel branché — le contenu narratif
-   (Buildings/Verses/Artifacts/Missions/Miracles/Leaders/Antagonists/
-   Techs, y compris les bâtiments génériques Ferme/Scierie/Mine/Marché/
-   Grenier/Réservoir/Grand Marché/Atelier de Charpentiers/Fonderie/
-   Tribunal) est fait pour les 7 Âges.
-3. Brancher `HexGrid`/`BattleGrid` à un rendu visuel (tilemap ou mesh
-   hexagonal) dans la scène `Kingdom` — la caméra bouge et les clics se
-   résolvent déjà en `HexCoordinates` (`Interaction/`), mais rien
-   n'affiche encore les cellules elles-mêmes. La palette de sélection de
-   bâtiment (`BuildingPaletteUI`) et l'UI de combat
-   (`BattleHUDController` : stats d'unité, Fin de Tour, liste de
-   miracles, Victoire/Défaite) existent toutes les deux, il ne leur
-   manque que des icônes une fois l'art produit.
+   les scènes — le contenu narratif (Buildings/Verses/Artifacts/Missions/
+   Miracles/Leaders/Antagonists/Techs, y compris les bâtiments génériques
+   Ferme/Scierie/Mine/Marché/Grenier/Réservoir/Grand Marché/Atelier de
+   Charpentiers/Fonderie/Tribunal) est fait pour les 7 Âges.
+3. `HexGridRenderer` affiche désormais `HexGrid`/`BattleGrid` (tuiles
+   hexagonales plates générées en code dans `Kingdom` et `Battle`,
+   colorées par `HexCell.TerrainType` et teintées par l'Âge en cours, plus
+   une tuile de survol qui suit la souris) — reste à faire générer une
+   vraie variété de terrain (`HexGrid.GenerateHexagonalMap` ne pose que
+   `TerrainType.Plain` pour l'instant, aucun générateur de relief
+   n'existe). La palette de sélection de bâtiment (`BuildingPaletteUI`) et
+   l'UI de combat (`BattleHUDController` : stats d'unité, Fin de Tour,
+   liste de miracles, Victoire/Défaite) existent toutes les deux, il ne
+   leur manque que des icônes une fois l'art produit.
 4. Habiller visuellement le menu de prière et le journal des versets
    (`PrayerMenuUI`/`VerseJournalUI` ont désormais leur boucle
    d'instanciation de liste — `RefreshList()` peuple un

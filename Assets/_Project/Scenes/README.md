@@ -71,13 +71,23 @@ gold `Outline`, from `UITheme.asset`) and, for the first two, an empty
 `ListContainer` child under their panel, wired to `listContainer` — their
 `RefreshList()` populates it with one `MiracleListItemUI`/`VerseListItemUI`
 per entry, but stays a no-op until a `listItemPrefab` is assigned (no such
-prefab exists yet, see `Assets/_Project/Prefabs/`). Still missing: the
-actual hex-grid visual (tilemap or mesh) — `HexGrid`'s data lives on the
-persistent Bootstrap object, this scene doesn't need its own.
-`BuildingManager.TryPlace` (Bootstrap) now instantiates `BuildingData.prefab`
-at the placed cell's world position via `HexCoordinates.ToWorldPosition`,
-but stays a no-op until a building has a prefab assigned — none of the 39
-`BuildingData` assets do yet.
+prefab exists yet, see `Assets/_Project/Prefabs/`). `HexGrid`'s data lives
+on the persistent Bootstrap object, this scene doesn't need its own — but
+it now has a local `HexGridVisual` GameObject carrying `HexGridRenderer`,
+which resolves that same Bootstrap `HexGrid` via `GameManager.Instance` and
+renders it: one flat-top hexagon per cell, combined into a couple of
+draw-call-cheap meshes rather than one GameObject per tile, colored by
+`HexCell.TerrainType` (all cells are `Plain` today — no terrain generator
+exists yet — tinted by `UIThemeData.GetAgeAccent(AgeManager.CurrentAge)`,
+a hook that existed in `UITheme.asset` since an earlier round but had no
+visual consumer until now) with a darker border ring per tile and a
+brighter tile that follows the mouse via the same ground-plane raycast
+`KingdomInputController` already used for clicks — so hovering a cell now
+shows something, not just resolves silently. `BuildingManager.TryPlace`
+(Bootstrap) now instantiates `BuildingData.prefab` at the placed cell's
+world position via `HexCoordinates.ToWorldPosition`, but stays a no-op
+until a building has a prefab assigned — none of the 39 `BuildingData`
+assets do yet.
 
 A `BuildingPalettePanel` (parchment `Image` + gold `Outline`, hidden by
 default) holds a `ListContainer` populated by `BuildingPaletteUI`: one
@@ -112,9 +122,16 @@ attacks, an empty one (within movement range) moves, anything else just
 deselects; a failed attack/move plays "Interface - Erreur / Action
 Impossible". EventSystem, Canvas (this scene previously had none), a
 dedicated `BattleGrid`/`HexGrid` pair sized for tactical combat (radius 5,
-vs. the kingdom's default 10), and a `BattleManager`. `VictoryCondition` is
-left at its default and needs to be set per mission; `miracleManager`
-resolves via `GameManager.Instance` like the Kingdom scene's UI.
+vs. the kingdom's default 10), and a `BattleManager`. Its own local
+`HexGridVisual`/`HexGridRenderer` (same script as `Kingdom`'s, wired
+directly to the local `HexGrid` here instead of resolving one via
+`GameManager.Instance`) renders the tactical grid the same way — terrain
+tiles plus a mouse-following hover tile, both reused by
+`BattleInputController` even though the two-click select/attack/move logic
+itself is unaffected; it's purely the missing visual feedback that's fixed.
+`VictoryCondition` is left at its default and needs to be set per mission;
+`miracleManager` resolves via `GameManager.Instance` like the Kingdom
+scene's UI.
 `BattleManager.SpawnUnit`/`TryMove`/`OnUnitDied` instantiate, reposition
 and destroy `UnitData.prefab` (parented under `BattleGrid`) the same way
 `BuildingManager` does for buildings — but no unit has a prefab assigned
