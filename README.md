@@ -93,7 +93,10 @@ Assets/_Project/
                     sont nouveaux ; ModifyLoyalty n'était jusqu'ici
                     jamais appelé qu'en négatif nulle part dans le code
                     (une pénurie ne remontait donc jamais) — corrigé par
-                    la récompense "bien nourri" de KingdomTurnManager
+                    la récompense "bien nourri" et par
+                    KingdomTurnManager.ApplyGovernanceLoyalty (+1 tant
+                    que Justice et Foi dépassent 0,5 par habitant,
+                    cumulable, jamais négatif)
     Battle/         Batailles tactiques tour par tour, unités, boss
                     (AntagonistData, lié à sa fiche UnitData via le
                     champ optionnel UnitData.antagonist) —
@@ -397,19 +400,25 @@ dans l'Éditeur, sans toucher au code.
     `PopulationSystem.ModifyLoyalty` n'était jusque-là jamais appelé
     qu'en négatif nulle part dans le code, donc toute pénurie devenait un
     cliquet à sens unique vers 0 % de Loyauté pour toujours ; une
-    récompense "bien nourri" (+2 Loyauté/tour) comble ce manque. Le
-    Temple est également débranché de son vide : `TempleSystem.levels`
-    (niveaux 2 à 5) est peuplé, et `TempleUI` (widget permanent du HUD)
-    donne enfin un moyen d'appeler `TryUpgrade`. Toutes les valeurs
-    nouvelles (taux de consommation, croissance, capacité de logement,
-    coûts du Temple) ont été validées par une simulation Python de 420
-    tours contre les 39 bâtiments déjà chiffrés (voir la note de
-    chiffrage dans `docs/Economy.md` §3) plutôt que devinées au hasard —
-    mais jamais testées en jeu réel, aucun Éditeur Unity n'étant
-    disponible dans cet environnement. Reste ouvert : le lien Justice/Foi
-    → Loyauté décrit dans `docs/Economy.md` §3 n'est pas implémenté (la
-    Loyauté ne réagit aujourd'hui qu'à l'entretien alimentaire) ; les
-    coûts des 93 technologies (`docs/Economy.md`, formule `10 + (palier
-    - 1) × 8`) n'ont pas été inclus dans la simulation ; et
-    `TempleLevelData.miraclesUnlocked` reste vide faute de champ de
-    niveau de Temple sur `MiracleData` pour établir la correspondance.
+    récompense "bien nourri" (+2 Loyauté/tour) comble ce manque.
+    `KingdomTurnManager.ApplyGovernanceLoyalty` chiffre également « la
+    Justice et la Foi sont les meilleurs moyens de maintenir une haute
+    loyauté » (`docs/Economy.md` §3) : +1 Loyauté/tour supplémentaire,
+    cumulable avec la récompense "bien nourri", tant que les réserves de
+    Justice *et* de Foi dépassent chacune 0,5 par habitant — volontairement
+    sans pénalité miroir (les bâtiments de Justice n'existent qu'à partir
+    de l'Âge 2, donc pénaliser son absence punirait un manque que le
+    système d'Âges rend inévitable en tout début de partie). Le Temple est
+    également débranché de son vide : `TempleSystem.levels` (niveaux 2 à
+    5) est peuplé, et `TempleUI` (widget permanent du HUD) donne enfin un
+    moyen d'appeler `TryUpgrade`. Toutes les valeurs nouvelles (taux de
+    consommation, croissance, capacité de logement, coûts du Temple, seuil
+    de gouvernance) ont été validées par une simulation Python de 420
+    tours contre les 39 bâtiments déjà chiffrés (voir la note de chiffrage
+    dans `docs/Economy.md` §3) plutôt que devinées au hasard — mais jamais
+    testées en jeu réel, aucun Éditeur Unity n'étant disponible dans cet
+    environnement. Reste ouvert : les coûts des 93 technologies
+    (`docs/Economy.md`, formule `10 + (palier - 1) × 8`) n'ont pas été
+    inclus dans la simulation ; et `TempleLevelData.miraclesUnlocked`
+    reste vide faute de champ de niveau de Temple sur `MiracleData` pour
+    établir la correspondance.

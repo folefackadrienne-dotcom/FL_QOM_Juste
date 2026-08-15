@@ -109,6 +109,18 @@ tour manquant, déclenché par le bouton « Fin de Tour » du HUD :
    d'Habitat — Tente Familiale, Campement des Tribus, Camp de Guilgal,
    Refuge des Collines, Camp des Exilés — qui ne servaient jusqu'ici à
    rien). En pénurie : Loyauté −5, rien n'est dépensé.
+3. « La Justice et la Foi sont les meilleurs moyens de maintenir une haute
+   loyauté » (ci-dessus), désormais chiffré : si les réserves de Justice
+   *et* de Foi dépassent chacune 0,5 par habitant, la Loyauté remonte
+   encore de +1 — un second bonus indépendant du premier, qui se cumule
+   avec lui. Volontairement asymétrique : aucune pénalité miroir n'existe
+   pour un royaume qui néglige Justice/Foi. Les bâtiments produisant de la
+   Justice (Autel d'Ébal, Tribunal…) ne se débloquent qu'à partir de l'Âge
+   2 — une pénalité symétrique aurait donc puni tous les joueurs pour un
+   manque que le système d'Âges lui-même rend inévitable en tout début de
+   partie, pas un vrai choix. La pénurie de Blé/Eau (point 2) couvre déjà
+   la négligence pure ; ce bonus ne fait que s'y ajouter quand il
+   s'applique, jamais s'y soustraire.
 
 **Un bug réel corrigé au passage** : avant ce round, `PopulationSystem.
 ModifyLoyalty` n'était jamais appelé qu'en négatif (nulle part dans le code

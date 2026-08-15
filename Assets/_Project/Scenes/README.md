@@ -166,7 +166,12 @@ ProcessTurnProduction` (scaled by the new `PopulationSystem.
 ProductionMultiplier`) followed by population upkeep — both were real,
 callable methods with nothing calling them until this round, so every
 placed building's `productionPerTurn` was inert regardless of how
-carefully it had been costed.
+carefully it had been costed. A third step, `ApplyGovernanceLoyalty`,
+grants a further +1 Loyalty (on top of the upkeep step's own bonus/penalty)
+once Justice and Faith stock both clear 0.5 per capita — docs/Economy.md
+§3's "Justice et Foi maintiennent la Loyauté," deliberately one-sided (no
+penalty for falling short, since Justice-producing buildings don't exist
+before Age 2).
 
 ### `Battle`
 Same elevated camera + `HexCameraController` as `Kingdom`, plus
