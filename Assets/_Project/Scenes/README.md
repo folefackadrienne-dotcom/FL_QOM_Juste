@@ -221,6 +221,13 @@ yet, so it's still a no-op in practice. See
 `Assets/_Project/ScriptableObjects/Units` for the 6 base `UnitData` assets
 and the 5 `Unit_Boss*` stat blocks (one per major antagonist, `antagonist`
 already linked to their `AntagonistData`) to spawn from once prefabs exist.
+All 9 now have a `.meta` with a fixed GUID (created this round — none
+existed before, since nothing had referenced a `UnitData` by GUID from
+another `.asset` until `MissionData.playerUnits`/`enemyUnits` needed to).
+Three of the 8 `MissionType.Battle` missions use a `Unit_Boss*` directly
+(Pharaon → La Mer Rouge, Goliath → David et Goliath, Sennachérib →
+Ézéchias et Sennachérib); the other five compose their rosters from the
+6 base units.
 
 `BattleHUDController` on the Canvas wires four pieces: a top-left stats
 panel that follows `BattleInputController.SelectionChanged`; an "End Tour"

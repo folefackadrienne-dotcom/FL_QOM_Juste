@@ -107,7 +107,36 @@ Assets/_Project/
                     Défaite désormais, pas seulement Victoire ;
                     BattleManager.Configure(VictoryCondition) permet de
                     remplacer à l'exécution la condition de victoire
-                    réglée à l'édition (voir Missions/MissionBattleSetup)
+                    réglée à l'édition (voir Missions/MissionBattleSetup).
+                    Les 8 missions de type Battle ont désormais un vrai
+                    roster (`MissionData.playerUnits`/`enemyUnits`,
+                    plus l'escadron générique de repli) plutôt que des
+                    listes vides : La Mer Rouge (Unit_BossPharaon + 2
+                    Unit_Char contre 2 Unit_Fantassin), La Chute de
+                    Jéricho (3 Unit_Fantassin + 1 Unit_Archer contre une
+                    garnison de 2 Unit_Archer + 1 Unit_Fantassin), La
+                    Bataille de Gabaon (armée à 5 contre la coalition
+                    des cinq rois amoréens, 5 unités en face), Débora et
+                    Barac (Unit_Prophete inclus côté joueur, contre
+                    3 Unit_Char représentant les chars de Sisera),
+                    Gédéon et les 300 (2 Unit_Fantassin seulement côté
+                    joueur — la mécanique « moins d'unités » de la
+                    mission — contre 5 unités madianites), David et
+                    Goliath (Unit_Archer + 2 Unit_Fantassin en soutien
+                    contre Unit_BossGoliath seul, en duel), David roi à
+                    Hébron puis Jérusalem (armée royale à 4 contre une
+                    garnison jébusite, condition CapturePoint), et
+                    Ézéchias et Sennachérib (Unit_PretreLevite inclus
+                    pour le soin, contre Unit_BossSennacherib + 2
+                    Unit_Char + 1 Unit_Archer). Composés à la main à
+                    partir du récit et des statistiques déjà existantes
+                    des 6 `UnitData` de base et des 3 fiches de boss
+                    narrativement liées (Pharaon, Goliath, Sennachérib) ;
+                    pas playtestés en combat réel. A nécessité de créer
+                    des `.meta` avec GUID fixe pour les 9 `UnitData`
+                    désormais référencées par nom depuis des `.asset` de
+                    mission — elles n'en avaient encore aucun, rien ne
+                    les ayant référencées par GUID jusqu'ici
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût
@@ -388,10 +417,14 @@ dans l'Éditeur, sans toucher au code.
    delta d'Alliance de l'option choisie (`AllianceSystem.Modify`),
    `Diplomacy` accorde le jeu de récompenses de l'option choisie à la
    place des récompenses de base, `Sandbox` (1 mission) complète sans
-   condition. Reste ouvert : composer un vrai `playerUnits`/`enemyUnits`
-   par mission de combat (actuellement tous vides, donc tout le monde
-   combat avec l'escadron de repli) ; les valeurs de coût/seuil/option
-   des 26 missions non-Sandbox sont plausibles au vu du récit de chaque
+   condition. `MissionData.playerUnits`/`enemyUnits` sont désormais
+   composés pour les 8 missions de combat plutôt que systématiquement
+   vides — voir `Battle/` ci-dessus pour le détail des 8 rosters —
+   donc l'escadron générique de repli (3 `Unit_Fantassin`) ne sert plus
+   qu'à une future mission de combat qui n'aurait pas encore la sienne.
+   Les valeurs de
+   coût/seuil/option des 26 missions non-Sandbox sont plausibles au vu
+   du récit de chaque
    mission mais pas playtestées/équilibrées ; et
    `VictoryConditionType.ProtectUnit` reste incomplet — son commentaire
    dit "vérifié séparément via `UnitInstance.Died`" mais rien

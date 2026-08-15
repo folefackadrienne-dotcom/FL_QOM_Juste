@@ -29,3 +29,10 @@ MonoBehaviour:
   rewards:
   - type: 4
     amount: 30
+  playerUnits:
+  - {fileID: 11400000, guid: 9424a851937a4298b9607e464892757a, type: 3}
+  - {fileID: 11400000, guid: 9424a851937a4298b9607e464892757a, type: 3}
+  enemyUnits:
+  - {fileID: 11400000, guid: 7bce465556b744dea8c9ec7d56dc3502, type: 3}
+  - {fileID: 11400000, guid: 1ca2f15b79ef477ba2e6f9c8e334812b, type: 3}
+  - {fileID: 11400000, guid: 1ca2f15b79ef477ba2e6f9c8e334812b, type: 3}

@@ -31,3 +31,9 @@ MonoBehaviour:
     amount: 20
   - type: 6
     amount: 10
+  playerUnits:
+  - {fileID: 11400000, guid: 32fd82da9a9742c68e6eec126c33f8f5, type: 3}
+  - {fileID: 11400000, guid: 9424a851937a4298b9607e464892757a, type: 3}
+  - {fileID: 11400000, guid: 9424a851937a4298b9607e464892757a, type: 3}
+  enemyUnits:
+  - {fileID: 11400000, guid: 3259fdb218ba479a80dc7c65813826b8, type: 3}
