@@ -89,17 +89,33 @@ left-click on a cell occupied by a `Allegiance.Player` unit selects it, a
 second click resolves through `BattleManager` — an enemy-occupied cell
 attacks, an empty one (within movement range) moves, anything else just
 deselects; a failed attack/move plays "Interface - Erreur / Action
-Impossible". EventSystem, a dedicated `BattleGrid`/`HexGrid` pair sized for
-tactical combat (radius 5, vs. the kingdom's default 10), and a
-`BattleManager`. `VictoryCondition` is left at its default and needs to be
-set per mission; `miracleManager` resolves via `GameManager.Instance` like
-the Kingdom scene's UI. `BattleManager.SpawnUnit`/`TryMove`/`OnUnitDied`
-instantiate, reposition and destroy `UnitData.prefab` (parented under
-`BattleGrid`) the same way `BuildingManager` does for buildings — but no
-unit has a prefab assigned yet, so it's still a no-op in practice. See
+Impossible". EventSystem, Canvas (this scene previously had none), a
+dedicated `BattleGrid`/`HexGrid` pair sized for tactical combat (radius 5,
+vs. the kingdom's default 10), and a `BattleManager`. `VictoryCondition` is
+left at its default and needs to be set per mission; `miracleManager`
+resolves via `GameManager.Instance` like the Kingdom scene's UI.
+`BattleManager.SpawnUnit`/`TryMove`/`OnUnitDied` instantiate, reposition
+and destroy `UnitData.prefab` (parented under `BattleGrid`) the same way
+`BuildingManager` does for buildings — but no unit has a prefab assigned
+yet, so it's still a no-op in practice. See
 `Assets/_Project/ScriptableObjects/Units` for the 6 base `UnitData` assets
 and the 5 `Unit_Boss*` stat blocks (one per major antagonist, `antagonist`
 already linked to their `AntagonistData`) to spawn from once prefabs exist.
+
+`BattleHUDController` on the Canvas wires four pieces: a top-left stats
+panel that follows `BattleInputController.SelectionChanged`; an "End Tour"
+button calling `BattleManager.EndPlayerPhase`; a right-side list of
+castable-miracle buttons generated at runtime (not from a prefab — plain
+`UITheme`-colored buttons built in code, since the castable set isn't
+known until play) calling `BattleManager.TryCastMiracle`, hidden once
+`MiracleManager.PrayerStarted` fires (only one miracle per battle); and a
+centered Victoire/Défaite panel with a "Retour au Royaume" button
+(`SceneManager.LoadScene("Kingdom")`) on `BattleManager.BattleEnded` — an
+event that fired into nothing before this. That last part surfaced a real
+bug: the method computing it was `CheckVictory` and could only ever set
+`Outcome.Victory`, never `Defeat`, despite the enum and event both
+supporting it. Renamed `CheckBattleEnd` and now also declares Defeat once
+every Player unit that ever spawned this battle is dead.
 
 ## After generating
 

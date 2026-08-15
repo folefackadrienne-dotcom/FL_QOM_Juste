@@ -73,7 +73,7 @@ namespace KingdomOfGod.Battle
                 miracleManager.InterruptPrayer();
             }
 
-            CheckVictory();
+            CheckBattleEnd();
             return true;
         }
 
@@ -114,7 +114,7 @@ namespace KingdomOfGod.Battle
             GameManager.Instance?.Audio.PlaySfx(unit.Data.antagonist != null
                 ? "Antagonistes - Boss Vaincu"
                 : "Bataille - Mort d'une Unité");
-            CheckVictory();
+            CheckBattleEnd();
         }
 
         /// <summary>Instantiates UnitData.prefab at the cell's world position — a deliberate no-op until a prefab is assigned (no unit art exists yet).</summary>
@@ -143,13 +143,30 @@ namespace KingdomOfGod.Battle
             }
         }
 
-        private void CheckVictory()
+        /// <summary>Was only ever called CheckVictory and only ever able to set Victory — a battle could never actually be lost. Now also declares Defeat once every Player unit that ever spawned is dead.</summary>
+        private void CheckBattleEnd()
         {
             if (Outcome != BattleOutcome.InProgress) return;
 
             if (victoryCondition.IsMet(battleGrid, turnController))
             {
                 Outcome = BattleOutcome.Victory;
+                BattleEnded?.Invoke(Outcome);
+                return;
+            }
+
+            bool hadPlayerUnits = false;
+            bool anyPlayerAlive = false;
+            foreach (var unit in units)
+            {
+                if (unit.Allegiance != Allegiance.Player) continue;
+                hadPlayerUnits = true;
+                if (unit.IsAlive) anyPlayerAlive = true;
+            }
+
+            if (hadPlayerUnits && !anyPlayerAlive)
+            {
+                Outcome = BattleOutcome.Defeat;
                 BattleEnded?.Invoke(Outcome);
             }
         }

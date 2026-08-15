@@ -76,7 +76,9 @@ Assets/_Project/
                     champ optionnel UnitData.antagonist) —
                     BattleManager.SpawnUnit/TryMove/OnUnitDied
                     instancient, déplacent et détruisent
-                    UnitData.prefab dès qu'un prefab existe
+                    UnitData.prefab dès qu'un prefab existe ;
+                    CheckBattleEnd (ex-CheckVictory) déclare aussi
+                    Défaite désormais, pas seulement Victoire
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût
@@ -123,7 +125,14 @@ Assets/_Project/
                     est assigné ; UIThemeData applique en couleurs plates
                     la palette de docs/ArtDirection.md (boutons, panneaux,
                     libellés) et WorldMoodUI teinte l'écran de Kingdom
-                    selon AllianceSystem.StandingChanged
+                    selon AllianceSystem.StandingChanged ;
+                    BattleHUDController — stats de l'unité sélectionnée
+                    (BattleInputController.SelectionChanged), bouton Fin
+                    de Tour, liste de miracles castables générée en code
+                    (pas besoin de prefab, juste des boutons UITheme) via
+                    BattleManager.TryCastMiracle, panneau Victoire/Défaite
+                    sur BattleManager.BattleEnded (jusque-là sans aucun
+                    auditeur)
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
                   — importe en masse des enregistrements de narration
@@ -205,8 +214,9 @@ dans l'Éditeur, sans toucher au code.
    n'affiche encore les cellules elles-mêmes. Ajouter aussi une vraie
    palette de sélection de bâtiment (`KingdomInputController.
    selectedBuilding` se règle pour l'instant à la main dans l'Inspecteur)
-   et une UI de combat (sélection d'unité, boutons d'action) — les deux
-   attendent surtout des icônes de bâtiments/unités.
+   — l'UI de combat existe (`BattleHUDController` : stats d'unité, Fin
+   de Tour, liste de miracles, Victoire/Défaite), il ne lui manque que
+   des icônes une fois l'art produit.
 4. Habiller visuellement le menu de prière et le journal des versets
    (`PrayerMenuUI`/`VerseJournalUI` ont désormais leur boucle
    d'instanciation de liste — `RefreshList()` peuple un

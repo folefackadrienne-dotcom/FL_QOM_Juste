@@ -275,9 +275,11 @@ namespace KingdomOfGod.EditorTools
         public static void CreateBattleScene()
         {
             var scene = NewScene();
+            var theme = LoadTheme();
 
             var battleCamera = CreateHexGridCamera();
             CreateEventSystem();
+            var canvas = CreateCanvas();
 
             var gridGO = new GameObject("BattleGrid");
             var hexGrid = gridGO.AddComponent<HexGrid>();
@@ -293,6 +295,60 @@ namespace KingdomOfGod.EditorTools
             SetRef(battleInput, "battleManager", battleManager);
             SetRef(battleInput, "battleGrid", battleGrid);
             SetRef(battleInput, "targetCamera", battleCamera);
+
+            var unitInfoPanelGO = new GameObject("UnitInfoPanel", typeof(RectTransform));
+            unitInfoPanelGO.transform.SetParent(canvas.transform, false);
+            var unitInfoRect = unitInfoPanelGO.GetComponent<RectTransform>();
+            unitInfoRect.anchorMin = new Vector2(0f, 1f);
+            unitInfoRect.anchorMax = new Vector2(0f, 1f);
+            unitInfoRect.pivot = new Vector2(0f, 1f);
+            unitInfoRect.anchoredPosition = new Vector2(20f, -20f);
+            unitInfoRect.sizeDelta = new Vector2(260f, 120f);
+            AddParchmentBackground(unitInfoPanelGO, theme);
+            var unitInfoText = CreateLabel(unitInfoPanelGO.transform, "Text", "", 16, TextAlignmentOptions.TopLeft,
+                Vector2.zero, unitInfoRect.sizeDelta, theme != null ? theme.panelText : (Color?)null);
+
+            var endTurnButton = CreateButton(canvas.transform, "EndTurnButton", "Fin de Tour", new Vector2(-140f, 40f), theme);
+            var endTurnRect = endTurnButton.GetComponent<RectTransform>();
+            endTurnRect.anchorMin = new Vector2(1f, 0f);
+            endTurnRect.anchorMax = new Vector2(1f, 0f);
+            endTurnRect.pivot = new Vector2(1f, 0f);
+
+            var miracleListGO = new GameObject("MiracleList", typeof(RectTransform), typeof(VerticalLayoutGroup));
+            miracleListGO.transform.SetParent(canvas.transform, false);
+            var miracleListRect = miracleListGO.GetComponent<RectTransform>();
+            miracleListRect.anchorMin = new Vector2(1f, 1f);
+            miracleListRect.anchorMax = new Vector2(1f, 1f);
+            miracleListRect.pivot = new Vector2(1f, 1f);
+            miracleListRect.anchoredPosition = new Vector2(-20f, -20f);
+            miracleListRect.sizeDelta = new Vector2(220f, 400f);
+            var miracleListLayout = miracleListGO.GetComponent<VerticalLayoutGroup>();
+            miracleListLayout.spacing = 6f;
+            miracleListLayout.childForceExpandHeight = false;
+            miracleListLayout.childControlHeight = false;
+
+            var outcomePanelGO = new GameObject("OutcomePanel", typeof(RectTransform));
+            outcomePanelGO.transform.SetParent(canvas.transform, false);
+            var outcomeRect = outcomePanelGO.GetComponent<RectTransform>();
+            outcomeRect.anchorMin = new Vector2(0.5f, 0.5f);
+            outcomeRect.anchorMax = new Vector2(0.5f, 0.5f);
+            outcomeRect.sizeDelta = new Vector2(420f, 220f);
+            AddParchmentBackground(outcomePanelGO, theme);
+            var outcomeText = CreateLabel(outcomePanelGO.transform, "Text", "", 32, TextAlignmentOptions.Center,
+                new Vector2(0f, 30f), new Vector2(380f, 80f), theme != null ? theme.panelText : (Color?)null);
+            var outcomeReturnButton = CreateButton(outcomePanelGO.transform, "ReturnButton", "Retour au Royaume", new Vector2(0f, -50f), theme);
+            outcomePanelGO.SetActive(false);
+
+            var battleHUD = canvas.gameObject.AddComponent<BattleHUDController>();
+            SetRef(battleHUD, "battleManager", battleManager);
+            SetRef(battleHUD, "inputController", battleInput);
+            SetRef(battleHUD, "theme", theme);
+            SetRef(battleHUD, "unitInfoText", unitInfoText);
+            SetRef(battleHUD, "endTurnButton", endTurnButton);
+            SetRef(battleHUD, "miracleListContainer", miracleListGO.transform);
+            SetRef(battleHUD, "outcomePanel", outcomePanelGO);
+            SetRef(battleHUD, "outcomeText", outcomeText);
+            SetRef(battleHUD, "outcomeReturnButton", outcomeReturnButton);
 
             SaveScene(scene, BattlePath);
         }
