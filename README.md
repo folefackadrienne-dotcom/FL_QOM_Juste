@@ -108,7 +108,12 @@ Assets/_Project/
                     libellés) et WorldMoodUI teinte l'écran de Kingdom
                     selon AllianceSystem.StandingChanged
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
-                  (menu Kingdom of God > Setup), assembly Editor-only
+                  (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
+                  — importe en masse des enregistrements de narration au
+                  nom générique (ex. exports ElevenLabs "audio (7).mp3")
+                  et les assigne aux 34 VerseData.narrationClip* (menu
+                  Kingdom of God > Setup > Import Voice Narrations),
+                  assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Antagonists, Techs, Ages,
@@ -193,7 +198,12 @@ dans l'Éditeur, sans toucher au code.
    (y compris les 44 SFX d'Interface, Construction, Bataille, Miracle,
    Foi & Alliance, Progression, Economy, Narrative, Meta et
    Collectibles) et la lecture de voix multilingue, il ne manque que
-   les fichiers son.
+   les fichiers son. Pour les narrations de versets exportées avec des
+   noms génériques (ex. ElevenLabs "audio (7).mp3"), voir
+   **Kingdom of God → Setup → Import Voice Narrations**
+   (`VoiceNarrationImporter.cs`) qui les importe, les associe aux 34
+   `VerseData` par ordre de date de création (à vérifier/réordonner
+   avant de valider) et les renomme.
 8. Remplacer les couleurs plates de `UIThemeData`/`ProjectSceneSetup` par
    de vraies textures/sprites 9-slice une fois l'art produit (bordures
    dorées, fond parchemin texturé, icônes symboliques du blé/eau/flamme/
