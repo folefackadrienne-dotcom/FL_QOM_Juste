@@ -31,6 +31,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private BuildingManager buildingManager;
         [SerializeField] private TempleSystem templeSystem;
         [SerializeField] private PopulationSystem populationSystem;
+        [SerializeField] private KingdomTurnManager kingdomTurnManager;
         [SerializeField] private AllianceSystem allianceSystem;
         [SerializeField] private MiracleManager miracleManager;
         [SerializeField] private VerseManager verseManager;
@@ -48,6 +49,7 @@ namespace KingdomOfGod.Core
         public BuildingManager Buildings => buildingManager;
         public TempleSystem Temple => templeSystem;
         public PopulationSystem Population => populationSystem;
+        public KingdomTurnManager Turns => kingdomTurnManager;
         public AllianceSystem Alliance => allianceSystem;
         public MiracleManager Miracles => miracleManager;
         public VerseManager Verses => verseManager;

@@ -46,7 +46,21 @@ Justice et Alliance).
 **Bâtiment ultime — le Temple (niveaux 1 à 5)** : consomme beaucoup d'Or,
 de Bois et de main-d'œuvre ; produit énormément de Foi ; débloque des
 miracles plus puissants ; attire des pèlerins (bonus de population et
-d'Or). Voir `Assets/_Project/Scripts/Buildings/TempleSystem.cs`.
+d'Or). Voir `Assets/_Project/Scripts/Buildings/TempleSystem.cs` —
+`TempleSystem.levels` (niveaux 2 à 5, le niveau 1 étant le départ gratuit)
+est désormais peuplé par `ProjectSceneSetup.SetTempleLevels` : coûts
+croissants en Bois/Or dès le niveau 2, plus Justice/Sagesse à partir du
+niveau 3, et le niveau 5 demande aussi de la Foi elle-même (atteindre le
+plafond de Foi coûte une partie de la Foi qu'il va libérer). `CanUpgrade`/
+`TryUpgrade` existaient déjà mais `levels` était une liste vide, donc
+inatteignables quoi qu'il arrive ; `TempleUI` (widget permanent du HUD
+`Kingdom`, pas un panneau à ouvrir) affiche le niveau actuel et un bouton
+« Améliorer » actif dès que l'achat est possible. Le lien vers
+`miraclesUnlocked` par niveau n'est pas fait — `MiracleData` n'a aucun
+champ de niveau de Temple à faire correspondre, et le construire
+demanderait de choisir quels miracles vont à quel niveau parmi tous ceux
+déjà créés ; laissé pour un futur passage de conception dédié plutôt que
+deviné ici.
 
 *Note : ces bâtiments de base sont génériques (utilisables dès l'Âge 1) et
 distincts des bâtiments thématiques déjà créés par âge dans
@@ -73,7 +87,49 @@ La Population est à la fois une ressource et un indicateur.
 - La Justice et la Foi sont les meilleurs moyens de maintenir une haute
   loyauté sur le long terme.
 
-Voir `Assets/_Project/Scripts/Population/PopulationSystem.cs`.
+Voir `Assets/_Project/Scripts/Population/PopulationSystem.cs`. Ce système
+existait déjà (jauge de Loyauté, seuils de murmures/rébellion), mais rien ne
+l'actionnait : `BuildingManager.ProcessTurnProduction`, `PopulationSystem.
+Grow` et la conséquence d'une pénurie sur la Loyauté étaient de vraies
+méthodes sans aucun appelant nulle part — `Kingdom` n'avait aucune notion de
+tour. `KingdomTurnManager` (nouveau, `Assets/_Project/Scripts/Core/`) est ce
+tour manquant, déclenché par le bouton « Fin de Tour » du HUD :
+1. `BuildingManager.ProcessTurnProduction` applique la production de chaque
+   bâtiment posé, multipliée par `PopulationSystem.ProductionMultiplier` —
+   une formule à paliers directement sur les seuils déjà existants
+   (`rebellionThreshold`/`murmurThreshold`/`productionBonusThreshold`) :
+   ×0.5 en dessous du seuil de rébellion, ×0.7 en dessous du seuil de
+   murmures, ×1.2 à ×1.4 (linéaire) au-dessus du seuil de bonus, ×1 sinon —
+   les « +20 à +40 % »/« baisse de production » ci-dessus, chiffrés.
+2. La population consomme `Population × 0.05` Blé et autant d'Eau (voir note
+   de chiffrage ci-dessous). Nourrie : la Loyauté remonte légèrement (+2) et
+   la population croît de 2 % par tour, plafonnée par sa capacité de
+   logement (`PopulationSystem.Capacity`, base 100, augmentée une fois à la
+   pose par `BuildingData.populationCapacityBonus` sur les 5 bâtiments
+   d'Habitat — Tente Familiale, Campement des Tribus, Camp de Guilgal,
+   Refuge des Collines, Camp des Exilés — qui ne servaient jusqu'ici à
+   rien). En pénurie : Loyauté −5, rien n'est dépensé.
+
+**Un bug réel corrigé au passage** : avant ce round, `PopulationSystem.
+ModifyLoyalty` n'était jamais appelé qu'en négatif (nulle part dans le code
+ne l'appelait en positif) — la moindre pénurie devenait donc un cliquet à
+sens unique vers 0 % de Loyauté pour toujours, sans jamais pouvoir remonter.
+Une simulation (voir note de chiffrage) l'a révélé avant que ça n'atterrisse
+en jeu : la nouvelle récompense « bien nourri » (+2 Loyauté/tour) est le
+correctif.
+
+**Note de chiffrage** : 0,05 Blé/Eau par habitant et par tour a été choisi
+(plutôt qu'un chiffre rond comme 0,1) après simulation en Python de 420
+tours contre les 39 `BuildingData` déjà chiffrés — il n'existe que 3
+bâtiments producteurs de Blé et 3 d'Eau sur les 7 Âges (~17/tour chacun au
+complet), donc une population qui grossit jusqu'à la capacité de logement
+maximale (base 100 + les 5 bonus d'Habitat = 260) a besoin d'un taux par
+habitant assez bas pour rester nourrissable par ce nombre fixe de bâtiments.
+0,1 provoquait une pénurie permanente dès que la population dépassait ~170 ;
+0,05 laisse une marge saine (~13 Blé/Eau nécessaires à capacité pleine
+contre ~17 produits). Simulation non jouée en vrai dans l'Éditeur (aucun
+Éditeur Unity disponible dans cet environnement), donc à confirmer/ajuster
+en playtest réel.
 
 ## 4. Commerce et Diplomatie Économique
 

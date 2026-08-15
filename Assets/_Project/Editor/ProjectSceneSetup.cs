@@ -80,6 +80,7 @@ namespace KingdomOfGod.EditorTools
             var saveManager = root.AddComponent<SaveManager>();
             var entitlementManager = root.AddComponent<EntitlementManager>();
             var audioManager = root.AddComponent<AudioManager>();
+            var kingdomTurnManager = root.AddComponent<KingdomTurnManager>();
             var gameManager = root.AddComponent<GameManager>();
             root.AddComponent<BootstrapLoader>();
 
@@ -101,13 +102,20 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "saveManager", saveManager);
             SetRef(gameManager, "entitlementManager", entitlementManager);
             SetRef(gameManager, "audioManager", audioManager);
+            SetRef(gameManager, "kingdomTurnManager", kingdomTurnManager);
 
             SetRef(ageManager, "contentGateBehaviour", entitlementManager);
 
             SetRef(buildingManager, "grid", hexGrid);
             SetRef(buildingManager, "resourceManager", resourceManager);
             SetRef(buildingManager, "allianceSystem", allianceSystem);
+            SetRef(buildingManager, "populationSystem", populationSystem);
             SetRef(templeSystem, "resourceManager", resourceManager);
+            SetTempleLevels(templeSystem);
+
+            SetRef(kingdomTurnManager, "buildingManager", buildingManager);
+            SetRef(kingdomTurnManager, "resourceManager", resourceManager);
+            SetRef(kingdomTurnManager, "populationSystem", populationSystem);
 
             SetRef(allianceSystem, "resourceManager", resourceManager);
             SetRef(miracleManager, "resourceManager", resourceManager);
@@ -241,6 +249,38 @@ namespace KingdomOfGod.EditorTools
                 resourceLabels.Add(new ResourceLabelRef { type = resourceOrder[i], text = label });
             }
             SetResourceLabels(resourceBar, resourceLabels);
+
+            var templeWidgetGO = new GameObject("TempleWidget", typeof(RectTransform));
+            templeWidgetGO.transform.SetParent(hudGO.transform, false);
+            var templeUI = templeWidgetGO.AddComponent<TempleUI>();
+            var templeLevelLabel = CreateLabel(templeWidgetGO.transform, "LevelText", "Temple — Niveau 1", 16,
+                TextAlignmentOptions.MidlineLeft, new Vector2(0f, -resourceOrder.Length * 26f - 10f), new Vector2(220f, 24f),
+                theme != null ? theme.ivoryWhite : (Color?)null);
+            templeLevelLabel.rectTransform.anchorMin = new Vector2(0f, 1f);
+            templeLevelLabel.rectTransform.anchorMax = new Vector2(0f, 1f);
+            templeLevelLabel.rectTransform.pivot = new Vector2(0f, 1f);
+            var templeUpgradeButton = CreateButton(templeWidgetGO.transform, "UpgradeButton", "Améliorer",
+                new Vector2(0f, -resourceOrder.Length * 26f - 40f), theme);
+            var templeUpgradeRect = templeUpgradeButton.GetComponent<RectTransform>();
+            templeUpgradeRect.anchorMin = new Vector2(0f, 1f);
+            templeUpgradeRect.anchorMax = new Vector2(0f, 1f);
+            templeUpgradeRect.pivot = new Vector2(0f, 1f);
+            templeUpgradeRect.sizeDelta = new Vector2(160f, 34f);
+            SetRef(templeUI, "levelText", templeLevelLabel);
+            SetRef(templeUI, "upgradeButton", templeUpgradeButton);
+
+            var endTurnButton = CreateButton(canvas.transform, "EndTurnButton", "Fin de Tour", new Vector2(-140f, 40f), theme);
+            var endTurnRect = endTurnButton.GetComponent<RectTransform>();
+            endTurnRect.anchorMin = new Vector2(1f, 0f);
+            endTurnRect.anchorMax = new Vector2(1f, 0f);
+            endTurnRect.pivot = new Vector2(1f, 0f);
+            UnityEventTools.AddPersistentListener(endTurnButton.onClick, hud.EndTurn);
+            var turnLabel = CreateLabel(canvas.transform, "TurnLabel", "Tour 1", 18, TextAlignmentOptions.Center,
+                new Vector2(-140f, 80f), new Vector2(220f, 30f), theme != null ? theme.ivoryWhite : (Color?)null);
+            turnLabel.rectTransform.anchorMin = new Vector2(1f, 0f);
+            turnLabel.rectTransform.anchorMax = new Vector2(1f, 0f);
+            turnLabel.rectTransform.pivot = new Vector2(1f, 0f);
+            SetRef(hud, "turnLabel", turnLabel);
 
             var prayerPanelGO = new GameObject("PrayerMenuPanel", typeof(RectTransform));
             prayerPanelGO.transform.SetParent(hudGO.transform, false);
@@ -655,6 +695,64 @@ namespace KingdomOfGod.EditorTools
                 element.FindPropertyRelative("valueText").objectReferenceValue = entries[i].text;
             }
             so.ApplyModifiedProperties();
+        }
+
+        /// <summary>
+        /// Populates TempleSystem.levels (2 through 5 — level 1 is the free starting level, never
+        /// looked up by CanUpgrade/TryUpgrade's GetLevelData(CurrentLevel + 1)). Was an empty list
+        /// before this round, which made TryUpgrade/CanUpgrade permanently unreachable regardless
+        /// of any UI calling them. Costs escalate in Or/Bois (docs/Economy.md §2: "consomme
+        /// beaucoup d'Or, de Bois") plus Justice/Sagesse from level 3 on, and level 5 also asks for
+        /// Foi itself — reaching the Faith cap costs some of the Faith it will make room for.
+        /// Validated by simulation against the already-authored building economy: reachable by
+        /// roughly the midpoint of a 7-age playthrough for an actively-building player.
+        /// </summary>
+        private static void SetTempleLevels(TempleSystem templeSystem)
+        {
+            var so = new SerializedObject(templeSystem);
+            var levelsProp = so.FindProperty("levels");
+            levelsProp.arraySize = 4;
+
+            SetTempleLevel(levelsProp.GetArrayElementAtIndex(0), 2, 20f,
+                new ResourceAmount { type = ResourceType.Wood, amount = 40f },
+                new ResourceAmount { type = ResourceType.Gold, amount = 60f },
+                new ResourceAmount { type = ResourceType.Justice, amount = 10f });
+
+            SetTempleLevel(levelsProp.GetArrayElementAtIndex(1), 3, 30f,
+                new ResourceAmount { type = ResourceType.Wood, amount = 60f },
+                new ResourceAmount { type = ResourceType.Gold, amount = 90f },
+                new ResourceAmount { type = ResourceType.Justice, amount = 20f },
+                new ResourceAmount { type = ResourceType.Wisdom, amount = 10f });
+
+            SetTempleLevel(levelsProp.GetArrayElementAtIndex(2), 4, 40f,
+                new ResourceAmount { type = ResourceType.Wood, amount = 90f },
+                new ResourceAmount { type = ResourceType.Gold, amount = 130f },
+                new ResourceAmount { type = ResourceType.Justice, amount = 30f },
+                new ResourceAmount { type = ResourceType.Wisdom, amount = 20f });
+
+            SetTempleLevel(levelsProp.GetArrayElementAtIndex(3), 5, 50f,
+                new ResourceAmount { type = ResourceType.Wood, amount = 130f },
+                new ResourceAmount { type = ResourceType.Gold, amount = 180f },
+                new ResourceAmount { type = ResourceType.Justice, amount = 40f },
+                new ResourceAmount { type = ResourceType.Wisdom, amount = 30f },
+                new ResourceAmount { type = ResourceType.Faith, amount = 50f });
+
+            so.ApplyModifiedProperties();
+        }
+
+        private static void SetTempleLevel(SerializedProperty element, int level, float faithCapBonus, params ResourceAmount[] cost)
+        {
+            element.FindPropertyRelative("level").intValue = level;
+            element.FindPropertyRelative("faithCapBonus").floatValue = faithCapBonus;
+
+            var costProp = element.FindPropertyRelative("upgradeCost");
+            costProp.arraySize = cost.Length;
+            for (int i = 0; i < cost.Length; i++)
+            {
+                var costElement = costProp.GetArrayElementAtIndex(i);
+                costElement.FindPropertyRelative("type").intValue = (int)cost[i].type;
+                costElement.FindPropertyRelative("amount").floatValue = cost[i].amount;
+            }
         }
 
         /// <summary>Populates BuildingPaletteUI.allBuildings from every BuildingData asset in the given folder, so the palette doesn't need 39 assets dragged in by hand.</summary>

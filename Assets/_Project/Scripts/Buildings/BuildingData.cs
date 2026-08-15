@@ -27,6 +27,9 @@ namespace KingdomOfGod.Buildings
         [Header("Storage (optional, applied once at placement)")]
         public List<ResourceAmount> storageCapacityBonus = new List<ResourceAmount>();
 
+        [Header("Housing (optional, applied once at placement — PopulationSystem.IncreaseCapacity)")]
+        public int populationCapacityBonus;
+
         public bool MeetsRequirements(float currentFaith, float currentJustice)
         {
             return currentFaith >= minFaithRequired && currentJustice >= minJusticeRequired;

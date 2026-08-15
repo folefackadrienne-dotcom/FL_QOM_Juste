@@ -149,6 +149,25 @@ Versets / Prophétie / Bâtiments / Missions) opens `PrayerMenuUI`/
 four `HUDController` methods already existed, but until an earlier round
 nothing in this scene ever wired a clickable `Button` to any of them.
 
+Below the resource bar, a permanent (never closed) `TempleWidget` shows
+`TempleUI`: "Temple — Niveau N" plus an "Améliorer" button, interactable
+once `TempleSystem.CanUpgrade()` is true. `TempleSystem.levels` — 4 entries
+covering levels 2 through 5 — is populated by
+`ProjectSceneSetup.SetTempleLevels`; before this round the list was empty,
+so `CanUpgrade`/`TryUpgrade` (both pre-existing, real methods) could never
+succeed regardless of a UI calling them. Bottom-right, an `EndTurnButton`
+("Fin de Tour") calls `HUDController.EndTurn` → `KingdomTurnManager.
+EndTurn` — this scene's only source of a turn advancing at all — next to a
+`TurnLabel` ("Tour N") that updates on `KingdomTurnManager.TurnAdvanced`.
+`KingdomTurnManager` itself lives on the persistent Bootstrap `GameManager`
+(cross-scene-resolved by `HUDController`/`TempleUI` like every other
+manager here) and, on each `EndTurn`, runs `BuildingManager.
+ProcessTurnProduction` (scaled by the new `PopulationSystem.
+ProductionMultiplier`) followed by population upkeep — both were real,
+callable methods with nothing calling them until this round, so every
+placed building's `productionPerTurn` was inert regardless of how
+carefully it had been costed.
+
 ### `Battle`
 Same elevated camera + `HexCameraController` as `Kingdom`, plus
 `BattleInputController` (fully wired locally — `battleManager`/`battleGrid`

@@ -50,7 +50,13 @@ Design de référence : [`docs/GDD.md`](docs/GDD.md) ·
 ```
 Assets/_Project/
   Scripts/
-    Core/          GameManager, cycle des 7 Âges
+    Core/          GameManager, cycle des 7 Âges, KingdomTurnManager —
+                    le tour qui manquait à Kingdom : BuildingManager.
+                    ProcessTurnProduction, PopulationSystem.Grow et la
+                    conséquence d'une pénurie sur la Loyauté existaient
+                    déjà en code mais rien ne les appelait ; EndTurn()
+                    (bouton "Fin de Tour" du HUD) les enchaîne désormais
+                    à chaque tour
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules),
                     HexCoordinates.FromWorldPosition (inverse de
@@ -72,9 +78,22 @@ Assets/_Project/
                     instancie BuildingData.prefab à la position de la
                     cellule dès qu'un prefab existe —, Temple (niveaux
                     1-5, un TempleLevelData.prefab par niveau,
-                    TempleSystem.LevelUpgraded)
+                    TempleSystem.LevelUpgraded ; TempleSystem.levels
+                    est désormais peuplé — CanUpgrade/TryUpgrade
+                    existaient déjà mais la liste était vide, donc
+                    inatteignables). BuildingData.populationCapacityBonus
+                    (nouveau, même mécanisme que storageCapacityBonus)
+                    donne enfin un effet aux 5 bâtiments d'Habitat.
+                    ProcessTurnProduction multiplie désormais chaque
+                    production par PopulationSystem.ProductionMultiplier
     Population/     Population & Loyauté (PopulationChanged,
-                    LoyaltyLow/LoyaltyCritical)
+                    LoyaltyLow/LoyaltyCritical) — ProductionMultiplier
+                    (formule à paliers sur les seuils existants),
+                    WheatUpkeep/WaterUpkeep, ComputeGrowth et Capacity
+                    sont nouveaux ; ModifyLoyalty n'était jusqu'ici
+                    jamais appelé qu'en négatif nulle part dans le code
+                    (une pénurie ne remontait donc jamais) — corrigé par
+                    la récompense "bien nourri" de KingdomTurnManager
     Battle/         Batailles tactiques tour par tour, unités, boss
                     (AntagonistData, lié à sa fiche UnitData via le
                     champ optionnel UnitData.antagonist) —
@@ -192,7 +211,14 @@ Assets/_Project/
                     d'outils à 5 boutons (Prière /
                     Versets / Prophétie / Bâtiments / Missions) qui
                     n'ouvrait jusque-là aucune UI malgré des méthodes
-                    HUDController déjà prêtes pour les 4 premiers
+                    HUDController déjà prêtes pour les 4 premiers ;
+                    TempleUI — petit widget permanent (jamais fermé,
+                    contrairement aux autres panneaux) affichant le
+                    niveau du Temple et un bouton Améliorer actif dès
+                    que TempleSystem.CanUpgrade() l'autorise ; bouton
+                    "Fin de Tour" + libellé de tour appelant
+                    HUDController.EndTurn -> KingdomTurnManager.EndTurn,
+                    seule façon de faire avancer un tour dans Kingdom
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
                   — importe en masse des enregistrements de narration
@@ -286,9 +312,13 @@ dans l'Éditeur, sans toucher au code.
    Le rituel complet de prière (`MiracleManager.BeginPrayer` /
    `AdvancePrayerTurn` / `AccelerateWithFaith` / `InterruptPrayer`) est déjà
    branché côté `Battle` via `TurnController` ; `PrayerMenuUI` utilise pour
-   l'instant `TryCast` (résolution instantanée) faute de boucle de tours
-   explicite côté `Kingdom` — à rebrancher sur le rituel complet une fois
-   cette boucle ajoutée.
+   l'instant `TryCast` (résolution instantanée). `Kingdom` a désormais sa
+   propre boucle de tours (`KingdomTurnManager`, voir `Core/` ci-dessus) —
+   la précondition qui manquait pour rebrancher `PrayerMenuUI` sur le
+   rituel complet existe maintenant, mais le rebranchement lui-même (barre
+   de progression, annulation, `AdvancePrayerTurn` appelé depuis
+   `KingdomTurnManager.EndTurn` quand une prière est en cours) reste à
+   faire — pas tenté ici, changement de comportement UI à part entière.
 5. Créer des prefabs d'unités référençant les 6 `UnitData` de base
    (`Assets/_Project/ScriptableObjects/Units`) pour peupler la scène
    `Battle`.
@@ -356,3 +386,30 @@ dans l'Éditeur, sans toucher au code.
    n'implémente cette vérification (`UnitInstance` n'a pas d'identifiant
    à faire correspondre à `protectedUnitId`) ; aucune des 35 missions
    actuelles ne l'utilise, donc ce n'est pas bloquant aujourd'hui.
+10. L'économie de `Kingdom` tourne enfin : `KingdomTurnManager` (nouveau,
+    bouton "Fin de Tour" du HUD) appelle chaque tour
+    `BuildingManager.ProcessTurnProduction`, l'entretien de la population
+    (Blé/Eau, `PopulationSystem.WheatUpkeep`/`WaterUpkeep`) et la
+    croissance (`PopulationSystem.ComputeGrowth`, plafonnée par
+    `Capacity`) — ces méthodes existaient déjà mais rien ne les appelait,
+    donc les 39 `BuildingData` déjà chiffrés ne produisaient jamais rien
+    en pratique. Un vrai bug corrigé au passage :
+    `PopulationSystem.ModifyLoyalty` n'était jusque-là jamais appelé
+    qu'en négatif nulle part dans le code, donc toute pénurie devenait un
+    cliquet à sens unique vers 0 % de Loyauté pour toujours ; une
+    récompense "bien nourri" (+2 Loyauté/tour) comble ce manque. Le
+    Temple est également débranché de son vide : `TempleSystem.levels`
+    (niveaux 2 à 5) est peuplé, et `TempleUI` (widget permanent du HUD)
+    donne enfin un moyen d'appeler `TryUpgrade`. Toutes les valeurs
+    nouvelles (taux de consommation, croissance, capacité de logement,
+    coûts du Temple) ont été validées par une simulation Python de 420
+    tours contre les 39 bâtiments déjà chiffrés (voir la note de
+    chiffrage dans `docs/Economy.md` §3) plutôt que devinées au hasard —
+    mais jamais testées en jeu réel, aucun Éditeur Unity n'étant
+    disponible dans cet environnement. Reste ouvert : le lien Justice/Foi
+    → Loyauté décrit dans `docs/Economy.md` §3 n'est pas implémenté (la
+    Loyauté ne réagit aujourd'hui qu'à l'entretien alimentaire) ; les
+    coûts des 93 technologies (`docs/Economy.md`, formule `10 + (palier
+    - 1) × 8`) n'ont pas été inclus dans la simulation ; et
+    `TempleLevelData.miraclesUnlocked` reste vide faute de champ de
+    niveau de Temple sur `MiracleData` pour établir la correspondance.

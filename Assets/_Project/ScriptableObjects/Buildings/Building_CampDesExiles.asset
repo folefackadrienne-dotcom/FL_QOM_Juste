@@ -29,3 +29,4 @@ MonoBehaviour:
   minFaithRequired: 0
   minJusticeRequired: 0
   productionPerTurn: []
+  populationCapacityBonus: 30
