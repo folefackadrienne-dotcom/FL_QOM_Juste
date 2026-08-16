@@ -15,6 +15,8 @@ namespace KingdomOfGod.Progression
 
         public event Action<TechNode> TechUnlocked;
 
+        public IReadOnlyCollection<TechNode> UnlockedNodes => unlocked;
+
         public bool IsUnlocked(TechNode node) => unlocked.Contains(node);
 
         public bool CanUnlock(TechNode node)
@@ -36,6 +38,16 @@ namespace KingdomOfGod.Progression
             unlocked.Add(node);
             TechUnlocked?.Invoke(node);
             return true;
+        }
+
+        /// <summary>Reapplies unlocked tech loaded from a save file, matched by TechNode.techId against allNodes — marks each unlocked directly, bypassing TryUnlock's resource spend since the save's resource stock already reflects it.</summary>
+        public void RestoreFromSave(IEnumerable<string> savedUnlockedTechIds)
+        {
+            var idSet = new HashSet<string>(savedUnlockedTechIds);
+            foreach (var node in allNodes)
+            {
+                if (idSet.Contains(node.techId)) unlocked.Add(node);
+            }
         }
     }
 }

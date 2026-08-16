@@ -19,6 +19,7 @@ namespace KingdomOfGod.Verses
     public class VerseManager : MonoBehaviour
     {
         [SerializeField] private ResourceManager resourceManager;
+        [SerializeField] private List<VerseData> allVerses = new List<VerseData>();
 
         private readonly HashSet<VerseData> unlockedVerses = new HashSet<VerseData>();
         private readonly HashSet<VerseData> memorizedVerses = new HashSet<VerseData>();
@@ -68,6 +69,19 @@ namespace KingdomOfGod.Verses
                     resourceManager.Add(bonus.type, bonus.amount);
                 }
                 VerseMemorized?.Invoke(verse);
+            }
+        }
+
+        /// <summary>Reapplies memorized verses loaded from a save file, matched by VerseData.reference against allVerses — marks each unlocked and Completed directly, bypassing AdvanceStep's permanentBonus grant since the save's resource stock already reflects it.</summary>
+        public void RestoreFromSave(IEnumerable<string> savedMemorizedReferences)
+        {
+            var referenceSet = new HashSet<string>(savedMemorizedReferences);
+            foreach (var verse in allVerses)
+            {
+                if (!referenceSet.Contains(verse.reference)) continue;
+                unlockedVerses.Add(verse);
+                memorizedVerses.Add(verse);
+                progress[verse] = MemorizationStep.Completed;
             }
         }
     }

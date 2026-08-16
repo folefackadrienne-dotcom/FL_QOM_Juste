@@ -241,7 +241,23 @@ Assets/_Project/
                     portée faute de Sagesse (seuls 3 des 39 bâtiments
                     en produisent, aucun avant l'Âge 4)
     SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud),
-                    SaveManager.Saved/Loaded
+                    SaveManager.Saved/Loaded — SaveManager ne fait que
+                    lire/écrire le fichier ; SaveCoordinator.Capture/Apply
+                    est le chaînon qui manquait : il rassemble l'état de
+                    tous les systèmes (âges, ressources, Temple,
+                    Population, Alliance, versets mémorisés, artefacts
+                    possédés, missions/tech débloqués, bâtiments posés
+                    — nouveau champ SaveData.placedBuildings, jamais
+                    persistés jusqu'ici) et le réapplique via des
+                    méthodes RestoreFromSave « silencieuses » qui
+                    court-circuitent les bonus/coûts déjà appliqués une
+                    première fois (AdvanceStep, Collect, Complete,
+                    TryUnlock, TryPlace) pour ne pas les accorder deux
+                    fois. Sauvegarde automatique en fin de tour + bouton
+                    « Sauvegarder » dans la barre d'outils du Royaume ;
+                    MainMenuController.OnContinue applique désormais
+                    réellement la sauvegarde chargée au lieu de jeter le
+                    résultat de LoadLocal
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
                     produits, seam IAP (stub Éditeur en attendant le vrai
                     store), EntitlementManager.ProductPurchased/TierChanged

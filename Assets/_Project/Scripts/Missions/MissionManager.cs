@@ -12,10 +12,12 @@ namespace KingdomOfGod.Missions
     {
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private AllianceSystem allianceSystem;
+        [SerializeField] private List<MissionData> allMissions = new List<MissionData>();
 
         private readonly HashSet<MissionData> completedMissions = new HashSet<MissionData>();
 
         public MissionData ActiveMission { get; private set; }
+        public IReadOnlyCollection<MissionData> CompletedMissions => completedMissions;
 
         public event Action<MissionData> MissionStarted;
         public event Action<MissionData> MissionCompleted;
@@ -109,6 +111,16 @@ namespace KingdomOfGod.Missions
 
             ActiveMission = null;
             MissionCompleted?.Invoke(mission);
+        }
+
+        /// <summary>Reapplies completed missions loaded from a save file, matched by MissionData.missionId against allMissions — marks each completed directly, bypassing Complete's reward grant since the save's resource stock already reflects it.</summary>
+        public void RestoreFromSave(IEnumerable<string> savedCompletedMissionIds)
+        {
+            var idSet = new HashSet<string>(savedCompletedMissionIds);
+            foreach (var mission in allMissions)
+            {
+                if (idSet.Contains(mission.missionId)) completedMissions.Add(mission);
+            }
         }
     }
 }

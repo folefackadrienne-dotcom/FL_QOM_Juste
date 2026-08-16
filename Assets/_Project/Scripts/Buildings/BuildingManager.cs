@@ -19,6 +19,7 @@ namespace KingdomOfGod.Buildings
         [SerializeField] private AllianceSystem allianceSystem;
         [SerializeField] private PopulationSystem populationSystem;
         [SerializeField] private UIThemeData theme;
+        [SerializeField] private List<BuildingData> allBuildingTypes = new List<BuildingData>();
 
         private readonly List<BuildingInstance> buildings = new List<BuildingInstance>();
 
@@ -163,6 +164,48 @@ namespace KingdomOfGod.Buildings
             if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", color);
             if (material.HasProperty("_Color")) material.SetColor("_Color", color);
             return material;
+        }
+
+        /// <summary>
+        /// Re-places buildings loaded from a save file, matched by BuildingData.displayName against
+        /// allBuildingTypes: applies the same cell occupation, visual spawn, and storage/population
+        /// capacity bonuses as TryPlace, but skips CanPlace's checks and resourceManager.TrySpend —
+        /// the save's resource stock already reflects every building's cost having been paid once,
+        /// at its original placement. Call before ResourceManager.RestoreStock so the storage-bonus
+        /// caps this raises are already in effect when stock is restored.
+        /// </summary>
+        public void RestoreFromSave(IEnumerable<(string buildingName, int q, int r, int level)> saved)
+        {
+            foreach (var entry in saved)
+            {
+                var data = allBuildingTypes.Find(b => b.displayName == entry.buildingName);
+                if (data == null)
+                {
+                    Debug.LogWarning($"Kingdom of God save: building '{entry.buildingName}' no longer exists, skipping.");
+                    continue;
+                }
+
+                var position = new HexCoordinates(entry.q, entry.r);
+                if (!grid.TryGetCell(position, out var cell)) continue;
+
+                var instance = new BuildingInstance(data, position);
+                instance.SetLevel(entry.level);
+                cell.Building = instance;
+                buildings.Add(instance);
+                SpawnVisual(instance);
+
+                foreach (var bonus in data.storageCapacityBonus)
+                {
+                    resourceManager.SetCap(bonus.type, resourceManager.GetCap(bonus.type) + bonus.amount);
+                }
+
+                if (data.populationCapacityBonus != 0 && populationSystem != null)
+                {
+                    populationSystem.IncreaseCapacity(data.populationCapacityBonus);
+                }
+
+                BuildingPlaced?.Invoke(instance);
+            }
         }
 
         /// <summary>Applies every placed building's per-turn production to the resource pool, scaled by PopulationSystem.ProductionMultiplier (docs/Economy.md §3: loyalty raises or lowers output).</summary>

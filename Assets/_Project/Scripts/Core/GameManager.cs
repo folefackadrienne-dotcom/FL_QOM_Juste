@@ -40,6 +40,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private TechTree techTree;
         [SerializeField] private LeaderManager leaderManager;
         [SerializeField] private SaveManager saveManager;
+        [SerializeField] private SaveCoordinator saveCoordinator;
         [SerializeField] private EntitlementManager entitlementManager;
         [SerializeField] private AudioManager audioManager;
 
@@ -58,6 +59,7 @@ namespace KingdomOfGod.Core
         public TechTree Tech => techTree;
         public LeaderManager Leaders => leaderManager;
         public SaveManager Save => saveManager;
+        public SaveCoordinator SaveCoordinator => saveCoordinator;
         public EntitlementManager Entitlements => entitlementManager;
         public AudioManager Audio => audioManager;
 

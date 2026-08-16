@@ -31,9 +31,20 @@ Persistent scene, loaded first. One `GameManager` GameObject carrying every
 manager component (`AgeManager`, `ResourceManager`, `HexGrid`,
 `BuildingManager`, `PopulationSystem`, `AllianceSystem`, `MiracleManager`,
 `VerseManager`, `CollectionManager`, `MissionManager`, `SaveManager`,
-`EntitlementManager`), all cross-wired, plus `BootstrapLoader` which loads
-`MainMenu` on `Start()`. `GameManager.Awake()` calls `DontDestroyOnLoad`, so
-this object (and its state) survives every later scene load.
+`SaveCoordinator`, `EntitlementManager`), all cross-wired, plus
+`BootstrapLoader` which loads `MainMenu` on `Start()`. `GameManager.Awake()`
+calls `DontDestroyOnLoad`, so this object (and its state) survives every
+later scene load.
+
+`SaveCoordinator` is the chain link `SaveManager` never had: `SaveManager`
+only reads/writes the JSON file, and until this round nothing ever called
+`SaveLocal`/applied a loaded `LoadLocal` result — `MainMenuController.
+OnContinue` discarded it. `SaveCoordinator.Capture()`/`Apply()` gather and
+reapply every system's state (see the `MainMenu`/`Kingdom` sections below).
+`BuildingManager.allBuildingTypes`, `VerseManager.allVerses`,
+`CollectionManager.allArtifacts` and `MissionManager.allMissions` are
+populated by `ProjectSceneSetup.SetAssetList<T>` — the lookup registries
+`SaveCoordinator` needs to match a saved ID string back to its asset.
 `AgeManager`'s content gate is wired to `EntitlementManager`, so free-tier
 players stop unlocking ages at the GDD's free limit (first 2-3 ages).
 Starting resources (Blé 50, Eau 50, Bois 30, Or 20, Foi 10, Sagesse 5,
@@ -51,6 +62,11 @@ which loads `Kingdom` and enables/disables Continuer based on
 from `UITheme.asset` (`UIThemeData` — see `docs/ArtDirection.md`) when it's
 found at `Assets/_Project/ScriptableObjects/UI/UITheme.asset`, falling back
 to the previous flat defaults otherwise.
+
+`OnContinue` now actually resumes a saved game: it calls `SaveManager.
+LoadLocal()` and passes the result to `SaveCoordinator.Apply()` before
+loading `Kingdom` — until this round the loaded `SaveData` was thrown away
+and every "Continuer" click silently started over from Awake's defaults.
 
 ### `Kingdom` (territory/management view)
 Camera positioned above and behind the grid origin (elevated ~55° RTS angle)
@@ -205,13 +221,16 @@ through a shared `MissionManager.Complete` that marks the mission
 completed and grants whichever reward list applies — something that
 simply didn't exist before this round for anything but `Battle` missions.
 
-A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 5 buttons — Prière /
-Versets / Prophétie / Bâtiments / Missions) opens `PrayerMenuUI`/
-`VerseJournalUI`/`ProphecyJournalPanel`/`BuildingPalettePanel`/
+A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 6 buttons — Prière /
+Versets / Prophétie / Bâtiments / Missions / Sauvegarder) opens
+`PrayerMenuUI`/`VerseJournalUI`/`ProphecyJournalPanel`/`BuildingPalettePanel`/
 `MissionListPanel` via `HUDController.OpenPrayerMenu`/`OpenVerseJournal`/
 `ToggleProphecyJournal`/`OpenBuildingPalette`/`OpenMissionList`. The first
 four `HUDController` methods already existed, but until an earlier round
-nothing in this scene ever wired a clickable `Button` to any of them.
+nothing in this scene ever wired a clickable `Button` to any of them. The
+6th, "Sauvegarder", calls the new `HUDController.SaveGame` →
+`SaveCoordinator.SaveGame` for an explicit save on demand, on top of the
+automatic save `EndTurnButton` now also triggers (see below).
 
 Below the resource bar, a permanent (never closed) `TempleWidget` shows
 `TempleUI`: "Temple — Niveau N" plus an "Améliorer" button, interactable
@@ -221,7 +240,8 @@ covering levels 2 through 5 — is populated by
 so `CanUpgrade`/`TryUpgrade` (both pre-existing, real methods) could never
 succeed regardless of a UI calling them. Bottom-right, an `EndTurnButton`
 ("Fin de Tour") calls `HUDController.EndTurn` → `KingdomTurnManager.
-EndTurn` — this scene's only source of a turn advancing at all — next to a
+EndTurn` — this scene's only source of a turn advancing at all — then
+`SaveCoordinator.SaveGame`, auto-saving after every turn, next to a
 `TurnLabel` ("Tour N") that updates on `KingdomTurnManager.TurnAdvanced`
 and a `PrayerStatusLabel` that tracks an in-progress ritual.
 `KingdomTurnManager` itself lives on the persistent Bootstrap `GameManager`

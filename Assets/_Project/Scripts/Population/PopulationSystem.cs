@@ -96,5 +96,14 @@ namespace KingdomOfGod.Population
         {
             Capacity += amount;
         }
+
+        /// <summary>Sets Population/Loyalty directly from a save file. Capacity is intentionally left untouched here — call after BuildingManager.RestoreFromSave, whose replayed IncreaseCapacity calls rebuild it the same way normal play does.</summary>
+        public void RestoreFromSave(int savedPopulation, float savedLoyalty)
+        {
+            Population = savedPopulation;
+            Loyalty = savedLoyalty;
+            PopulationChanged?.Invoke(Population);
+            LoyaltyChanged?.Invoke(Loyalty);
+        }
     }
 }

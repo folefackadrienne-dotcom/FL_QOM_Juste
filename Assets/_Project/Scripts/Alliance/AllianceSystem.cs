@@ -76,5 +76,14 @@ namespace KingdomOfGod.Alliance
             Repented?.Invoke();
             return true;
         }
+
+        /// <summary>Sets Value directly from a save file and recomputes Standing — no resource cost involved here, so unlike the other restore methods this one doesn't need to bypass a side effect, just the startingValue set in Awake.</summary>
+        public void RestoreFromSave(float savedValue)
+        {
+            Value = Mathf.Clamp(savedValue, 0f, 100f);
+            ValueChanged?.Invoke(Value);
+            Standing = ComputeStanding(Value);
+            StandingChanged?.Invoke(Standing);
+        }
     }
 }

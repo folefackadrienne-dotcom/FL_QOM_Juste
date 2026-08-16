@@ -41,5 +41,15 @@ namespace KingdomOfGod.Collectibles
             var artifactsOfAge = allArtifacts.Where(a => a.age == age).ToList();
             return artifactsOfAge.Count > 0 && artifactsOfAge.All(owned.Contains);
         }
+
+        /// <summary>Reapplies owned artifacts loaded from a save file, matched by ArtifactData.displayName against allArtifacts — marks each owned directly, bypassing Collect's passiveBonus grant since the save's resource stock already reflects it.</summary>
+        public void RestoreFromSave(IEnumerable<string> savedOwnedDisplayNames)
+        {
+            var nameSet = new HashSet<string>(savedOwnedDisplayNames);
+            foreach (var artifact in allArtifacts)
+            {
+                if (nameSet.Contains(artifact.displayName)) owned.Add(artifact);
+            }
+        }
     }
 }

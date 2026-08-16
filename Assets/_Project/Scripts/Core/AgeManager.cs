@@ -60,6 +60,16 @@ namespace KingdomOfGod.Core
             AgeChanged?.Invoke(age);
         }
 
+        /// <summary>Reapplies age progress loaded from a save file: replays UnlockAge (idempotent, still content-gated) for each previously-unlocked age, then sets the current age — call after EntitlementManager.RestoreFromSave so the gate check reflects the restored tier.</summary>
+        public void RestoreFromSave(IEnumerable<Age> savedUnlockedAges, Age savedCurrentAge)
+        {
+            foreach (var age in savedUnlockedAges)
+            {
+                UnlockAge(age);
+            }
+            SetCurrentAge(savedCurrentAge);
+        }
+
         /// <summary>Advances to the next age in the chronology and unlocks it.</summary>
         public void AdvanceToNextAge()
         {

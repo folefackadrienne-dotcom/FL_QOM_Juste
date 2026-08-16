@@ -83,5 +83,15 @@ namespace KingdomOfGod.Resources
             stock[type] = Mathf.Max(0f, stock[type] - amount);
             ResourceChanged?.Invoke(type, stock[type]);
         }
+
+        /// <summary>Overwrites stock directly from a save file — bypasses Add/Spend's cap clamp, since a saved amount can legitimately exceed the default cap once storage-bonus buildings/Temple levels have been restored. Call after RestoreFromSave on BuildingManager/TempleSystem so those bonuses are already applied.</summary>
+        public void RestoreStock(IEnumerable<ResourceAmount> savedStock)
+        {
+            foreach (var entry in savedStock)
+            {
+                stock[entry.type] = entry.amount;
+                ResourceChanged?.Invoke(entry.type, stock[entry.type]);
+            }
+        }
     }
 }

@@ -80,6 +80,7 @@ namespace KingdomOfGod.EditorTools
             var techTree = root.AddComponent<TechTree>();
             var leaderManager = root.AddComponent<LeaderManager>();
             var saveManager = root.AddComponent<SaveManager>();
+            var saveCoordinator = root.AddComponent<SaveCoordinator>();
             var entitlementManager = root.AddComponent<EntitlementManager>();
             var audioManager = root.AddComponent<AudioManager>();
             var kingdomTurnManager = root.AddComponent<KingdomTurnManager>();
@@ -102,6 +103,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "techTree", techTree);
             SetRef(gameManager, "leaderManager", leaderManager);
             SetRef(gameManager, "saveManager", saveManager);
+            SetRef(gameManager, "saveCoordinator", saveCoordinator);
             SetRef(gameManager, "entitlementManager", entitlementManager);
             SetRef(gameManager, "audioManager", audioManager);
             SetRef(gameManager, "kingdomTurnManager", kingdomTurnManager);
@@ -113,6 +115,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(buildingManager, "allianceSystem", allianceSystem);
             SetRef(buildingManager, "populationSystem", populationSystem);
             SetRef(buildingManager, "theme", theme);
+            SetAssetList<BuildingData>(buildingManager, "allBuildingTypes", "Assets/_Project/ScriptableObjects/Buildings");
             SetRef(templeSystem, "resourceManager", resourceManager);
             SetTempleLevels(templeSystem);
 
@@ -128,11 +131,16 @@ namespace KingdomOfGod.EditorTools
             SetRef(miracleManager, "collectionManager", collectionManager);
             SetRef(miracleManager, "ageManager", ageManager);
             SetRef(verseManager, "resourceManager", resourceManager);
+            SetAssetList<VerseData>(verseManager, "allVerses", "Assets/_Project/ScriptableObjects/Verses");
             SetRef(collectionManager, "resourceManager", resourceManager);
+            SetAssetList<ArtifactData>(collectionManager, "allArtifacts", "Assets/_Project/ScriptableObjects/Artifacts");
             SetRef(missionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "allianceSystem", allianceSystem);
+            SetAssetList<MissionData>(missionManager, "allMissions", "Assets/_Project/ScriptableObjects/Missions");
             SetRef(techTree, "resourceManager", resourceManager);
             SetTechNodeList(techTree, "Assets/_Project/ScriptableObjects/Techs");
+
+            SetRef(saveCoordinator, "gameManager", gameManager);
 
             SetRef(audioManager, "miracleManager", miracleManager);
             SetRef(audioManager, "allianceSystem", allianceSystem);
@@ -439,6 +447,8 @@ namespace KingdomOfGod.EditorTools
             UnityEventTools.AddPersistentListener(buildingToolbarButton.onClick, hud.OpenBuildingPalette);
             var missionToolbarButton = CreateButton(toolbarGO.transform, "MissionButton", "Missions", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(missionToolbarButton.onClick, hud.OpenMissionList);
+            var saveToolbarButton = CreateButton(toolbarGO.transform, "SaveButton", "Sauvegarder", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(saveToolbarButton.onClick, hud.SaveGame);
 
             SetRef(hud, "resourceBar", resourceBar);
             SetRef(hud, "prayerMenu", prayerMenu);
@@ -820,6 +830,27 @@ namespace KingdomOfGod.EditorTools
             {
                 var node = AssetDatabase.LoadAssetAtPath<TechNode>(AssetDatabase.GUIDToAssetPath(guids[i]));
                 listProp.GetArrayElementAtIndex(i).objectReferenceValue = node;
+            }
+            so.ApplyModifiedProperties();
+        }
+
+        /// <summary>
+        /// Generic version of SetBuildingList/SetTechNodeList/SetMissionList below, used to populate
+        /// the new save/load lookup registries (BuildingManager.allBuildingTypes, VerseManager.
+        /// allVerses, CollectionManager.allArtifacts, MissionManager.allMissions) from every asset of
+        /// type T in the given folder, so SaveCoordinator.Apply can match a saved ID string back to
+        /// its asset without 39+ references dragged in by hand.
+        /// </summary>
+        private static void SetAssetList<T>(UnityEngine.Object target, string fieldName, string folder) where T : UnityEngine.Object
+        {
+            var guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { folder });
+            var so = new SerializedObject(target);
+            var listProp = so.FindProperty(fieldName);
+            listProp.arraySize = guids.Length;
+            for (int i = 0; i < guids.Length; i++)
+            {
+                var asset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guids[i]));
+                listProp.GetArrayElementAtIndex(i).objectReferenceValue = asset;
             }
             so.ApplyModifiedProperties();
         }

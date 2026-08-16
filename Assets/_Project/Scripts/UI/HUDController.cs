@@ -1,11 +1,12 @@
 using KingdomOfGod.Core;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.SaveSystem;
 using TMPro;
 using UnityEngine;
 
 namespace KingdomOfGod.UI
 {
-    /// <summary>Top-level HUD wiring: resource bar + the always-accessible Torah tab and prophecy journal (GDD 10. Interface), plus the "Fin de Tour" button that drives KingdomTurnManager — Kingdom's only source of a turn advancing at all.</summary>
+    /// <summary>Top-level HUD wiring: resource bar + the always-accessible Torah tab and prophecy journal (GDD 10. Interface), plus the "Fin de Tour" button that drives KingdomTurnManager — Kingdom's only source of a turn advancing at all — and the "Sauvegarder" button, which along with an auto-save on every turn end is the only place SaveCoordinator.SaveGame is ever actually called.</summary>
     public class HUDController : MonoBehaviour
     {
         [SerializeField] private ResourceBarUI resourceBar;
@@ -18,12 +19,13 @@ namespace KingdomOfGod.UI
         [SerializeField] private TMP_Text turnLabel;
         [SerializeField] private MiracleManager miracleManager;
         [SerializeField] private TMP_Text prayerStatusLabel;
+        [SerializeField] private SaveCoordinator saveCoordinator;
 
         private void Awake()
         {
-            // turnManager/miracleManager live on the persistent Bootstrap GameManager, in a
-            // different scene from this HUD — Inspector references can't cross scenes, so fall
-            // back to the running singleton when these fields were left unassigned.
+            // turnManager/miracleManager/saveCoordinator live on the persistent Bootstrap
+            // GameManager, in a different scene from this HUD — Inspector references can't cross
+            // scenes, so fall back to the running singleton when these fields were left unassigned.
             if (turnManager == null && GameManager.Instance != null)
             {
                 turnManager = GameManager.Instance.Turns;
@@ -31,6 +33,10 @@ namespace KingdomOfGod.UI
             if (miracleManager == null && GameManager.Instance != null)
             {
                 miracleManager = GameManager.Instance.Miracles;
+            }
+            if (saveCoordinator == null && GameManager.Instance != null)
+            {
+                saveCoordinator = GameManager.Instance.SaveCoordinator;
             }
         }
 
@@ -77,7 +83,11 @@ namespace KingdomOfGod.UI
         {
             turnManager.EndTurn();
             GameManager.Instance?.Audio.PlaySfx("Interface - Clic sur Parchemin");
+            saveCoordinator?.SaveGame();
         }
+
+        /// <summary>Manual save, e.g. from a "Sauvegarder" toolbar button — on top of the automatic save at the end of every turn, so the player always has an explicit way to be sure their progress is on disk.</summary>
+        public void SaveGame() => saveCoordinator?.SaveGame();
 
         public void ToggleProphecyJournal()
         {

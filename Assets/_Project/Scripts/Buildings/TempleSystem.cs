@@ -52,5 +52,18 @@ namespace KingdomOfGod.Buildings
             LevelUpgraded?.Invoke(CurrentLevel);
             return true;
         }
+
+        /// <summary>Reapplies a Temple level loaded from a save file: sets CurrentLevel and recomputes the Faith cap the same way TryUpgrade does, without spending the upgrade cost again — the save's resource stock already reflects it having been spent once, at the original upgrade.</summary>
+        public void RestoreFromSave(int level)
+        {
+            CurrentLevel = level;
+            float totalCap = baseFaithCap;
+            for (int i = 1; i <= CurrentLevel; i++)
+            {
+                totalCap += GetLevelData(i)?.faithCapBonus ?? 0f;
+            }
+            resourceManager.SetCap(ResourceType.Faith, totalCap);
+            LevelUpgraded?.Invoke(CurrentLevel);
+        }
     }
 }

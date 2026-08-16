@@ -26,7 +26,10 @@ namespace KingdomOfGod.UI
         public void OnContinue()
         {
             GameManager.Instance?.Audio.PlaySfx("Interface - Clic sur Parchemin");
-            GameManager.Instance?.Save.LoadLocal();
+
+            var data = GameManager.Instance?.Save.LoadLocal();
+            if (data != null) GameManager.Instance?.SaveCoordinator.Apply(data);
+
             SceneManager.LoadScene(kingdomSceneName, LoadSceneMode.Single);
         }
     }

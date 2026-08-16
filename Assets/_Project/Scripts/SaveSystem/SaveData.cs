@@ -4,6 +4,16 @@ using KingdomOfGod.Monetization;
 
 namespace KingdomOfGod.SaveSystem
 {
+    /// <summary>A single placed building: which BuildingData (by displayName) at which hex cell, and its level.</summary>
+    [Serializable]
+    public class PlacedBuildingSave
+    {
+        public string buildingName;
+        public int q;
+        public int r;
+        public int level;
+    }
+
     /// <summary>Plain-data snapshot of everything needed to resume a game, serialized to JSON.</summary>
     [Serializable]
     public class SaveData
@@ -27,6 +37,8 @@ namespace KingdomOfGod.SaveSystem
         public List<string> ownedArtifactIds = new List<string>();
         public List<string> completedMissionIds = new List<string>();
         public List<string> unlockedTechIds = new List<string>();
+
+        public List<PlacedBuildingSave> placedBuildings = new List<PlacedBuildingSave>();
 
         public DateTime savedAtUtc;
     }
