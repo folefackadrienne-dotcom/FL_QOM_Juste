@@ -462,8 +462,25 @@ dans l'Éditeur, sans toucher au code.
    `BuildingData.icon`, `MiracleData.icon`, `ArtifactData.icon`,
    `ProductData.icon`), voir **Kingdom of God → Setup → Import Images**
    (`ImageImporter.cs`) : dépose des fichiers "image <Nom>.png/.jpg" dans
-   un dossier et lance l'import — aucune image n'existe encore dans le
-   dépôt, cet outil n'a donc encore rien pu assigner.
+   un dossier et lance l'import. 9 premières images reçues et assignées à
+   la main (pas d'Éditeur Unity ici pour lancer l'outil lui-même, donc
+   import/`.meta`/assignation reproduits par script en suivant exactement
+   le même format que produirait `ImageImporter.cs`) —
+   `Assets/_Project/Art/Sprites/` : 5 portraits de Leaders (Abraham,
+   Moïse, Josué, Débora, David) et 4 icônes de Bâtiments (Autel de
+   Pierres, Tente Familiale, Tabernacle, Marché). Restent non assignées :
+   un portrait de guerrier en bronze (`Image_GuerrierBronze.jpg`,
+   personnage ambigu — Gédéon ? Salomon ? une unité générique ? — à
+   confirmer) et 6 textures de tuiles hexagonales par terrain
+   (`Terrain_Desert/Plaine/Ruines/Cote/Colline/Marais.jpg`) : `HexGrid`
+   n'a que 8 `TerrainType` en couleurs plates générées en code
+   (`HexGridRenderer`), aucun champ Sprite/texture par tuile n'existe
+   encore pour les consommer — les fichiers sont importés et prêts, mais
+   afficher de vraies textures de terrain demanderait d'étendre
+   `HexGridRenderer` (mapping UV + matériau par `TerrainType` au lieu de
+   couleurs de sommets), non fait ici faute de détails de conception
+   demandés (biome pour Plain/Mountain/Forest non couverts par les 6
+   images reçues).
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`
