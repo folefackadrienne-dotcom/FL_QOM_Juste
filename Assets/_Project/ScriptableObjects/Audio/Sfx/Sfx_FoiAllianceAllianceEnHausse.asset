@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Note claire et chaude, en écho au signal de Foi, quand la jauge
     d'Alliance augmente.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 9e526de681da4b789a2088f8f04bf44e, type: 3}

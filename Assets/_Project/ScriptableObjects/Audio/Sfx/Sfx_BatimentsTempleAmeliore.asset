@@ -18,4 +18,4 @@ MonoBehaviour:
     Montée solennelle distincte de la fanfare de bâtiment important —
     jouée quand le Temple existant passe au niveau supérieur
     (TempleSystem.LevelUpgraded), pas quand il est nouvellement posé.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: b938994edeef444fa310032ae5c176e1, type: 3}

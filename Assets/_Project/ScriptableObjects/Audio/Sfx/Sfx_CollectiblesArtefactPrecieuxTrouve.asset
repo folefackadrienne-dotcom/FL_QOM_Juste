@@ -18,4 +18,4 @@ MonoBehaviour:
     Résonance dorée et solennelle, distincte du simple Artefact Trouvé,
     jouée quand l'artefact ajouté à la collection est Épique ou
     Légendaire (CollectionManager.ArtifactCollected, ArtifactData.rarity).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: bd0ddd06e80d462bb3da6d19c11d7b27, type: 3}

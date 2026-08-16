@@ -455,8 +455,8 @@ dans l'Éditeur, sans toucher au code.
    (y compris les 44 SFX d'Interface, Construction, Bataille, Miracle,
    Foi & Alliance, Progression, Economy, Narrative, Meta et
    Collectibles) et la lecture de voix multilingue, il ne manque que
-   les fichiers son. 27 des 44 `SfxCueData` et les 6 `AmbientSoundscapeData`
-   ont reçu deux lots de fichiers envoyés directement dans la
+   les fichiers son. 35 des 44 `SfxCueData` et les 6 `AmbientSoundscapeData`
+   ont reçu trois lots de fichiers envoyés directement dans la
    conversation plutôt qu'importés via `SfxImporter.cs` (aucun Éditeur
    Unity disponible ici pour le lancer) — assignation reproduite par
    script au même format, mais par **correspondance de nom de fichier

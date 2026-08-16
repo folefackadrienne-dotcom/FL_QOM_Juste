@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Note d'ouverture douce jouée quand un nouveau verset devient
     disponible à la mémorisation (VerseManager.VerseUnlocked).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: b84f48a42c35477e992951b6eebf413b, type: 3}

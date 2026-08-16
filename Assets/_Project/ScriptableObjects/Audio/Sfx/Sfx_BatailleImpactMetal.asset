@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Impact réaliste mais pas excessivement violent, joué à chaque
     attaque résolue.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: f924e48402b14c5fb430d98f167c115b, type: 3}

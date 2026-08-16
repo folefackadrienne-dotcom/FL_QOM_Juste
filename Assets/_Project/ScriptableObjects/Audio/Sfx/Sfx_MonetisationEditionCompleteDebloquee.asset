@@ -20,4 +20,4 @@ MonoBehaviour:
     FullEdition — marque l'ouverture de tous les Âges et du Mode Libre,
     au même titre que Repentance / Restauration au-dessus d'Alliance en
     Hausse.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 3bc03fcb8cd245b09b81f3985079591d, type: 3}

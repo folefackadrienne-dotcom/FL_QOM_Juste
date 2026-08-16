@@ -20,4 +20,4 @@ MonoBehaviour:
     — voir MiracleData.audioSignatureDescription pour les 4 miracles qui
     en ont une (Mer Rouge, Feu du Carmel, Soleil Arrêté, Colonne de Nuée
     et de Feu).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 595d8df6cbec49b2bd7813a3e69a17ea, type: 3}
