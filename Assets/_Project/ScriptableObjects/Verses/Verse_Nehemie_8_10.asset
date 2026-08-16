@@ -22,6 +22,6 @@ MonoBehaviour:
   permanentBonus:
   - type: 4
     amount: 8
-  narrationClipFrench: {fileID: 0}
+  narrationClipFrench: {fileID: 8300000, guid: b221595e69a44e63a1ca7267f89e3ad1, type: 3}
   narrationClipEnglish: {fileID: 0}
   narrationClipHebrew: {fileID: 0}
