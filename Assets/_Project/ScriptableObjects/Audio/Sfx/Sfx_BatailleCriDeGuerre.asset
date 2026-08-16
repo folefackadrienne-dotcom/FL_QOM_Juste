@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Cri de guerre hébreu stylisé, joué quand une unité entre sur le
     champ de bataille.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 403762acfcd942369616a8e6037405b4, type: 3}

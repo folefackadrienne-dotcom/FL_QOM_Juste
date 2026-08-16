@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Campement
   layerDescription: Feux de camp, conversations murmurées, animaux, enfants.
   duckedDuringDialogueOrMiracle: 1
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 966c2d9e34d14fafa3e4c6582e8d04ed, type: 3}

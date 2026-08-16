@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Pierres qui s'assemblent, bois taillé, outils — joué à la pose de
     tout bâtiment Habitat/Production/Militaire.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: df33fbf2020b43b885138d3b8a599998, type: 3}

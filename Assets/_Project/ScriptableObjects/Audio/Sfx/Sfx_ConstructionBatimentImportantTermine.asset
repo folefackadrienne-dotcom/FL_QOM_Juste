@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Petite fanfare douce + chœur très léger, joué à la pose d'un
     bâtiment Spirituel ou Spécial (Temple, Tabernacle, Arche…).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: b79ed45562ca4ca2b9257b933d8ec37f, type: 3}

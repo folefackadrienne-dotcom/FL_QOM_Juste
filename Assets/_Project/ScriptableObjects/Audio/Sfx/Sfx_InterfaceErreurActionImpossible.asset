@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Interface - Erreur / Action Impossible
   category: 0
   description: Son sourd et court signalant une action impossible ou refusée.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 379eb726e9e346b586049210fd64ea87, type: 3}

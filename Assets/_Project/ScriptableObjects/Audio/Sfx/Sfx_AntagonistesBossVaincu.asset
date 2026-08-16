@@ -18,4 +18,4 @@ MonoBehaviour:
     Chute dramatique et définitive, distincte de la Mort d'une Unité
     ordinaire, jouée à la défaite d'un antagoniste majeur
     (UnitData.antagonist renseigné).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: d05731a3418e419a82b8f809b98c7c20, type: 3}

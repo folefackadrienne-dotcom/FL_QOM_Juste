@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Interface - Validation Positive
   category: 0
   description: Petite cloche ou note de lyre confirmant une action réussie.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 3ae28b30480f4edf867ed81bd90e6dc7, type: 3}

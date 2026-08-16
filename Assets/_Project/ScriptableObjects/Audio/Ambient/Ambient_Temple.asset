@@ -17,4 +17,4 @@ MonoBehaviour:
     Silence presque sacré, léger écho, flamme des lampes, chants très
     lointains.
   duckedDuringDialogueOrMiracle: 1
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: d5e46a605a474b588c035fda6c375702, type: 3}

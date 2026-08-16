@@ -18,4 +18,4 @@ MonoBehaviour:
     Léger enroulement de parchemin, symétrique de l'ouverture de menu,
     joué à la fermeture d'un panneau (Prière, Journal des Versets,
     Journal Prophétique).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: c2daa4347cde4bf89db3ee9f5f6e1066, type: 3}

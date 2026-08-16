@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Ouverture d'un panneau ou menu (Prière, Journal des versets…) comme
     un rouleau de parchemin qui se déroule.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 496b20cc0fba409ebb632d85d81c033b, type: 3}

@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Nuit
   layerDescription: Grillons, vent doux, feu qui crépite.
   duckedDuringDialogueOrMiracle: 1
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: d4df5406b1f74812bf31cc5e6ad753ac, type: 3}

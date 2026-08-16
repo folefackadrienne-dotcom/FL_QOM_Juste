@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Désert
   layerDescription: Vent, sable qui glisse, insectes lointains, chameaux.
   duckedDuringDialogueOrMiracle: 1
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: cb256b44de844964acadbbd122a12671, type: 3}

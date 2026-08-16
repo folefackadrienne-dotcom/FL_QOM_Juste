@@ -455,7 +455,17 @@ dans l'Éditeur, sans toucher au code.
    (y compris les 44 SFX d'Interface, Construction, Bataille, Miracle,
    Foi & Alliance, Progression, Economy, Narrative, Meta et
    Collectibles) et la lecture de voix multilingue, il ne manque que
-   les fichiers son. Pour les narrations de versets nommées
+   les fichiers son. 11 des 44 `SfxCueData` et 4 des 6 `AmbientSoundscapeData`
+   ont reçu un premier lot de fichiers envoyés directement dans la
+   conversation plutôt qu'importés via `SfxImporter.cs` (aucun Éditeur
+   Unity disponible ici pour le lancer) — assignation reproduite par
+   script au même format, mais par **correspondance de nom de fichier
+   uniquement** : contrairement aux images, l'agent ne peut pas écouter
+   un fichier audio, donc chaque appariement (ex. "monster_roar.wav" →
+   Antagonistes - Entrée en Scène du Boss, "buzz.flac" → Interface -
+   Erreur / Action Impossible) doit être **vérifié à l'oreille** une fois
+   le projet ouvert dans un vrai Éditeur avant de considérer que c'est
+   bon. Pour les narrations de versets nommées
    "audio <Référence>" (ex. "audio Genese 12,2-3.mp3"), voir
    **Kingdom of God → Setup → Import Voice Narrations**
    (`VoiceNarrationImporter.cs`) qui les importe, les associe

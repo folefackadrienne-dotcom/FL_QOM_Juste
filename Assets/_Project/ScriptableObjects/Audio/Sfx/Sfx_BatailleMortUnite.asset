@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Bataille - Mort d'une Unité
   category: 2
   description: Son rapide et digne, sans effet gore, joué à la mort d'une unité.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: a1121bfb8e94401b8e8aaca1f8bf86f8, type: 3}

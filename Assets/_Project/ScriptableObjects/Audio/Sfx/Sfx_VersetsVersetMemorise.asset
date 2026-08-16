@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Accomplissement lumineux joué à la fin du mini-jeu de mémorisation
     (VerseManager.VerseMemorized), quand le bonus permanent est acquis.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: b79ed45562ca4ca2b9257b933d8ec37f, type: 3}

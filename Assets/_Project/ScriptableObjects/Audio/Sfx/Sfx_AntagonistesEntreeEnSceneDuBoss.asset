@@ -19,4 +19,4 @@ MonoBehaviour:
     ordinaire, jouée quand une unité dont UnitData.antagonist est
     renseigné (Pharaon, Goliath, Jézabel...) entre sur le champ de
     bataille.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 76450e59a3a54ad3b35038cb88ee13ef, type: 3}
