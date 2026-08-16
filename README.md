@@ -306,7 +306,19 @@ Assets/_Project/
                   sur le poste) et l'assigne au MusicThemeData/
                   LeitmotifData/AmbientSoundscapeData dont le nom
                   correspond exactement (menu Kingdom of God > Setup >
-                  Import Music Videos), assembly Editor-only
+                  Import Music Videos) ; ImageImporter.cs — importe des
+                  illustrations nommées "image <Nom>" (ex. "image
+                  Moïse.png") comme Sprites et suggère une assignation
+                  pour chaque fiche ayant un champ portrait/icône
+                  (LeaderData, AntagonistData, UnitData, BuildingData,
+                  MiracleData, ArtifactData, ProductData — 7 types, 135
+                  fiches au total) par correspondance de nom avec
+                  displayName (accents ignorés, sous-chaîne par mot
+                  entier acceptée dans les deux sens) ; comme SfxImporter,
+                  volontairement plusieurs-à-plusieurs : une même image
+                  peut être suggérée et assignée à plusieurs fiches dont
+                  le nom correspond (menu Kingdom of God > Setup > Import
+                  Images), assembly Editor-only
   ScriptableObjects/  Assets de données créés dans l'Éditeur
                       (Buildings, Units, Miracles, Verses, Artifacts,
                       Missions, Leaders, Antagonists, Techs, Ages,
@@ -444,7 +456,14 @@ dans l'Éditeur, sans toucher au code.
    dorées, fond parchemin texturé, icônes symboliques du blé/eau/flamme/
    rouleau de Torah décrites dans `docs/ArtDirection.md`) — la palette de
    couleurs elle-même (`Assets/_Project/ScriptableObjects/UI/UITheme.asset`)
-   n'a pas besoin d'attendre l'art et est déjà appliquée.
+   n'a pas besoin d'attendre l'art et est déjà appliquée. Pour les 135
+   portraits/icônes de fiches de contenu réparties sur 7 types
+   (`LeaderData.portrait`, `AntagonistData.portrait`, `UnitData.icon`,
+   `BuildingData.icon`, `MiracleData.icon`, `ArtifactData.icon`,
+   `ProductData.icon`), voir **Kingdom of God → Setup → Import Images**
+   (`ImageImporter.cs`) : dépose des fichiers "image <Nom>.png/.jpg" dans
+   un dossier et lance l'import — aucune image n'existe encore dans le
+   dépôt, cet outil n'a donc encore rien pu assigner.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`
