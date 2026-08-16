@@ -56,3 +56,4 @@ MonoBehaviour:
   unlockCondition: >-
     Leader de départ de la campagne, disponible dès l'Âge 1 (Les
     Patriarches).
+  unlockMission: {fileID: 0}

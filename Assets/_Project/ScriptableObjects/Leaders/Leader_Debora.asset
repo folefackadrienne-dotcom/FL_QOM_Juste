@@ -57,3 +57,4 @@ MonoBehaviour:
     de fer.'
   unlockCondition: >-
     Débloquée à la mission « Débora et Barac » (Âge 4).
+  unlockMission: {fileID: 11400000, guid: 68464a11d4f1491fb222da44fc3c2076, type: 3}

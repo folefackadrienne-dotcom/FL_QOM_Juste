@@ -55,3 +55,4 @@ MonoBehaviour:
   - 'Nathan : le prophète qui ose le confronter.'
   unlockCondition: >-
     Débloqué à la mission « David et Goliath » (Âge 5).
+  unlockMission: {fileID: 11400000, guid: 9f68fd83558445bc98347bd67070551e, type: 3}

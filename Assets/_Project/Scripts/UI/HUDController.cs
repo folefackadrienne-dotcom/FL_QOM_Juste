@@ -15,6 +15,9 @@ namespace KingdomOfGod.UI
         [SerializeField] private GameObject prophecyJournalPanel;
         [SerializeField] private BuildingPaletteUI buildingPalette;
         [SerializeField] private MissionListUI missionList;
+        [SerializeField] private LeaderScreenUI leaderScreen;
+        [SerializeField] private AntagonistCodexUI antagonistCodex;
+        [SerializeField] private CollectionUI collectionUI;
         [SerializeField] private KingdomTurnManager turnManager;
         [SerializeField] private TMP_Text turnLabel;
         [SerializeField] private MiracleManager miracleManager;
@@ -78,6 +81,9 @@ namespace KingdomOfGod.UI
         public void OpenVerseJournal() => verseJournal.Open();
         public void OpenBuildingPalette() => buildingPalette.Open();
         public void OpenMissionList() => missionList.Open();
+        public void OpenLeaderScreen() => leaderScreen.Open();
+        public void OpenAntagonistCodex() => antagonistCodex.Open();
+        public void OpenCollection() => collectionUI.Open();
 
         public void EndTurn()
         {

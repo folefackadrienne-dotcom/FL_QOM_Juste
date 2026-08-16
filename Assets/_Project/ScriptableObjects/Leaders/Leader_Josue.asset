@@ -61,3 +61,4 @@ MonoBehaviour:
   unlockCondition: >-
     Débloqué au début de l'Âge 3 (La Conquête), dès la mission « La
     Chute de Jéricho ».
+  unlockMission: {fileID: 0}

@@ -133,12 +133,16 @@ namespace KingdomOfGod.EditorTools
             SetRef(verseManager, "resourceManager", resourceManager);
             SetAssetList<VerseData>(verseManager, "allVerses", "Assets/_Project/ScriptableObjects/Verses");
             SetRef(collectionManager, "resourceManager", resourceManager);
+            SetRef(collectionManager, "ageManager", ageManager);
             SetAssetList<ArtifactData>(collectionManager, "allArtifacts", "Assets/_Project/ScriptableObjects/Artifacts");
             SetRef(missionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "allianceSystem", allianceSystem);
             SetAssetList<MissionData>(missionManager, "allMissions", "Assets/_Project/ScriptableObjects/Missions");
             SetRef(techTree, "resourceManager", resourceManager);
             SetTechNodeList(techTree, "Assets/_Project/ScriptableObjects/Techs");
+            SetRef(leaderManager, "ageManager", ageManager);
+            SetRef(leaderManager, "missionManager", missionManager);
+            SetAssetList<LeaderData>(leaderManager, "allLeaders", "Assets/_Project/ScriptableObjects/Leaders");
 
             SetRef(saveCoordinator, "gameManager", gameManager);
 
@@ -315,8 +319,9 @@ namespace KingdomOfGod.EditorTools
             var prayerSelectionGO = new GameObject("SelectionView", typeof(RectTransform));
             prayerSelectionGO.transform.SetParent(prayerPanelGO.transform, false);
             var prayerConfirm = CreateButton(prayerSelectionGO.transform, "ConfirmButton", "Commencer la Prière", Vector2.zero, theme);
-            var prayerListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            var prayerListContainer = new GameObject("ListContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
             prayerListContainer.transform.SetParent(prayerSelectionGO.transform, false);
+            ConfigureListLayout(prayerListContainer);
 
             var prayerRitualGO = new GameObject("RitualView", typeof(RectTransform));
             prayerRitualGO.transform.SetParent(prayerPanelGO.transform, false);
@@ -342,8 +347,9 @@ namespace KingdomOfGod.EditorTools
             versePanelGO.transform.SetParent(hudGO.transform, false);
             AddParchmentBackground(versePanelGO, theme);
             var verseJournal = versePanelGO.AddComponent<VerseJournalUI>();
-            var verseListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            var verseListContainer = new GameObject("ListContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
             verseListContainer.transform.SetParent(versePanelGO.transform, false);
+            ConfigureListLayout(verseListContainer);
             SetRef(verseJournal, "panelRoot", versePanelGO);
             SetRef(verseJournal, "listContainer", verseListContainer.transform);
             versePanelGO.SetActive(false);
@@ -357,8 +363,9 @@ namespace KingdomOfGod.EditorTools
             buildingPanelGO.transform.SetParent(hudGO.transform, false);
             AddParchmentBackground(buildingPanelGO, theme);
             var buildingPalette = buildingPanelGO.AddComponent<BuildingPaletteUI>();
-            var buildingListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            var buildingListContainer = new GameObject("ListContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
             buildingListContainer.transform.SetParent(buildingPanelGO.transform, false);
+            ConfigureListLayout(buildingListContainer);
             var buildingCancelButton = CreateButton(buildingPanelGO.transform, "CancelButton", "Annuler", Vector2.zero, theme);
             SetRef(buildingPalette, "inputController", kingdomInput);
             SetRef(buildingPalette, "theme", theme);
@@ -413,8 +420,9 @@ namespace KingdomOfGod.EditorTools
             missionPanelGO.transform.SetParent(hudGO.transform, false);
             AddParchmentBackground(missionPanelGO, theme);
             var missionList = missionPanelGO.AddComponent<MissionListUI>();
-            var missionListContainer = new GameObject("ListContainer", typeof(RectTransform));
+            var missionListContainer = new GameObject("ListContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
             missionListContainer.transform.SetParent(missionPanelGO.transform, false);
+            ConfigureListLayout(missionListContainer);
             var missionCloseButton = CreateButton(missionPanelGO.transform, "CloseButton", "Fermer", Vector2.zero, theme);
             SetRef(missionList, "theme", theme);
             SetRef(missionList, "panelRoot", missionPanelGO);
@@ -423,6 +431,46 @@ namespace KingdomOfGod.EditorTools
             SetRef(missionList, "resolutionUI", missionResolution);
             SetMissionList(missionList, "Assets/_Project/ScriptableObjects/Missions");
             missionPanelGO.SetActive(false);
+
+            var (leaderPanelGO, leaderListContainer, leaderPortrait, leaderNameText, leaderRoleText, leaderArcText, leaderCloseButton) =
+                CreateCodexPanel(hudGO.transform, "LeaderScreenPanel", theme);
+            var leaderScreen = leaderPanelGO.AddComponent<LeaderScreenUI>();
+            var leaderActivateButton = CreateButton(leaderPanelGO.transform, "ActivateButton", "Activer", new Vector2(140f, -170f), theme);
+            SetRef(leaderScreen, "theme", theme);
+            SetRef(leaderScreen, "panelRoot", leaderPanelGO);
+            SetRef(leaderScreen, "listContainer", leaderListContainer);
+            SetRef(leaderScreen, "closeButton", leaderCloseButton);
+            SetRef(leaderScreen, "portraitImage", leaderPortrait);
+            SetRef(leaderScreen, "nameText", leaderNameText);
+            SetRef(leaderScreen, "roleText", leaderRoleText);
+            SetRef(leaderScreen, "arcText", leaderArcText);
+            SetRef(leaderScreen, "activateButton", leaderActivateButton);
+            SetRef(leaderScreen, "activateButtonLabel", leaderActivateButton.GetComponentInChildren<TextMeshProUGUI>());
+
+            var (antagonistPanelGO, antagonistListContainer, antagonistPortrait, antagonistNameText, antagonistRoleText, antagonistDetailText, antagonistCloseButton) =
+                CreateCodexPanel(hudGO.transform, "AntagonistCodexPanel", theme);
+            var antagonistCodex = antagonistPanelGO.AddComponent<AntagonistCodexUI>();
+            SetRef(antagonistCodex, "theme", theme);
+            SetRef(antagonistCodex, "panelRoot", antagonistPanelGO);
+            SetRef(antagonistCodex, "listContainer", antagonistListContainer);
+            SetRef(antagonistCodex, "closeButton", antagonistCloseButton);
+            SetRef(antagonistCodex, "portraitImage", antagonistPortrait);
+            SetRef(antagonistCodex, "nameText", antagonistNameText);
+            SetRef(antagonistCodex, "roleText", antagonistRoleText);
+            SetRef(antagonistCodex, "detailText", antagonistDetailText);
+            SetAssetList<AntagonistData>(antagonistCodex, "allAntagonists", "Assets/_Project/ScriptableObjects/Antagonists");
+
+            var (collectionPanelGO, collectionListContainer, collectionIcon, collectionNameText, collectionRarityText, collectionDetailText, collectionCloseButton) =
+                CreateCodexPanel(hudGO.transform, "CollectionPanel", theme);
+            var collectionUI = collectionPanelGO.AddComponent<CollectionUI>();
+            SetRef(collectionUI, "theme", theme);
+            SetRef(collectionUI, "panelRoot", collectionPanelGO);
+            SetRef(collectionUI, "listContainer", collectionListContainer);
+            SetRef(collectionUI, "closeButton", collectionCloseButton);
+            SetRef(collectionUI, "iconImage", collectionIcon);
+            SetRef(collectionUI, "nameText", collectionNameText);
+            SetRef(collectionUI, "rarityText", collectionRarityText);
+            SetRef(collectionUI, "detailText", collectionDetailText);
 
             var toolbarGO = new GameObject("Toolbar", typeof(RectTransform), typeof(HorizontalLayoutGroup));
             toolbarGO.transform.SetParent(hudGO.transform, false);
@@ -450,10 +498,37 @@ namespace KingdomOfGod.EditorTools
             var saveToolbarButton = CreateButton(toolbarGO.transform, "SaveButton", "Sauvegarder", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(saveToolbarButton.onClick, hud.SaveGame);
 
+            // Second row: the first row's 750-wide RectTransform already holds 6 buttons at their
+            // fixed 240-wide CreateButton size (childControlWidth/childForceExpandWidth both false,
+            // so the HorizontalLayoutGroup doesn't shrink them) — a 7th would push the row past the
+            // 1920-wide reference canvas, so Leaders/Antagonistes/Collection get their own row above it.
+            var toolbarRow2GO = new GameObject("ToolbarRow2", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            toolbarRow2GO.transform.SetParent(hudGO.transform, false);
+            var toolbarRow2Rect = toolbarRow2GO.GetComponent<RectTransform>();
+            toolbarRow2Rect.anchorMin = new Vector2(0.5f, 0f);
+            toolbarRow2Rect.anchorMax = new Vector2(0.5f, 0f);
+            toolbarRow2Rect.pivot = new Vector2(0.5f, 0f);
+            toolbarRow2Rect.anchoredPosition = new Vector2(0f, 80f);
+            toolbarRow2Rect.sizeDelta = new Vector2(750f, 50f);
+            var toolbarRow2Layout = toolbarRow2GO.GetComponent<HorizontalLayoutGroup>();
+            toolbarRow2Layout.spacing = 10f;
+            toolbarRow2Layout.childForceExpandWidth = false;
+            toolbarRow2Layout.childControlWidth = false;
+
+            var leaderToolbarButton = CreateButton(toolbarRow2GO.transform, "LeaderButton", "Leaders", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(leaderToolbarButton.onClick, hud.OpenLeaderScreen);
+            var antagonistToolbarButton = CreateButton(toolbarRow2GO.transform, "AntagonistButton", "Antagonistes", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(antagonistToolbarButton.onClick, hud.OpenAntagonistCodex);
+            var collectionToolbarButton = CreateButton(toolbarRow2GO.transform, "CollectionButton", "Collection", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(collectionToolbarButton.onClick, hud.OpenCollection);
+
             SetRef(hud, "resourceBar", resourceBar);
             SetRef(hud, "prayerMenu", prayerMenu);
             SetRef(hud, "verseJournal", verseJournal);
             SetRef(hud, "prophecyJournalPanel", prophecyPanelGO);
+            SetRef(hud, "leaderScreen", leaderScreen);
+            SetRef(hud, "antagonistCodex", antagonistCodex);
+            SetRef(hud, "collectionUI", collectionUI);
             SetRef(hud, "buildingPalette", buildingPalette);
             SetRef(hud, "missionList", missionList);
 
@@ -644,6 +719,48 @@ namespace KingdomOfGod.EditorTools
             return label;
         }
 
+        /// <summary>
+        /// Shared list+detail layout for the Leader/Antagonist/Collection screens: a scrollable-
+        /// height list on the left (ListContainer, VerticalLayoutGroup via ConfigureListLayout) and
+        /// a portrait + name/role/detail text column on the right, closed by a bottom-center button.
+        /// All three screens share this exact shape, so it's built once instead of three times.
+        /// </summary>
+        private static (GameObject panel, Transform listContainer, Image portrait, TextMeshProUGUI nameText,
+            TextMeshProUGUI roleText, TextMeshProUGUI detailText, Button closeButton) CreateCodexPanel(
+                Transform parent, string panelName, UIThemeData theme)
+        {
+            var panelGO = new GameObject(panelName, typeof(RectTransform));
+            panelGO.transform.SetParent(parent, false);
+            var rect = panelGO.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(760f, 480f);
+            AddParchmentBackground(panelGO, theme);
+
+            var listContainerGO = new GameObject("ListContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
+            listContainerGO.transform.SetParent(panelGO.transform, false);
+            var listRect = listContainerGO.GetComponent<RectTransform>();
+            listRect.anchoredPosition = new Vector2(-260f, 20f);
+            listRect.sizeDelta = new Vector2(220f, 380f);
+            ConfigureListLayout(listContainerGO);
+
+            var portraitGO = new GameObject("Portrait", typeof(RectTransform), typeof(Image));
+            portraitGO.transform.SetParent(panelGO.transform, false);
+            var portraitRect = portraitGO.GetComponent<RectTransform>();
+            portraitRect.anchoredPosition = new Vector2(140f, 150f);
+            portraitRect.sizeDelta = new Vector2(140f, 140f);
+
+            var nameText = CreateLabel(panelGO.transform, "NameText", "", 20, TextAlignmentOptions.Center,
+                new Vector2(140f, 50f), new Vector2(340f, 30f), theme != null ? theme.panelText : (Color?)null);
+            var roleText = CreateLabel(panelGO.transform, "RoleText", "", 15, TextAlignmentOptions.Center,
+                new Vector2(140f, 0f), new Vector2(340f, 50f), theme != null ? theme.panelText : (Color?)null);
+            var detailText = CreateLabel(panelGO.transform, "DetailText", "", 13, TextAlignmentOptions.TopLeft,
+                new Vector2(140f, -100f), new Vector2(340f, 160f), theme != null ? theme.panelText : (Color?)null);
+
+            var closeButton = CreateButton(panelGO.transform, "CloseButton", "Fermer", new Vector2(0f, -215f), theme);
+
+            panelGO.SetActive(false);
+            return (panelGO, listContainerGO.transform, portraitGO.GetComponent<Image>(), nameText, roleText, detailText, closeButton);
+        }
+
         /// <summary>Flat-color chrome per docs/ArtDirection.md section 6 ("bordures dorées fines") — an Outline effect stands in for a real 9-slice border sprite until one exists.</summary>
         private static Button CreateButton(Transform parent, string name, string label, Vector2 anchoredPosition, UIThemeData theme = null)
         {
@@ -832,6 +949,23 @@ namespace KingdomOfGod.EditorTools
                 listProp.GetArrayElementAtIndex(i).objectReferenceValue = node;
             }
             so.ApplyModifiedProperties();
+        }
+
+        /// <summary>
+        /// Every list panel's ListContainer (Prayer/Verse/Building/Mission, plus the new Leader/
+        /// Antagonist/Collection ones below) had a plain RectTransform and no layout component, so
+        /// every code-generated item button landed at the same (0,0) local position — fully
+        /// overlapping, not stacked, regardless of how many entries RefreshList created. Mirrors
+        /// BattleHUDController's miracleListContainer, the one list in the project that already had
+        /// a VerticalLayoutGroup.
+        /// </summary>
+        private static void ConfigureListLayout(GameObject listContainer)
+        {
+            var layout = listContainer.GetComponent<VerticalLayoutGroup>();
+            layout.spacing = 6f;
+            layout.childForceExpandHeight = false;
+            layout.childControlHeight = false;
+            layout.childAlignment = TextAnchor.UpperCenter;
         }
 
         /// <summary>

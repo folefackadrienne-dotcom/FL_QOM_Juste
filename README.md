@@ -193,6 +193,14 @@ Assets/_Project/
                     VerseUnlocked/VerseMemorized)
     Collectibles/   Artefacts bibliques (Commun → Légendaire),
                     CollectionManager.ArtifactCollected/AgeCollectionCompleted
+                    — Collect était une méthode réelle et appelable que
+                    rien n'appelait jamais ; CollectionManager s'abonne
+                    désormais lui-même à AgeManager.AgeUnlocked et
+                    collecte chaque ArtifactData dont l'Âge vient de se
+                    débloquer (aucune nouvelle donnée à saisir : le champ
+                    ArtifactData.age existait déjà), et un nouveau panneau
+                    Collection (UI/) affiche la fiche de chaque artefact
+                    une fois découvert
     Missions/       Définition & suivi des missions
                     (MissionStarted/MissionCompleted/MissionFailed) —
                     MissionManager.StartMission charge désormais la scène
@@ -228,7 +236,22 @@ Assets/_Project/
                     d'options plausibles au vu du récit de chaque
                     mission, non playtestés/équilibrés
     Progression/    Leaders légendaires (LeaderManager : débloqués +
-                    leader actif), arbre technologique (3 arbres × 5
+                    leader actif) — Unlock/SetActiveLeader étaient des
+                    méthodes réelles et appelables que rien n'appelait
+                    jamais ; nouveau champ LeaderData.unlockMission
+                    (renseigné pour les 6 des 10 leaders dont
+                    unlockCondition cite une mission précise — David,
+                    Débora, Élie, Gédéon, Salomon, Samson — nécessitant
+                    un premier .meta pour ces 6 assets Mission, qui n'en
+                    avaient aucun) et LeaderManager s'abonne à
+                    AgeManager.AgeUnlocked/MissionManager.MissionCompleted
+                    pour débloquer chaque leader au bon déclencheur (les 4
+                    autres — Abraham, Moïse, Josué, Néhémie — dès que leur
+                    Âge se débloque) ; un nouvel écran Leader (UI/) liste
+                    les 10, affiche la fiche narrative de ceux débloqués
+                    (« ??? (Verrouillé) » + unlockCondition sinon) et
+                    permet d'Activer le leader courant, arbre
+                    technologique (3 arbres × 5
                     branches : Économique, Militaire, Spirituel ;
                     TechTree.TechUnlocked) — CanUnlock/TryUnlock sont du
                     code réel mais TechTree.allNodes était une liste
@@ -246,9 +269,10 @@ Assets/_Project/
                     est le chaînon qui manquait : il rassemble l'état de
                     tous les systèmes (âges, ressources, Temple,
                     Population, Alliance, versets mémorisés, artefacts
-                    possédés, missions/tech débloqués, bâtiments posés
-                    — nouveau champ SaveData.placedBuildings, jamais
-                    persistés jusqu'ici) et le réapplique via des
+                    possédés, missions/tech débloqués, leaders débloqués/
+                    actif, bâtiments posés — nouveaux champs SaveData.
+                    placedBuildings/unlockedLeaderIds/activeLeaderId,
+                    jamais persistés jusqu'ici) et le réapplique via des
                     méthodes RestoreFromSave « silencieuses » qui
                     court-circuitent les bonus/coûts déjà appliqués une
                     première fois (AdvanceStep, Collect, Complete,
@@ -331,7 +355,31 @@ Assets/_Project/
                     que TempleSystem.CanUpgrade() l'autorise ; bouton
                     "Fin de Tour" + libellé de tour appelant
                     HUDController.EndTurn -> KingdomTurnManager.EndTurn,
-                    seule façon de faire avancer un tour dans Kingdom
+                    seule façon de faire avancer un tour dans Kingdom ;
+                    barre d'outils secondaire à 3 boutons (Leaders /
+                    Antagonistes / Collection, au-dessus de la première —
+                    6 boutons pleine largeur (240px) dépassaient déjà la
+                    zone de canevas de référence) ouvrant 3 nouveaux
+                    panneaux liste + fiche partageant un même gabarit
+                    (CreateCodexPanel) : LeaderScreenUI — un bouton par
+                    LeaderData (LeaderManager.AllLeaders), fiche narrative
+                    si débloqué sinon "??? (Verrouillé)" + unlockCondition,
+                    bouton Activer -> LeaderManager.SetActiveLeader ;
+                    AntagonistCodexUI — codex en lecture seule des boss
+                    majeurs, révélés par Âge (AgeManager.IsUnlocked),
+                    fiche narrative + mécanique d'affrontement +
+                    condition de victoire ; CollectionUI — fiche de
+                    chaque ArtifactData une fois possédé (référence
+                    biblique, contexte historique, commentaire éducatif,
+                    effet), couleur de la rareté (Commun→Légendaire)
+                    reprise de la palette UITheme. Corrigé au passage :
+                    PrayerMenuUI/VerseJournalUI/BuildingPaletteUI/
+                    MissionListUI n'avaient pas de VerticalLayoutGroup
+                    sur leur ListContainer — chaque bouton généré en code
+                    atterrissait à la même position (0,0), superposé aux
+                    autres plutôt qu'empilé ; ConfigureListLayout
+                    l'ajoute désormais partout (déjà présent seulement sur
+                    BattleHUDController.miracleListContainer)
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
                   — importe en masse des enregistrements de narration

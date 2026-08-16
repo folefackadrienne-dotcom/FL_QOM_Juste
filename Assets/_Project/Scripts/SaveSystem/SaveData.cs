@@ -40,6 +40,9 @@ namespace KingdomOfGod.SaveSystem
 
         public List<PlacedBuildingSave> placedBuildings = new List<PlacedBuildingSave>();
 
+        public List<string> unlockedLeaderIds = new List<string>();
+        public string activeLeaderId = "";
+
         public DateTime savedAtUtc;
     }
 }

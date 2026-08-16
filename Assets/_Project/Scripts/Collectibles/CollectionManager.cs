@@ -7,17 +7,53 @@ using UnityEngine;
 
 namespace KingdomOfGod.Collectibles
 {
-    /// <summary>Tracks owned artifacts and fires a bonus/cinematic hook when an age's set is completed.</summary>
+    /// <summary>
+    /// Tracks owned artifacts and fires a bonus/cinematic hook when an age's set is completed.
+    /// Collect was a real, callable method with nothing ever calling it — every artifact would have
+    /// stayed uncollected forever. ageManager (below) is the missing trigger: reaching an artifact's
+    /// Age reveals and collects it, the same "Age unlocks its content" pattern already used for
+    /// buildings/missions/tech, needing no new per-artifact authoring (ArtifactData.age already exists).
+    /// </summary>
     public class CollectionManager : MonoBehaviour
     {
         [SerializeField] private ResourceManager resourceManager;
+        [SerializeField] private AgeManager ageManager;
         [SerializeField] private List<ArtifactData> allArtifacts = new List<ArtifactData>();
 
         private readonly HashSet<ArtifactData> owned = new HashSet<ArtifactData>();
 
         public IReadOnlyCollection<ArtifactData> Owned => owned;
+        public IReadOnlyList<ArtifactData> AllArtifacts => allArtifacts;
         public event Action<ArtifactData> ArtifactCollected;
         public event Action<Age> AgeCollectionCompleted;
+
+        private void Start()
+        {
+            if (ageManager == null) return;
+
+            foreach (var artifact in allArtifacts)
+            {
+                if (artifact != null && ageManager.IsUnlocked(artifact.age)) Collect(artifact);
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (ageManager != null) ageManager.AgeUnlocked += OnAgeUnlocked;
+        }
+
+        private void OnDisable()
+        {
+            if (ageManager != null) ageManager.AgeUnlocked -= OnAgeUnlocked;
+        }
+
+        private void OnAgeUnlocked(Age age)
+        {
+            foreach (var artifact in allArtifacts)
+            {
+                if (artifact != null && artifact.age == age) Collect(artifact);
+            }
+        }
 
         public void Collect(ArtifactData artifact)
         {
@@ -35,6 +71,8 @@ namespace KingdomOfGod.Collectibles
                 AgeCollectionCompleted?.Invoke(artifact.age);
             }
         }
+
+        public bool IsOwned(ArtifactData artifact) => owned.Contains(artifact);
 
         public bool IsAgeCollectionComplete(Age age)
         {

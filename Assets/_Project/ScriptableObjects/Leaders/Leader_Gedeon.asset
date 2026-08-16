@@ -64,3 +64,4 @@ MonoBehaviour:
     de son père.'
   unlockCondition: >-
     Débloqué à la mission « Gédéon et les 300 » (Âge 3).
+  unlockMission: {fileID: 11400000, guid: 00fe1de59953497daf1074a5c203ca4a, type: 3}

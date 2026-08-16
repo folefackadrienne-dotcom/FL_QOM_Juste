@@ -54,3 +54,4 @@ MonoBehaviour:
   - 'Jéroboam : le futur adversaire que Salomon contribue à créer.'
   unlockCondition: >-
     Débloqué à la mission « Salomon et le Temple » (Âge 5).
+  unlockMission: {fileID: 11400000, guid: c8a03a5dec3b41afa4062de559fa5005, type: 3}

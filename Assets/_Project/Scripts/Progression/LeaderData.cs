@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using KingdomOfGod.Core;
+using KingdomOfGod.Missions;
 using UnityEngine;
 
 namespace KingdomOfGod.Progression
@@ -28,5 +29,10 @@ namespace KingdomOfGod.Progression
         public List<string> keyRelationships = new List<string>();
 
         [TextArea] public string unlockCondition;
+
+        [Tooltip("If set, LeaderManager unlocks this leader when this mission is completed. If left "
+            + "empty, it unlocks as soon as `age` is unlocked instead — matches unlockCondition's "
+            + "two phrasings (\"Débloqué à la mission «...»\" vs \"Débloqué au début de l'Âge N\").")]
+        public MissionData unlockMission;
     }
 }

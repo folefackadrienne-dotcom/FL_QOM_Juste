@@ -52,3 +52,4 @@ MonoBehaviour:
   - 'Josué : disciple et successeur, celui en qui il place son espoir.'
   unlockCondition: >-
     Débloqué au début de l'Âge 2 (L'Exode et le Désert).
+  unlockMission: {fileID: 0}

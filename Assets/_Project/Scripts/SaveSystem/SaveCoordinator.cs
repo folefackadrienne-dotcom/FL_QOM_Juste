@@ -91,6 +91,15 @@ namespace KingdomOfGod.SaveSystem
                 });
             }
 
+            foreach (var leader in gameManager.Leaders.UnlockedLeaders)
+            {
+                data.unlockedLeaderIds.Add(leader.displayName);
+            }
+            if (gameManager.Leaders.ActiveLeader != null)
+            {
+                data.activeLeaderId = gameManager.Leaders.ActiveLeader.displayName;
+            }
+
             return data;
         }
 
@@ -125,6 +134,7 @@ namespace KingdomOfGod.SaveSystem
             gameManager.Collection.RestoreFromSave(data.ownedArtifactIds);
             gameManager.Missions.RestoreFromSave(data.completedMissionIds);
             gameManager.Tech.RestoreFromSave(data.unlockedTechIds);
+            gameManager.Leaders.RestoreFromSave(data.unlockedLeaderIds, data.activeLeaderId);
         }
     }
 }

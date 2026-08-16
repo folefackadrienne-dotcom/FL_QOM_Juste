@@ -49,3 +49,4 @@ MonoBehaviour:
     toujours un reste.'
   unlockCondition: >-
     Débloqué à la mission « Élie au Carmel » (Âge 6).
+  unlockMission: {fileID: 11400000, guid: 759509a7bac24eeda2b4381d4403031a, type: 3}

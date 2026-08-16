@@ -54,6 +54,22 @@ under `Assets/_Project/ScriptableObjects/Techs` — previously left empty,
 which made `CanUnlock`/`TryUnlock` unable to ever pass a prerequisite
 check regardless of cost.
 
+`LeaderManager.Unlock`/`SetActiveLeader` and `CollectionManager.Collect`
+were three more real, callable methods nothing ever called. Both managers
+now wire an `ageManager` ref and subscribe to `AgeManager.AgeUnlocked`
+themselves: `CollectionManager` collects every `ArtifactData` whose `age`
+matches, `LeaderManager` unlocks every `LeaderData` whose `age` matches
+*and* has no `unlockMission` set (Abraham/Moïse/Josué/Néhémie). The other
+6 leaders (David/Débora/Élie/Gédéon/Salomon/Samson) instead unlock on
+`MissionManager.MissionCompleted` matching their new `LeaderData.
+unlockMission` reference — wired via a `missionManager` ref — which
+needed a first `.meta`/GUID for those 6 `Mission_*.asset` files (none of
+the 35 Mission assets had one before this round; Unity would have
+auto-assigned GUIDs itself once opened live, but nothing else in this
+repo could reference one ahead of that). `LeaderManager.allLeaders` and
+`CollectionManager.allArtifacts`/`ageManager` are populated/wired by
+`ProjectSceneSetup` the same way as the registries mentioned above.
+
 ### `MainMenu`
 Camera, EventSystem, Canvas with a full-screen background Image, a title
 and two buttons (Nouvelle Partie / Continuer) wired to `MainMenuController`,
@@ -221,6 +237,39 @@ through a shared `MissionManager.Complete` that marks the mission
 completed and grants whichever reward list applies — something that
 simply didn't exist before this round for anything but `Battle` missions.
 
+Three more panels share a single layout built by the new
+`CreateCodexPanel` helper — a `ListContainer` on the left, a portrait
+`Image` plus name/role/detail `TMP_Text` on the right, a `CloseButton`
+at the bottom — since `LeaderScreenUI`, `AntagonistCodexUI` and
+`CollectionUI` all needed the exact same shape:
+
+- `LeaderScreenPanel` (`LeaderScreenUI`): one button per `LeaderData`
+  under `Assets/_Project/ScriptableObjects/Leaders` (all 10, via
+  `LeaderManager.AllLeaders`). `LeaderManager.Unlock`/`SetActiveLeader`
+  were real, callable methods with nothing calling them — this screen is
+  the first caller, on top of `LeaderManager`'s own new auto-unlock (see
+  the `Bootstrap` section above). A locked entry's button reads "???
+  (Verrouillé)"; selecting it shows `unlockCondition` instead of the
+  narrative fields. An unlocked entry shows its portrait (or a flat
+  `UITheme` swatch — 4 of the 10 `LeaderData.portrait` fields are still
+  unassigned), `gameplayRole`, `narrativeArc`, and an "Activer" button
+  that calls `SetActiveLeader` and relabels to "Leader Actif" once it is.
+- `AntagonistCodexPanel` (`AntagonistCodexUI`): read-only codex of the 5
+  `AntagonistData` assets, revealed by `AgeManager.IsUnlocked` (no
+  unlock/collected state of its own — `AntagonistData` never had a
+  manager, `BattleManager` only ever reads it to pick a boss SFX cue).
+  Shows `role`, `encounterDescription`, `uniqueMechanicName`/
+  `uniqueMechanicDescription`, and `victoryCondition`.
+- `CollectionPanel` (`CollectionUI`): fiche journal for the 45
+  `ArtifactData` assets. `CollectionManager.Collect` was likewise a real
+  method nothing called — `CollectionManager` now subscribes to
+  `AgeManager.AgeUnlocked` itself and collects every artifact whose
+  `age` matches (no new per-artifact authoring needed, `ArtifactData.age`
+  already existed). An undiscovered entry reads "??? (Non découvert)";
+  a discovered one shows `biblicalReference`/`historicalContext`/
+  `educationalComment`/`activeAbilityDescription`, colored by `rarity`
+  (Commun→Légendaire mapped onto the existing `UITheme` palette).
+
 A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 6 buttons — Prière /
 Versets / Prophétie / Bâtiments / Missions / Sauvegarder) opens
 `PrayerMenuUI`/`VerseJournalUI`/`ProphecyJournalPanel`/`BuildingPalettePanel`/
@@ -231,6 +280,22 @@ nothing in this scene ever wired a clickable `Button` to any of them. The
 6th, "Sauvegarder", calls the new `HUDController.SaveGame` →
 `SaveCoordinator.SaveGame` for an explicit save on demand, on top of the
 automatic save `EndTurnButton` now also triggers (see below).
+
+A second row, `ToolbarRow2`, sits above the first (3 buttons — Leaders /
+Antagonistes / Collection, opening the three panels above): each
+`CreateButton` is a fixed 240px wide and the row's own `HorizontalLayoutGroup`
+doesn't shrink them (`childControlWidth`/`childForceExpandWidth` both
+false), so a 7th button on the first row would have pushed past the
+1920px reference canvas — hence the second row rather than a wider one.
+
+`ConfigureListLayout` also fixes a real bug in every `ListContainer` in
+this scene, old and new alike: `PrayerMenuUI`'s selection list,
+`VerseJournalUI`, `BuildingPaletteUI` and `MissionListUI` never had a
+`VerticalLayoutGroup` on their `ListContainer`, so every runtime-generated
+item button landed at local `(0,0)` — fully overlapped, not stacked,
+regardless of how many entries `RefreshList` created. Mirrors the one
+list in the project that already had a `VerticalLayoutGroup`,
+`BattleHUDController.miracleListContainer`.
 
 Below the resource bar, a permanent (never closed) `TempleWidget` shows
 `TempleUI`: "Temple — Niveau N" plus an "Améliorer" button, interactable

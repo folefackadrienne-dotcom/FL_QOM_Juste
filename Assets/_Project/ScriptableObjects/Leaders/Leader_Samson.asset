@@ -64,3 +64,4 @@ MonoBehaviour:
     don plutôt qu''un droit.'
   unlockCondition: >-
     Débloqué à la mission « Samson » (Âge 3).
+  unlockMission: {fileID: 11400000, guid: e191a99abbc14743a9e2ce0096795e6b, type: 3}
