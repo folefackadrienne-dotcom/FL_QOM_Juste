@@ -310,12 +310,21 @@ avec un rôle (`VoiceRole.Narrator`/`Character`), un `speaker` optionnel
 (`clipFrench`/`clipEnglish`/`clipHebrew`) — laissés vides jusqu'à un
 vrai enregistrement, comme les autres champs `AudioClip` du projet.
 3 instances créées dans `Assets/_Project/ScriptableObjects/Audio/Voice/`
-comme exemples du mécanisme : un placeholder Narrateur (style de
-référence, sans texte inventé), et 2 lignes de personnage réutilisant
-des paroles bibliques déjà présentes dans le jeu plutôt que d'en
-inventer — Josué (« Fortifie-toi et prends courage », Josué 1:9) et
-Élie (« Jusqu'à quand clocherez-vous des deux côtés ? », 1 Rois 18:21),
-toutes deux tirées mot pour mot des `VerseData` correspondants.
+comme exemples du mécanisme : le Narrateur principal, et 2 lignes de
+personnage réutilisant des paroles bibliques déjà présentes dans le jeu
+plutôt que d'en inventer — Josué (« Fortifie-toi et prends courage »,
+Josué 1:9) et Élie (« Jusqu'à quand clocherez-vous des deux côtés ? »,
+1 Rois 18:21), toutes deux tirées mot pour mot des `VerseData`
+correspondants.
+
+`Voice_NarrateurPrincipal.lineText` a depuis reçu un texte d'introduction
+(validé avec l'utilisateur, ton documentaire posé demandé plus haut,
+pose le cadre des 7 Âges et de l'Alliance). `AudioManager.PlayVoiceLine`
+était une méthode réelle et appelable que rien n'appelait — corrigé :
+`MainMenuController.Start()` la joue désormais une fois à l'apparition
+de l'écran-titre. `clipFrench`/`English`/`Hebrew` restent vides (aucun
+enregistrement reçu pour cette ligne) : `PlayVoiceLine` ne fait
+simplement rien tant qu'aucun clip n'est assigné, sans erreur.
 
 « Lecture des versets » réutilise directement `VerseData`, qui porte
 déjà le texte biblique exact (`text`) : 3 champs

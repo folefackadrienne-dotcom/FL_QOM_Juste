@@ -84,6 +84,16 @@ LoadLocal()` and passes the result to `SaveCoordinator.Apply()` before
 loading `Kingdom` — until this round the loaded `SaveData` was thrown away
 and every "Continuer" click silently started over from Awake's defaults.
 
+`MainMenuController.Start()` also calls `AudioManager.PlayVoiceLine`
+with `narratorIntro` — loaded from `Voice_NarrateurPrincipal.asset` via
+`ProjectSceneSetup.NarratorIntroPath`, same load-by-path pattern as
+`UITheme.asset`. `PlayVoiceLine` was a real, callable method with
+nothing anywhere calling it; the asset's `lineText` was also empty
+(deliberately left as a pure style-reference placeholder) until an
+intro line was written and validated with the user. `clipFrench`/
+`English`/`Hebrew` are still unassigned — no recording exists yet, so
+`PlayVoiceLine` just no-ops silently until one is.
+
 ### `Kingdom` (territory/management view)
 Camera positioned above and behind the grid origin (elevated ~55° RTS angle)
 with `HexCameraController` (WASD/arrow-key pan, scroll-wheel zoom) and

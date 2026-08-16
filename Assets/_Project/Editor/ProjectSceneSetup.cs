@@ -45,6 +45,9 @@ namespace KingdomOfGod.EditorTools
         private const string EditionCompleteProductPath =
             "Assets/_Project/ScriptableObjects/Monetization/Product_EditionComplete.asset";
 
+        private const string NarratorIntroPath =
+            "Assets/_Project/ScriptableObjects/Audio/Voice/Voice_NarrateurPrincipal.asset";
+
         private const string UIThemePath = "Assets/_Project/ScriptableObjects/UI/UITheme.asset";
         private const string TerrainTileSetPath = "Assets/_Project/ScriptableObjects/Grid/TerrainTileSet.asset";
 
@@ -202,6 +205,7 @@ namespace KingdomOfGod.EditorTools
             controllerGO.transform.SetParent(canvas.transform, false);
             var controller = controllerGO.AddComponent<MainMenuController>();
             SetRef(controller, "continueButton", continueButton);
+            SetRef(controller, "narratorIntro", AssetDatabase.LoadAssetAtPath<VoiceLineData>(NarratorIntroPath));
 
             UnityEventTools.AddPersistentListener(newGameButton.onClick, controller.OnNewGame);
             UnityEventTools.AddPersistentListener(continueButton.onClick, controller.OnContinue);

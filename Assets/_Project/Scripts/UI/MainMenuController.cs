@@ -1,3 +1,4 @@
+using KingdomOfGod.Audio;
 using KingdomOfGod.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,10 +12,15 @@ namespace KingdomOfGod.UI
         [SerializeField] private Button continueButton;
         [SerializeField] private string kingdomSceneName = "Kingdom";
 
+        [Tooltip("Narrator intro line (docs/AudioDesign.md \"Narrateur principal\") — played once when the title screen appears. AudioManager.PlayVoiceLine already existed with nothing anywhere ever calling it.")]
+        [SerializeField] private VoiceLineData narratorIntro;
+
         private void Start()
         {
             bool hasSave = GameManager.Instance != null && GameManager.Instance.Save.HasLocalSave();
             if (continueButton != null) continueButton.interactable = hasSave;
+
+            GameManager.Instance?.Audio.PlayVoiceLine(narratorIntro);
         }
 
         public void OnNewGame()

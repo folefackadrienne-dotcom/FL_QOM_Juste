@@ -16,7 +16,12 @@ MonoBehaviour:
   role: 0
   speaker: {fileID: 0}
   relatedVerse: {fileID: 0}
-  lineText:
+  lineText: >-
+    Il y a des millénaires, un peuple reçut une promesse. D'Abraham, père
+    d'une multitude, jusqu'à l'exil et au retour d'un royaume brisé mais
+    jamais abandonné, cette histoire est celle d'une Alliance : entre un
+    Dieu fidèle et un peuple souvent infidèle. Sept âges. Sept épreuves.
+    Une seule question posée à chaque génération : garderas-tu l'Alliance ?
   clipFrench: {fileID: 0}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}
