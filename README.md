@@ -346,10 +346,15 @@ Assets/_Project/
                     sur BattleManager.BattleEnded (jusque-là sans aucun
                     auditeur) ; BuildingPaletteUI — un bouton par
                     BuildingData débloqué (AgeManager.IsUnlocked), généré
-                    en code comme les boutons de miracle, sélection ->
-                    KingdomInputController.SelectBuilding, avec un
-                    libellé et un bouton Annuler toujours visibles hors
-                    du panneau ; MissionListUI — liste les 35 missions
+                    en code comme les boutons de miracle, affiche
+                    désormais BuildingData.icon quand une icône est
+                    assignée (4 des 39 bâtiments — Autel de Pierres,
+                    Marché, Tabernacle, Tente Familiale — avaient une
+                    image déjà importée que rien n'affichait ; les 35
+                    autres restent en couleur plate, toujours utilisables),
+                    sélection -> KingdomInputController.SelectBuilding,
+                    avec un libellé et un bouton Annuler toujours visibles
+                    hors du panneau ; MissionListUI — liste les 35 missions
                     débloquées et non terminées, un bouton par mission
                     appelant MissionManager.StartMission (charge la
                     scène Battle pour une mission de combat, ouvre

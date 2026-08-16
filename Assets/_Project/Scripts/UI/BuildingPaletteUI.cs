@@ -13,10 +13,13 @@ namespace KingdomOfGod.UI
     /// BuildingData (populated into allBuildings by ProjectSceneSetup from
     /// Assets/_Project/ScriptableObjects/Buildings/ — no manual drag needed, same reasoning as
     /// BattleHUDController's miracle list: flat UITheme-colored buttons, no icon art needed to be
-    /// functional), filtered to buildings from an Age the player has actually unlocked. Selecting
-    /// one calls KingdomInputController.SelectBuilding and closes the panel; a persistent label
-    /// and cancel button (both outside panelRoot, always visible) track/clear the current
-    /// selection so it isn't forgotten once the palette closes.
+    /// functional), filtered to buildings from an Age the player has actually unlocked. A button
+    /// shows BuildingData.icon when one is assigned (4 of the 39 buildings have real art so far —
+    /// the rest stay flat-colored, still fully usable) — the icon was imported and sitting on the
+    /// asset with nothing ever displaying it. Selecting a button calls KingdomInputController.
+    /// SelectBuilding and closes the panel; a persistent label and cancel button (both outside
+    /// panelRoot, always visible) track/clear the current selection so it isn't forgotten once the
+    /// palette closes.
     /// </summary>
     public class BuildingPaletteUI : MonoBehaviour
     {
@@ -113,6 +116,25 @@ namespace KingdomOfGod.UI
             button.targetGraphic = image;
             button.onClick.AddListener(() => OnBuildingButtonClicked(building));
 
+            float labelInsetLeft = 0f;
+            if (building.icon != null)
+            {
+                var iconGO = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+                iconGO.transform.SetParent(go.transform, false);
+                var iconImage = iconGO.GetComponent<Image>();
+                iconImage.sprite = building.icon;
+                iconImage.preserveAspect = true;
+
+                var iconRect = iconGO.GetComponent<RectTransform>();
+                iconRect.anchorMin = new Vector2(0f, 0.5f);
+                iconRect.anchorMax = new Vector2(0f, 0.5f);
+                iconRect.pivot = new Vector2(0f, 0.5f);
+                iconRect.anchoredPosition = new Vector2(4f, 0f);
+                iconRect.sizeDelta = new Vector2(36f, 36f);
+
+                labelInsetLeft = 40f;
+            }
+
             var labelGO = new GameObject("Text", typeof(RectTransform));
             labelGO.transform.SetParent(go.transform, false);
             var label = labelGO.AddComponent<TextMeshProUGUI>();
@@ -124,7 +146,8 @@ namespace KingdomOfGod.UI
             var labelRect = labelGO.GetComponent<RectTransform>();
             labelRect.anchorMin = Vector2.zero;
             labelRect.anchorMax = Vector2.one;
-            labelRect.sizeDelta = Vector2.zero;
+            labelRect.offsetMin = new Vector2(labelInsetLeft, 0f);
+            labelRect.offsetMax = Vector2.zero;
         }
 
         private void OnBuildingButtonClicked(BuildingData building)

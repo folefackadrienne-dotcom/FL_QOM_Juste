@@ -217,7 +217,11 @@ runtime-generated `UITheme`-colored button per `BuildingData` under
 `BattleHUDController`'s miracle list — no icon art needed to be
 functional), filtered to buildings from an unlocked `Age`
 (`AgeManager.IsUnlocked`, resolved at runtime via `GameManager.Instance`
-like the rest of this scene). Clicking one calls
+like the rest of this scene). A button shows `BuildingData.icon` when one
+is assigned — 4 of the 39 buildings (Autel de Pierres, Marché,
+Tabernacle, Tente Familiale) have real imported art that just sat on the
+asset with nothing ever displaying it; the other 35 stay flat-colored,
+still fully usable. Clicking one calls
 `KingdomInputController.SelectBuilding` and closes the panel. Outside the
 panel, always visible: a `SelectedBuildingLabel` showing "En cours de pose
 : <bâtiment>" (or nothing) and a `CancelButton` that clears the selection —
