@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KingdomOfGod.Alliance;
+using KingdomOfGod.Core;
 using KingdomOfGod.Grid;
 using KingdomOfGod.Population;
 using KingdomOfGod.Resources;

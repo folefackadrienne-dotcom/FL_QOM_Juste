@@ -129,7 +129,17 @@ Assets/_Project/
                     champ optionnel UnitData.antagonist) —
                     BattleManager.SpawnUnit/TryMove/OnUnitDied
                     instancient, déplacent et détruisent
-                    UnitData.prefab dès qu'un prefab existe ;
+                    UnitData.prefab dès qu'un prefab existe, sinon (les
+                    11 UnitData actuels n'en ont aucun) génèrent un
+                    placeholder en code : une primitive (forme selon
+                    UnitClass — cube/cylindre/capsule/sphère) colorée par
+                    Allegiance (bleu Joueur, rouge Ennemi, olive Allié),
+                    agrandie et assombrie pour un boss
+                    (UnitData.antagonist renseigné), avec un libellé
+                    TextMeshPro suivant la caméra (BillboardLabel,
+                    déplacé de Buildings/ vers Core/ car désormais
+                    partagé avec BuildingManager) — même discipline
+                    UITheme-au-lieu-d'art que les bâtiments ;
                     CheckBattleEnd (ex-CheckVictory) déclare aussi
                     Défaite désormais, pas seulement Victoire ;
                     BattleManager.Configure(VictoryCondition) permet de
@@ -439,9 +449,12 @@ dans l'Éditeur, sans toucher au code.
    sur `PrayerMenuUI`, dont le GameObject se désactive avec le panneau, ce
    qui couperait ses abonnements aux événements) garde la progression
    visible même panneau fermé, sur le même principe que `turnLabel`.
-5. Créer des prefabs d'unités référençant les 6 `UnitData` de base
-   (`Assets/_Project/ScriptableObjects/Units`) pour peupler la scène
-   `Battle`.
+5. Créer de vrais prefabs d'unités (les 11 `UnitData` — 6 de base + 5 boss
+   — dans `Assets/_Project/ScriptableObjects/Units`) une fois l'art
+   produit ; en attendant, `Battle` n'est plus vide : `BattleManager.
+   SpawnVisual` retombe sur un placeholder en code (primitive colorée par
+   Allegiance/UnitClass, voir `Battle/` ci-dessus) tant qu'aucun
+   `UnitData.prefab` n'est assigné.
 6. Remplacer `EditorIAPService` par une vraie intégration store (Unity IAP
    ou équivalent) une fois les fiches produit créées dans App Store
    Connect / Play Console — voir `Assets/_Project/Scripts/Monetization`.

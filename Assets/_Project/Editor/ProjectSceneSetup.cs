@@ -472,6 +472,7 @@ namespace KingdomOfGod.EditorTools
             var battleManagerGO = new GameObject("BattleManager");
             var battleManager = battleManagerGO.AddComponent<BattleManager>();
             SetRef(battleManager, "battleGrid", battleGrid);
+            SetRef(battleManager, "theme", theme);
 
             var missionBattleSetup = battleManagerGO.AddComponent<MissionBattleSetup>();
             SetRef(missionBattleSetup, "battleManager", battleManager);

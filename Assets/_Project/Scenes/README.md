@@ -285,10 +285,22 @@ scene's UI.
 `BattleManager.SpawnUnit`/`TryMove`/`OnUnitDied` instantiate, reposition
 and destroy `UnitData.prefab` (parented under `BattleGrid`) the same way
 `BuildingManager` does for buildings — but no unit has a prefab assigned
-yet, so it's still a no-op in practice. See
+yet, so that path falls through to a code-generated placeholder instead
+(same UITheme-instead-of-art discipline as `BuildingManager`'s building
+placeholders): a primitive shaped by `UnitClass` (`Cube` for Infantry,
+`Cylinder` for Archer/Priest/Prophet, `Capsule` for Cavalry, a squat
+`Cube` for Chariot, `Sphere` for Special), colored by `Allegiance`
+(`theme.deepBlue` for Player, `theme.crisisRed` for Enemy,
+`theme.oliveGreen` for the as-yet-unused `Allegiance.Ally`), scaled ×1.5
+and recolored to `theme.panelText` for a boss (`UnitData.antagonist`
+set), with a `TextMeshPro` name label that stays camera-facing via
+`BillboardLabel` — moved from `Buildings/` to `Core/` this round since
+it's now shared between `BuildingManager` and `BattleManager`. `theme`
+is wired onto `BattleManager` the same way it already was on
+`HexGridRenderer` for this scene. See
 `Assets/_Project/ScriptableObjects/Units` for the 6 base `UnitData` assets
 and the 5 `Unit_Boss*` stat blocks (one per major antagonist, `antagonist`
-already linked to their `AntagonistData`) to spawn from once prefabs exist.
+already linked to their `AntagonistData`) to spawn from once real prefabs exist.
 All 9 now have a `.meta` with a fixed GUID (created this round — none
 existed before, since nothing had referenced a `UnitData` by GUID from
 another `.asset` until `MissionData.playerUnits`/`enemyUnits` needed to).

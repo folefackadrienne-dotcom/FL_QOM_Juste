@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using KingdomOfGod.Core;
 using KingdomOfGod.Grid;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.UI;
+using TMPro;
 using UnityEngine;
 
 namespace KingdomOfGod.Battle
@@ -20,6 +22,7 @@ namespace KingdomOfGod.Battle
         [SerializeField] private BattleGrid battleGrid;
         [SerializeField] private VictoryCondition victoryCondition;
         [SerializeField] private MiracleManager miracleManager;
+        [SerializeField] private UIThemeData theme;
 
         private readonly List<UnitInstance> units = new List<UnitInstance>();
         private readonly Dictionary<UnitInstance, GameObject> unitVisuals = new Dictionary<UnitInstance, GameObject>();
@@ -120,13 +123,130 @@ namespace KingdomOfGod.Battle
             CheckBattleEnd();
         }
 
-        /// <summary>Instantiates UnitData.prefab at the cell's world position — a deliberate no-op until a prefab is assigned (no unit art exists yet).</summary>
+        /// <summary>
+        /// Instantiates UnitData.prefab at the cell's world position — or, until real unit art
+        /// exists (none of the 11 UnitData assets have a prefab assigned), a code-generated
+        /// placeholder: a primitive shaped by UnitClass, colored by Allegiance (blue=Player,
+        /// red=Enemy, olive=Ally), scaled up and darkened for a boss (UnitData.antagonist set),
+        /// plus a camera-facing name label — the same UITheme-instead-of-art discipline already
+        /// used by BuildingManager's placeholder buildings. Swapping in real art later is just
+        /// assigning UnitData.prefab — no code change needed, this path stops being reached
+        /// automatically.
+        /// </summary>
         private void SpawnVisual(UnitInstance unit)
         {
-            if (unit.Data.prefab == null) return;
-
             var worldPosition = unit.Position.ToWorldPosition(battleGrid.Grid.HexSize);
-            unitVisuals[unit] = Instantiate(unit.Data.prefab, worldPosition, Quaternion.identity, battleGrid.transform);
+
+            if (unit.Data.prefab != null)
+            {
+                unitVisuals[unit] = Instantiate(unit.Data.prefab, worldPosition, Quaternion.identity, battleGrid.transform);
+                return;
+            }
+
+            unitVisuals[unit] = SpawnPlaceholderVisual(unit, worldPosition);
+        }
+
+        private GameObject SpawnPlaceholderVisual(UnitInstance unit, Vector3 worldPosition)
+        {
+            GetPlaceholderShape(unit.Data.unitClass, out var primitiveType, out float height);
+            bool isBoss = unit.Data.antagonist != null;
+            if (isBoss) height *= 1.5f;
+            float footprint = battleGrid.Grid.HexSize * 0.6f;
+
+            var anchor = new GameObject($"{unit.Data.displayName} (Placeholder)");
+            anchor.transform.SetParent(battleGrid.transform, false);
+            anchor.transform.position = worldPosition;
+
+            var visual = GameObject.CreatePrimitive(primitiveType);
+            visual.transform.SetParent(anchor.transform, false);
+            visual.transform.localPosition = new Vector3(0f, height * 0.5f, 0f);
+            visual.transform.localScale = new Vector3(
+                footprint,
+                primitiveType == PrimitiveType.Cylinder || primitiveType == PrimitiveType.Capsule ? height * 0.5f : height,
+                footprint);
+
+            var collider = visual.GetComponent<Collider>();
+            if (collider != null) Destroy(collider);
+
+            var renderer = visual.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial = CreateFlatMaterial(GetPlaceholderColor(unit.Allegiance, isBoss));
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            renderer.receiveShadows = false;
+
+            var labelGO = new GameObject("NameLabel");
+            labelGO.transform.SetParent(anchor.transform, false);
+            labelGO.transform.localPosition = new Vector3(0f, height + 0.35f, 0f);
+            labelGO.transform.localScale = Vector3.one * 0.15f;
+            var label = labelGO.AddComponent<TextMeshPro>();
+            label.text = unit.Data.displayName;
+            label.fontSize = 4f;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = theme != null ? theme.ivoryWhite : Color.white;
+            labelGO.AddComponent<BillboardLabel>();
+
+            return anchor;
+        }
+
+        /// <summary>Shape/height per UnitClass — enough to tell unit types apart on sight without any produced art.</summary>
+        private static void GetPlaceholderShape(UnitClass unitClass, out PrimitiveType type, out float height)
+        {
+            switch (unitClass)
+            {
+                case UnitClass.Archer:
+                    type = PrimitiveType.Cylinder;
+                    height = 1.0f;
+                    break;
+                case UnitClass.Chariot:
+                    type = PrimitiveType.Cube;
+                    height = 0.6f;
+                    break;
+                case UnitClass.Cavalry:
+                    type = PrimitiveType.Capsule;
+                    height = 1.3f;
+                    break;
+                case UnitClass.Priest:
+                    type = PrimitiveType.Cylinder;
+                    height = 1.1f;
+                    break;
+                case UnitClass.Prophet:
+                    type = PrimitiveType.Cylinder;
+                    height = 1.2f;
+                    break;
+                case UnitClass.Special:
+                    type = PrimitiveType.Sphere;
+                    height = 1.0f;
+                    break;
+                case UnitClass.Infantry:
+                default:
+                    type = PrimitiveType.Cube;
+                    height = 1.0f;
+                    break;
+            }
+        }
+
+        private Color GetPlaceholderColor(Allegiance allegiance, bool isBoss)
+        {
+            if (isBoss) return theme != null ? theme.panelText : new Color(0.2f, 0.133f, 0.078f);
+
+            switch (allegiance)
+            {
+                case Allegiance.Player: return theme != null ? theme.deepBlue : new Color(0.090f, 0.196f, 0.310f);
+                case Allegiance.Ally: return theme != null ? theme.oliveGreen : new Color(0.420f, 0.478f, 0.227f);
+                case Allegiance.Enemy:
+                default: return theme != null ? theme.crisisRed : new Color(0.361f, 0.102f, 0.102f);
+            }
+        }
+
+        private static Material CreateFlatMaterial(Color color)
+        {
+            var shader = Shader.Find("Universal Render Pipeline/Unlit")
+                ?? Shader.Find("Unlit/Color")
+                ?? Shader.Find("Sprites/Default")
+                ?? Shader.Find("Standard");
+            var material = new Material(shader) { name = "UnitPlaceholderFlatColor" };
+            if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", color);
+            if (material.HasProperty("_Color")) material.SetColor("_Color", color);
+            return material;
         }
 
         private void MoveVisual(UnitInstance unit)
