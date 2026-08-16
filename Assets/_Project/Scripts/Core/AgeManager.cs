@@ -1,13 +1,21 @@
 using System;
 using System.Collections.Generic;
+using KingdomOfGod.Missions;
 using UnityEngine;
 
 namespace KingdomOfGod.Core
 {
-    /// <summary>Tracks which age the player is currently in and which ages have been unlocked.</summary>
+    /// <summary>
+    /// Tracks which age the player is currently in and which ages have been unlocked.
+    /// AdvanceToNextAge was a real, callable method with nothing ever calling it — the campaign had
+    /// no notion of "done with this age, move on to the next" at all. missionManager (below) is the
+    /// missing trigger: completing an age's last remaining mission calls AdvanceToNextAge, using
+    /// MissionManager.AreAllMissionsComplete as the criterion.
+    /// </summary>
     public class AgeManager : MonoBehaviour
     {
         [SerializeField] private Age startingAge = Age.Patriarchs;
+        [SerializeField] private MissionManager missionManager;
 
         [Tooltip("Optional component implementing IContentGate (e.g. EntitlementManager). "
             + "Leave empty to unlock ages freely, with no monetization restriction.")]
@@ -21,6 +29,7 @@ namespace KingdomOfGod.Core
         public event Action<Age> AgeChanged;
         public event Action<Age> AgeUnlocked;
         public event Action<Age> AgeLocked;
+        public event Action CampaignCompleted;
 
         private void Awake()
         {
@@ -28,6 +37,24 @@ namespace KingdomOfGod.Core
 
             CurrentAge = startingAge;
             UnlockAge(startingAge);
+        }
+
+        private void OnEnable()
+        {
+            if (missionManager != null) missionManager.MissionCompleted += OnMissionCompleted;
+        }
+
+        private void OnDisable()
+        {
+            if (missionManager != null) missionManager.MissionCompleted -= OnMissionCompleted;
+        }
+
+        private void OnMissionCompleted(MissionData mission)
+        {
+            if (mission.age == CurrentAge && missionManager.AreAllMissionsComplete(CurrentAge))
+            {
+                AdvanceToNextAge();
+            }
         }
 
         public bool IsUnlocked(Age age) => unlockedAges.Contains(age);
@@ -70,13 +97,13 @@ namespace KingdomOfGod.Core
             SetCurrentAge(savedCurrentAge);
         }
 
-        /// <summary>Advances to the next age in the chronology and unlocks it.</summary>
+        /// <summary>Advances to the next age in the chronology and unlocks it, or fires CampaignCompleted once past the Exile and Return.</summary>
         public void AdvanceToNextAge()
         {
             int next = (int)CurrentAge + 1;
             if (next > (int)Age.ExileAndReturn)
             {
-                Debug.Log("Campaign complete: no age beyond the Exile and Return.");
+                CampaignCompleted?.Invoke();
                 return;
             }
 

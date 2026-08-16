@@ -329,6 +329,21 @@ une fois à l'apparition de l'écran-titre. `clipEnglish`/`Hebrew`
 restent vides ; `PlayVoiceLine` retombe sur le français tant qu'aucun
 clip n'existe pour la langue courante.
 
+8 nouveaux `VoiceLineData` narrent la progression de la campagne :
+`Voice_Age1Intro` à `Voice_Age7Intro` (une réplique courte par Âge,
+textes validés avec l'utilisateur, posant le thème de chaque période —
+voir `docs/GDD.md` section 2) et `Voice_CampaignEpilogue` (fin de
+campagne). Ils n'existaient pas avant : `AgeManager.AdvanceToNextAge`
+était lui-même une méthode réelle que rien n'appelait — la campagne
+n'avait aucune notion de transition d'Âge à raconter. `AgeManager`
+appelle désormais `AdvanceToNextAge` dès que les 5 missions de l'Âge
+courant sont terminées (`MissionManager.AreAllMissionsComplete`,
+nouveau), et le nouveau `AgeNarrationController` (Kingdom scene) joue la
+réplique correspondante sur `AgeManager.AgeUnlocked`, plus l'épilogue
+sur le nouvel événement `AgeManager.CampaignCompleted`. Les 8
+`clipFrench`/`English`/`Hebrew` restent vides — aucun enregistrement
+fourni pour l'instant.
+
 « Lecture des versets » réutilise directement `VerseData`, qui porte
 déjà le texte biblique exact (`text`) : 3 champs
 `narrationClipFrench`/`narrationClipEnglish`/`narrationClipHebrew` y ont

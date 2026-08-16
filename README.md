@@ -60,7 +60,27 @@ Assets/_Project/
                     cours (MiracleManager.AdvancePrayerTurn) — sauf si
                     PopulationSystem.LoyaltyCritical (bande de rébellion)
                     l'a déjà interrompue ce tour-ci, l'équivalent côté
-                    Kingdom d'une attaque ennemie perturbant le rituel
+                    Kingdom d'une attaque ennemie perturbant le rituel.
+                    AgeManager.AdvanceToNextAge était une méthode réelle
+                    et appelable que rien n'appelait — la campagne
+                    n'avait aucune notion de "cet Âge est terminé, on
+                    passe au suivant". AgeManager s'abonne désormais à
+                    MissionManager.MissionCompleted et appelle
+                    AdvanceToNextAge dès que les 5 missions de l'Âge
+                    courant sont toutes terminées (MissionManager.
+                    AreAllMissionsComplete) ; le verrou monétisation
+                    (EntitlementManager, gratuit limité aux 2-3 premiers
+                    Âges) s'applique enfin pour de vrai puisque UnlockAge
+                    est désormais réellement appelé pour des Âges au-delà
+                    du premier. Nouveau AgeNarrationController : joue une
+                    courte réplique du Narrateur à chaque nouvel Âge
+                    (AgeManager.AgeUnlocked) et un épilogue à la fin de la
+                    campagne (AgeManager.CampaignCompleted, nouveau
+                    événement) — 8 VoiceLineData créés dans
+                    Assets/_Project/ScriptableObjects/Audio/Voice/
+                    (Voice_Age1Intro…Age7Intro, Voice_CampaignEpilogue),
+                    textes validés avec l'utilisateur, clips audio non
+                    encore fournis
     Resources/      Blé, Eau, Bois, Or, Foi, Sagesse, Justice
     Grid/           Grille hexagonale (coordonnées axiales, cellules),
                     HexCoordinates.FromWorldPosition (inverse de
@@ -251,7 +271,11 @@ Assets/_Project/
                     valeurs réelles renseignées dans leurs .asset — coûts/
                     seuils de ressources et libellés/deltas/récompenses
                     d'options plausibles au vu du récit de chaque
-                    mission, non playtestés/équilibrés
+                    mission, non playtestés/équilibrés. Nouveau
+                    MissionManager.AreAllMissionsComplete(Age) — vérifie
+                    si les 5 missions d'un Âge sont toutes terminées ;
+                    c'est le critère qui manquait à
+                    AgeManager.AdvanceToNextAge (voir Core/ ci-dessous)
     Progression/    Leaders légendaires (LeaderManager : débloqués +
                     leader actif) — Unlock/SetActiveLeader étaient des
                     méthodes réelles et appelables que rien n'appelait

@@ -70,6 +70,18 @@ repo could reference one ahead of that). `LeaderManager.allLeaders` and
 `CollectionManager.allArtifacts`/`ageManager` are populated/wired by
 `ProjectSceneSetup` the same way as the registries mentioned above.
 
+`AgeManager.AdvanceToNextAge` was the same story again: real, callable,
+nothing calling it — the campaign had no notion of "this Age is done,
+move to the next." `AgeManager` now wires a `missionManager` ref too and
+subscribes to `MissionManager.MissionCompleted`: the moment every one of
+the current Age's 5 missions is complete (new `MissionManager.
+AreAllMissionsComplete`), it calls `AdvanceToNextAge` itself. This also
+means `EntitlementManager`'s free-tier age gate (mentioned above) is
+finally exercised for real, since `UnlockAge` is now actually reached for
+ages beyond the first. `AdvanceToNextAge` fires a new `CampaignCompleted`
+event instead of just logging once there's no age left past the Exile
+and Return — see the `Kingdom` section below for what listens.
+
 ### `MainMenu`
 Camera, EventSystem, Canvas with a full-screen background Image, a title
 and two buttons (Nouvelle Partie / Continuer) wired to `MainMenuController`,
@@ -201,6 +213,22 @@ in `UITheme.divineLight`, both scaling up with level, plus a
 `BillboardLabel` reading "Temple — Niveau N". Rebuilt on every
 `TempleSystem.LevelUpgraded`, so upgrading via `TempleUI`'s "Améliorer"
 button now visibly changes the map, not just the HUD widget's number.
+
+A third sibling, `AgeNarration`, carries the new `AgeNarrationController`:
+`AgeManager.AdvanceToNextAge` was itself a real, callable method with
+nothing calling it (see the `Bootstrap` section above for the fix), so
+this is the other half — once an Age transition can actually happen,
+something needs to narrate it. `Start()` plays whichever `AgeManager.
+CurrentAge` line applies the moment this scene loads (covers both a new
+game at Age 1 and a loaded save resuming at a later Age, since
+`AgeUnlocked` for Age 1 already fired back in `Bootstrap`'s `Awake()`,
+before this controller existed to hear it), then `AgeUnlocked` fires
+live for every later transition reached during the same session, and
+`CampaignCompleted` (new event, raised once `AdvanceToNextAge` runs past
+the Exile and Return) plays a closing line. 8 `VoiceLineData` assets
+back it — `Voice_Age1Intro` through `Voice_Age7Intro` plus
+`Voice_CampaignEpilogue` — each with a short narrator line (validated
+with the user) but no clip yet.
 
 `BuildingManager.TryPlace`
 (Bootstrap) now instantiates `BuildingData.prefab` at the placed cell's

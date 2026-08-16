@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using KingdomOfGod.Alliance;
+using KingdomOfGod.Core;
 using KingdomOfGod.Resources;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,6 +26,13 @@ namespace KingdomOfGod.Missions
         public event Action<MissionData> MissionFailed;
 
         public bool IsCompleted(MissionData mission) => completedMissions.Contains(mission);
+
+        /// <summary>Have every one of an Age's authored missions been completed? Drives AgeManager's age-to-age progression — the missing "when do we advance" criterion AdvanceToNextAge never had a caller for.</summary>
+        public bool AreAllMissionsComplete(Age age)
+        {
+            var missionsOfAge = allMissions.Where(m => m != null && m.age == age).ToList();
+            return missionsOfAge.Count > 0 && missionsOfAge.All(completedMissions.Contains);
+        }
 
         /// <summary>Sets the active mission and, for a MissionType.Battle mission, loads the shared Battle scene — MissionBattleSetup picks ActiveMission back up there to configure the fight. Every other type is resolved in place via TryResolveConstruction/TryResolveSurvival/ResolveMoralChoice/ResolveDiplomacy/ResolveSandbox, typically driven by MissionResolutionUI.</summary>
         public void StartMission(MissionData mission)

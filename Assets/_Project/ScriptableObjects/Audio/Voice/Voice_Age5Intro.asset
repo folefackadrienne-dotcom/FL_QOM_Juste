@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b113e5f82b0f4c76bdd65910c5c10d78, type: 3}
+  m_Name: Voice_Age5Intro
+  m_EditorClassIdentifier:
+  displayName: Narrateur - Âge 5 La Monarchie Unifiée
+  role: 0
+  speaker: {fileID: 0}
+  relatedVerse: {fileID: 0}
+  lineText: >-
+    Le peuple réclame un roi. De Saül à David, puis à Salomon et son
+    Temple, le royaume atteint sa gloire — et découvre le poids d'une
+    couronne.
+  clipFrench: {fileID: 0}
+  clipEnglish: {fileID: 0}
+  clipHebrew: {fileID: 0}

@@ -141,6 +141,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(missionManager, "resourceManager", resourceManager);
             SetRef(missionManager, "allianceSystem", allianceSystem);
             SetAssetList<MissionData>(missionManager, "allMissions", "Assets/_Project/ScriptableObjects/Missions");
+            SetRef(ageManager, "missionManager", missionManager);
             SetRef(techTree, "resourceManager", resourceManager);
             SetTechNodeList(techTree, "Assets/_Project/ScriptableObjects/Techs");
             SetRef(leaderManager, "ageManager", ageManager);
@@ -236,6 +237,10 @@ namespace KingdomOfGod.EditorTools
             var kingdomTempleVisualGO = new GameObject("TempleVisual");
             var kingdomTempleVisual = kingdomTempleVisualGO.AddComponent<TempleVisualController>();
             SetRef(kingdomTempleVisual, "theme", theme);
+
+            var ageNarrationGO = new GameObject("AgeNarration");
+            var ageNarration = ageNarrationGO.AddComponent<AgeNarrationController>();
+            SetAgeNarrationLines(ageNarration);
 
             CreateEventSystem();
             var canvas = CreateCanvas();
@@ -936,6 +941,29 @@ namespace KingdomOfGod.EditorTools
                 costElement.FindPropertyRelative("type").intValue = (int)cost[i].type;
                 costElement.FindPropertyRelative("amount").floatValue = cost[i].amount;
             }
+        }
+
+        /// <summary>Loads the 7 Voice_AgeNIntro assets (one per Age, filenames fixed at authoring time) into AgeNarrationController.ageLines, plus the campaign epilogue.</summary>
+        private static void SetAgeNarrationLines(AgeNarrationController controller)
+        {
+            const string voiceFolder = "Assets/_Project/ScriptableObjects/Audio/Voice";
+
+            var so = new SerializedObject(controller);
+            var linesProp = so.FindProperty("ageLines");
+            linesProp.arraySize = 7;
+
+            for (int i = 0; i < 7; i++)
+            {
+                var line = AssetDatabase.LoadAssetAtPath<VoiceLineData>($"{voiceFolder}/Voice_Age{i + 1}Intro.asset");
+                var element = linesProp.GetArrayElementAtIndex(i);
+                element.FindPropertyRelative("age").intValue = i;
+                element.FindPropertyRelative("line").objectReferenceValue = line;
+            }
+
+            var epilogueProp = so.FindProperty("campaignEpilogue");
+            epilogueProp.objectReferenceValue = AssetDatabase.LoadAssetAtPath<VoiceLineData>($"{voiceFolder}/Voice_CampaignEpilogue.asset");
+
+            so.ApplyModifiedProperties();
         }
 
         /// <summary>
