@@ -309,13 +309,15 @@ avec un rôle (`VoiceRole.Narrator`/`Character`), un `speaker` optionnel
 (`relatedVerse`), le texte de la ligne, et un clip par langue
 (`clipFrench`/`clipEnglish`/`clipHebrew`) — laissés vides jusqu'à un
 vrai enregistrement, comme les autres champs `AudioClip` du projet.
-3 instances créées dans `Assets/_Project/ScriptableObjects/Audio/Voice/`
-comme exemples du mécanisme : le Narrateur principal, et 2 lignes de
-personnage réutilisant des paroles bibliques déjà présentes dans le jeu
-plutôt que d'en inventer — Josué (« Fortifie-toi et prends courage »,
-Josué 1:9) et Élie (« Jusqu'à quand clocherez-vous des deux côtés ? »,
-1 Rois 18:21), toutes deux tirées mot pour mot des `VerseData`
-correspondants.
+1 instance créée dans `Assets/_Project/ScriptableObjects/Audio/Voice/` :
+le Narrateur principal. Deux exemples de lignes de personnage (Josué
+« Fortifie-toi et prends courage », Josué 1:9 ; Élie « Jusqu'à quand
+clocherez-vous des deux côtés ? », 1 Rois 18:21) avaient été créés dans
+un round précédent comme démonstration du mécanisme `VoiceRole.
+Character`, puis supprimés à la demande de l'utilisateur avant tout
+enregistrement — ni l'un ni l'autre n'était référencé ailleurs dans le
+code (aucun `ProjectSceneSetup`/déclencheur ne les chargeait), donc
+suppression propre, sans rien à débrancher.
 
 `Voice_NarrateurPrincipal.lineText` a depuis reçu un texte d'introduction
 (validé avec l'utilisateur, ton documentaire posé demandé plus haut,
