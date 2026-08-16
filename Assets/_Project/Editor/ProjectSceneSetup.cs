@@ -213,6 +213,10 @@ namespace KingdomOfGod.EditorTools
             SetRef(kingdomGridVisual, "tileSet", LoadTerrainTileSet());
             SetRef(kingdomGridVisual, "targetCamera", kingdomCamera);
 
+            var kingdomMiracleVfxGO = new GameObject("MiracleVfx");
+            var kingdomMiracleVfx = kingdomMiracleVfxGO.AddComponent<MiracleVfxController>();
+            SetRef(kingdomMiracleVfx, "theme", theme);
+
             CreateEventSystem();
             var canvas = CreateCanvas();
 
@@ -468,6 +472,10 @@ namespace KingdomOfGod.EditorTools
             SetRef(battleGridVisual, "theme", theme);
             SetRef(battleGridVisual, "tileSet", LoadTerrainTileSet());
             SetRef(battleGridVisual, "targetCamera", battleCamera);
+
+            var battleMiracleVfxGO = new GameObject("MiracleVfx");
+            var battleMiracleVfx = battleMiracleVfxGO.AddComponent<MiracleVfxController>();
+            SetRef(battleMiracleVfx, "theme", theme);
 
             var battleManagerGO = new GameObject("BattleManager");
             var battleManager = battleManagerGO.AddComponent<BattleManager>();

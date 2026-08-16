@@ -126,7 +126,17 @@ color. A darker border ring per tile (always flat-colored, never
 textured) and a brighter tile that follows the mouse via the same
 ground-plane raycast `KingdomInputController` already used for clicks
 round it out — so hovering a cell now shows something, not just resolves
-silently. `BuildingManager.TryPlace`
+silently. A sibling `MiracleVfx` GameObject carries the new
+`MiracleVfxController`: `MiracleManager.PrayerStarted`/`MiracleCast`/
+`PrayerCancelled` were already fully wired to SFX (`AudioManager`) but had
+no visual consumer, so this builds one `ParticleSystem` entirely in code
+(`Resources.GetBuiltinResource<Material>("Default-Particle.mat")` — Unity's
+built-in particle material, so no texture needs to be produced first) — a
+soft golden glow loops while `MiracleManager.IsPraying`, bursts once on
+`MiracleCast`, and stops on `PrayerCancelled`. It's anchored at a fixed
+point above the map's world origin rather than any specific unit or
+building, since prayer isn't tied to one in either this scene or `Battle`
+(where the same component is wired the same way). `BuildingManager.TryPlace`
 (Bootstrap) now instantiates `BuildingData.prefab` at the placed cell's
 world position via `HexCoordinates.ToWorldPosition` — or, since none of the
 39 `BuildingData` assets have a `prefab` assigned, falls through to
@@ -262,6 +272,11 @@ directly to the local `HexGrid` here instead of resolving one via
 tiles plus a mouse-following hover tile, both reused by
 `BattleInputController` even though the two-click select/attack/move logic
 itself is unaffected; it's purely the missing visual feedback that's fixed.
+A local `MiracleVfx` GameObject carries the same `MiracleVfxController` as
+`Kingdom` (see that scene's entry above for how the particle glow is
+built) — `BattleManager.TryCastMiracle` drives the same
+`MiracleManager.PrayerStarted`/`MiracleCast`/`PrayerCancelled` events, so
+no Battle-specific wiring was needed beyond adding the GameObject.
 `VictoryCondition` is left at its default at edit time — `MissionBattleSetup`
 (on the same GameObject as `BattleManager`) overrides it at runtime via the
 new `BattleManager.Configure`, but only when this scene was reached through

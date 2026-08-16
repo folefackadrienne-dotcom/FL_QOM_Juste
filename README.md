@@ -177,7 +177,16 @@ Assets/_Project/
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût
-                    d'Alliance pour les plus puissants)
+                    d'Alliance pour les plus puissants). MiracleVfxController
+                    (nouveau) — PrayerStarted/MiracleCast/PrayerCancelled
+                    étaient déjà câblés côté son (AudioManager) mais sans
+                    rien à l'écran ; un unique ParticleSystem généré en
+                    code (matériau Default-Particle intégré à Unity,
+                    aucune texture à produire) fait une lueur dorée
+                    continue pendant la prière et une salve à la
+                    résolution, ancré à un point fixe au-dessus du centre
+                    de la carte (la prière n'est liée à aucune unité/
+                    bâtiment précis, dans Kingdom comme dans Battle)
     Alliance/       Jauge d'Alliance (0-100), repentance & multiplicateur
                     de puissance des miracles
     Verses/         Mémorisation de versets (mini-jeu progressif,
