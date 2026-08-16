@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   displayName: Gédéon – Le vaillant héros malgré lui
   age: 3
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: b46158516452446d953c4eb533567a4d, type: 3}
   narrativeArc: >-
     Trouvé en train de battre son blé en cachette dans un pressoir, de
     peur des Madianites, Gédéon est le plus improbable des juges : le

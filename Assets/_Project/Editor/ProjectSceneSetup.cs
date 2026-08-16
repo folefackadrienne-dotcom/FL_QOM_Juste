@@ -46,6 +46,7 @@ namespace KingdomOfGod.EditorTools
             "Assets/_Project/ScriptableObjects/Monetization/Product_EditionComplete.asset";
 
         private const string UIThemePath = "Assets/_Project/ScriptableObjects/UI/UITheme.asset";
+        private const string TerrainTileSetPath = "Assets/_Project/ScriptableObjects/Grid/TerrainTileSet.asset";
 
         [MenuItem("Kingdom of God/Setup/Create All Scenes", priority = 0)]
         public static void CreateAllScenes()
@@ -209,6 +210,7 @@ namespace KingdomOfGod.EditorTools
             var kingdomGridVisualGO = new GameObject("HexGridVisual");
             var kingdomGridVisual = kingdomGridVisualGO.AddComponent<HexGridRenderer>();
             SetRef(kingdomGridVisual, "theme", theme);
+            SetRef(kingdomGridVisual, "tileSet", LoadTerrainTileSet());
             SetRef(kingdomGridVisual, "targetCamera", kingdomCamera);
 
             CreateEventSystem();
@@ -464,6 +466,7 @@ namespace KingdomOfGod.EditorTools
             var battleGridVisual = battleGridVisualGO.AddComponent<HexGridRenderer>();
             SetRef(battleGridVisual, "grid", hexGrid);
             SetRef(battleGridVisual, "theme", theme);
+            SetRef(battleGridVisual, "tileSet", LoadTerrainTileSet());
             SetRef(battleGridVisual, "targetCamera", battleCamera);
 
             var battleManagerGO = new GameObject("BattleManager");
@@ -674,6 +677,12 @@ namespace KingdomOfGod.EditorTools
             }
             return theme;
         }
+
+        // No warning when missing, unlike LoadTheme: a TerrainTileSet is optional by design —
+        // HexGridRenderer already falls back to flat UITheme colors for any TerrainType with no
+        // texture entry (or when tileSet itself is null), so an absent asset is a normal state
+        // (no terrain art produced yet), not a setup mistake.
+        private static TerrainTileSet LoadTerrainTileSet() => AssetDatabase.LoadAssetAtPath<TerrainTileSet>(TerrainTileSetPath);
 
         private static UnitData LoadUnit(string assetName)
         {

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c55d9a2d3464216b19f681abb364f85, type: 3}
+  m_Name: TerrainTileSet
+  m_EditorClassIdentifier:
+  entries:
+  - terrain: 0
+    texture: {fileID: 2800000, guid: 47c65a30fa39456dae7759be0f66f424, type: 3}
+  - terrain: 1
+    texture: {fileID: 2800000, guid: 202fd38a27634422919f22631209d76c, type: 3}
+  - terrain: 2
+    texture: {fileID: 2800000, guid: 6309e9bb2d8246aeb500eb1714961777, type: 3}
+  - terrain: 5
+    texture: {fileID: 2800000, guid: 00f9f41b860545529f57be4b56b31ae0, type: 3}
+  - terrain: 6
+    texture: {fileID: 2800000, guid: ed49624a6e364275a5ce1df9f8027024, type: 3}
+  - terrain: 7
+    texture: {fileID: 2800000, guid: d3ee7453cb9048f59f0323706f4ec1c3, type: 3}

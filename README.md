@@ -66,11 +66,14 @@ Assets/_Project/
                     HexCoordinates.FromWorldPosition (inverse de
                     ToWorldPosition, pour le clic-pour-sélectionner) —
                     HexGridRenderer affiche enfin la grille (tuiles hexagonales
-                    plates générées en code, sans art : une couleur par
-                    HexCell.TerrainType puisée dans UIThemeData, la teinte
-                    « Plain » suivant l'Âge en cours via
-                    UIThemeData.GetAgeAccent, plus une tuile de survol qui
-                    suit la souris) au lieu de rien du tout
+                    générées en code : une couleur par HexCell.TerrainType
+                    puisée dans UIThemeData par défaut (la teinte « Plain »
+                    suivant l'Âge en cours via UIThemeData.GetAgeAccent), ou
+                    une vraie texture quand TerrainTileSet en fournit une
+                    pour ce TerrainType (6/8 aujourd'hui — Plain/Mountain/
+                    Forest restent en couleur, faute d'illustration reçue),
+                    plus une tuile de survol qui suit la souris) au lieu de
+                    rien du tout
     Interaction/    Caméra RTS libre (HexCameraController : WASD/flèches
                     + molette) et clic-pour-jouer sur la grille —
                     KingdomInputController (pose de bâtiment via
@@ -373,12 +376,14 @@ dans l'Éditeur, sans toucher au code.
    Ferme/Scierie/Mine/Marché/Grenier/Réservoir/Grand Marché/Atelier de
    Charpentiers/Fonderie/Tribunal) est fait pour les 7 Âges.
 3. `HexGridRenderer` affiche désormais `HexGrid`/`BattleGrid` (tuiles
-   hexagonales plates générées en code dans `Kingdom` et `Battle`,
-   colorées par `HexCell.TerrainType` et teintées par l'Âge en cours, plus
-   une tuile de survol qui suit la souris) — reste à faire générer une
-   vraie variété de terrain (`HexGrid.GenerateHexagonalMap` ne pose que
-   `TerrainType.Plain` pour l'instant, aucun générateur de relief
-   n'existe). La palette de sélection de bâtiment (`BuildingPaletteUI`) et
+   hexagonales générées en code dans `Kingdom` et `Battle`, colorées par
+   `HexCell.TerrainType` et teintées par l'Âge en cours, ou texturées via
+   `TerrainTileSet` pour 6 des 8 types, plus une tuile de survol qui suit
+   la souris) — reste à faire générer une vraie variété de terrain
+   (`HexGrid.GenerateHexagonalMap` ne pose que `TerrainType.Plain` pour
+   l'instant, aucun générateur de relief n'existe, donc les textures de
+   `Hill`/`Desert`/etc. ne s'afficheront nulle part tant que rien
+   n'écrit ces valeurs sur une cellule réelle). La palette de sélection de bâtiment (`BuildingPaletteUI`) et
    l'UI de combat (`BattleHUDController` : stats d'unité, Fin de Tour,
    liste de miracles, Victoire/Défaite) existent toutes les deux, il ne
    leur manque que des icônes une fois l'art produit. `BuildingManager.
@@ -462,25 +467,28 @@ dans l'Éditeur, sans toucher au code.
    `BuildingData.icon`, `MiracleData.icon`, `ArtifactData.icon`,
    `ProductData.icon`), voir **Kingdom of God → Setup → Import Images**
    (`ImageImporter.cs`) : dépose des fichiers "image <Nom>.png/.jpg" dans
-   un dossier et lance l'import. 9 premières images reçues et assignées à
+   un dossier et lance l'import. 16 premières images reçues et assignées à
    la main (pas d'Éditeur Unity ici pour lancer l'outil lui-même, donc
    import/`.meta`/assignation reproduits par script en suivant exactement
    le même format que produirait `ImageImporter.cs`) —
-   `Assets/_Project/Art/Sprites/` : 5 portraits de Leaders (Abraham,
-   Moïse, Josué, Débora, David) et 4 icônes de Bâtiments (Autel de
-   Pierres, Tente Familiale, Tabernacle, Marché). Restent non assignées :
-   un portrait de guerrier en bronze (`Image_GuerrierBronze.jpg`,
-   personnage ambigu — Gédéon ? Salomon ? une unité générique ? — à
-   confirmer) et 6 textures de tuiles hexagonales par terrain
-   (`Terrain_Desert/Plaine/Ruines/Cote/Colline/Marais.jpg`) : `HexGrid`
-   n'a que 8 `TerrainType` en couleurs plates générées en code
-   (`HexGridRenderer`), aucun champ Sprite/texture par tuile n'existe
-   encore pour les consommer — les fichiers sont importés et prêts, mais
-   afficher de vraies textures de terrain demanderait d'étendre
-   `HexGridRenderer` (mapping UV + matériau par `TerrainType` au lieu de
-   couleurs de sommets), non fait ici faute de détails de conception
-   demandés (biome pour Plain/Mountain/Forest non couverts par les 6
-   images reçues).
+   `Assets/_Project/Art/Sprites/` : 6 portraits de Leaders (Abraham,
+   Moïse, Josué, Débora, David, Gédéon) et 4 icônes de Bâtiments (Autel de
+   Pierres, Tente Familiale, Tabernacle, Marché). Les 6 dernières
+   (`Terrain_Desert/Plaine/Ruines/Cote/Colline/Marais.jpg`) n'allaient
+   dans aucun des 7 types ci-dessus — ce sont des tuiles de terrain
+   hexagonal, pas des portraits/icônes de fiche — donc `HexGridRenderer`
+   a été étendu plutôt que de les laisser inutilisées : un nouveau
+   `TerrainTileSet` (`Assets/_Project/ScriptableObjects/Grid/
+   TerrainTileSet.asset`, un `TerrainType` → `Texture2D`) fournit une
+   texture par tuile quand une existe, avec repli sur la couleur plate
+   UITheme d'origine sinon (donc `Plain`/`Mountain`/`Forest`, non
+   couverts par les 6 images reçues, restent en couleur). Le maillage de
+   tuile (`AppendHex`) porte désormais des UV (chaque sommet = sa
+   position sur le cercle unité, remappée en [0,1] — l'éventail hexagonal
+   n'échantillonne jamais les coins du carré UV, donc le padding
+   noir/blanc autour de chaque illustration n'est simplement jamais
+   visité), et `CreateTexturedMaterial` bascule le shader plat existant
+   sur `_BaseMap`/`_MainTex` au lieu d'une couleur unie.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

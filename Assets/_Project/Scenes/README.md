@@ -87,14 +87,29 @@ on the persistent Bootstrap object, this scene doesn't need its own — but
 it now has a local `HexGridVisual` GameObject carrying `HexGridRenderer`,
 which resolves that same Bootstrap `HexGrid` via `GameManager.Instance` and
 renders it: one flat-top hexagon per cell, combined into a couple of
-draw-call-cheap meshes rather than one GameObject per tile, colored by
-`HexCell.TerrainType` (all cells are `Plain` today — no terrain generator
-exists yet — tinted by `UIThemeData.GetAgeAccent(AgeManager.CurrentAge)`,
-a hook that existed in `UITheme.asset` since an earlier round but had no
-visual consumer until now) with a darker border ring per tile and a
-brighter tile that follows the mouse via the same ground-plane raycast
-`KingdomInputController` already used for clicks — so hovering a cell now
-shows something, not just resolves silently. `BuildingManager.TryPlace`
+draw-call-cheap meshes per TerrainType present (all cells are `Plain`
+today — no terrain generator exists yet, `HexGrid.GenerateHexagonalMap`
+never writes any other TerrainType, so the 5 non-Plain textures below
+currently have no cell to appear on). Each TerrainType layer is either a
+flat color from `UIThemeData` (the `Plain` tint follows
+`UIThemeData.GetAgeAccent(AgeManager.CurrentAge)`, a hook that existed in
+`UITheme.asset` since an earlier round but had no visual consumer until
+`HexGridRenderer`) or, when a `TerrainTileSet` asset is wired in and has an
+entry for that TerrainType, a real texture — `Assets/_Project/
+ScriptableObjects/Grid/TerrainTileSet.asset` currently covers 6 of the 8
+types (`Plain`/`Desert`/`Hill`/`River`/`Coast`/`Ruins`; `Mountain`/`Forest`
+still fall back to flat color) from illustrations imported into
+`Assets/_Project/Art/Sprites/Terrain_*.jpg`. Each hex's hand-built fan mesh
+carries UVs (`AppendHex` maps every perimeter vertex to its own position on
+the unit circle, remapped to [0,1] — the fan never samples the UV square's
+corners, so any black/white padding baked around a source hex illustration
+is simply never drawn) and `HexGridRenderer.CreateTexturedMaterial` swaps
+the same flat-color shader onto `_BaseMap`/`_MainTex` instead of a solid
+color. A darker border ring per tile (always flat-colored, never
+textured) and a brighter tile that follows the mouse via the same
+ground-plane raycast `KingdomInputController` already used for clicks
+round it out — so hovering a cell now shows something, not just resolves
+silently. `BuildingManager.TryPlace`
 (Bootstrap) now instantiates `BuildingData.prefab` at the placed cell's
 world position via `HexCoordinates.ToWorldPosition` — or, since none of the
 39 `BuildingData` assets have a `prefab` assigned, falls through to

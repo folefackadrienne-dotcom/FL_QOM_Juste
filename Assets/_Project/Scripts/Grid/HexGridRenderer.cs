@@ -17,11 +17,16 @@ namespace KingdomOfGod.Grid
     /// from UIThemeData.GetAgeAccent(AgeManager.CurrentAge), a hook that already existed but had
     /// no visual consumer. Also tracks the mouse-hovered cell with a moving highlight tile reusing
     /// HexInputUtility's ground-plane raycast, so clicking finally has visual feedback.
+    /// Fill tiles use a real texture per TerrainType when tileSet provides one — each hex fan
+    /// unwraps to its own independent unit-circle UV, since the source art is a set of
+    /// self-contained hex illustrations rather than a seamlessly tileable pattern. A TerrainType
+    /// with no texture (or no tileSet at all) keeps the flat UITheme color it always had.
     /// </summary>
     public class HexGridRenderer : MonoBehaviour
     {
         [SerializeField] private HexGrid grid;
         [SerializeField] private UIThemeData theme;
+        [SerializeField] private TerrainTileSet tileSet;
         [SerializeField] private AgeManager ageManager;
         [SerializeField] private Camera targetCamera;
 
@@ -87,7 +92,10 @@ namespace KingdomOfGod.Grid
             foreach (var pair in byTerrain)
             {
                 var layerName = $"HexFillTiles_{pair.Key}";
-                CreateLayer(layerName, pair.Value, grid.HexSize * fillScale, FillHeight, GetTerrainColor(pair.Key, accent));
+                var mesh = BuildCombinedHexMesh(pair.Value, grid.HexSize * fillScale, FillHeight);
+                var texture = tileSet != null ? tileSet.GetTexture(pair.Key) : null;
+                var material = texture != null ? CreateTexturedMaterial(texture) : CreateFlatMaterial(GetTerrainColor(pair.Key, accent));
+                CreateTileObject(layerName, mesh, material);
             }
 
             BuildHoverTile();
@@ -122,7 +130,8 @@ namespace KingdomOfGod.Grid
         private void BuildHoverTile()
         {
             var mesh = BuildCombinedHexMesh(new List<Vector3> { Vector3.zero }, grid.HexSize * hoverScale, 0f);
-            hoverGO = CreateTileObject("HexHoverTile", mesh, theme != null ? theme.warmGold : new Color(0.831f, 0.627f, 0.09f));
+            var color = theme != null ? theme.warmGold : new Color(0.831f, 0.627f, 0.09f);
+            hoverGO = CreateTileObject("HexHoverTile", mesh, CreateFlatMaterial(color));
             hoverGO.SetActive(false);
         }
 
@@ -149,17 +158,17 @@ namespace KingdomOfGod.Grid
         {
             if (centers == null || centers.Count == 0) return null;
             var mesh = BuildCombinedHexMesh(centers, size, height);
-            return CreateTileObject(name, mesh, color);
+            return CreateTileObject(name, mesh, CreateFlatMaterial(color));
         }
 
-        private GameObject CreateTileObject(string name, Mesh mesh, Color color)
+        private GameObject CreateTileObject(string name, Mesh mesh, Material material)
         {
             var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
             go.transform.SetParent(transform, false);
             go.GetComponent<MeshFilter>().sharedMesh = mesh;
 
             var renderer = go.GetComponent<MeshRenderer>();
-            renderer.sharedMaterial = CreateFlatMaterial(color);
+            renderer.sharedMaterial = material;
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderer.receiveShadows = false;
             return go;
@@ -177,32 +186,57 @@ namespace KingdomOfGod.Grid
             return material;
         }
 
+        private static Material CreateTexturedMaterial(Texture texture)
+        {
+            var shader = Shader.Find("Universal Render Pipeline/Unlit")
+                ?? Shader.Find("Unlit/Texture")
+                ?? Shader.Find("Sprites/Default")
+                ?? Shader.Find("Standard");
+            var material = new Material(shader) { name = $"HexGridTerrainTexture_{texture.name}" };
+            if (material.HasProperty("_BaseMap")) material.SetTexture("_BaseMap", texture);
+            if (material.HasProperty("_MainTex")) material.SetTexture("_MainTex", texture);
+            if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", Color.white);
+            if (material.HasProperty("_Color")) material.SetColor("_Color", Color.white);
+            return material;
+        }
+
         /// <summary>Fan-triangulated flat-top hexagons (angle offset 0°, matching HexCoordinates.ToWorldPosition) for every center, combined into one mesh so an entire tile layer is a single draw call.</summary>
         private static Mesh BuildCombinedHexMesh(List<Vector3> centers, float size, float y)
         {
             var vertices = new List<Vector3>(centers.Count * 6);
+            var uvs = new List<Vector2>(centers.Count * 6);
             var triangles = new List<int>(centers.Count * 24);
 
             foreach (var center in centers)
             {
-                AppendHex(vertices, triangles, center, size, y);
+                AppendHex(vertices, uvs, triangles, center, size, y);
             }
 
             var mesh = new Mesh { name = "HexGridTiles" };
             mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
             mesh.SetTriangles(triangles, 0);
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
             return mesh;
         }
 
-        private static void AppendHex(List<Vector3> vertices, List<int> triangles, Vector3 center, float size, float y)
+        /// <summary>
+        /// Each vertex's UV is its own position on the unit circle remapped to [0,1] — the same
+        /// hex fan never samples the four corners of the UV square, so a source image only needs
+        /// its hex illustration to reach at least this inscribed-circle footprint; any extra
+        /// padding around the hex in the source image is simply never sampled.
+        /// </summary>
+        private static void AppendHex(List<Vector3> vertices, List<Vector2> uvs, List<int> triangles, Vector3 center, float size, float y)
         {
             int baseIndex = vertices.Count;
             for (int i = 0; i < 6; i++)
             {
                 float angle = Mathf.Deg2Rad * (60f * i);
-                vertices.Add(new Vector3(center.x + size * Mathf.Cos(angle), y, center.z + size * Mathf.Sin(angle)));
+                float cos = Mathf.Cos(angle);
+                float sin = Mathf.Sin(angle);
+                vertices.Add(new Vector3(center.x + size * cos, y, center.z + size * sin));
+                uvs.Add(new Vector2(0.5f + cos * 0.5f, 0.5f + sin * 0.5f));
             }
 
             // Both winding orders are emitted for every triangle so the tile renders regardless
