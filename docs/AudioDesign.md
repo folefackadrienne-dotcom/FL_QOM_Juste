@@ -319,12 +319,13 @@ correspondants.
 
 `Voice_NarrateurPrincipal.lineText` a depuis reçu un texte d'introduction
 (validé avec l'utilisateur, ton documentaire posé demandé plus haut,
-pose le cadre des 7 Âges et de l'Alliance). `AudioManager.PlayVoiceLine`
-était une méthode réelle et appelable que rien n'appelait — corrigé :
-`MainMenuController.Start()` la joue désormais une fois à l'apparition
-de l'écran-titre. `clipFrench`/`English`/`Hebrew` restent vides (aucun
-enregistrement reçu pour cette ligne) : `PlayVoiceLine` ne fait
-simplement rien tant qu'aucun clip n'est assigné, sans erreur.
+pose le cadre des 7 Âges et de l'Alliance), et `clipFrench` un
+enregistrement réel envoyé dans la conversation. `AudioManager.
+PlayVoiceLine` était une méthode réelle et appelable que rien
+n'appelait — corrigé : `MainMenuController.Start()` la joue désormais
+une fois à l'apparition de l'écran-titre. `clipEnglish`/`Hebrew`
+restent vides ; `PlayVoiceLine` retombe sur le français tant qu'aucun
+clip n'existe pour la langue courante.
 
 « Lecture des versets » réutilise directement `VerseData`, qui porte
 déjà le texte biblique exact (`text`) : 3 champs

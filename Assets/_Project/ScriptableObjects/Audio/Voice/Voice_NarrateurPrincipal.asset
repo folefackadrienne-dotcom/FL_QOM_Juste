@@ -22,6 +22,6 @@ MonoBehaviour:
     jamais abandonné, cette histoire est celle d'une Alliance : entre un
     Dieu fidèle et un peuple souvent infidèle. Sept âges. Sept épreuves.
     Une seule question posée à chaque génération : garderas-tu l'Alliance ?
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: bad48e89c92143b7b8c37e3fa8012f48, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}
