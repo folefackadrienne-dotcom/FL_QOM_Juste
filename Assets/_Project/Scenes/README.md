@@ -87,10 +87,27 @@ on the persistent Bootstrap object, this scene doesn't need its own — but
 it now has a local `HexGridVisual` GameObject carrying `HexGridRenderer`,
 which resolves that same Bootstrap `HexGrid` via `GameManager.Instance` and
 renders it: one flat-top hexagon per cell, combined into a couple of
-draw-call-cheap meshes per TerrainType present (all cells are `Plain`
-today — no terrain generator exists yet, `HexGrid.GenerateHexagonalMap`
-never writes any other TerrainType, so the 5 non-Plain textures below
-currently have no cell to appear on). Each TerrainType layer is either a
+draw-call-cheap meshes per TerrainType present — real variety now, not
+just `Plain` everywhere: `HexGrid.GenerateHexagonalMap` calls the new
+`TerrainGenerator.Apply` after laying out cells, which classifies each one
+from four hand-rolled value-noise channels (elevation/moisture/river/coast
+— a random lattice bilinearly interpolated and smoothstepped, deliberately
+not `Mathf.PerlinNoise`, so the thresholds below were calibrated against a
+Python simulation of the actual output distribution rather than guessed)
+plus a per-cell hash for sparse `Ruins`. Seeded (`HexGrid.seed`, `12345` by
+default) so the same map reproduces every time within a play session
+(`HexGrid` lives on the persistent Bootstrap object, so `Awake` — and thus
+generation — only ever runs once; map layout isn't part of `SaveData` yet,
+matching placed buildings, which also aren't, so a fresh app launch can
+still produce a different map). Two cells are guarded against ever
+becoming `Mountain` — the only `TerrainType` `HexCell.IsPassable` treats as
+impassable: every cell on the `q == ±radius` column, since
+`MissionBattleSetup.SpawnEdge` always places Battle units there, and the
+map center `(0, 0)`, the one hardcoded `VictoryConditionType.CapturePoint`
+coordinate across all 35 missions
+(`Mission_Age5_03_DavidRoiAHebronPuisJerusalem`) — without this an
+unlucky map could spawn a unit somewhere it can never move from, or make
+that mission's objective permanently unreachable. Each TerrainType layer is either a
 flat color from `UIThemeData` (the `Plain` tint follows
 `UIThemeData.GetAgeAccent(AgeManager.CurrentAge)`, a hook that existed in
 `UITheme.asset` since an earlier round but had no visual consumer until

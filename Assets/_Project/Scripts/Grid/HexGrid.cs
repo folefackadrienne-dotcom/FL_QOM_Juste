@@ -11,6 +11,7 @@ namespace KingdomOfGod.Grid
     {
         [SerializeField] private int radius = 10;
         [SerializeField] private float hexSize = 1f;
+        [SerializeField] private int seed = 12345;
 
         private readonly Dictionary<HexCoordinates, HexCell> cells = new Dictionary<HexCoordinates, HexCell>();
 
@@ -35,6 +36,8 @@ namespace KingdomOfGod.Grid
                     cells[coords] = new HexCell(coords);
                 }
             }
+
+            TerrainGenerator.Apply(cells, seed, mapRadius);
         }
 
         public bool TryGetCell(HexCoordinates coords, out HexCell cell) => cells.TryGetValue(coords, out cell);

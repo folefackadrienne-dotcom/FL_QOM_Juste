@@ -73,7 +73,15 @@ Assets/_Project/
                     pour ce TerrainType (6/8 aujourd'hui — Plain/Mountain/
                     Forest restent en couleur, faute d'illustration reçue),
                     plus une tuile de survol qui suit la souris) au lieu de
-                    rien du tout
+                    rien du tout. TerrainGenerator (nouveau) donne enfin
+                    autre chose que du Plain à afficher : bruit de valeur
+                    fait main (élévation/humidité/rivière/côte + hachage
+                    de ruines), seedé (HexGrid.seed) donc reproductible,
+                    calibré par simulation Python plutôt que deviné, avec
+                    des garde-fous sur la colonne de spawn Battle et le
+                    centre de la carte (seul point de capture codé en dur)
+                    pour que Mountain (le seul TerrainType impassable) n'y
+                    apparaisse jamais
     Interaction/    Caméra RTS libre (HexCameraController : WASD/flèches
                     + molette) et clic-pour-jouer sur la grille —
                     KingdomInputController (pose de bâtiment via
@@ -379,11 +387,23 @@ dans l'Éditeur, sans toucher au code.
    hexagonales générées en code dans `Kingdom` et `Battle`, colorées par
    `HexCell.TerrainType` et teintées par l'Âge en cours, ou texturées via
    `TerrainTileSet` pour 6 des 8 types, plus une tuile de survol qui suit
-   la souris) — reste à faire générer une vraie variété de terrain
-   (`HexGrid.GenerateHexagonalMap` ne pose que `TerrainType.Plain` pour
-   l'instant, aucun générateur de relief n'existe, donc les textures de
-   `Hill`/`Desert`/etc. ne s'afficheront nulle part tant que rien
-   n'écrit ces valeurs sur une cellule réelle). La palette de sélection de bâtiment (`BuildingPaletteUI`) et
+   la souris). `HexGrid.GenerateHexagonalMap` ne posait jusqu'ici que
+   `TerrainType.Plain` (aucun générateur de relief n'existait), donc les
+   textures de `Hill`/`Desert`/etc. n'avaient nulle part où s'afficher —
+   `TerrainGenerator` (nouveau) comble ça : 4 canaux de bruit de valeur
+   (élévation/humidité/rivière/côte, une grille de valeurs aléatoires
+   interpolée bilinéairement, pas `Mathf.PerlinNoise`, pour que les seuils
+   ci-dessous soient calibrés par simulation Python plutôt que devinés) et
+   un hachage par cellule pour des ruines éparses, classent chaque
+   cellule ; seeded (`HexGrid.seed`, 12345 par défaut) donc reproductible
+   d'une session à l'autre. Deux garde-fous : la colonne `q == ±rayon`
+   (là où `MissionBattleSetup.SpawnEdge` place toujours les unités de
+   Battle) et le centre `(0, 0)` (le seul point de capture codé en dur,
+   `Mission_Age5_03_DavidRoiAHebronPuisJerusalem`) ne deviennent jamais
+   `Mountain`, le seul `TerrainType` que `HexCell.IsPassable` bloque —
+   sans ça une carte malchanceuse aurait pu rendre une mission
+   littéralement infranchissable ou faire apparaître une unité sur une
+   case qu'elle ne peut plus jamais quitter. La palette de sélection de bâtiment (`BuildingPaletteUI`) et
    l'UI de combat (`BattleHUDController` : stats d'unité, Fin de Tour,
    liste de miracles, Victoire/Défaite) existent toutes les deux, il ne
    leur manque que des icônes une fois l'art produit. `BuildingManager.
