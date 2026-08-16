@@ -168,7 +168,31 @@ soft golden glow loops while `MiracleManager.IsPraying`, bursts once on
 `MiracleCast`, and stops on `PrayerCancelled`. It's anchored at a fixed
 point above the map's world origin rather than any specific unit or
 building, since prayer isn't tied to one in either this scene or `Battle`
-(where the same component is wired the same way). `BuildingManager.TryPlace`
+(where the same component is wired the same way).
+
+A sibling `TempleVisual` GameObject carries the new
+`TempleVisualController`: `TempleSystem` was pure data/logic — no
+`HexCoordinates`, no `HexGrid` reference, `TempleLevelData.prefab` never
+instantiated anywhere — so the Temple itself was completely invisible
+regardless of level. Fixed at the map center `(0, 0)`, `HexCoordinates.
+ToWorldPosition` there gives its world position; `TerrainGenerator`
+already guarantees that exact cell is never `Mountain` (it's the
+hardcoded `CapturePoint` objective for
+`Mission_Age5_03_DavidRoiAHebronPuisJerusalem`, reused here as the
+capital site). A new `HexCell.IsReserved` flag, set on that cell in
+`TempleVisualController.Start()`, keeps `BuildingManager.CanPlace` from
+ever letting the player build over it — the Temple isn't a
+`BuildingInstance` so occupying `HexCell.Building` the way a normal
+building does wasn't an option. The placeholder itself (docs/
+ArtDirection.md: "imposant, lumineux, couvert d'or et de motifs sacrés")
+is a golden `Cylinder` body — color lerped `ochre`→`warmGold` by
+`TempleSystem.CurrentLevel` — topped by a 45°-rotated `Cube` "capstone"
+in `UITheme.divineLight`, both scaling up with level, plus a
+`BillboardLabel` reading "Temple — Niveau N". Rebuilt on every
+`TempleSystem.LevelUpgraded`, so upgrading via `TempleUI`'s "Améliorer"
+button now visibly changes the map, not just the HUD widget's number.
+
+`BuildingManager.TryPlace`
 (Bootstrap) now instantiates `BuildingData.prefab` at the placed cell's
 world position via `HexCoordinates.ToWorldPosition` — or, since none of the
 39 `BuildingData` assets have a `prefab` assigned, falls through to

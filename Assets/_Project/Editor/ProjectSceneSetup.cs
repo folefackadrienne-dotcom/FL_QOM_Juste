@@ -229,6 +229,10 @@ namespace KingdomOfGod.EditorTools
             var kingdomMiracleVfx = kingdomMiracleVfxGO.AddComponent<MiracleVfxController>();
             SetRef(kingdomMiracleVfx, "theme", theme);
 
+            var kingdomTempleVisualGO = new GameObject("TempleVisual");
+            var kingdomTempleVisual = kingdomTempleVisualGO.AddComponent<TempleVisualController>();
+            SetRef(kingdomTempleVisual, "theme", theme);
+
             CreateEventSystem();
             var canvas = CreateCanvas();
 

@@ -108,7 +108,24 @@ Assets/_Project/
                     TempleSystem.LevelUpgraded ; TempleSystem.levels
                     est désormais peuplé — CanUpgrade/TryUpgrade
                     existaient déjà mais la liste était vide, donc
-                    inatteignables). BuildingData.populationCapacityBonus
+                    inatteignables) — TempleSystem lui-même n'avait
+                    aucune position ni aucun rendu : c'est un
+                    GameObject non-visuel sur le GameManager persistant,
+                    sans HexCoordinates ni référence à HexGrid, et
+                    TempleLevelData.prefab n'était jamais instancié
+                    nulle part. Nouveau TempleVisualController (fixe au
+                    centre de la carte (0,0), la seule cellule déjà
+                    garantie jamais Montagne par TerrainGenerator —
+                    c'est l'objectif CapturePoint codé en dur de
+                    Mission_Age5_03_DavidRoiAHebronPuisJerusalem, réutilisé
+                    ici comme "capitale") : un placeholder doré qui
+                    grandit avec le niveau (corps ochre→or, "capstone"
+                    cube pivoté en divineLight, docs/ArtDirection.md
+                    "imposant, lumineux, couvert d'or"), reconstruit à
+                    chaque TempleSystem.LevelUpgraded. Nouveau
+                    HexCell.IsReserved marque cette cellule pour que
+                    BuildingManager ne puisse jamais y laisser construire
+                    un bâtiment par-dessus. BuildingData.populationCapacityBonus
                     (nouveau, même mécanisme que storageCapacityBonus)
                     donne enfin un effet aux 5 bâtiments d'Habitat.
                     ProcessTurnProduction multiplie désormais chaque
