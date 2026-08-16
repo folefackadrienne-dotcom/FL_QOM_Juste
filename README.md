@@ -590,17 +590,17 @@ dans l'Éditeur, sans toucher au code.
    automatiquement au bon `VerseData` par correspondance de référence
    (accents/virgule-deux-points ignorés) et les renomme — à vérifier
    avant de valider, les fichiers non reconnus restent assignables à
-   la main. **15 des 34** `VerseData.narrationClipFrench` ont reçu un
+   la main. **16 des 34** `VerseData.narrationClipFrench` ont reçu un
    fichier envoyé directement dans la conversation (même limite que les
    SFX : appariement par référence dans le nom de fichier uniquement,
    pas d'écoute possible, donc à vérifier à l'oreille) — reproduit par
    script au même format que `VoiceNarrationImporter` plutôt que lancé
    depuis l'Éditeur : Genèse 12:2-3/15:6/22:12/50:20, Exode 3:14/14:14/
    20:2-3/33:14, Nombres 6:24-26, Josué 1:9/6:20/24:15, Juges 2:16/6:12/
-   16:28. Un 16ᵉ fichier envoyé ("audio_1_Samuel_77.mp3") ne correspond à
-   aucune référence existante (seuls `1 Samuel 16:7` et `1 Samuel 17:45`
-   existent) — laissé de côté plutôt que mal assigné. `narrationClipEnglish`/
-   `Hebrew` et les 19 autres `narrationClipFrench` restent vides. Pour les
+   16:28, 1 Samuel 16:7 (fichier initialement nommé "audio_1_Samuel_77",
+   confirmé par l'utilisateur comme 16:7 après vérification — aucun
+   verset "1 Samuel 7:7" n'existe dans le jeu). `narrationClipEnglish`/
+   `Hebrew` et les 18 autres `narrationClipFrench` restent vides. Pour les
    effets sonores nommés "sound effects -
    <description>" (ex. "sound effects - male cry.mp3"), voir
    **Kingdom of God → Setup → Import Sound Effects**
