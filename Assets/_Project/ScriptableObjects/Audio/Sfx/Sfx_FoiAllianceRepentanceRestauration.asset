@@ -19,4 +19,4 @@ MonoBehaviour:
     instruments nobles, joué spécifiquement quand le joueur choisit de
     se repentir (AllianceSystem.TryRepent), en plus — et non à la place —
     de la note de hausse générique de la jauge.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 229b4d2d8eab4e5ab14ad93dc13edf77, type: 3}

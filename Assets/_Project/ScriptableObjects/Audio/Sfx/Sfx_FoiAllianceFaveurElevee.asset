@@ -18,4 +18,4 @@ MonoBehaviour:
     Signal lumineux et solennel joué une seule fois, au moment précis où
     l'Alliance franchit le seuil haut (Standing devient High) — distinct
     de la simple note de hausse jouée à chaque augmentation de la jauge.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 68dc9b7c9ad6448c9f1f9696a75d16a2, type: 3}

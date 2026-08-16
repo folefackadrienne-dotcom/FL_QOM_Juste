@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Fanfare brève et solennelle marquant l'arrivée d'un nouveau leader
     légendaire dans le jeu (LeaderManager.LeaderUnlocked).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: d1e2b15ae40d473ca229c3ae36e37600, type: 3}

@@ -18,4 +18,4 @@ MonoBehaviour:
     Signal grave et alarmant joué quand la Loyauté tombe sous le seuil
     critique (PopulationSystem.LoyaltyCritical), plus pressant que les
     Murmures.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 06562e8bac06469e80dce30274aa7c94, type: 3}

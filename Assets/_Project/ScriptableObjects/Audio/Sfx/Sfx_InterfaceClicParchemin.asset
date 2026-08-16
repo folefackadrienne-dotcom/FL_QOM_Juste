@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Son doux et noble accompagnant un clic générique sur un bouton ou une
     icône, comme un doigt effleurant un parchemin.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: f8a1139c33b742d18c24e39061b9a712, type: 3}

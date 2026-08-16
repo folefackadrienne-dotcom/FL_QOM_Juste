@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Chime élevé et lumineux (harpe, voix distante, comme les thèmes du
     Temple) joué au déblocage d'un nœud de l'arbre Spirituel.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 273c2a25c44346d18dfa9699b9c122e6, type: 3}

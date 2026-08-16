@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Petit éclat métallique et curieux, joué à chaque artefact Commun ou
     Rare ajouté à la collection (CollectionManager.ArtifactCollected).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 37bb9a9b0b854583a11ad73f8cdd9a47, type: 3}

@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Fanfare de réussite jouée à l'achèvement d'une mission, au moment où
     ses récompenses sont accordées (MissionManager.MissionCompleted).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 327bf5f3c1af475497bbb549f37839d5, type: 3}

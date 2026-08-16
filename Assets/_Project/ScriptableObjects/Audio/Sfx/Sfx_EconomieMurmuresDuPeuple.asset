@@ -18,4 +18,4 @@ MonoBehaviour:
     Rumeur sourde et inquiète jouée quand la Loyauté tombe sous le seuil
     des murmures (PopulationSystem.LoyaltyLow) — « Pénurie = murmures et
     baisse de loyauté ».
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: c55bf2e8ce2d4d049c37d0d5ec4051f3, type: 3}

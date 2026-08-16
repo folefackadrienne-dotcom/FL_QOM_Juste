@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Foi & Alliance - Foi en Hausse
   category: 4
   description: Note claire et chaude quand la jauge de Foi augmente.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 01b274c3b9fa489b9eaf87e81f7584d6, type: 3}

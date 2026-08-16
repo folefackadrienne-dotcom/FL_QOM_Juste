@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Bataille
   layerDescription: Cris, métal, chevaux, vent de guerre.
   duckedDuringDialogueOrMiracle: 1
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: da970f962aaf4094bdb7f005e492038a, type: 3}

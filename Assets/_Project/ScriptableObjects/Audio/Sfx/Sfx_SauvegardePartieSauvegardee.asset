@@ -18,4 +18,4 @@ MonoBehaviour:
     Confirmation discrète et rassurante (léger tampon de cire ou page qui se
     referme), jouée à chaque écriture réussie de la sauvegarde locale
     (SaveManager.Saved).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 92e9d330554c4a5687bfb66f447d91f4, type: 3}

@@ -19,4 +19,4 @@ MonoBehaviour:
     Collectibles, jouée une fois tous les artefacts d'un Âge réunis
     (CollectionManager.AgeCollectionCompleted) — sert de point d'ancrage
     à un futur bonus/cinématique dédié.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 5493154ea4a84f5b9fef324f626fe9ac, type: 3}
