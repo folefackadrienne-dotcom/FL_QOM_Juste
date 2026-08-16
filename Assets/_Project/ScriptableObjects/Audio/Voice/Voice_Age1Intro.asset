@@ -20,6 +20,6 @@ MonoBehaviour:
     Ici commence l'histoire d'un peuple qui n'existe pas encore. Un homme
     quitte tout pour suivre une promesse : Abraham, père d'une multitude,
     appelé à faire confiance avant de comprendre.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: 6f182c2b10674cf6952c990d570e676e, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

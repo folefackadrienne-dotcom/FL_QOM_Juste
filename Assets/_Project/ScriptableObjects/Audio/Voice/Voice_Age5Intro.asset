@@ -20,6 +20,6 @@ MonoBehaviour:
     Le peuple réclame un roi. De Saül à David, puis à Salomon et son
     Temple, le royaume atteint sa gloire — et découvre le poids d'une
     couronne.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: 1c59f883bee241ac8ed5a6a9f21be489, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

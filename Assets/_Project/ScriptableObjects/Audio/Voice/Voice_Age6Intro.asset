@@ -20,6 +20,6 @@ MonoBehaviour:
     Le royaume se déchire en deux. L'idolâtrie s'installe, et des
     prophètes se lèvent, seuls, pour rappeler à des rois sourds les termes
     oubliés de l'Alliance.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: 37b01aa2f5904e559d86683bd14dd889, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

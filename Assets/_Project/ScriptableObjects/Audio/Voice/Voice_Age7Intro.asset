@@ -20,6 +20,6 @@ MonoBehaviour:
     Jérusalem tombe. Le peuple part en exil, loin de la terre promise.
     Mais même là, l'espérance ne meurt pas — et un jour, le retour
     commence.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: 98fa9b5b5c104374a35d9e8044873968, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

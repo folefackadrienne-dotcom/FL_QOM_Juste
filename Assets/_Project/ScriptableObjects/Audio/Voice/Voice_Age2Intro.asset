@@ -20,6 +20,6 @@ MonoBehaviour:
     Des siècles de servitude s'achèvent. Un peuple sort d'Égypte, traverse
     la mer et le désert, et reçoit au pied d'une montagne les termes d'une
     Alliance qui le définira pour toujours.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: dc15fa0bb7e14127bb62e4b0a2d477fd, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

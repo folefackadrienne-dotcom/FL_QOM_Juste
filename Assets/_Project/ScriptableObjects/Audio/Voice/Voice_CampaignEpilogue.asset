@@ -20,6 +20,6 @@ MonoBehaviour:
     L'histoire ne s'arrête pas ici. Le peuple a traversé la promesse,
     l'esclavage, la conquête, la chute et le retour — et l'Alliance,
     envers et contre tout, a tenu.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: dad3ecdd903441739707e56887b6e39b, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

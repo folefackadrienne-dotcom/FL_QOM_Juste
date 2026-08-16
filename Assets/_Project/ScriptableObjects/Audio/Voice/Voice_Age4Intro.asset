@@ -20,6 +20,6 @@ MonoBehaviour:
     Sans roi, le peuple vacille. Péché, oppression, repentance, délivrance
     — le même cycle se répète, âge après âge, porté par des libérateurs
     improbables.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: b851aae75cf74fe297c5a260cd11fd31, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

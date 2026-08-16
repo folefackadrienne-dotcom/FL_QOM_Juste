@@ -20,6 +20,6 @@ MonoBehaviour:
     La promesse devient terre. Sous Josué, le peuple entre enfin dans le
     pays juré à ses pères — à condition de rester fidèle à l'Alliance qui
     le lui a donné.
-  clipFrench: {fileID: 0}
+  clipFrench: {fileID: 8300000, guid: 4598c66def1a47fa8db53b46eb1c17ba, type: 3}
   clipEnglish: {fileID: 0}
   clipHebrew: {fileID: 0}

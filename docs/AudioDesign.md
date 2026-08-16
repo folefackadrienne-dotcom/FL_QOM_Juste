@@ -341,8 +341,8 @@ courant sont terminées (`MissionManager.AreAllMissionsComplete`,
 nouveau), et le nouveau `AgeNarrationController` (Kingdom scene) joue la
 réplique correspondante sur `AgeManager.AgeUnlocked`, plus l'épilogue
 sur le nouvel événement `AgeManager.CampaignCompleted`. Les 8
-`clipFrench`/`English`/`Hebrew` restent vides — aucun enregistrement
-fourni pour l'instant.
+`clipFrench` ont depuis reçu un enregistrement réel envoyé dans la
+conversation ; `clipEnglish`/`Hebrew` restent vides.
 
 « Lecture des versets » réutilise directement `VerseData`, qui porte
 déjà le texte biblique exact (`text`) : 3 champs
