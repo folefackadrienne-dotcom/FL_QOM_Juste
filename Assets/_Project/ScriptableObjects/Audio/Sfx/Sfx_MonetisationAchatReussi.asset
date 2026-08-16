@@ -18,4 +18,4 @@ MonoBehaviour:
     Confirmation positive et sobre (jamais tapageuse), jouée à tout achat
     réussi — produit cosmétique, Battle Pass ou Édition Complète
     (EntitlementManager.ProductPurchased).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 3ae28b30480f4edf867ed81bd90e6dc7, type: 3}

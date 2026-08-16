@@ -18,4 +18,4 @@ MonoBehaviour:
     Signal grave et inconfortable joué une seule fois, au moment précis
     où l'Alliance franchit le seuil bas (Standing devient Low) — distinct
     de la simple note de baisse jouée à chaque diminution de la jauge.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 06562e8bac06469e80dce30274aa7c94, type: 3}

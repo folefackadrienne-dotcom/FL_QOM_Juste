@@ -18,4 +18,4 @@ MonoBehaviour:
     Chime bref et martial (percussions sur cadre, cuivre discret, comme
     les thèmes de Bataille) joué au déblocage d'un nœud de l'arbre
     Militaire.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: f924e48402b14c5fb430d98f167c115b, type: 3}

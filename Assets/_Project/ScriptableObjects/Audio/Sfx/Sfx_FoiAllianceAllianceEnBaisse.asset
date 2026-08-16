@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Dissonance légère et inconfortable, en écho au signal de Foi, quand
     la jauge d'Alliance baisse.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 64f5ce157f114c7e95e3e607fac83a65, type: 3}

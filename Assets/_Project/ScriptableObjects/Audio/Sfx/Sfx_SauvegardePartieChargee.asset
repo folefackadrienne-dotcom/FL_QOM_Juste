@@ -18,4 +18,4 @@ MonoBehaviour:
     Ouverture de parchemin ample, distincte de la simple sauvegarde, jouée
     quand une partie est relue depuis le disque (SaveManager.Loaded), par
     exemple au lancement ou via "Continuer".
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 496b20cc0fba409ebb632d85d81c033b, type: 3}

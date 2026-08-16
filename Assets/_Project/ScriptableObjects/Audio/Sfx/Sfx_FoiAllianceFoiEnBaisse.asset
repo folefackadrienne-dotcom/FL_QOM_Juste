@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Foi & Alliance - Foi en Baisse
   category: 4
   description: Dissonance légère et inconfortable quand la jauge de Foi baisse.
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 64f5ce157f114c7e95e3e607fac83a65, type: 3}

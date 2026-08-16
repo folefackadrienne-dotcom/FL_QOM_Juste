@@ -17,4 +17,4 @@ MonoBehaviour:
   description: >-
     Signal d'engagement bref joué au début d'une nouvelle mission
     (MissionManager.MissionStarted).
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 3ae28b30480f4edf867ed81bd90e6dc7, type: 3}
