@@ -8,6 +8,7 @@ using KingdomOfGod.Missions;
 using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
 using KingdomOfGod.Progression;
+using KingdomOfGod.Prophecy;
 using KingdomOfGod.Resources;
 using KingdomOfGod.SaveSystem;
 using KingdomOfGod.Verses;
@@ -43,6 +44,7 @@ namespace KingdomOfGod.Core
         [SerializeField] private SaveCoordinator saveCoordinator;
         [SerializeField] private EntitlementManager entitlementManager;
         [SerializeField] private AudioManager audioManager;
+        [SerializeField] private ProphecyManager prophecyManager;
 
         public AgeManager Ages => ageManager;
         public ResourceManager Resources => resourceManager;
@@ -62,6 +64,7 @@ namespace KingdomOfGod.Core
         public SaveCoordinator SaveCoordinator => saveCoordinator;
         public EntitlementManager Entitlements => entitlementManager;
         public AudioManager Audio => audioManager;
+        public ProphecyManager Prophecies => prophecyManager;
 
         private void Awake()
         {

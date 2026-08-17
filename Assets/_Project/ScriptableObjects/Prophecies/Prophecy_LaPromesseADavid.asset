@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c26e69bdfa54ba396b4e5771bd091f1, type: 3}
+  m_Name: Prophecy_LaPromesseADavid
+  m_EditorClassIdentifier:
+  displayName: La Promesse à David
+  age: 4
+  reference: 2 Samuel 7:12-16
+  prophecyText: >-
+    Nathan transmet la parole de l'Éternel à David : « Ta maison et ton règne
+    seront pour toujours assurés devant toi, ton trône sera pour toujours
+    affermi. »
+  fulfillmentText: >-
+    Salomon bâtit le Temple que David voulait construire ; mais la promesse
+    dépasse un seul roi — un trône « pour toujours » qu'aucun successeur mortel
+    ne peut, à lui seul, épuiser.

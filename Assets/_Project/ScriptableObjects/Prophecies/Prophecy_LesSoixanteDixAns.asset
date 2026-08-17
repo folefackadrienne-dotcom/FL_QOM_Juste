@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c26e69bdfa54ba396b4e5771bd091f1, type: 3}
+  m_Name: Prophecy_LesSoixanteDixAns
+  m_EditorClassIdentifier:
+  displayName: Les Soixante-Dix Ans
+  age: 6
+  reference: Jérémie 25:11-12 ; 29:10 ; Esdras 1:1
+  prophecyText: >-
+    Jérémie annonce, avant même la chute de Jérusalem : « Ce pays entier ne sera
+    que ruines... et ces nations seront asservies au roi de Babylone pendant
+    soixante-dix ans. Mais quand ces soixante-dix ans seront accomplis, je vous
+    visiterai. »
+  fulfillmentText: >-
+    Soixante-dix ans plus tard, Cyrus, roi de Perse, publie un édit qui renvoie
+    le peuple reconstruire la maison de l'Éternel à Jérusalem — au jour dit, la
+    parole de Jérémie s'accomplit.

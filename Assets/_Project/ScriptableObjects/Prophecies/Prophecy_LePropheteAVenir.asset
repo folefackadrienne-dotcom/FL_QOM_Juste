@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c26e69bdfa54ba396b4e5771bd091f1, type: 3}
+  m_Name: Prophecy_LePropheteAVenir
+  m_EditorClassIdentifier:
+  displayName: Le Prophète à Venir
+  age: 1
+  reference: Deutéronome 18:15
+  prophecyText: >-
+    Moïse dit au peuple : « L'Éternel ton Dieu te suscitera du milieu de toi,
+    d'entre tes frères, un prophète comme moi : vous l'écouterez. »
+  fulfillmentText: >-
+    Après Moïse, Israël attend une voix pareille à la sienne — un guide qui
+    parlerait au nom de Dieu comme lui parlait face à face avec l'Éternel.

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c26e69bdfa54ba396b4e5771bd091f1, type: 3}
+  m_Name: Prophecy_JugementContreAchab
+  m_EditorClassIdentifier:
+  displayName: Le Jugement Contre la Maison d'Achab
+  age: 5
+  reference: 1 Rois 21:19-24 ; 2 Rois 9:30-37
+  prophecyText: >-
+    Élie annonce à Achab, après le meurtre de Naboth : « Les chiens dévoreront
+    Jézabel près du rempart de Jizreel... » — parole de jugement contre une
+    maison royale livrée à l'idolâtrie.
+  fulfillmentText: >-
+    À la mort de Jézabel, on ne retrouve d'elle que le crâne, les pieds et les
+    paumes des mains : les chiens avaient dévoré le reste, exactement là où Élie
+    l'avait annoncé, des années plus tôt.

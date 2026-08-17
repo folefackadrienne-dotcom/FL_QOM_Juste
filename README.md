@@ -235,7 +235,16 @@ Assets/_Project/
                     usage unique) n'était jamais sauvegardé — corrigé via
                     SaveData.usedOnceMiracleIds/RestoreFromSave
     Alliance/       Jauge d'Alliance (0-100), repentance & multiplicateur
-                    de puissance des miracles
+                    de puissance des miracles. AllianceSystem.TryRepent
+                    était réelle et appelable ("le joueur peut toujours se
+                    repentir", dit son propre commentaire) mais sans aucun
+                    appelant — nulle part où relever une Alliance tombée
+                    Basse autrement que passivement via des récompenses de
+                    mission. Nouveau widget permanent RepentanceUI (UI/,
+                    à côté du TempleWidget) affiche la valeur/le palier et
+                    un bouton "Se Repentir" ; nouvelle méthode
+                    AllianceSystem.CanRepent() pilote son état actif/
+                    inactif comme TempleSystem.CanUpgrade()
     Verses/         Mémorisation de versets (mini-jeu progressif,
                     VerseUnlocked/VerseMemorized). Unlock/AdvanceStep
                     étaient réels et appelables mais sans aucun appelant :
@@ -247,6 +256,19 @@ Assets/_Project/
                     clic chacune plutôt que 4 mini-jeux distincts, faute de
                     contenu de puzzle rédigé (mots à masquer, questions de
                     quiz) pour les 34 versets
+    Prophecy/       (nouveau) Journal Prophétique — HUDController.
+                    ToggleProphecyJournal ouvrait un panneau que
+                    ProjectSceneSetup ne construisait qu'avec un fond
+                    parchemin, sans aucune ProphecyData/ProphecyManager
+                    pour l'alimenter. Nouveau ProphecyData (référence,
+                    texte de la prophétie, texte d'accomplissement) + 7
+                    prophéties bibliques réelles, une par Âge, dont
+                    l'accomplissement est vérifiable dans le texte biblique
+                    lui-même (Genèse 12/15 → Deutéronome 18 → Josué 6/1 Rois
+                    16 → 1 Samuel 2 → 2 Samuel 7 → 1 Rois 21/2 Rois 9 →
+                    Jérémie 25 & 29/Esdras 1) ; ProphecyManager s'abonne à
+                    AgeManager.AgeUnlocked, même schéma que Verses/
+                    Collectibles/Leaders/Miracles
     Collectibles/   Artefacts bibliques (Commun → Légendaire),
                     CollectionManager.ArtifactCollected/AgeCollectionCompleted
                     — Collect était une méthode réelle et appelable que
@@ -322,7 +344,18 @@ Assets/_Project/
                     « Coûts ») après simulation : la formule d'origine
                     laissait 10 technologies définitivement hors de
                     portée faute de Sagesse (seuls 3 des 39 bâtiments
-                    en produisent, aucun avant l'Âge 4)
+                    en produisent, aucun avant l'Âge 4). Mais même
+                    peuplé, allNodes n'était accessible d'aucune UI :
+                    TryUnlock restait réel et appelable sans un seul
+                    appelant, les 93 TechNode restant à jamais
+                    inatteignables en jeu quel que soit leur coût. Nouvel
+                    écran TechScreenUI (UI/), à onglets par catégorie
+                    (Économique/Militaire/Spirituel — 93 nœuds d'un coup
+                    sans onglets aurait été une liste ingérable, cf.
+                    MissionListUI ci-dessous pour la même limite « pas de
+                    ScrollRect dans ce projet »), qui pilote TryUnlock et
+                    affiche coût/prérequis (résolus en noms lisibles
+                    depuis leurs techId) pour le nœud sélectionné
     SaveSystem/     Sauvegarde locale JSON (+ point d'extension cloud),
                     SaveManager.Saved/Loaded — SaveManager ne fait que
                     lire/écrire le fichier ; SaveCoordinator.Capture/Apply
@@ -345,6 +378,18 @@ Assets/_Project/
     Monetization/   Entitlements (gratuit/Édition Complète), catalogue de
                     produits, seam IAP (stub Éditeur en attendant le vrai
                     store), EntitlementManager.ProductPurchased/TierChanged
+                    — mais PurchaseFullEdition/RestorePurchases étaient
+                    réelles et appelables sans qu'aucun écran Boutique
+                    n'existe nulle part : un joueur gratuit ne pouvait
+                    donc *jamais* dépasser freeAgeLimit (Âge 2), et
+                    AgeManager.AdvanceToNextAge échouait silencieusement
+                    son verrou de contenu pour toujours au-delà — la
+                    campagne ne pouvait jamais atteindre CampaignCompleted.
+                    Nouveau StoreUI (UI/), accessible depuis la barre
+                    d'outils du Royaume, affiche le palier courant et
+                    appelle les deux méthodes ; EditorIAPService fait
+                    réussir tout "achat" instantanément (stub Éditeur), donc
+                    ce blocage disparaît dès ce round
     Audio/          Direction sonore : thèmes musicaux par contexte
                     (MusicThemeData), leitmotifs récurrents
                     (LeitmotifData), ambiances (AmbientSoundscapeData),
@@ -452,7 +497,18 @@ Assets/_Project/
                     atterrissait à la même position (0,0), superposé aux
                     autres plutôt qu'empilé ; ConfigureListLayout
                     l'ajoute désormais partout (déjà présent seulement sur
-                    BattleHUDController.miracleListContainer)
+                    BattleHUDController.miracleListContainer). Trois
+                    écrans de plus, joignables depuis une nouvelle
+                    troisième rangée d'outils (Technologies / Boutique) ou
+                    en widget permanent (Repentance) : TechScreenUI —
+                    voir Progression/ ci-dessus ; StoreUI — voir
+                    Monetization/ ci-dessus ; RepentanceUI — voir
+                    Alliance/ ci-dessus. ProphecyJournalUI — reconstruit
+                    sur CreateCodexPanel comme VerseJournalUI (portrait
+                    masqué, pas de sprite sur ProphecyData), une entrée
+                    par Âge affichant la prophétie et son accomplissement
+                    une fois débloquée ; voir Prophecy/ ci-dessus pour le
+                    contenu et ProphecyManager
   Editor/         ProjectSceneSetup.cs — génère les 4 scènes de base
                   (menu Kingdom of God > Setup) ; VoiceNarrationImporter.cs
                   — importe en masse des enregistrements de narration

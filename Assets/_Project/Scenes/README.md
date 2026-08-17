@@ -31,7 +31,7 @@ Persistent scene, loaded first. One `GameManager` GameObject carrying every
 manager component (`AgeManager`, `ResourceManager`, `HexGrid`,
 `BuildingManager`, `PopulationSystem`, `AllianceSystem`, `MiracleManager`,
 `VerseManager`, `CollectionManager`, `MissionManager`, `SaveManager`,
-`SaveCoordinator`, `EntitlementManager`), all cross-wired, plus
+`SaveCoordinator`, `EntitlementManager`, `ProphecyManager`), all cross-wired, plus
 `BootstrapLoader` which loads `MainMenu` on `Start()`. `GameManager.Awake()`
 calls `DontDestroyOnLoad`, so this object (and its state) survives every
 later scene load.
@@ -99,6 +99,29 @@ finally exercised for real, since `UnlockAge` is now actually reached for
 ages beyond the first. `AdvanceToNextAge` fires a new `CampaignCompleted`
 event instead of just logging once there's no age left past the Exile
 and Return — see the `Kingdom` section below for what listens.
+
+That gate being "exercised for real" surfaced a real blocker of its own:
+`EntitlementManager.PurchaseFullEdition`/`RestorePurchases` were real,
+callable methods with zero callers anywhere — no Store screen existed in
+this project at all. A free-tier player could never cross `freeAgeLimit`
+(Age 2, ExodusAndDesert), so `AdvanceToNextAge` would keep failing its
+content-gate check forever past that point and the campaign could never
+reach `CampaignCompleted`. See the `Kingdom` section's `StoreUI` for the
+fix — `EditorIAPService` already made every "purchase" succeed instantly,
+it just had nothing calling it.
+
+`ProphecyManager` follows the exact same `VerseManager`/`CollectionManager`
+shape: wires an `ageManager` ref plus an `allProphecies` registry
+(`ProjectSceneSetup.SetAssetList<ProphecyData>` from
+`Assets/_Project/ScriptableObjects/Prophecies`), auto-unlocking one
+`ProphecyData` per Age via `AgeManager.AgeUnlocked`. It didn't replace an
+existing broken method — `HUDController.ToggleProphecyJournal` opened a
+panel that was never backed by any data or manager at all (GDD 10.
+Interface's "Journal Prophétique" existed only as an empty toggle). 7 new
+`ProphecyData` assets, one per Age, each pairing a real biblical prophecy
+with its fulfillment (e.g. Age 4's promise to David in 2 Samuel 7,
+Age 6's "seventy years" in Jeremiah 25/29 fulfilled by Cyrus's decree in
+Ezra 1) — see the `Kingdom` section for `ProphecyJournalUI`.
 
 ### `MainMenu`
 Camera, EventSystem, Canvas with a full-screen background Image, a title
@@ -374,12 +397,21 @@ A bottom-center `Toolbar` (`HorizontalLayoutGroup`, 6 buttons — Prière /
 Versets / Prophétie / Bâtiments / Missions / Sauvegarder) opens
 `PrayerMenuUI`/`VerseJournalUI`/`ProphecyJournalPanel`/`BuildingPalettePanel`/
 `MissionListPanel` via `HUDController.OpenPrayerMenu`/`OpenVerseJournal`/
-`ToggleProphecyJournal`/`OpenBuildingPalette`/`OpenMissionList`. The first
+`OpenProphecyJournal`/`OpenBuildingPalette`/`OpenMissionList`. The first
 four `HUDController` methods already existed, but until an earlier round
 nothing in this scene ever wired a clickable `Button` to any of them. The
 6th, "Sauvegarder", calls the new `HUDController.SaveGame` →
 `SaveCoordinator.SaveGame` for an explicit save on demand, on top of the
 automatic save `EndTurnButton` now also triggers (see below).
+`ProphecyJournalPanel` used to be nothing but a parchment background —
+`ToggleProphecyJournal` just flipped `activeSelf` on an empty
+`GameObject`, since no `ProphecyData`/`ProphecyManager` existed at all.
+It's now a full `CreateCodexPanel` wired to `ProphecyJournalUI`
+(`OpenProphecyJournal` replaces the old toggle method, matching how every
+other journal opens), backed by a new `ProphecyManager` that
+auto-unlocks one `ProphecyData` per Age via `AgeManager.AgeUnlocked` —
+same pattern as `VerseManager`/`CollectionManager`/`LeaderManager`/
+`MiracleManager`.
 
 A second row, `ToolbarRow2`, sits above the first (3 buttons — Leaders /
 Antagonistes / Collection, opening the three panels above): each
@@ -387,6 +419,23 @@ Antagonistes / Collection, opening the three panels above): each
 doesn't shrink them (`childControlWidth`/`childForceExpandWidth` both
 false), so a 7th button on the first row would have pushed past the
 1920px reference canvas — hence the second row rather than a wider one.
+A third row, `ToolbarRow3` (Technologies / Boutique), sits above row 2 for
+the same reason — plenty of room left at only 2 buttons. `TechScreenUI`
+opens on `OpenTechScreen`: `TechTree.TryUnlock` was real and callable with
+no UI anywhere reaching the ~93 authored `TechNode` assets; this screen
+adds 3 small category-tab buttons (Économique/Militaire/Spirituel, 70px
+wide, sitting inside the `CreateCodexPanel` list column above its
+`ListContainer`) since listing all 93 flat would be far taller than even
+`MissionListUI`'s already-accepted 35-entry list. `StoreUI` opens on
+`OpenStore`: `EntitlementManager.PurchaseFullEdition`/`RestorePurchases`
+were real and callable with zero callers anywhere — no Store screen
+existed, so a free-tier player could never cross `freeAgeLimit` (Age 2)
+and `AgeManager.AdvanceToNextAge` would silently fail its content gate
+forever past that point. A small always-visible `AllianceWidget` (not a
+toggled panel, same convention as `TempleWidget`) sits below the Temple
+widget: `RepentanceUI` shows the current Alliance value/standing and a
+"Se Repentir" button driving `AllianceSystem.TryRepent`, gated by a new
+`AllianceSystem.CanRepent()` mirroring `TempleSystem.CanUpgrade()`.
 
 `ConfigureListLayout` also fixes a real bug in every `ListContainer` in
 this scene, old and new alike: `PrayerMenuUI`'s selection list,

@@ -12,12 +12,14 @@ namespace KingdomOfGod.UI
         [SerializeField] private ResourceBarUI resourceBar;
         [SerializeField] private PrayerMenuUI prayerMenu;
         [SerializeField] private VerseJournalUI verseJournal;
-        [SerializeField] private GameObject prophecyJournalPanel;
+        [SerializeField] private ProphecyJournalUI prophecyJournal;
         [SerializeField] private BuildingPaletteUI buildingPalette;
         [SerializeField] private MissionListUI missionList;
         [SerializeField] private LeaderScreenUI leaderScreen;
         [SerializeField] private AntagonistCodexUI antagonistCodex;
         [SerializeField] private CollectionUI collectionUI;
+        [SerializeField] private TechScreenUI techScreen;
+        [SerializeField] private StoreUI storeUI;
         [SerializeField] private KingdomTurnManager turnManager;
         [SerializeField] private TMP_Text turnLabel;
         [SerializeField] private MiracleManager miracleManager;
@@ -79,11 +81,14 @@ namespace KingdomOfGod.UI
 
         public void OpenPrayerMenu() => prayerMenu.Open();
         public void OpenVerseJournal() => verseJournal.Open();
+        public void OpenProphecyJournal() => prophecyJournal.Open();
         public void OpenBuildingPalette() => buildingPalette.Open();
         public void OpenMissionList() => missionList.Open();
         public void OpenLeaderScreen() => leaderScreen.Open();
         public void OpenAntagonistCodex() => antagonistCodex.Open();
         public void OpenCollection() => collectionUI.Open();
+        public void OpenTechScreen() => techScreen.Open();
+        public void OpenStore() => storeUI.Open();
 
         public void EndTurn()
         {
@@ -94,15 +99,6 @@ namespace KingdomOfGod.UI
 
         /// <summary>Manual save, e.g. from a "Sauvegarder" toolbar button — on top of the automatic save at the end of every turn, so the player always has an explicit way to be sure their progress is on disk.</summary>
         public void SaveGame() => saveCoordinator?.SaveGame();
-
-        public void ToggleProphecyJournal()
-        {
-            bool opening = !prophecyJournalPanel.activeSelf;
-            prophecyJournalPanel.SetActive(opening);
-            GameManager.Instance?.Audio.PlaySfx(opening
-                ? "Interface - Ouverture de Menu"
-                : "Interface - Fermeture de Menu");
-        }
 
         private void OnTurnAdvanced(int turn) => UpdateTurnLabel();
 

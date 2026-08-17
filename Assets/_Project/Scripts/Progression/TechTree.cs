@@ -5,7 +5,11 @@ using UnityEngine;
 
 namespace KingdomOfGod.Progression
 {
-    /// <summary>Tracks which tech nodes have been researched and enforces prerequisite chains.</summary>
+    /// <summary>
+    /// Tracks which tech nodes have been researched and enforces prerequisite chains. TryUnlock was
+    /// a real, callable method with no UI anywhere ever reaching it — see UI/TechScreenUI, which
+    /// reads AllNodes (below) to list every node, not just the already-unlocked ones.
+    /// </summary>
     public class TechTree : MonoBehaviour
     {
         [SerializeField] private ResourceManager resourceManager;
@@ -16,6 +20,7 @@ namespace KingdomOfGod.Progression
         public event Action<TechNode> TechUnlocked;
 
         public IReadOnlyCollection<TechNode> UnlockedNodes => unlocked;
+        public IReadOnlyList<TechNode> AllNodes => allNodes;
 
         public bool IsUnlocked(TechNode node) => unlocked.Contains(node);
 

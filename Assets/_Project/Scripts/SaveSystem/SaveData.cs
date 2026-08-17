@@ -45,6 +45,8 @@ namespace KingdomOfGod.SaveSystem
 
         public List<string> usedOnceMiracleIds = new List<string>();
 
+        public List<string> unlockedProphecyIds = new List<string>();
+
         public DateTime savedAtUtc;
     }
 }

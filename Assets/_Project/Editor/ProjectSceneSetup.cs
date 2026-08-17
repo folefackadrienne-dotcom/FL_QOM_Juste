@@ -13,6 +13,7 @@ using KingdomOfGod.Missions;
 using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
 using KingdomOfGod.Progression;
+using KingdomOfGod.Prophecy;
 using KingdomOfGod.Resources;
 using KingdomOfGod.SaveSystem;
 using KingdomOfGod.UI;
@@ -87,6 +88,7 @@ namespace KingdomOfGod.EditorTools
             var entitlementManager = root.AddComponent<EntitlementManager>();
             var audioManager = root.AddComponent<AudioManager>();
             var kingdomTurnManager = root.AddComponent<KingdomTurnManager>();
+            var prophecyManager = root.AddComponent<ProphecyManager>();
             var gameManager = root.AddComponent<GameManager>();
             root.AddComponent<BootstrapLoader>();
 
@@ -110,6 +112,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "entitlementManager", entitlementManager);
             SetRef(gameManager, "audioManager", audioManager);
             SetRef(gameManager, "kingdomTurnManager", kingdomTurnManager);
+            SetRef(gameManager, "prophecyManager", prophecyManager);
 
             SetRef(ageManager, "contentGateBehaviour", entitlementManager);
 
@@ -149,6 +152,8 @@ namespace KingdomOfGod.EditorTools
             SetRef(leaderManager, "ageManager", ageManager);
             SetRef(leaderManager, "missionManager", missionManager);
             SetAssetList<LeaderData>(leaderManager, "allLeaders", "Assets/_Project/ScriptableObjects/Leaders");
+            SetRef(prophecyManager, "ageManager", ageManager);
+            SetAssetList<ProphecyData>(prophecyManager, "allProphecies", "Assets/_Project/ScriptableObjects/Prophecies");
 
             SetRef(saveCoordinator, "gameManager", gameManager);
 
@@ -373,10 +378,17 @@ namespace KingdomOfGod.EditorTools
             SetRef(verseJournal, "actionButtonLabel", verseActionButton.GetComponentInChildren<TextMeshProUGUI>());
             versePortrait.gameObject.SetActive(false);
 
-            var prophecyPanelGO = new GameObject("ProphecyJournalPanel", typeof(RectTransform));
-            prophecyPanelGO.transform.SetParent(hudGO.transform, false);
-            AddParchmentBackground(prophecyPanelGO, theme);
-            prophecyPanelGO.SetActive(false);
+            var (prophecyPanelGO, prophecyListContainer, prophecyPortrait, prophecyNameText, prophecyRoleText, prophecyDetailText, prophecyCloseButton) =
+                CreateCodexPanel(hudGO.transform, "ProphecyJournalPanel", theme);
+            var prophecyJournal = prophecyPanelGO.AddComponent<ProphecyJournalUI>();
+            SetRef(prophecyJournal, "theme", theme);
+            SetRef(prophecyJournal, "panelRoot", prophecyPanelGO);
+            SetRef(prophecyJournal, "listContainer", prophecyListContainer);
+            SetRef(prophecyJournal, "closeButton", prophecyCloseButton);
+            SetRef(prophecyJournal, "nameText", prophecyNameText);
+            SetRef(prophecyJournal, "referenceText", prophecyRoleText);
+            SetRef(prophecyJournal, "detailText", prophecyDetailText);
+            prophecyPortrait.gameObject.SetActive(false);
 
             var buildingPanelGO = new GameObject("BuildingPalettePanel", typeof(RectTransform));
             buildingPanelGO.transform.SetParent(hudGO.transform, false);
@@ -491,6 +503,71 @@ namespace KingdomOfGod.EditorTools
             SetRef(collectionUI, "rarityText", collectionRarityText);
             SetRef(collectionUI, "detailText", collectionDetailText);
 
+            var (techPanelGO, techListContainer, techPortrait, techNameText, techCategoryText, techDetailText, techCloseButton) =
+                CreateCodexPanel(hudGO.transform, "TechScreenPanel", theme);
+            var techScreen = techPanelGO.AddComponent<TechScreenUI>();
+            techPortrait.gameObject.SetActive(false);
+            var economicTabButton = CreateButton(techPanelGO.transform, "EconomicTabButton", "Économie", new Vector2(-335f, 225f), theme);
+            economicTabButton.GetComponent<RectTransform>().sizeDelta = new Vector2(70f, 30f);
+            var militaryTabButton = CreateButton(techPanelGO.transform, "MilitaryTabButton", "Militaire", new Vector2(-260f, 225f), theme);
+            militaryTabButton.GetComponent<RectTransform>().sizeDelta = new Vector2(70f, 30f);
+            var spiritualTabButton = CreateButton(techPanelGO.transform, "SpiritualTabButton", "Esprit", new Vector2(-185f, 225f), theme);
+            spiritualTabButton.GetComponent<RectTransform>().sizeDelta = new Vector2(70f, 30f);
+            var techUnlockButton = CreateButton(techPanelGO.transform, "UnlockButton", "Débloquer", new Vector2(140f, -170f), theme);
+            SetRef(techScreen, "theme", theme);
+            SetRef(techScreen, "panelRoot", techPanelGO);
+            SetRef(techScreen, "listContainer", techListContainer);
+            SetRef(techScreen, "closeButton", techCloseButton);
+            SetRef(techScreen, "economicTabButton", economicTabButton);
+            SetRef(techScreen, "militaryTabButton", militaryTabButton);
+            SetRef(techScreen, "spiritualTabButton", spiritualTabButton);
+            SetRef(techScreen, "nameText", techNameText);
+            SetRef(techScreen, "categoryText", techCategoryText);
+            SetRef(techScreen, "detailText", techDetailText);
+            SetRef(techScreen, "unlockButton", techUnlockButton);
+            SetRef(techScreen, "unlockButtonLabel", techUnlockButton.GetComponentInChildren<TextMeshProUGUI>());
+
+            var storePanelGO = new GameObject("StorePanel", typeof(RectTransform));
+            storePanelGO.transform.SetParent(hudGO.transform, false);
+            storePanelGO.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 320f);
+            AddParchmentBackground(storePanelGO, theme);
+            var storeUI = storePanelGO.AddComponent<StoreUI>();
+            var storeTierText = CreateLabel(storePanelGO.transform, "TierText", "", 22, TextAlignmentOptions.Center,
+                new Vector2(0f, 110f), new Vector2(440f, 34f), theme != null ? theme.panelText : (Color?)null);
+            var storeDescriptionText = CreateLabel(storePanelGO.transform, "DescriptionText", "", 15, TextAlignmentOptions.Center,
+                new Vector2(0f, 40f), new Vector2(440f, 120f), theme != null ? theme.panelText : (Color?)null);
+            var storePurchaseButton = CreateButton(storePanelGO.transform, "PurchaseButton", "Acheter l'Édition Complète", new Vector2(0f, -60f), theme);
+            var storeRestoreButton = CreateButton(storePanelGO.transform, "RestoreButton", "Restaurer mes achats", new Vector2(0f, -115f), theme);
+            var storeCloseButton = CreateButton(storePanelGO.transform, "CloseButton", "Fermer", new Vector2(0f, -170f), theme);
+            SetRef(storeUI, "theme", theme);
+            SetRef(storeUI, "panelRoot", storePanelGO);
+            SetRef(storeUI, "tierText", storeTierText);
+            SetRef(storeUI, "descriptionText", storeDescriptionText);
+            SetRef(storeUI, "purchaseButton", storePurchaseButton);
+            SetRef(storeUI, "purchaseButtonLabel", storePurchaseButton.GetComponentInChildren<TextMeshProUGUI>());
+            SetRef(storeUI, "restoreButton", storeRestoreButton);
+            SetRef(storeUI, "closeButton", storeCloseButton);
+            storePanelGO.SetActive(false);
+
+            var allianceWidgetGO = new GameObject("AllianceWidget", typeof(RectTransform));
+            allianceWidgetGO.transform.SetParent(hudGO.transform, false);
+            var allianceStatusLabel = CreateLabel(allianceWidgetGO.transform, "StatusText", "Alliance — 50 (Moyenne)", 16,
+                TextAlignmentOptions.MidlineLeft, new Vector2(0f, -resourceOrder.Length * 26f - 70f), new Vector2(240f, 24f),
+                theme != null ? theme.ivoryWhite : (Color?)null);
+            allianceStatusLabel.rectTransform.anchorMin = new Vector2(0f, 1f);
+            allianceStatusLabel.rectTransform.anchorMax = new Vector2(0f, 1f);
+            allianceStatusLabel.rectTransform.pivot = new Vector2(0f, 1f);
+            var repentButton = CreateButton(allianceWidgetGO.transform, "RepentButton", "Se Repentir",
+                new Vector2(0f, -resourceOrder.Length * 26f - 100f), theme);
+            var repentRect = repentButton.GetComponent<RectTransform>();
+            repentRect.anchorMin = new Vector2(0f, 1f);
+            repentRect.anchorMax = new Vector2(0f, 1f);
+            repentRect.pivot = new Vector2(0f, 1f);
+            repentRect.sizeDelta = new Vector2(160f, 34f);
+            var repentanceUI = allianceWidgetGO.AddComponent<RepentanceUI>();
+            SetRef(repentanceUI, "statusText", allianceStatusLabel);
+            SetRef(repentanceUI, "repentButton", repentButton);
+
             var toolbarGO = new GameObject("Toolbar", typeof(RectTransform), typeof(HorizontalLayoutGroup));
             toolbarGO.transform.SetParent(hudGO.transform, false);
             var toolbarRect = toolbarGO.GetComponent<RectTransform>();
@@ -509,7 +586,7 @@ namespace KingdomOfGod.EditorTools
             var verseToolbarButton = CreateButton(toolbarGO.transform, "VerseButton", "Versets", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(verseToolbarButton.onClick, hud.OpenVerseJournal);
             var prophecyToolbarButton = CreateButton(toolbarGO.transform, "ProphecyButton", "Prophétie", Vector2.zero, theme);
-            UnityEventTools.AddPersistentListener(prophecyToolbarButton.onClick, hud.ToggleProphecyJournal);
+            UnityEventTools.AddPersistentListener(prophecyToolbarButton.onClick, hud.OpenProphecyJournal);
             var buildingToolbarButton = CreateButton(toolbarGO.transform, "BuildingButton", "Bâtiments", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(buildingToolbarButton.onClick, hud.OpenBuildingPalette);
             var missionToolbarButton = CreateButton(toolbarGO.transform, "MissionButton", "Missions", Vector2.zero, theme);
@@ -541,15 +618,37 @@ namespace KingdomOfGod.EditorTools
             var collectionToolbarButton = CreateButton(toolbarRow2GO.transform, "CollectionButton", "Collection", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(collectionToolbarButton.onClick, hud.OpenCollection);
 
+            // Third row: Tech/Boutique, same reasoning as row 2 — plenty of room left at only
+            // 2 buttons (500 of the 750-wide budget), unlike row 1's already-full 6.
+            var toolbarRow3GO = new GameObject("ToolbarRow3", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            toolbarRow3GO.transform.SetParent(hudGO.transform, false);
+            var toolbarRow3Rect = toolbarRow3GO.GetComponent<RectTransform>();
+            toolbarRow3Rect.anchorMin = new Vector2(0.5f, 0f);
+            toolbarRow3Rect.anchorMax = new Vector2(0.5f, 0f);
+            toolbarRow3Rect.pivot = new Vector2(0.5f, 0f);
+            toolbarRow3Rect.anchoredPosition = new Vector2(0f, 140f);
+            toolbarRow3Rect.sizeDelta = new Vector2(750f, 50f);
+            var toolbarRow3Layout = toolbarRow3GO.GetComponent<HorizontalLayoutGroup>();
+            toolbarRow3Layout.spacing = 10f;
+            toolbarRow3Layout.childForceExpandWidth = false;
+            toolbarRow3Layout.childControlWidth = false;
+
+            var techToolbarButton = CreateButton(toolbarRow3GO.transform, "TechButton", "Technologies", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(techToolbarButton.onClick, hud.OpenTechScreen);
+            var storeToolbarButton = CreateButton(toolbarRow3GO.transform, "StoreButton", "Boutique", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(storeToolbarButton.onClick, hud.OpenStore);
+
             SetRef(hud, "resourceBar", resourceBar);
             SetRef(hud, "prayerMenu", prayerMenu);
             SetRef(hud, "verseJournal", verseJournal);
-            SetRef(hud, "prophecyJournalPanel", prophecyPanelGO);
+            SetRef(hud, "prophecyJournal", prophecyJournal);
             SetRef(hud, "leaderScreen", leaderScreen);
             SetRef(hud, "antagonistCodex", antagonistCodex);
             SetRef(hud, "collectionUI", collectionUI);
             SetRef(hud, "buildingPalette", buildingPalette);
             SetRef(hud, "missionList", missionList);
+            SetRef(hud, "techScreen", techScreen);
+            SetRef(hud, "storeUI", storeUI);
 
             SaveScene(scene, KingdomPath);
         }

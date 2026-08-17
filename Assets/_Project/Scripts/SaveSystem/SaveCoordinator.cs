@@ -105,6 +105,11 @@ namespace KingdomOfGod.SaveSystem
                 data.usedOnceMiracleIds.Add(miracle.displayName);
             }
 
+            foreach (var prophecy in gameManager.Prophecies.UnlockedProphecies)
+            {
+                data.unlockedProphecyIds.Add(prophecy.displayName);
+            }
+
             return data;
         }
 
@@ -141,6 +146,7 @@ namespace KingdomOfGod.SaveSystem
             gameManager.Tech.RestoreFromSave(data.unlockedTechIds);
             gameManager.Leaders.RestoreFromSave(data.unlockedLeaderIds, data.activeLeaderId);
             gameManager.Miracles.RestoreFromSave(data.usedOnceMiracleIds);
+            gameManager.Prophecies.RestoreFromSave(data.unlockedProphecyIds);
         }
     }
 }

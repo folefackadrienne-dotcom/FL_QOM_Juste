@@ -67,6 +67,9 @@ namespace KingdomOfGod.Alliance
             return value >= highThreshold ? AllianceStanding.High : AllianceStanding.Medium;
         }
 
+        /// <summary>Whether the player can currently afford TryRepent's cost — drives a UI button's interactable state the same way TempleSystem.CanUpgrade does.</summary>
+        public bool CanRepent() => resourceManager != null && resourceManager.CanAfford(new[] { repentanceCost });
+
         /// <summary>Spends the repentance cost to restore some Alliance after a fall — mechanic is always available.</summary>
         public bool TryRepent()
         {
