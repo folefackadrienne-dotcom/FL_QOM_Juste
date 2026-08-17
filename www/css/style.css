@@ -264,6 +264,8 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   font-weight: bold;
   font-size: .85rem;
 }
+.hud-item { white-space: nowrap; }
+#hud-timer-item.low { color: #e0475b; }
 .game-ref {
   font-weight: bold;
   text-align: center;

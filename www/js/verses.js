@@ -6,6 +6,10 @@
 const LEVEL_TARGET = [400, 435, 470, 505, 540, 575, 610, 645, 680, 715, 750, 785];
 const LEVEL_MOVES = [20, 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15];
 const levelTiles = (n) => (n <= 6 ? 6 : 5);
+// Compte à rebours (secondes) : assez large pour réfléchir, mais ajoute une
+// vraie contrainte de temps qui se resserre légèrement sur les niveaux
+// avancés, en plus de la limite de coups.
+const levelTime = (movesForLevel) => movesForLevel * 4;
 
 function buildLevels(rawVerses, lang) {
   return rawVerses.map((v, i) => {
@@ -18,6 +22,7 @@ function buildLevels(rawVerses, lang) {
       hide: l.hide,
       target: LEVEL_TARGET[i],
       moves: LEVEL_MOVES[i],
+      time: levelTime(LEVEL_MOVES[i]),
       tiles: levelTiles(n)
     };
   });

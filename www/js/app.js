@@ -13,7 +13,9 @@ const state = {
   board: null,
   score: 0,
   movesLeft: 0,
-  target: 0
+  timeLeft: 0,
+  target: 0,
+  timerId: null
 };
 
 function emptyParcoursProgress() {
@@ -294,10 +296,12 @@ function startLevel(levelId) {
 
   const level = currentLevel();
   state.movesLeft = level.moves;
+  state.timeLeft = level.time;
   state.target = level.target;
 
   refreshGameTexts();
   updateHud();
+  startTimer();
 
   const container = document.getElementById("board");
   if (state.board) state.board.destroy();
@@ -315,6 +319,25 @@ function startLevel(levelId) {
   navTo("game");
 }
 
+function startTimer() {
+  stopTimer();
+  state.timerId = setInterval(() => {
+    state.timeLeft -= 1;
+    updateHud();
+    if (state.timeLeft <= 0) {
+      stopTimer();
+      finishLevel(state.score >= state.target);
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (state.timerId) {
+    clearInterval(state.timerId);
+    state.timerId = null;
+  }
+}
+
 function refreshGameTexts() {
   const p = currentParcours();
   const level = currentLevel();
@@ -326,6 +349,8 @@ function updateHud() {
   document.getElementById("hud-score").textContent = state.score;
   document.getElementById("hud-target").textContent = state.target;
   document.getElementById("hud-moves").textContent = state.movesLeft;
+  document.getElementById("hud-timer").textContent = Math.max(0, state.timeLeft);
+  document.getElementById("hud-timer-item").classList.toggle("low", state.timeLeft <= 10);
   document.getElementById("hud-stars").textContent = starsPreview();
 }
 
@@ -353,16 +378,14 @@ function renderStarsAnimated(elementId, filledCount) {
 function handleScore(gained) {
   state.score += gained;
   updateHud();
-  if (state.score >= state.target) {
-    setTimeout(() => finishLevel(true), 350);
-  }
 }
 
 function handleMove() {
   state.movesLeft -= 1;
   updateHud();
-  if (state.movesLeft <= 0 && state.score < state.target) {
-    setTimeout(() => finishLevel(false), 500);
+  if (state.movesLeft <= 0) {
+    stopTimer();
+    setTimeout(() => finishLevel(state.score >= state.target), 500);
   }
 }
 
@@ -370,6 +393,7 @@ function finishLevel(win) {
   if (levelFinished) return;
   levelFinished = true;
   state.lastWin = win;
+  stopTimer();
 
   const p = currentParcours();
   const prog = getProgress(p.id);
@@ -532,6 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-share").addEventListener("click", shareApp);
 
   document.getElementById("btn-quit-game").addEventListener("click", () => {
+    stopTimer();
     if (state.board) state.board.destroy();
     renderLevels();
     navTo("levels");
