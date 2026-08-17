@@ -80,6 +80,19 @@ function navTo(id) {
   document.getElementById("screen-" + id).classList.add("active");
 }
 
+const SHARE_URL = "https://play.google.com/store/apps/details?id=com.croqueversets.app";
+
+function shareApp() {
+  const text = t("share_text");
+  if (navigator.share) {
+    navigator.share({ title: "Croque-Versets", text, url: SHARE_URL }).catch(() => {});
+    return;
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(`${text} ${SHARE_URL}`).then(() => showToast(t("share_copied")));
+  }
+}
+
 /* ---------- TEXTES STATIQUES / LANGUE ---------- */
 
 function applyStaticI18n() {
@@ -92,6 +105,7 @@ function applyStaticI18n() {
   document.getElementById("btn-play").textContent = t("btn_play");
   document.getElementById("btn-library").textContent = t("btn_library");
   document.getElementById("btn-help").textContent = t("btn_help");
+  document.getElementById("btn-share").textContent = t("btn_share");
   document.getElementById("parcours-header").textContent = t("parcours_header");
   document.getElementById("hud-moves-suffix").textContent = t("hud_moves_suffix");
   document.getElementById("btn-to-verse").textContent = t("btn_to_verse");
@@ -514,6 +528,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-help").addEventListener("click", () => navTo("help"));
+
+  document.getElementById("btn-share").addEventListener("click", shareApp);
 
   document.getElementById("btn-quit-game").addEventListener("click", () => {
     if (state.board) state.board.destroy();

@@ -46,7 +46,10 @@ const I18N = {
     purchase_error: "Achat impossible pour le moment. Réessaie plus tard.",
     purchase_unavailable: "Les achats ne sont disponibles que dans l'application Android.",
     restore_done: "Achats restaurés ✅",
-    toast_unlocked: "Parcours débloqué ! 🎉"
+    toast_unlocked: "Parcours débloqué ! 🎉",
+    btn_share: "📤 Partager avec un ami",
+    share_text: "Croque-Versets : un jeu pour apprendre des versets bibliques en s'amusant ! 🍭✝️",
+    share_copied: "Lien copié ! Colle-le où tu veux 📋"
   },
   en: {
     doc_title: "Croque-Versets — The Bible verse game",
@@ -93,7 +96,10 @@ const I18N = {
     purchase_error: "Purchase couldn't be completed. Please try again later.",
     purchase_unavailable: "Purchases are only available in the Android app.",
     restore_done: "Purchases restored ✅",
-    toast_unlocked: "Journey unlocked! 🎉"
+    toast_unlocked: "Journey unlocked! 🎉",
+    btn_share: "📤 Share with a friend",
+    share_text: "Croque-Versets: a fun game to learn Bible verses! 🍭✝️",
+    share_copied: "Link copied! Paste it anywhere 📋"
   }
 };
 
