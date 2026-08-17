@@ -14,7 +14,7 @@ namespace KingdomOfGod.UI
     /// Assets/_Project/ScriptableObjects/Buildings/ — no manual drag needed, same reasoning as
     /// BattleHUDController's miracle list: flat UITheme-colored buttons, no icon art needed to be
     /// functional), filtered to buildings from an Age the player has actually unlocked. A button
-    /// shows BuildingData.icon when one is assigned (4 of the 39 buildings have real art so far —
+    /// shows BuildingData.icon when one is assigned (14 of the 39 buildings have real art so far —
     /// the rest stay flat-colored, still fully usable) — the icon was imported and sitting on the
     /// asset with nothing ever displaying it. Selecting a button calls KingdomInputController.
     /// SelectBuilding and closes the panel; a persistent label and cancel button (both outside

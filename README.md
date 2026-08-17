@@ -396,10 +396,13 @@ Assets/_Project/
                     BuildingData débloqué (AgeManager.IsUnlocked), généré
                     en code comme les boutons de miracle, affiche
                     désormais BuildingData.icon quand une icône est
-                    assignée (4 des 39 bâtiments — Autel de Pierres,
-                    Marché, Tabernacle, Tente Familiale — avaient une
-                    image déjà importée que rien n'affichait ; les 35
-                    autres restent en couleur plate, toujours utilisables),
+                    assignée (14 des 39 bâtiments ont une image importée —
+                    Autel de Pierres, Marché, Tabernacle, Tente Familiale
+                    depuis un précédent round, plus Campement de Caravane,
+                    Mine, Citerne de Siège, Scierie, Autel d'Ébal, Autel du
+                    Sinaï, Camp de Guilgal, Champs de Canaan, Forteresse et
+                    Ferme cette fois ; les 25 autres restent en couleur
+                    plate, toujours utilisables),
                     sélection -> KingdomInputController.SelectBuilding,
                     avec un libellé et un bouton Annuler toujours visibles
                     hors du panneau ; MissionListUI — liste les 35 missions
@@ -709,7 +712,12 @@ dans l'Éditeur, sans toucher au code.
    n'échantillonne jamais les coins du carré UV, donc le padding
    noir/blanc autour de chaque illustration n'est simplement jamais
    visité), et `CreateTexturedMaterial` bascule le shader plat existant
-   sur `_BaseMap`/`_MainTex` au lieu d'une couleur unie.
+   sur `_BaseMap`/`_MainTex` au lieu d'une couleur unie. Un deuxième lot de
+   10 icônes de Bâtiments a été reçu et assigné de la même façon (guid fixe
+   + `.meta` reproduits à la main) : Campement de Caravane, Mine, Citerne
+   de Siège, Scierie, Autel d'Ébal, Autel du Sinaï, Camp de Guilgal, Champs
+   de Canaan, Forteresse et Ferme — portant le total à 14 des 39 bâtiments
+   illustrés.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

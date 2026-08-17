@@ -288,9 +288,11 @@ runtime-generated `UITheme`-colored button per `BuildingData` under
 functional), filtered to buildings from an unlocked `Age`
 (`AgeManager.IsUnlocked`, resolved at runtime via `GameManager.Instance`
 like the rest of this scene). A button shows `BuildingData.icon` when one
-is assigned — 4 of the 39 buildings (Autel de Pierres, Marché,
-Tabernacle, Tente Familiale) have real imported art that just sat on the
-asset with nothing ever displaying it; the other 35 stay flat-colored,
+is assigned — 14 of the 39 buildings (Autel de Pierres, Marché,
+Tabernacle, Tente Familiale from an earlier round, plus Campement de
+Caravane, Mine, Citerne de Siège, Scierie, Autel d'Ébal, Autel du Sinaï,
+Camp de Guilgal, Champs de Canaan, Forteresse and Ferme from this one)
+have real imported art; the other 25 stay flat-colored,
 still fully usable. Clicking one calls
 `KingdomInputController.SelectBuilding` and closes the panel. Outside the
 panel, always visible: a `SelectedBuildingLabel` showing "En cours de pose

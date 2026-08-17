@@ -19,7 +19,7 @@ MonoBehaviour:
   category: 1
   introducedInAge: 0
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9ceb3a91a7574001afc5e057f730f547, type: 3}
   buildCost:
   - type: 2
     amount: 5
