@@ -43,6 +43,8 @@ namespace KingdomOfGod.SaveSystem
         public List<string> unlockedLeaderIds = new List<string>();
         public string activeLeaderId = "";
 
+        public List<string> usedOnceMiracleIds = new List<string>();
+
         public DateTime savedAtUtc;
     }
 }

@@ -70,6 +70,24 @@ repo could reference one ahead of that). `LeaderManager.allLeaders` and
 `CollectionManager.allArtifacts`/`ageManager` are populated/wired by
 `ProjectSceneSetup` the same way as the registries mentioned above.
 
+`MiracleManager.Unlock` was the same story, and the more consequential one:
+the entire prayer ritual (`BeginPrayer`/`AdvancePrayerTurn`/
+`AccelerateWithFaith`/VFX/SFX, all described below) was fully built and
+functional, but `unlockedMiracles` was never populated by anything, so no
+miracle could ever be cast. `MiracleData` gained a new `age` field (the 24
+`Miracle_*.asset` files were patched with their Age from biblical
+chronology, cross-checked against `effectDescription`/`requiredVerse` where
+ambiguous) and `MiracleManager` now wires an `ageManager` ref plus an
+`allMiracles` registry (populated by `ProjectSceneSetup.SetAssetList`,
+same as the other registries), subscribing to `AgeManager.AgeUnlocked` the
+same way `VerseManager`/`CollectionManager`/`LeaderManager` do. While fixing
+this, `usedOnceMiracles` (which gates `usableOncePerCampaign` miracles like
+Soleil Arrêté from ever being cast twice) turned out to never be saved —
+reloading a save would silently forget which once-only miracles were already
+spent. `SaveData.usedOnceMiracleIds` plus `MiracleManager.RestoreFromSave`
+(matched by `displayName`, same convention as artifacts/buildings/leaders)
+close that gap; `SaveCoordinator.Capture()`/`Apply()` wire it in last.
+
 `AgeManager.AdvanceToNextAge` was the same story again: real, callable,
 nothing calling it — the campaign had no notion of "this Age is done,
 move to the next." `AgeManager` now wires a `missionManager` ref too and
@@ -125,11 +143,25 @@ references resolve at runtime via `GameManager.Instance` instead (Unity
 can't serialize cross-scene Inspector references); `WorldMoodUI` does the
 same for `AllianceSystem`. `PrayerMenuUI`/`VerseJournalUI`/
 `ProphecyJournalPanel` each get a parchment-colored background (`Image` +
-gold `Outline`, from `UITheme.asset`). `VerseJournalUI` still has an empty
-`ListContainer` child under its panel, wired to `listContainer` — its
-`RefreshList()` populates it with one `VerseListItemUI` per memorized
-verse, but stays a no-op until a `listItemPrefab` is assigned (no such
-prefab exists yet, see `Assets/_Project/Prefabs/`). `PrayerMenuUI` no
+gold `Outline`, from `UITheme.asset`). `VerseJournalUI` used to rely on a
+`listItemPrefab` field that was never authored (`Assets/_Project/Prefabs/`
+is empty), so `RefreshList()` was a permanent no-op — on top of that,
+`VerseManager.Unlock`/`AdvanceStep` had zero callers anywhere, so no verse
+could ever reach this panel in the first place. Both are fixed now: `Verse
+Manager` wires an `ageManager` ref and subscribes to `AgeManager.
+AgeUnlocked` (same pattern as `CollectionManager`/`LeaderManager` below),
+unlocking every `VerseData` whose `age` matches the instant that Age does.
+`VerseJournalUI` was rebuilt through `ProjectSceneSetup.CreateCodexPanel`
+(the same list+portrait+detail shape as `LeaderScreenPanel`/
+`AntagonistCodexPanel`/`CollectionPanel`, portrait hidden since `VerseData`
+has no sprite) with rows generated in code — no prefab — plus a new
+`ActionButton` ("Avancer") that drives `VerseManager.AdvanceStep`. The
+GDD's 4-stage mini-game (lecture → trous → ordre → quiz de contexte) is
+represented here as one click per step rather than 4 separate interactive
+puzzle screens, since none of that puzzle content (which words to blank,
+which quiz questions) has been authored yet; once a verse reaches
+`Completed` its `permanentBonus` is granted and the row switches to
+"Écouter" for `AudioManager.PlayVerseNarration`. `PrayerMenuUI` no
 longer needs one: it has two child views, `SelectionView` (a
 `ListContainer` of runtime-generated `UITheme`-colored buttons, one per
 castable `MiracleData` — same code-generated-button pattern as

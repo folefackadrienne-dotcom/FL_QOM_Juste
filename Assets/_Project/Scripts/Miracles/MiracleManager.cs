@@ -15,6 +15,11 @@ namespace KingdomOfGod.Miracles
     /// the multi-turn prayer/charge gauge (steps 1-5 of the ritual) which can be accelerated
     /// with extra Faith or interrupted by an enemy attack; and applies post-cast consequences
     /// (Judgment miracles cast without Justice, and reliance on signs, both erode Alliance).
+    /// Unlock was itself a real, callable method with nothing ever calling it — unlockedMiracles
+    /// stayed permanently empty, so PrayerMenuUI/BattleHUDController's miracle lists (both filter
+    /// from UnlockedMiracles) never had anything to show despite the whole ritual/VFX/SFX pipeline
+    /// working. allMiracles (below) plus the Age-unlock wiring is the fix, the same pattern already
+    /// used for Buildings/Missions/Tech/Artifacts/Leaders/Verses.
     /// </summary>
     public class MiracleManager : MonoBehaviour
     {
@@ -23,6 +28,7 @@ namespace KingdomOfGod.Miracles
         [SerializeField] private AllianceSystem allianceSystem;
         [SerializeField] private CollectionManager collectionManager;
         [SerializeField] private AgeManager ageManager;
+        [SerializeField] private List<MiracleData> allMiracles = new List<MiracleData>();
         [SerializeField] private List<MiracleData> unlockedMiracles = new List<MiracleData>();
 
         [Tooltip("Faith cost and prayer duration multiplier applied in the 'dark ages' (Royaumes Divisés, Exil) — Dieu se tait parfois.")]
@@ -36,6 +42,7 @@ namespace KingdomOfGod.Miracles
         private readonly HashSet<MiracleData> usedOnceMiracles = new HashSet<MiracleData>();
 
         public IReadOnlyList<MiracleData> UnlockedMiracles => unlockedMiracles;
+        public IReadOnlyCollection<MiracleData> UsedOnceMiracles => usedOnceMiracles;
 
         /// <summary>The miracle currently being prayed for, or null if no ritual is in progress. Only one can be active at a time.</summary>
         public MiracleData ActiveMiracle { get; private set; }
@@ -48,9 +55,47 @@ namespace KingdomOfGod.Miracles
         public event Action<MiracleData> PrayerInterrupted;
         public event Action<MiracleData> PrayerCancelled;
 
+        private void Start()
+        {
+            if (ageManager == null) return;
+
+            foreach (var miracle in allMiracles)
+            {
+                if (miracle != null && ageManager.IsUnlocked(miracle.age)) Unlock(miracle);
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (ageManager != null) ageManager.AgeUnlocked += OnAgeUnlocked;
+        }
+
+        private void OnDisable()
+        {
+            if (ageManager != null) ageManager.AgeUnlocked -= OnAgeUnlocked;
+        }
+
+        private void OnAgeUnlocked(Age age)
+        {
+            foreach (var miracle in allMiracles)
+            {
+                if (miracle != null && miracle.age == age) Unlock(miracle);
+            }
+        }
+
         public void Unlock(MiracleData miracle)
         {
             if (!unlockedMiracles.Contains(miracle)) unlockedMiracles.Add(miracle);
+        }
+
+        /// <summary>Reapplies which usableOncePerCampaign miracles were already cast, loaded from a save file and matched by MiracleData.displayName against allMiracles — without this, reloading a save would let a once-per-campaign miracle (e.g. Soleil Arrêté) be cast again.</summary>
+        public void RestoreFromSave(IEnumerable<string> savedUsedOnceDisplayNames)
+        {
+            var nameSet = new HashSet<string>(savedUsedOnceDisplayNames);
+            foreach (var miracle in allMiracles)
+            {
+                if (miracle != null && nameSet.Contains(miracle.displayName)) usedOnceMiracles.Add(miracle);
+            }
         }
 
         public void RecordMoralChoice(string choiceId) => fulfilledChoices.Add(choiceId);

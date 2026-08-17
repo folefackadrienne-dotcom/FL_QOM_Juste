@@ -18,6 +18,7 @@ MonoBehaviour:
     de Foi pour tout le royaume.
   context: 1
   category: 4
+  age: 4
   faithCost: 35
   prayerDurationTurns: 4
   requiredVerse: {fileID: 11400000, guid: f6f682dabade4491b52b9f9acc982450, type: 3}

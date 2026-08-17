@@ -18,6 +18,7 @@ MonoBehaviour:
     illumine et rassure la nuit, et réduit les murmures du peuple.
   context: 2
   category: 0
+  age: 1
   faithCost: 20
   prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: fbd91616b5d24e5390251d5f5ed1349a, type: 3}

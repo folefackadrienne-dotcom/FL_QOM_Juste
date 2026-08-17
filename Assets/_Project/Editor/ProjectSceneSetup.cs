@@ -133,7 +133,9 @@ namespace KingdomOfGod.EditorTools
             SetRef(miracleManager, "allianceSystem", allianceSystem);
             SetRef(miracleManager, "collectionManager", collectionManager);
             SetRef(miracleManager, "ageManager", ageManager);
+            SetAssetList<MiracleData>(miracleManager, "allMiracles", "Assets/_Project/ScriptableObjects/Miracles");
             SetRef(verseManager, "resourceManager", resourceManager);
+            SetRef(verseManager, "ageManager", ageManager);
             SetAssetList<VerseData>(verseManager, "allVerses", "Assets/_Project/ScriptableObjects/Verses");
             SetRef(collectionManager, "resourceManager", resourceManager);
             SetRef(collectionManager, "ageManager", ageManager);
@@ -356,16 +358,20 @@ namespace KingdomOfGod.EditorTools
             UnityEventTools.AddPersistentListener(prayerConfirm.onClick, prayerMenu.ConfirmCast);
             prayerPanelGO.SetActive(false);
 
-            var versePanelGO = new GameObject("VerseJournalPanel", typeof(RectTransform));
-            versePanelGO.transform.SetParent(hudGO.transform, false);
-            AddParchmentBackground(versePanelGO, theme);
+            var (versePanelGO, verseListContainer, versePortrait, verseNameText, verseRoleText, verseDetailText, verseCloseButton) =
+                CreateCodexPanel(hudGO.transform, "VerseJournalPanel", theme);
             var verseJournal = versePanelGO.AddComponent<VerseJournalUI>();
-            var verseListContainer = new GameObject("ListContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
-            verseListContainer.transform.SetParent(versePanelGO.transform, false);
-            ConfigureListLayout(verseListContainer);
+            var verseActionButton = CreateButton(versePanelGO.transform, "ActionButton", "Avancer", new Vector2(140f, -170f), theme);
+            SetRef(verseJournal, "theme", theme);
             SetRef(verseJournal, "panelRoot", versePanelGO);
-            SetRef(verseJournal, "listContainer", verseListContainer.transform);
-            versePanelGO.SetActive(false);
+            SetRef(verseJournal, "listContainer", verseListContainer);
+            SetRef(verseJournal, "closeButton", verseCloseButton);
+            SetRef(verseJournal, "referenceText", verseNameText);
+            SetRef(verseJournal, "stepText", verseRoleText);
+            SetRef(verseJournal, "verseText", verseDetailText);
+            SetRef(verseJournal, "actionButton", verseActionButton);
+            SetRef(verseJournal, "actionButtonLabel", verseActionButton.GetComponentInChildren<TextMeshProUGUI>());
+            versePortrait.gameObject.SetActive(false);
 
             var prophecyPanelGO = new GameObject("ProphecyJournalPanel", typeof(RectTransform));
             prophecyPanelGO.transform.SetParent(hudGO.transform, false);

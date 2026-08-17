@@ -1,4 +1,5 @@
 using KingdomOfGod.Collectibles;
+using KingdomOfGod.Core;
 using KingdomOfGod.Verses;
 using UnityEngine;
 
@@ -36,6 +37,10 @@ namespace KingdomOfGod.Miracles
         [TextArea] public string effectDescription;
         public MiracleContext context;
         public MiracleCategory category;
+
+        [Tooltip("Which Age's story this miracle belongs to — MiracleManager unlocks it the moment this Age does, the same AgeManager.AgeUnlocked pattern used for Verses/Artifacts/Leaders.")]
+        public Age age;
+
         public float faithCost;
 
         [Range(1, 4)]

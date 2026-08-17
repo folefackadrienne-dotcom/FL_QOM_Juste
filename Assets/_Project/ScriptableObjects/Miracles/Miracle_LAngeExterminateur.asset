@@ -18,6 +18,7 @@ MonoBehaviour:
     direct, comme devant Sennachérib à Jérusalem.
   context: 0
   category: 0
+  age: 5
   faithCost: 35
   prayerDurationTurns: 4
   requiredVerse: {fileID: 11400000, guid: 6b788654f357464ab6fa59b920cb2b16, type: 3}

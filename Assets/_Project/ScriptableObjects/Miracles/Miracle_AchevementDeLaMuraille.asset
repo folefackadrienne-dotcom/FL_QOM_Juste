@@ -18,6 +18,7 @@ MonoBehaviour:
     l'opposition ennemie active, comme la muraille bâtie en 52 jours.
   context: 1
   category: 2
+  age: 6
   faithCost: 30
   prayerDurationTurns: 3
   requiredVerse: {fileID: 11400000, guid: bbf52db25a5e404cb6f99c1a1b6e89d0, type: 3}

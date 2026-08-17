@@ -223,11 +223,30 @@ Assets/_Project/
                     continue pendant la prière et une salve à la
                     résolution, ancré à un point fixe au-dessus du centre
                     de la carte (la prière n'est liée à aucune unité/
-                    bâtiment précis, dans Kingdom comme dans Battle)
+                    bâtiment précis, dans Kingdom comme dans Battle).
+                    MiracleManager.Unlock était une méthode réelle et
+                    appelable que rien n'appelait jamais — tout le rituel
+                    de prière fonctionnait déjà mais aucun miracle ne
+                    pouvait être castable. Nouveau champ MiracleData.age
+                    (rempli sur les 24 assets d'après leur chronologie
+                    biblique) + abonnement à AgeManager.AgeUnlocked (même
+                    schéma que Verses/Collectibles/Leaders) ; au passage,
+                    usedOnceMiracles (qui empêche de recaster un miracle à
+                    usage unique) n'était jamais sauvegardé — corrigé via
+                    SaveData.usedOnceMiracleIds/RestoreFromSave
     Alliance/       Jauge d'Alliance (0-100), repentance & multiplicateur
                     de puissance des miracles
     Verses/         Mémorisation de versets (mini-jeu progressif,
-                    VerseUnlocked/VerseMemorized)
+                    VerseUnlocked/VerseMemorized). Unlock/AdvanceStep
+                    étaient réels et appelables mais sans aucun appelant :
+                    VerseManager s'abonne désormais à AgeManager.
+                    AgeUnlocked (déverrouille chaque VerseData dont l'Âge
+                    vient de s'ouvrir) et le nouveau bouton "Avancer" du
+                    journal (UI/) pilote AdvanceStep — les 4 étapes du GDD
+                    (lecture/trous/ordre/quiz) sont représentées par un
+                    clic chacune plutôt que 4 mini-jeux distincts, faute de
+                    contenu de puzzle rédigé (mots à masquer, questions de
+                    quiz) pour les 34 versets
     Collectibles/   Artefacts bibliques (Commun → Légendaire),
                     CollectionManager.ArtifactCollected/AgeCollectionCompleted
                     — Collect était une méthode réelle et appelable que
@@ -355,9 +374,14 @@ Assets/_Project/
                     multi-tours) au lieu de TryCast (résolution
                     instantanée) ; la vue rituel affiche la progression
                     et un bouton Accélérer (AccelerateWithFaith) et
-                    Abandonner (InterruptPrayer) ; VerseJournalUI
-                    instancie encore un VerseListItemUI par entrée dès
-                    qu'un listItemPrefab est assigné ; UIThemeData
+                    Abandonner (InterruptPrayer) ; VerseJournalUI a été
+                    reconstruit sur CreateCodexPanel (même liste+portrait
+                    +détail que LeaderScreenPanel/AntagonistCodexPanel/
+                    CollectionPanel, portrait masqué car VerseData n'a pas
+                    de sprite) : lignes générées en code (plus de
+                    listItemPrefab, VerseListItemUI supprimée) et un bouton
+                    "Avancer" qui pilote VerseManager.AdvanceStep, puis
+                    "Écouter" une fois le verset mémorisé ; UIThemeData
                     applique en couleurs plates
                     la palette de docs/ArtDirection.md (boutons, panneaux,
                     libellés) et WorldMoodUI teinte l'écran de Kingdom
@@ -544,11 +568,21 @@ dans l'Éditeur, sans toucher au code.
    discipline UITheme-au-lieu-d'art que `HexGridRenderer`/`BuildingPaletteUI`.
    Remplacer par le vrai art se fera juste en assignant `BuildingData.prefab`,
    sans toucher au code.
-4. Habiller visuellement le journal des versets (`VerseJournalUI` a
-   toujours sa boucle d'instanciation de liste — `RefreshList()` peuple un
-   `VerseListItemUI` par verset mémorisé — mais elle reste un no-op tant
-   qu'aucun prefab d'item n'est assigné à `listItemPrefab`, faute d'art
-   produit). `PrayerMenuUI`, elle, n'a plus besoin de prefab : sa liste de
+4. ~~Habiller visuellement le journal des versets~~ Fait : `VerseJournalUI`
+   ne dépend plus d'un `listItemPrefab` (jamais assigné faute d'art produit,
+   donc `RefreshList()` restait un no-op permanent) — reconstruite sur
+   `CreateCodexPanel` avec des lignes générées en code, comme
+   `BuildingPaletteUI`/`PrayerMenuUI`. Plus profond que prévu : `VerseManager.
+   Unlock`/`AdvanceStep` étaient eux-mêmes des méthodes réelles sans aucun
+   appelant, donc aucun verset n'atteignait jamais ce panneau. `VerseManager`
+   s'abonne désormais à `AgeManager.AgeUnlocked` (déverrouille chaque
+   `VerseData` dont l'Âge vient de s'ouvrir) et un bouton "Avancer" pilote
+   `AdvanceStep`. Limite assumée : le mini-jeu de mémorisation en 4 étapes du
+   GDD (lecture → trous → ordre → quiz de contexte) est représenté par un
+   clic "Avancer" par étape plutôt que 4 écrans de puzzle distincts, faute de
+   contenu de puzzle rédigé (quels mots masquer, quelles questions de quiz)
+   pour les 34 versets — à construire séparément si souhaité. `PrayerMenuUI`,
+   elle, n'a plus besoin de prefab : sa liste de
    miracles castables est générée en code (comme `BuildingPaletteUI`).
    Le rituel complet de prière (`MiracleManager.BeginPrayer` /
    `AdvancePrayerTurn` / `AccelerateWithFaith` / `InterruptPrayer`) était déjà

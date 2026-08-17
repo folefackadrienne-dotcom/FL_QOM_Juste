@@ -18,6 +18,7 @@ MonoBehaviour:
     fils de la Sunamite (2 Rois 4).
   context: 1
   category: 4
+  age: 5
   faithCost: 25
   prayerDurationTurns: 3
   requiredVerse: {fileID: 0}

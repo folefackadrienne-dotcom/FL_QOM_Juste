@@ -18,6 +18,7 @@ MonoBehaviour:
     hostile, comme Daniel dans la fosse aux lions.
   context: 1
   category: 0
+  age: 6
   faithCost: 20
   prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: 334c37d8d0f04f858f8d0b23e5942907, type: 3}

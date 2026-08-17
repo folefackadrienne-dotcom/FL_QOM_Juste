@@ -18,6 +18,7 @@ MonoBehaviour:
     la harpe de David apaisait Saül.
   context: 1
   category: 4
+  age: 4
   faithCost: 10
   prayerDurationTurns: 1
   requiredVerse: {fileID: 0}

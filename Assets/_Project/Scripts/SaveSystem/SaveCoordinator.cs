@@ -100,6 +100,11 @@ namespace KingdomOfGod.SaveSystem
                 data.activeLeaderId = gameManager.Leaders.ActiveLeader.displayName;
             }
 
+            foreach (var miracle in gameManager.Miracles.UsedOnceMiracles)
+            {
+                data.usedOnceMiracleIds.Add(miracle.displayName);
+            }
+
             return data;
         }
 
@@ -135,6 +140,7 @@ namespace KingdomOfGod.SaveSystem
             gameManager.Missions.RestoreFromSave(data.completedMissionIds);
             gameManager.Tech.RestoreFromSave(data.unlockedTechIds);
             gameManager.Leaders.RestoreFromSave(data.unlockedLeaderIds, data.activeLeaderId);
+            gameManager.Miracles.RestoreFromSave(data.usedOnceMiracleIds);
         }
     }
 }

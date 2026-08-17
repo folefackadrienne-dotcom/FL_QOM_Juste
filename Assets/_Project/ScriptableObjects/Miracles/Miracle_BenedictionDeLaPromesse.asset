@@ -18,6 +18,7 @@ MonoBehaviour:
     plusieurs tours, en écho à la promesse faite à Abraham.
   context: 1
   category: 2
+  age: 0
   faithCost: 10
   prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 3af41dd943994957aa5cf8357453d93b, type: 3}

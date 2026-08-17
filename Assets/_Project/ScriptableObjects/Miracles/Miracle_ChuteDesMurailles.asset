@@ -18,6 +18,7 @@ MonoBehaviour:
     de la ville assiégée, débloqué par la corne de bélier de Jéricho.
   context: 0
   category: 3
+  age: 2
   faithCost: 25
   prayerDurationTurns: 4
   requiredVerse: {fileID: 11400000, guid: 729e706d1b744c55afdce6c038f08c96, type: 3}

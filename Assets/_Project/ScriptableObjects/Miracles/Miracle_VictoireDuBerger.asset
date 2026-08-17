@@ -18,6 +18,7 @@ MonoBehaviour:
     que soit son niveau de défense.
   context: 0
   category: 3
+  age: 4
   faithCost: 15
   prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 908ff1abe3574f9cbb08db200a4bdcc2, type: 3}

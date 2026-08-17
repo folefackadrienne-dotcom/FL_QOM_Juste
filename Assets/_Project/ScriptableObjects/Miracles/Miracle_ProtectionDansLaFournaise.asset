@@ -18,6 +18,7 @@ MonoBehaviour:
     de céder à l'idolâtrie imposée, comme les trois compagnons de Daniel.
   context: 2
   category: 0
+  age: 6
   faithCost: 25
   prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: 690beb6060d7465ba3f01e692ba096c0, type: 3}

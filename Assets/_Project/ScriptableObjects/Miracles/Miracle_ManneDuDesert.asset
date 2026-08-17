@@ -18,6 +18,7 @@ MonoBehaviour:
     tours, tant que rien n'en est amassé pour le lendemain (Exode 16).
   context: 1
   category: 2
+  age: 1
   faithCost: 15
   prayerDurationTurns: 1
   requiredVerse: {fileID: 0}

@@ -18,6 +18,7 @@ MonoBehaviour:
     feu jailli du rocher, confirmant l'appel de Gédéon.
   context: 2
   category: 1
+  age: 3
   faithCost: 15
   prayerDurationTurns: 1
   requiredVerse: {fileID: 11400000, guid: 16c32970fadf45348010844099977923, type: 3}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using KingdomOfGod.Core;
 using KingdomOfGod.Resources;
 using UnityEngine;
 
@@ -15,10 +16,17 @@ namespace KingdomOfGod.Verses
         Completed
     }
 
-    /// <summary>Tracks unlocked verses, memorization progress, and the "Bibliothèque de la Torah" / Meditation mode.</summary>
+    /// <summary>
+    /// Tracks unlocked verses, memorization progress, and the "Bibliothèque de la Torah" / Meditation
+    /// mode. Unlock was a real, callable method with nothing ever calling it — every verse would have
+    /// stayed unlockable-but-never-unlocked forever, and any MiracleData.requiredVerse gate could
+    /// never pass. ageManager (below) is the missing trigger, the same "Age unlocks its content"
+    /// pattern already used for Buildings/Missions/Tech/Artifacts/Leaders.
+    /// </summary>
     public class VerseManager : MonoBehaviour
     {
         [SerializeField] private ResourceManager resourceManager;
+        [SerializeField] private AgeManager ageManager;
         [SerializeField] private List<VerseData> allVerses = new List<VerseData>();
 
         private readonly HashSet<VerseData> unlockedVerses = new HashSet<VerseData>();
@@ -26,8 +34,37 @@ namespace KingdomOfGod.Verses
         private readonly Dictionary<VerseData, MemorizationStep> progress = new Dictionary<VerseData, MemorizationStep>();
 
         public IReadOnlyCollection<VerseData> MemorizedVerses => memorizedVerses;
+        public IReadOnlyCollection<VerseData> UnlockedVerses => unlockedVerses;
         public event Action<VerseData> VerseUnlocked;
         public event Action<VerseData> VerseMemorized;
+
+        private void Start()
+        {
+            if (ageManager == null) return;
+
+            foreach (var verse in allVerses)
+            {
+                if (verse != null && ageManager.IsUnlocked(verse.age)) Unlock(verse);
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (ageManager != null) ageManager.AgeUnlocked += OnAgeUnlocked;
+        }
+
+        private void OnDisable()
+        {
+            if (ageManager != null) ageManager.AgeUnlocked -= OnAgeUnlocked;
+        }
+
+        private void OnAgeUnlocked(Age age)
+        {
+            foreach (var verse in allVerses)
+            {
+                if (verse != null && verse.age == age) Unlock(verse);
+            }
+        }
 
         public void Unlock(VerseData verse)
         {
@@ -37,6 +74,8 @@ namespace KingdomOfGod.Verses
                 VerseUnlocked?.Invoke(verse);
             }
         }
+
+        public bool IsUnlocked(VerseData verse) => unlockedVerses.Contains(verse);
 
         public bool IsMemorized(VerseData verse) => memorizedVerses.Contains(verse);
 

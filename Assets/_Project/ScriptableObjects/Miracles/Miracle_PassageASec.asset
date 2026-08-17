@@ -18,6 +18,7 @@ MonoBehaviour:
     d'Alliance, comme au passage du Jourdain (Josué 3-4).
   context: 2
   category: 0
+  age: 2
   faithCost: 20
   prayerDurationTurns: 2
   requiredVerse: {fileID: 0}

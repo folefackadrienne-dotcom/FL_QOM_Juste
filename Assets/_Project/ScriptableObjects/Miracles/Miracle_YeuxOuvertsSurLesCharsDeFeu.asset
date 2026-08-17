@@ -18,6 +18,7 @@ MonoBehaviour:
     force perçu par le joueur et par l'ennemi.
   context: 0
   category: 0
+  age: 5
   faithCost: 20
   prayerDurationTurns: 2
   requiredVerse: {fileID: 11400000, guid: 7b128ad2d6684c9c985336c61090091a, type: 3}
