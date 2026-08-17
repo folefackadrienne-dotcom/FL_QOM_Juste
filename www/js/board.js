@@ -151,6 +151,27 @@ class Board {
     });
   }
 
+  spawnSparkles(tileEl) {
+    const boardRect = this.container.getBoundingClientRect();
+    const tileRect = tileEl.getBoundingClientRect();
+    const cx = tileRect.left - boardRect.left + tileRect.width / 2;
+    const cy = tileRect.top - boardRect.top + tileRect.height / 2;
+    const count = 3;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("span");
+      s.className = "sparkle";
+      s.textContent = "✨";
+      const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.8 - 0.4);
+      const dist = 16 + Math.random() * 12;
+      s.style.left = cx + "px";
+      s.style.top = cy + "px";
+      s.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+      s.style.setProperty("--dy", `${Math.sin(angle) * dist}px`);
+      this.container.appendChild(s);
+      setTimeout(() => s.remove(), 520);
+    }
+  }
+
   findMatches() {
     const matched = new Set();
 
@@ -192,8 +213,13 @@ class Board {
 
     matches.forEach(({ r, c }) => {
       this.cellEls[r][c].classList.add("matched");
+      this.spawnSparkles(this.cellEls[r][c]);
     });
     SFX.match();
+    this.container.classList.remove("pulse");
+    // force reflow so the animation restarts even on rapid consecutive matches
+    void this.container.offsetWidth;
+    this.container.classList.add("pulse");
 
     const gained = matches.length * 10 * cascadeLevel;
     this.onScore(gained, matches.length, cascadeLevel);
@@ -205,6 +231,7 @@ class Board {
     });
 
     this.collapseAndRefill();
+    SFX.drop();
     await this.wait(220);
 
     await this.resolveMatches(cascadeLevel + 1);

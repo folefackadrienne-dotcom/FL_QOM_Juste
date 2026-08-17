@@ -119,6 +119,7 @@ const VerseGame = (function () {
       els.checkBtn.classList.add("hidden");
       els.nextBtn.classList.remove("hidden");
       SFX.verseComplete();
+      VFX.confetti();
       return true;
     } else {
       els.feedback.textContent = t("verse_retry");

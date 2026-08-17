@@ -324,6 +324,18 @@ function starsPreview() {
   return "⭐".repeat(n) + "☆".repeat(3 - n);
 }
 
+function renderStarsAnimated(elementId, filledCount) {
+  const el = document.getElementById(elementId);
+  el.innerHTML = "";
+  for (let i = 0; i < 3; i++) {
+    const span = document.createElement("span");
+    span.className = "star";
+    span.style.animationDelay = i * 0.12 + "s";
+    span.textContent = i < filledCount ? "⭐" : "☆";
+    el.appendChild(span);
+  }
+}
+
 function handleScore(gained) {
   state.score += gained;
   updateHud();
@@ -379,9 +391,10 @@ function renderResultTexts() {
 
     document.getElementById("result-emoji").textContent = "🎉";
     document.getElementById("result-title").textContent = t("result_win_title");
-    document.getElementById("result-stars").textContent = "⭐".repeat(stars) + "☆".repeat(3 - stars);
+    renderStarsAnimated("result-stars", stars);
     document.getElementById("result-text").textContent = t("result_win_text", state.score, state.target);
     document.getElementById("btn-to-verse").classList.remove("hidden");
+    VFX.confetti();
   } else {
     document.getElementById("result-emoji").textContent = "🙏";
     document.getElementById("result-title").textContent = t("result_lose_title");
