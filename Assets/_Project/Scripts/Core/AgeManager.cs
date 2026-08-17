@@ -11,6 +11,12 @@ namespace KingdomOfGod.Core
     /// no notion of "done with this age, move on to the next" at all. missionManager (below) is the
     /// missing trigger: completing an age's last remaining mission calls AdvanceToNextAge, using
     /// MissionManager.AreAllMissionsComplete as the criterion.
+    ///
+    /// A free-tier player who finished the current age's last mission before buying the Full
+    /// Edition would otherwise stay stuck forever: UnlockAge's content-gate refusal only fires
+    /// AgeLocked into the void, and with no missions left to complete, OnMissionCompleted never
+    /// fires again to retrigger the check. Subscribing to contentGate.GateChanged closes that gap —
+    /// the moment a purchase flips the gate, AgeManager retries the advance on its own.
     /// </summary>
     public class AgeManager : MonoBehaviour
     {
@@ -42,16 +48,27 @@ namespace KingdomOfGod.Core
         private void OnEnable()
         {
             if (missionManager != null) missionManager.MissionCompleted += OnMissionCompleted;
+            if (contentGate != null) contentGate.GateChanged += OnGateChanged;
         }
 
         private void OnDisable()
         {
             if (missionManager != null) missionManager.MissionCompleted -= OnMissionCompleted;
+            if (contentGate != null) contentGate.GateChanged -= OnGateChanged;
         }
 
         private void OnMissionCompleted(MissionData mission)
         {
             if (mission.age == CurrentAge && missionManager.AreAllMissionsComplete(CurrentAge))
+            {
+                AdvanceToNextAge();
+            }
+        }
+
+        /// <summary>Retries the advance a purchase may have just unblocked — a no-op unless the current age's missions were already all complete and UnlockAge had previously refused the next one.</summary>
+        private void OnGateChanged()
+        {
+            if (missionManager != null && missionManager.AreAllMissionsComplete(CurrentAge))
             {
                 AdvanceToNextAge();
             }

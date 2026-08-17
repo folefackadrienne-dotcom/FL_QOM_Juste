@@ -388,8 +388,19 @@ Assets/_Project/
                     Nouveau StoreUI (UI/), accessible depuis la barre
                     d'outils du Royaume, affiche le palier courant et
                     appelle les deux méthodes ; EditorIAPService fait
-                    réussir tout "achat" instantanément (stub Éditeur), donc
-                    ce blocage disparaît dès ce round
+                    réussir tout "achat" instantanément (stub Éditeur). Un
+                    second blocage restait caché derrière celui-ci : un
+                    joueur qui termine la dernière mission de son Âge
+                    *avant* d'acheter restait quand même bloqué pour
+                    toujours, achat ou pas — plus aucune mission à
+                    terminer pour redéclencher la vérification, et rien
+                    n'écoutait TierChanged pour retenter le déblocage.
+                    Nouvel événement IContentGate.GateChanged (implémenté
+                    par EntitlementManager, levé avec TierChanged) auquel
+                    AgeManager s'abonne désormais lui-même pour retenter
+                    AdvanceToNextAge dès que le palier change — sans que
+                    AgeManager ait besoin de savoir pourquoi le verrou
+                    s'est levé
     Audio/          Direction sonore : thèmes musicaux par contexte
                     (MusicThemeData), leitmotifs récurrents
                     (LeitmotifData), ambiances (AmbientSoundscapeData),

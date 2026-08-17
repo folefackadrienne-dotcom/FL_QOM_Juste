@@ -1,3 +1,5 @@
+using System;
+
 namespace KingdomOfGod.Core
 {
     /// <summary>
@@ -8,5 +10,8 @@ namespace KingdomOfGod.Core
     public interface IContentGate
     {
         bool CanUnlockAge(Age age);
+
+        /// <summary>Fires whenever CanUnlockAge's answer for the current age might have flipped from false to true (e.g. a purchase completed) — lets AgeManager retry an unlock that was previously refused, without knowing why it changed.</summary>
+        event Action GateChanged;
     }
 }

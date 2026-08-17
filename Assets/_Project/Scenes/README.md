@@ -110,6 +110,19 @@ reach `CampaignCompleted`. See the `Kingdom` section's `StoreUI` for the
 fix — `EditorIAPService` already made every "purchase" succeed instantly,
 it just had nothing calling it.
 
+That first fix shipped with a second blocker still hiding behind it: a
+player who finished the current age's last mission *before* buying would
+stay stuck forever even after a successful purchase — `UnlockAge`'s
+refusal only fires `AgeLocked` into the void (zero subscribers), and with
+no missions left to complete, `OnMissionCompleted` never fires again to
+retrigger the check; nothing listened to `EntitlementManager.TierChanged`
+either to retry. `IContentGate` gained a `GateChanged` event (implemented
+by `EntitlementManager`, raised alongside `TierChanged`), and `AgeManager`
+now subscribes to it in `OnEnable` — the moment a purchase flips the
+gate, it retries `AdvanceToNextAge` for the current age on its own,
+without knowing anything about purchases or entitlements (same
+decoupling `IContentGate.CanUnlockAge` already had).
+
 `ProphecyManager` follows the exact same `VerseManager`/`CollectionManager`
 shape: wires an `ageManager` ref plus an `allProphecies` registry
 (`ProjectSceneSetup.SetAssetList<ProphecyData>` from

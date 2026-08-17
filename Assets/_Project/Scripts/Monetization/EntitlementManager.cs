@@ -10,6 +10,10 @@ namespace KingdomOfGod.Monetization
     /// Free tier: ages up to <see cref="freeAgeLimit"/> (GDD: "Accès aux 2-3 premiers
     /// âges"). Buying <see cref="fullEditionProduct"/> unlocks every age and Mode Libre.
     /// Cosmetic/Battle Pass products only ever add owned items, never gameplay power.
+    /// GateChanged fires alongside TierChanged so AgeManager can retry a previously-refused
+    /// UnlockAge the moment a purchase completes — without it, a player who finished a free-tier
+    /// age's last mission before buying would stay stuck forever: nothing left to complete to
+    /// retrigger the blocked check, and the purchase itself never nudged AgeManager to look again.
     /// </summary>
     public class EntitlementManager : MonoBehaviour, IContentGate
     {
@@ -24,6 +28,9 @@ namespace KingdomOfGod.Monetization
 
         public event Action<EntitlementTier> TierChanged;
         public event Action<ProductData> ProductPurchased;
+
+        /// <summary>IContentGate.GateChanged — fires alongside TierChanged so AgeManager can retry a previously-refused UnlockAge without this class knowing anything about ages.</summary>
+        public event Action GateChanged;
 
         private void Awake()
         {
@@ -67,6 +74,7 @@ namespace KingdomOfGod.Monetization
 
             Tier = EntitlementTier.FullEdition;
             TierChanged?.Invoke(Tier);
+            GateChanged?.Invoke();
         }
 
         /// <summary>Reapplies a tier and owned product list loaded from a save file.</summary>
@@ -76,6 +84,7 @@ namespace KingdomOfGod.Monetization
             ownedProductIds.Clear();
             foreach (var id in savedProductIds) ownedProductIds.Add(id);
             TierChanged?.Invoke(Tier);
+            GateChanged?.Invoke();
         }
 
         public IReadOnlyCollection<string> OwnedProductIds => ownedProductIds;
