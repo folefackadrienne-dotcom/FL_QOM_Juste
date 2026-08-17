@@ -508,9 +508,17 @@ Same elevated camera + `HexCameraController` as `Kingdom`, plus
 live in this same scene, no cross-scene fallback needed here): first
 left-click on a cell occupied by a `Allegiance.Player` unit selects it, a
 second click resolves through `BattleManager` — an enemy-occupied cell
-attacks, an empty one (within movement range) moves, anything else just
-deselects; a failed attack/move plays "Interface - Erreur / Action
-Impossible". EventSystem, Canvas (this scene previously had none), a
+attacks, an empty one (within movement range) moves, a friendly-occupied
+cell reselects that unit *unless* the selected unit's `UnitData.canHeal`
+is set, in which case it heals instead via the new `BattleManager.TryHeal`
+(reuses `attackRange` as heal range rather than adding a field just for
+this); anything else just deselects; a failed attack/move/heal plays
+"Interface - Erreur / Action Impossible". `UnitData.canHeal`/`healAmount`
+and `UnitInstance.Heal` were real, working members with zero callers —
+`Unit_PretreLevite` (the one `UnitData` with `canHeal` set) is placed in
+the Ézéchias et Sennachérib roster specifically "pour le soin", but had no
+way to actually heal anyone before this fix. `BattleHUDController`'s
+stats panel now shows "Soin N" for a selected healer. EventSystem, Canvas (this scene previously had none), a
 dedicated `BattleGrid`/`HexGrid` pair sized for tactical combat (radius 5,
 vs. the kingdom's default 10), and a `BattleManager`. Its own local
 `HexGridVisual`/`HexGridRenderer` (same script as `Kingdom`'s, wired

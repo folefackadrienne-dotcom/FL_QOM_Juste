@@ -73,7 +73,8 @@ namespace KingdomOfGod.UI
                 ? string.Empty
                 : $"{unit.Data.displayName}\nPV {unit.CurrentHealth}/{unit.Data.maxHealth}\n" +
                   $"Attaque {unit.Data.attack}   Défense {unit.Data.defense}\n" +
-                  $"Déplacement {unit.Data.movement}   Portée {unit.Data.attackRange}";
+                  $"Déplacement {unit.Data.movement}   Portée {unit.Data.attackRange}" +
+                  (unit.Data.canHeal ? $"\nSoin {unit.Data.healAmount} (cliquer un allié)" : string.Empty);
         }
 
         private void OnEndTurnClicked() => battleManager.EndPlayerPhase();

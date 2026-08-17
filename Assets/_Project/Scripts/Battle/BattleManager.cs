@@ -83,6 +83,26 @@ namespace KingdomOfGod.Battle
             return true;
         }
 
+        /// <summary>
+        /// UnitData.canHeal/healAmount and UnitInstance.Heal were real, usable members with zero
+        /// callers — the Prêtre-Lévite (the one UnitData with canHeal set) had no way to actually
+        /// heal in battle. Reuses attackRange as the heal range rather than adding a new UnitData
+        /// field just for this one unit; targets any non-Enemy unit (Player or Ally), same
+        /// friend/foe split TryAttack implicitly relies on via its caller.
+        /// </summary>
+        public bool TryHeal(UnitInstance healer, UnitInstance target)
+        {
+            if (!healer.Data.canHeal) return false;
+            if (healer.HasActedThisTurn) return false;
+            if (target.Allegiance == Allegiance.Enemy) return false;
+            if (healer.Position.DistanceTo(target.Position) > healer.Data.attackRange) return false;
+
+            target.Heal(healer.Data.healAmount);
+            healer.HasActedThisTurn = true;
+            GameManager.Instance?.Audio.PlaySfx("Alliance - Repentance / Restauration");
+            return true;
+        }
+
         public bool TryMove(UnitInstance unit, HexCoordinates destination)
         {
             if (battleGrid.IsOccupied(destination)) return false;

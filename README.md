@@ -210,7 +210,20 @@ Assets/_Project/
                     des `.meta` avec GUID fixe pour les 9 `UnitData`
                     désormais référencées par nom depuis des `.asset` de
                     mission — elles n'en avaient encore aucun, rien ne
-                    les ayant référencées par GUID jusqu'ici
+                    les ayant référencées par GUID jusqu'ici. Ce "pour le
+                    soin" restait cependant purement narratif :
+                    UnitData.canHeal/healAmount et UnitInstance.Heal
+                    étaient des membres réels et fonctionnels sans aucun
+                    appelant — Unit_PretreLevite était placé dans le
+                    roster de cette mission mais ne pouvait rien soigner
+                    du tout. Nouveau BattleManager.TryHeal (réutilise
+                    attackRange comme portée de soin plutôt que d'ajouter
+                    un champ dédié pour cette seule unité) ; cliquer sur
+                    un allié avec un soigneur sélectionné soigne
+                    désormais au lieu de resélectionner
+                    (BattleInputController), et BattleHUDController
+                    affiche "Soin X" dans la fiche d'unité quand
+                    UnitData.canHeal est vrai
     Miracles/       Miracles conditionnels (5 catégories, coût en Foi, verset/
                     objet/Alliance requis, jauge de prière 1-4 tours
                     interruptible, limite à 1 usage unique et coût
