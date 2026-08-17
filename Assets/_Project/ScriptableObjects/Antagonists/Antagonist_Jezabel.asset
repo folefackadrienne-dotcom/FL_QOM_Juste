@@ -16,7 +16,7 @@ MonoBehaviour:
   age: 5
   role: >-
     Antagoniste principale de l'Âge 6, aux côtés de son mari Achab.
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 8d6f9cc22b264be5810cea959fd2e85b, type: 3}
   appearance: >-
     Femme d'une grande beauté froide et calculée. Maquillage
     sophistiqué, yeux soulignés, lèvres rouges. Vêtements phéniciens

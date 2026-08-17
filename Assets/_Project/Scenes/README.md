@@ -394,8 +394,9 @@ at the bottom — since `LeaderScreenUI`, `AntagonistCodexUI` and
   `AntagonistData` assets, revealed by `AgeManager.IsUnlocked` (no
   unlock/collected state of its own — `AntagonistData` never had a
   manager, `BattleManager` only ever reads it to pick a boss SFX cue).
-  Shows `role`, `encounterDescription`, `uniqueMechanicName`/
-  `uniqueMechanicDescription`, and `victoryCondition`.
+  Shows `portrait` (all 5 now assigned — Pharaon, Goliath, Jézabel,
+  Sennachérib, Sanballat et Tobija), `role`, `encounterDescription`,
+  `uniqueMechanicName`/`uniqueMechanicDescription`, and `victoryCondition`.
 - `CollectionPanel` (`CollectionUI`): fiche journal for the 45
   `ArtifactData` assets. `CollectionManager.Collect` was likewise a real
   method nothing called — `CollectionManager` now subscribes to

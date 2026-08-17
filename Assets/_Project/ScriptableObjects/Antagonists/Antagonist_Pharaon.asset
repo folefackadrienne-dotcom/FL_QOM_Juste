@@ -18,7 +18,7 @@ MonoBehaviour:
     Antagoniste principal de l'Âge 2. Nom dans le jeu : « Pharaon » — le
     joueur ne connaît jamais son nom personnel, ce qui renforce son
     caractère d'institution plus que d'individu.
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: db3a3ed4abec4a149307c87aed458f9c, type: 3}
   appearance: >-
     Homme d'âge mûr, visage fier et impassible. Yeux lourdement
     maquillés de khôl, peau bronzée. Coiffe de pharaon imposante

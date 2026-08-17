@@ -797,7 +797,11 @@ dans l'Éditeur, sans toucher au code.
    + `.meta` reproduits à la main) : Campement de Caravane, Mine, Citerne
    de Siège, Scierie, Autel d'Ébal, Autel du Sinaï, Camp de Guilgal, Champs
    de Canaan, Forteresse et Ferme — portant le total à 14 des 39 bâtiments
-   illustrés.
+   illustrés. Les 5 portraits d'`AntagonistData` (Pharaon, Goliath,
+   Jézabel, Sennachérib, Sanballat et Tobija) ont ensuite été reçus et
+   assignés de la même façon — `AntagonistCodexUI` affichait déjà
+   `AntagonistData.portrait` génériquement, donc aucun changement de code
+   n'était nécessaire, seulement l'import.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

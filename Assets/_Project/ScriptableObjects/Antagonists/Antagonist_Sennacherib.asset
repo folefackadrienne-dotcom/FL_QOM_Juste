@@ -17,7 +17,7 @@ MonoBehaviour:
   role: >-
     Antagoniste majeur de la fin de l'Âge 6, lors du siège de Jérusalem
     sous Ézéchias.
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: aae95767e8904c0f92772368729b3710, type: 3}
   appearance: >-
     Roi assyrien imposant, barbe longue très travaillée (style assyrien
     caractéristique), cheveux bouclés. Armure lourde richement décorée.

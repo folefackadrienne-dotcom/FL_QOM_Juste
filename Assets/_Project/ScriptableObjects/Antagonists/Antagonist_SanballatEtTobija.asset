@@ -16,7 +16,7 @@ MonoBehaviour:
   age: 6
   role: >-
     Antagonistes principaux de l'Âge 7, en opposition à Néhémie.
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 06d90016be384f7980864a1130b6f585, type: 3}
   appearance: >-
     Sanballat : homme d'âge mûr, visage rusé et moqueur, vêtements de
     gouverneur perse assez riches, sourire condescendant permanent.

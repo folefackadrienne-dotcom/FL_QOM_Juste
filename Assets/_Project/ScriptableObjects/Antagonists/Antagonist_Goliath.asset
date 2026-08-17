@@ -17,7 +17,7 @@ MonoBehaviour:
   role: >-
     Antagoniste emblématique du début de l'Âge 5, boss de la mission
     « David et Goliath ».
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: bbe28ee441cf4f2a88bd15145f094ecd, type: 3}
   appearance: >-
     Géant (environ 2,90 m dans le jeu), extrêmement musclé. Armure de
     bronze massive qui brille au soleil. Visage brutal, barbe épaisse,
