@@ -24,11 +24,16 @@ html, body {
   user-select: none;
 }
 
-.lang-toggle {
+.top-controls {
   position: fixed;
   top: 10px;
   right: 10px;
   z-index: 40;
+  display: flex;
+  gap: 8px;
+}
+
+.lang-toggle {
   background: #fffdf8;
   border: none;
   border-radius: 20px;

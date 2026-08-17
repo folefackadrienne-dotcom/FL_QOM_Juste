@@ -91,6 +91,7 @@ const VerseGame = (function () {
     span.textContent = word;
     span.classList.add("filled");
     btnEl.classList.add("used");
+    SFX.wordPlaced();
 
     els.feedback.textContent = "";
   }
@@ -117,6 +118,7 @@ const VerseGame = (function () {
       els.feedback.className = "verse-feedback ok";
       els.checkBtn.classList.add("hidden");
       els.nextBtn.classList.remove("hidden");
+      SFX.verseComplete();
       return true;
     } else {
       els.feedback.textContent = t("verse_retry");

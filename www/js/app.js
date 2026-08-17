@@ -5,6 +5,7 @@ const TOTAL_LEVELS = PARCOURS.reduce((s, p) => s + p.verses.length, 0);
 
 const state = {
   lang: "fr",
+  sound: true,
   progress: {}, // { [parcoursId]: { unlocked, stars: {levelId:n}, learned: {levelId:true} } }
   currentParcoursId: null,
   currentLevelId: null,
@@ -51,15 +52,17 @@ function loadProgress() {
       const data = JSON.parse(raw);
       if (data && data.progress) state.progress = data.progress;
       if (data && (data.lang === "fr" || data.lang === "en")) state.lang = data.lang;
+      if (data && typeof data.sound === "boolean") state.sound = data.sound;
     }
   } catch (e) {
     /* stockage indisponible : on continue avec l'état par défaut */
   }
+  SFX.setEnabled(state.sound);
 }
 
 function saveProgress() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ progress: state.progress, lang: state.lang }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ progress: state.progress, lang: state.lang, sound: state.sound }));
   } catch (e) {
     /* stockage indisponible : progression non persistée */
   }
@@ -83,6 +86,7 @@ function applyStaticI18n() {
   document.documentElement.lang = state.lang;
   document.title = t("doc_title");
   document.getElementById("lang-toggle").textContent = "🌐 " + t("lang_switch_label");
+  document.getElementById("sound-toggle").textContent = state.sound ? "🔊" : "🔇";
 
   document.getElementById("home-subtitle").textContent = t("home_subtitle");
   document.getElementById("btn-play").textContent = t("btn_play");
@@ -356,6 +360,9 @@ function finishLevel(win) {
       prog.unlocked = level.id + 1;
     }
     saveProgress();
+    SFX.levelWin();
+  } else {
+    SFX.levelLose();
   }
 
   renderResultTexts();
@@ -464,6 +471,13 @@ document.addEventListener("DOMContentLoaded", () => {
     saveProgress();
     applyStaticI18n();
     refreshActiveScreen();
+  });
+
+  document.getElementById("sound-toggle").addEventListener("click", () => {
+    state.sound = !state.sound;
+    SFX.setEnabled(state.sound);
+    saveProgress();
+    applyStaticI18n();
   });
 
   document.querySelectorAll("[data-nav]").forEach((btn) => {

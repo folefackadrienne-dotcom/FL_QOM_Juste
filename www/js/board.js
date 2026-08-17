@@ -81,6 +81,7 @@ class Board {
     if (!this.selected) {
       this.selected = { r, c };
       this.cellEls[r][c].classList.add("selected");
+      SFX.select();
       return;
     }
 
@@ -118,12 +119,14 @@ class Board {
       this.updateCell(r1, c1);
       this.updateCell(r2, c2);
       this.flashInvalid(r1, c1, r2, c2);
+      SFX.invalid();
       this.onInvalid();
       await this.wait(250);
       this.locked = false;
       return;
     }
 
+    SFX.swap();
     this.onMove();
     await this.resolveMatches(1);
     this.locked = false;
@@ -190,6 +193,7 @@ class Board {
     matches.forEach(({ r, c }) => {
       this.cellEls[r][c].classList.add("matched");
     });
+    SFX.match();
 
     const gained = matches.length * 10 * cascadeLevel;
     this.onScore(gained, matches.length, cascadeLevel);
