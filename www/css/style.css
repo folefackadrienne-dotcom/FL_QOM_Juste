@@ -133,6 +133,17 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   justify-content: space-between;
   padding: 8px 0;
 }
+/* Les références de verset peuvent être longues ("1 Chroniques 29.11") ;
+   on réserve la place des boutons flottants 🔊/🌐 pour ne jamais passer dessous. */
+#verse-ref-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  padding-right: 84px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* PARCOURS */
 .parcours-list {
@@ -253,7 +264,18 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   font-weight: bold;
   font-size: .85rem;
 }
-.game-ref { font-weight: bold; text-align: center; flex: 1; color: var(--purple-dark); font-size: 1rem; }
+.game-ref {
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+  color: var(--purple-dark);
+  font-size: 1rem;
+  padding-right: 84px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .board-wrap { width: 100%; display: flex; justify-content: center; }
 .board {
