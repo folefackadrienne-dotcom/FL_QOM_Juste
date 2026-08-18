@@ -1,0 +1,929 @@
+<title>Faith Run</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-void:#0d1420;
+    --bg-void-2:#141d30;
+    --panel:#182338;
+    --canopy:#173d33;
+    --leaf:#4fa97a;
+    --gold:#f2b84b;
+    --gold-soft:#f6cd7c;
+    --aqua:#7fd6d1;
+    --parchment:#f3e9d6;
+    --parchment-dim:#c9bfa9;
+    --ink:#241a10;
+    --danger:#d9694f;
+    --line-gold:rgba(242,184,75,.32);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse 70% 50% at 50% -10%, #24365a 0%, transparent 60%),
+      var(--bg-void);
+    color:var(--parchment);
+    font-family:'Manrope',ui-sans-serif,system-ui,sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:clamp(20px,4vw,48px) 16px 40px;
+  }
+
+  .page{
+    width:100%;
+    max-width:1040px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+  }
+
+  header{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+  }
+
+  .kicker{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:.72rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--aqua);
+    opacity:.85;
+  }
+
+  h1{
+    font-family:'Cinzel',serif;
+    font-weight:700;
+    font-size:clamp(2.1rem,5vw + .5rem,3.4rem);
+    letter-spacing:.03em;
+    margin:0;
+    text-wrap:balance;
+    color:var(--parchment);
+    text-shadow:0 0 28px rgba(242,184,75,.25);
+  }
+
+  .subtitle{
+    font-family:'Manrope',sans-serif;
+    font-weight:600;
+    font-size:.95rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+  }
+
+  /* ---------- HUD ---------- */
+  .hud{
+    width:100%;
+    max-width:820px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:10px 18px;
+    background:linear-gradient(180deg,var(--panel),var(--bg-void-2));
+    border:1px solid rgba(242,184,75,.18);
+    border-radius:10px;
+    box-shadow:0 10px 30px -14px rgba(0,0,0,.6);
+  }
+
+  .hearts{display:flex;gap:6px;flex-shrink:0;}
+  .hearts svg{width:20px;height:20px;transition:opacity .3s;}
+  .hearts svg path{fill:var(--gold-soft);stroke:var(--gold);stroke-width:1;}
+  .hearts svg.lost path{fill:transparent;stroke:rgba(243,233,214,.28);}
+
+  .hud-sep{width:1px;align-self:stretch;background:rgba(243,233,214,.14);}
+
+  .verse-count{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:.85rem;
+    color:var(--parchment-dim);
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .verse-count b{color:var(--gold-soft);font-weight:600;}
+
+  .progress-track{
+    flex:1;
+    height:6px;
+    border-radius:4px;
+    background:rgba(243,233,214,.1);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--leaf),var(--gold));
+    border-radius:4px;
+    transition:width .15s linear;
+  }
+
+  /* ---------- Stage / arch frame ---------- */
+  .stage-wrap{
+    position:relative;
+    width:100%;
+    max-width:960px;
+  }
+
+  .arch{
+    position:relative;
+    width:100%;
+    aspect-ratio:960/540;
+    border-radius:46% 46% 10px 10px / 20% 20% 6px 6px;
+    padding:10px;
+    background:
+      linear-gradient(180deg,#2a3d63,#141d30);
+    box-shadow:
+      0 0 0 1px rgba(242,184,75,.28),
+      0 0 0 8px var(--bg-void-2),
+      0 0 0 9px rgba(242,184,75,.16),
+      0 30px 70px -20px rgba(0,0,0,.75);
+  }
+
+  .canvas-mask{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:44% 44% 4px 4px / 18% 18% 4px 4px;
+    overflow:hidden;
+    background:#0d1420;
+  }
+
+  canvas#game{
+    display:block;
+    width:100%;
+    height:100%;
+  }
+
+  #toastLayer{
+    position:absolute;
+    top:14px;
+    left:0;
+    right:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    pointer-events:none;
+    z-index:5;
+  }
+  .toast{
+    font-family:'Manrope',sans-serif;
+    font-size:.78rem;
+    font-weight:600;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    padding:6px 14px;
+    border-radius:20px;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.5);
+    animation:toastFade 2.4s ease forwards;
+    max-width:80%;
+    text-align:center;
+  }
+  @keyframes toastFade{
+    0%{opacity:0;transform:translateY(-6px);}
+    10%{opacity:1;transform:translateY(0);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(-4px);}
+  }
+
+  /* ---------- Overlays ---------- */
+  .overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    background:radial-gradient(ellipse at 50% 40%, rgba(13,20,32,.55), rgba(9,13,22,.92));
+    z-index:10;
+    text-align:center;
+  }
+  .overlay[hidden]{display:none;}
+
+  .scroll-panel{
+    max-width:520px;
+    background:linear-gradient(180deg,#221808,var(--ink));
+    border:1px solid var(--line-gold);
+    border-radius:14px;
+    padding:clamp(20px,4vw,34px);
+    box-shadow:0 20px 60px -20px rgba(0,0,0,.7), inset 0 0 40px rgba(242,184,75,.06);
+  }
+
+  .scroll-panel h2{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:1.5rem;
+    color:var(--gold-soft);
+    margin:0 0 12px;
+  }
+
+  .scroll-panel p{
+    font-size:.95rem;
+    line-height:1.6;
+    color:var(--parchment);
+    margin:0 0 10px;
+  }
+  .scroll-panel p.ref{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--aqua);
+    margin-bottom:4px;
+  }
+
+  .stat-row{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin:16px 0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.8rem;
+    color:var(--parchment-dim);
+    flex-wrap:wrap;
+  }
+  .stat-row b{display:block;color:var(--gold-soft);font-size:1.1rem;}
+
+  button.cta{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:.9rem;
+    letter-spacing:.03em;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    border:none;
+    padding:12px 26px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:6px;
+    box-shadow:0 8px 20px -8px rgba(242,184,75,.5);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  button.cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(242,184,75,.65);}
+  button.cta:focus-visible{outline:2px solid var(--aqua);outline-offset:3px;}
+
+  .next-note{
+    margin-top:14px;
+    font-size:.72rem;
+    letter-spacing:.05em;
+    color:var(--parchment-dim);
+    opacity:.75;
+  }
+
+  /* ---------- controls legend + touch pad ---------- */
+  .legend{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.74rem;
+    color:var(--parchment-dim);
+    letter-spacing:.02em;
+  }
+  .legend kbd{
+    font-family:'JetBrains Mono',monospace;
+    background:var(--panel);
+    border:1px solid rgba(243,233,214,.18);
+    border-bottom-width:2px;
+    padding:2px 7px;
+    border-radius:5px;
+    color:var(--parchment);
+    font-size:.72rem;
+  }
+
+  .touchpad{
+    display:none;
+    width:100%;
+    max-width:960px;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:14px;
+  }
+  @media (hover:none) and (pointer:coarse){
+    .touchpad{display:flex;}
+  }
+  .touch-move{display:flex;gap:10px;}
+  .touch-btn{
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:none;
+    width:56px;height:56px;
+    border-radius:50%;
+    background:linear-gradient(180deg,var(--panel),var(--bg-void-2));
+    border:1px solid rgba(242,184,75,.3);
+    color:var(--gold-soft);
+    font-size:1.3rem;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Manrope',sans-serif;
+  }
+  .touch-btn:active{background:var(--canopy);}
+  .touch-btn.jump{width:72px;height:72px;font-size:.85rem;font-weight:700;}
+
+  footer{
+    font-size:.72rem;
+    color:var(--parchment-dim);
+    opacity:.6;
+    text-align:center;
+    max-width:520px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .toast{animation:none;opacity:1;}
+    button.cta{transition:none;}
+  }
+</style>
+
+<div class="page">
+  <header>
+    <span class="kicker">Faith Run · Prototype jouable</span>
+    <h1>FAITH RUN</h1>
+    <span class="subtitle">Niveau 1 — Éden</span>
+  </header>
+
+  <div class="hud">
+    <div class="hearts" id="hearts"></div>
+    <div class="hud-sep"></div>
+    <div class="verse-count">Versets&nbsp;<b id="verseCount">0</b>/5</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="arch">
+      <div class="canvas-mask">
+        <canvas id="game"></canvas>
+        <div id="toastLayer"></div>
+
+        <div class="overlay" id="overlayStart">
+          <div class="scroll-panel">
+            <h2>Le Jardin t'attend</h2>
+            <p>Traverse Éden, recueille les versets semés sur ton chemin, évite les ronces et le serpent, et rejoins l'Arbre de Vie.</p>
+            <p style="font-size:.8rem;color:var(--parchment-dim);">← → ou A/D pour marcher · Espace / ↑ pour sauter</p>
+            <button class="cta" id="btnStart">Commencer la course</button>
+          </div>
+        </div>
+
+        <div class="overlay" id="overlayDialogue" hidden>
+          <div class="scroll-panel">
+            <p class="ref">Jean 15:5 — Louis Segond</p>
+            <h2>L'Arbre de Vie</h2>
+            <p>« Je suis le cep, vous êtes les sarments. Celui qui demeure en moi et en qui je demeure porte beaucoup de fruit, car sans moi vous ne pouvez rien faire. »</p>
+            <p style="font-size:.85rem;color:var(--parchment-dim);">Depuis Éden, Dieu ne cherche pas seulement un serviteur, mais une présence quotidienne avec toi. Comme le sarment demeure attaché au cep, demeure en Christ chaque jour : c'est là que naît le fruit véritable.</p>
+            <div class="stat-row"><div><b id="dlgVerses">0/5</b>versets recueillis</div></div>
+            <button class="cta" id="btnContinue">Continuer</button>
+          </div>
+        </div>
+
+        <div class="overlay" id="overlayComplete" hidden>
+          <div class="scroll-panel">
+            <h2>Niveau accompli</h2>
+            <p>Tu as traversé le Jardin et demeuré jusqu'à l'Arbre de Vie.</p>
+            <div class="stat-row">
+              <div><b id="sumVerses">0/5</b>versets</div>
+              <div><b id="sumHearts">3/3</b>cœurs</div>
+              <div><b id="sumTime">0:00</b>temps</div>
+            </div>
+            <button class="cta" id="btnReplayWin">Rejouer le niveau</button>
+            <p class="next-note">À suivre — Niveau 2 : l'Exode</p>
+          </div>
+        </div>
+
+        <div class="overlay" id="overlayGameover" hidden>
+          <div class="scroll-panel">
+            <h2>Tu as trébuché</h2>
+            <p>Même dans la chute, la grâce relève. Reprends la course.</p>
+            <button class="cta" id="btnRetry">Réessayer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><kbd>←</kbd><kbd>→</kbd> ou <kbd>A</kbd><kbd>D</kbd> marcher</span>
+    <span><kbd>Espace</kbd> / <kbd>↑</kbd> sauter</span>
+  </div>
+
+  <div class="touchpad">
+    <div class="touch-move">
+      <div class="touch-btn" id="tLeft">◀</div>
+      <div class="touch-btn" id="tRight">▶</div>
+    </div>
+    <div class="touch-btn jump" id="tJump">SAUT</div>
+  </div>
+
+  <footer>Textes bibliques : version Louis Segond (1910, domaine public).</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------- canvas setup ----------------
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = 960, H = 540;
+  function fitCanvas(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  fitCanvas();
+  window.addEventListener('resize', fitCanvas);
+
+  // ---------------- level data ----------------
+  const GROUND_Y = 440;
+  const GAPS = [ {x0:1700,x1:2000}, {x0:3000,x1:3120} ];
+  const WORLD_W = 4000;
+  const GROUND_SEGMENTS = (function(){
+    const pts = [0, ...GAPS.flatMap(g=>[g.x0,g.x1]), WORLD_W];
+    const segs = [];
+    for(let i=0;i<pts.length;i+=2){ segs.push({x0:pts[i],x1:pts[i+1]}); }
+    return segs;
+  })();
+
+  const PLATFORMS = [
+    {x:850,y:360,w:110,h:18},
+    {x:1020,y:300,w:100,h:18},
+    {x:1720,y:410,w:70,h:18},
+    {x:1830,y:378,w:70,h:18},
+    {x:1940,y:410,w:70,h:18},
+    {x:2220,y:380,w:90,h:18},
+    {x:2380,y:322,w:90,h:18},
+    {x:2540,y:380,w:110,h:18},
+    {x:2740,y:322,w:90,h:18},
+    {x:2900,y:380,w:90,h:18},
+    {x:3580,y:392,w:90,h:18}
+  ];
+
+  const OBSTACLES = [
+    {x:560,y:412,w:44,h:28,type:'thorn'},
+    {x:2170,y:412,w:50,h:28,type:'thorn'},
+    {x:3300,y:412,w:50,h:28,type:'thorn'},
+    {x:2560,y:352,w:34,h:22,type:'serpent',range:[2560,2610],speed:42,dir:1,baseY:352}
+  ];
+
+  const VERSES = [
+    {x:560,y:250,ref:'Genèse 1:27',text:"Dieu créa l'homme à son image, il le créa à l'image de Dieu, il créa l'homme et la femme."},
+    {x:1060,y:255,ref:'Genèse 2:7',text:"L'Éternel Dieu forma l'homme de la poussière de la terre, il souffla dans ses narines un souffle de vie."},
+    {x:1855,y:335,ref:'Genèse 2:15',text:"L'Éternel Dieu prit l'homme et le plaça dans le jardin d'Éden pour le cultiver et pour le garder."},
+    {x:2420,y:275,ref:'Genèse 2:18',text:"Il n'est pas bon que l'homme soit seul ; je lui ferai une aide semblable à lui."},
+    {x:3620,y:345,ref:'Jean 15:5',text:"Je suis le cep, vous êtes les sarments. Celui qui demeure en moi porte beaucoup de fruit."}
+  ].map((v,i)=>({...v, id:i, collected:false}));
+
+  const TREE_X = 3800;
+  const TREE_TRIGGER_X = 3760;
+  const CHECKPOINTS = [0,780,2010,3130,3560];
+
+  // ---------------- state ----------------
+  const player = {
+    x:60, y:GROUND_Y-42, prevY:GROUND_Y-42, w:26, h:42,
+    vx:0, vy:0, facing:1, onGround:true,
+    hearts:3, invuln:0, running:0
+  };
+  let camera = {x:0};
+  let lastCheckpoint = 0;
+  let collectedCount = 0;
+  let gameState = 'start'; // start | playing | dialogue | complete | gameover
+  let startTime = 0, elapsed = 0;
+  let raf = null, lastT = 0;
+
+  const keys = new Set();
+  let touchLeft=false, touchRight=false, touchJumpQueued=false;
+
+  const GRAVITY = 1900;
+  const MOVE_SPEED = 230;
+  const JUMP_V = -640;
+  const MAX_FALL = 900;
+
+  // ---------------- input ----------------
+  window.addEventListener('keydown', (e)=>{
+    if(['ArrowLeft','ArrowRight','ArrowUp',' ','Space','KeyA','KeyD','KeyW'].includes(e.code) || e.key===' '){
+      e.preventDefault();
+    }
+    keys.add(e.code);
+    if((e.code==='Space'||e.code==='ArrowUp'||e.code==='KeyW')){
+      tryJump();
+    }
+    if(gameState==='start' && (e.code==='Space'||e.code==='Enter')) startGame();
+  }, {passive:false});
+  window.addEventListener('keyup', (e)=>keys.delete(e.code));
+
+  function bindTouch(el, onDown, onUp){
+    el.addEventListener('pointerdown', (e)=>{ e.preventDefault(); onDown(); }, {passive:false});
+    ['pointerup','pointerleave','pointercancel'].forEach(ev=>el.addEventListener(ev, ()=>onUp && onUp()));
+  }
+  bindTouch(document.getElementById('tLeft'), ()=>touchLeft=true, ()=>touchLeft=false);
+  bindTouch(document.getElementById('tRight'), ()=>touchRight=true, ()=>touchRight=false);
+  bindTouch(document.getElementById('tJump'), ()=>{ tryJump(); if(gameState==='start') startGame(); });
+
+  function tryJump(){
+    if(gameState!=='playing') return;
+    if(player.onGround){
+      player.vy = JUMP_V;
+      player.onGround = false;
+    }
+  }
+
+  // ---------------- helpers ----------------
+  function overlap(a,b){
+    return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+  }
+
+  function heartHit(){
+    if(player.invuln>0) return;
+    player.hearts--;
+    player.invuln = 1.1;
+    player.x = Math.max(0, player.x - player.facing*26);
+    player.vy = -320;
+    updateHUD();
+    if(player.hearts<=0){
+      gameState = 'gameover';
+      show('overlayGameover');
+    }
+  }
+
+  function respawnAtCheckpoint(){
+    player.x = lastCheckpoint + 20;
+    player.y = GROUND_Y - player.h;
+    player.vx = 0; player.vy = 0;
+    player.invuln = 1.0;
+    heartHit();
+  }
+
+  function show(id){ document.getElementById(id).hidden = false; }
+  function hide(id){ document.getElementById(id).hidden = true; }
+
+  function updateHUD(){
+    const heartsEl = document.getElementById('hearts');
+    heartsEl.innerHTML = '';
+    for(let i=0;i<3;i++){
+      const lost = i >= player.hearts;
+      heartsEl.insertAdjacentHTML('beforeend',
+        `<svg viewBox="0 0 24 24" class="${lost?'lost':''}"><path d="M12 21s-7.5-4.7-10-9.3C.4 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.2C10.2 6.1 11.6 5 13.6 5 17 5 18.6 8.4 17 11.7 15 16.3 12 21 12 21z"/></svg>`);
+    }
+    document.getElementById('verseCount').textContent = collectedCount;
+    const pct = Math.min(100, Math.max(0, (player.x/WORLD_W)*100));
+    document.getElementById('progressFill').style.width = pct+'%';
+  }
+
+  function toast(ref, text){
+    const layer = document.getElementById('toastLayer');
+    const div = document.createElement('div');
+    div.className = 'toast';
+    div.textContent = ref + ' — ' + text;
+    layer.appendChild(div);
+    setTimeout(()=>div.remove(), 2500);
+  }
+
+  function fmtTime(s){
+    const m = Math.floor(s/60), r = Math.floor(s%60);
+    return m+':'+String(r).padStart(2,'0');
+  }
+
+  function startGame(){
+    hide('overlayStart');
+    gameState = 'playing';
+    startTime = performance.now();
+  }
+
+  function resetAll(){
+    player.x=60; player.y=GROUND_Y-42; player.prevY=player.y;
+    player.vx=0; player.vy=0; player.facing=1; player.onGround=true;
+    player.hearts=3; player.invuln=0;
+    camera.x=0; lastCheckpoint=0; collectedCount=0;
+    VERSES.forEach(v=>v.collected=false);
+    OBSTACLES.forEach(o=>{ if(o.type==='serpent'){ o.x=o.range[0]; o.dir=1; }});
+    updateHUD();
+  }
+
+  document.getElementById('btnStart').addEventListener('click', startGame);
+  document.getElementById('btnContinue').addEventListener('click', ()=>{
+    hide('overlayDialogue');
+    elapsed = (performance.now()-startTime)/1000;
+    document.getElementById('sumVerses').textContent = collectedCount+'/5';
+    document.getElementById('sumHearts').textContent = player.hearts+'/3';
+    document.getElementById('sumTime').textContent = fmtTime(elapsed);
+    gameState = 'complete';
+    show('overlayComplete');
+  });
+  document.getElementById('btnReplayWin').addEventListener('click', ()=>{
+    hide('overlayComplete'); resetAll(); startGame();
+  });
+  document.getElementById('btnRetry').addEventListener('click', ()=>{
+    hide('overlayGameover'); resetAll(); startGame();
+  });
+
+  // ---------------- update ----------------
+  function update(dt){
+    if(gameState!=='playing'){ return; }
+
+    let moveDir = 0;
+    if(keys.has('ArrowLeft')||keys.has('KeyA')||touchLeft) moveDir -= 1;
+    if(keys.has('ArrowRight')||keys.has('KeyD')||touchRight) moveDir += 1;
+
+    player.vx = moveDir * MOVE_SPEED;
+    if(moveDir!==0) player.facing = moveDir;
+    player.running = moveDir!==0 ? player.running+dt : 0;
+
+    player.prevY = player.y;
+    player.vy = Math.min(player.vy + GRAVITY*dt, MAX_FALL);
+    player.x += player.vx*dt;
+    player.y += player.vy*dt;
+    player.x = Math.max(0, Math.min(player.x, WORLD_W-player.w));
+
+    // ground collision
+    player.onGround = false;
+    for(const seg of GROUND_SEGMENTS){
+      if(player.x+player.w>seg.x0 && player.x<seg.x1){
+        const feetY = player.y+player.h, prevFeetY = player.prevY+player.h;
+        if(player.vy>=0 && prevFeetY<=GROUND_Y+1 && feetY>=GROUND_Y){
+          player.y = GROUND_Y-player.h; player.vy=0; player.onGround=true;
+        }
+      }
+    }
+    // platform collision
+    for(const p of PLATFORMS){
+      if(player.x+player.w>p.x && player.x<p.x+p.w){
+        const feetY = player.y+player.h, prevFeetY = player.prevY+player.h;
+        if(player.vy>=0 && prevFeetY<=p.y+1 && feetY>=p.y && feetY<=p.y+16){
+          player.y = p.y-player.h; player.vy=0; player.onGround=true;
+        }
+      }
+    }
+
+    // pit fall
+    if(player.y > H+60){
+      respawnAtCheckpoint();
+    }
+
+    // checkpoint update
+    if(player.onGround){
+      for(const c of CHECKPOINTS){
+        if(player.x>=c) lastCheckpoint = Math.max(lastCheckpoint, c);
+      }
+    }
+
+    // invuln timer
+    if(player.invuln>0) player.invuln = Math.max(0, player.invuln-dt);
+
+    // obstacles
+    for(const o of OBSTACLES){
+      if(o.type==='serpent'){
+        o.x += o.dir*o.speed*dt;
+        if(o.x<o.range[0]){ o.x=o.range[0]; o.dir=1; }
+        if(o.x>o.range[1]){ o.x=o.range[1]; o.dir=-1; }
+      }
+      if(overlap(player,o)) heartHit();
+    }
+
+    // collectibles
+    for(const v of VERSES){
+      if(v.collected) continue;
+      const vb = {x:v.x-14,y:v.y-14,w:28,h:28};
+      if(overlap(player,vb)){
+        v.collected = true;
+        collectedCount++;
+        toast(v.ref, v.text);
+        updateHUD();
+      }
+    }
+
+    // camera
+    camera.x = Math.max(0, Math.min(player.x - W/2, WORLD_W-W));
+
+    // goal
+    if(player.x > TREE_TRIGGER_X){
+      gameState = 'dialogue';
+      document.getElementById('dlgVerses').textContent = collectedCount+'/5';
+      show('overlayDialogue');
+    }
+
+    updateHUD();
+  }
+
+  // ---------------- render ----------------
+  const AMBIENT = Array.from({length:26},(_,i)=>({
+    x:Math.random()*WORLD_W, y:60+Math.random()*380,
+    r:1+Math.random()*2, phase:Math.random()*Math.PI*2, speed:.4+Math.random()*.6
+  }));
+
+  function drawSky(t){
+    const g = ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#1b2a4a');
+    g.addColorStop(.55,'#254a55');
+    g.addColorStop(1,'#173d33');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,W,H);
+
+    // sun
+    const sunX = 760 - camera.x*0.15;
+    const sunG = ctx.createRadialGradient(sunX,90,4,sunX,90,190);
+    sunG.addColorStop(0,'rgba(246,205,124,.85)');
+    sunG.addColorStop(1,'rgba(246,205,124,0)');
+    ctx.fillStyle = sunG;
+    ctx.fillRect(0,0,W,H);
+
+    // distant hills (parallax)
+    ctx.fillStyle = 'rgba(23,61,51,.55)';
+    const hillOffset = -(camera.x*0.3)%240;
+    for(let i=-1;i<6;i++){
+      const hx = hillOffset + i*240;
+      ctx.beginPath();
+      ctx.ellipse(hx,H-90,170,90,0,Math.PI,0);
+      ctx.fill();
+    }
+
+    // ambient motes
+    ctx.fillStyle = 'rgba(242,214,150,.8)';
+    for(const a of AMBIENT){
+      const sx = a.x - camera.x;
+      if(sx<-20||sx>W+20) continue;
+      const sy = a.y + Math.sin(t*a.speed + a.phase)*10;
+      ctx.globalAlpha = .35+.35*Math.sin(t*a.speed+a.phase);
+      ctx.beginPath(); ctx.arc(sx,sy,a.r,0,Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawGround(){
+    for(const seg of GROUND_SEGMENTS){
+      const sx = seg.x0-camera.x, ex = seg.x1-camera.x;
+      if(ex<0||sx>W) continue;
+      const g = ctx.createLinearGradient(0,GROUND_Y,0,H);
+      g.addColorStop(0,'#3d7a52');
+      g.addColorStop(.15,'#2a5c3e');
+      g.addColorStop(1,'#152c20');
+      ctx.fillStyle = g;
+      ctx.fillRect(sx,GROUND_Y,ex-sx,H-GROUND_Y);
+      ctx.fillStyle = 'rgba(79,169,122,.9)';
+      ctx.fillRect(sx,GROUND_Y,ex-sx,6);
+    }
+    // river in gaps
+    ctx.fillStyle = 'rgba(127,214,209,.28)';
+    for(const g of GAPS){
+      const sx=g.x0-camera.x, ex=g.x1-camera.x;
+      if(ex<0||sx>W) continue;
+      ctx.fillRect(sx,GROUND_Y+20,ex-sx,H-GROUND_Y-20);
+    }
+  }
+
+  function drawPlatforms(){
+    for(const p of PLATFORMS){
+      const sx = p.x-camera.x;
+      if(sx+p.w<0||sx>W) continue;
+      ctx.fillStyle = '#5c3a24';
+      ctx.fillRect(sx,p.y+6,p.w,p.h-6);
+      ctx.fillStyle = '#4fa97a';
+      ctx.fillRect(sx,p.y,p.w,8);
+    }
+  }
+
+  function drawObstacles(){
+    for(const o of OBSTACLES){
+      const sx = o.x-camera.x;
+      if(sx+o.w<0||sx>W) continue;
+      if(o.type==='thorn'){
+        ctx.fillStyle = '#7a2f22';
+        for(let i=0;i<o.w;i+=10){
+          ctx.beginPath();
+          ctx.moveTo(sx+i,o.y+o.h);
+          ctx.lineTo(sx+i+5,o.y);
+          ctx.lineTo(sx+i+10,o.y+o.h);
+          ctx.closePath(); ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = '#8a4fa9';
+        ctx.beginPath();
+        ctx.ellipse(sx+o.w/2,o.y+o.h/2,o.w/2,o.h/2,0,0,Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#f2b84b';
+        ctx.beginPath(); ctx.arc(sx+o.w*0.7,o.y+o.h*0.4,2.4,0,Math.PI*2); ctx.fill();
+      }
+    }
+  }
+
+  function drawVerses(t){
+    for(const v of VERSES){
+      if(v.collected) continue;
+      const sx = v.x-camera.x;
+      if(sx<-20||sx>W+20) continue;
+      const bob = Math.sin(t*2+v.id)*5;
+      const glow = ctx.createRadialGradient(sx,v.y+bob,2,sx,v.y+bob,22);
+      glow.addColorStop(0,'rgba(242,184,75,.55)');
+      glow.addColorStop(1,'rgba(242,184,75,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(sx-22,v.y+bob-22,44,44);
+      ctx.fillStyle = '#f6cd7c';
+      ctx.fillRect(sx-8,v.y+bob-10,16,20);
+      ctx.strokeStyle = '#a8712e';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(sx-8,v.y+bob-10,16,20);
+    }
+  }
+
+  function drawTree(t){
+    const sx = TREE_X - camera.x;
+    if(sx<-260||sx>W+260) return;
+    const g = ctx.createRadialGradient(sx,GROUND_Y-140,10,sx,GROUND_Y-140,220);
+    g.addColorStop(0,'rgba(246,205,124,.4)');
+    g.addColorStop(1,'rgba(246,205,124,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(sx-220,GROUND_Y-360,440,440);
+
+    ctx.fillStyle = '#5c3a24';
+    ctx.fillRect(sx-14,GROUND_Y-120,28,120);
+    ctx.fillStyle = '#2a5c3e';
+    for(let i=0;i<3;i++){
+      ctx.beginPath();
+      ctx.ellipse(sx, GROUND_Y-150-i*46, 100-i*18, 60-i*10, 0,0,Math.PI*2);
+      ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(246,205,124,.9)';
+    for(let i=0;i<10;i++){
+      const ang = (i/10)*Math.PI*2 + t*0.5;
+      const rx = sx+Math.cos(ang)*70, ry = GROUND_Y-190+Math.sin(ang)*40;
+      ctx.beginPath(); ctx.arc(rx,ry,2,0,Math.PI*2); ctx.fill();
+    }
+  }
+
+  function drawPlayer(t){
+    const sx = player.x-camera.x, sy = player.y;
+    const flashOff = player.invuln>0 && Math.floor(t*14)%2===0;
+    if(flashOff) return;
+
+    ctx.save();
+    ctx.translate(sx+player.w/2, sy);
+    ctx.scale(player.facing,1);
+
+    const stride = player.onGround ? Math.sin(player.running*10)*10 : 0;
+
+    // legs
+    ctx.strokeStyle = '#3c2a1a';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(-4,player.h-16); ctx.lineTo(-4+stride*0.4, player.h);
+    ctx.moveTo(4,player.h-16); ctx.lineTo(4-stride*0.4, player.h);
+    ctx.stroke();
+
+    // robe
+    ctx.fillStyle = '#e7dcc4';
+    ctx.beginPath();
+    ctx.moveTo(-11,player.h-16);
+    ctx.lineTo(11,player.h-16);
+    ctx.lineTo(8,10);
+    ctx.lineTo(-8,10);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#7fd6d1';
+    ctx.fillRect(-11,player.h-24,22,7);
+
+    // head
+    ctx.fillStyle = '#e6b98c';
+    ctx.beginPath(); ctx.arc(0,0,9,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#4a3320';
+    ctx.beginPath(); ctx.arc(0,-4,9,Math.PI,0); ctx.fill();
+
+    ctx.restore();
+  }
+
+  function render(t){
+    drawSky(t);
+    drawGround();
+    drawPlatforms();
+    drawTree(t);
+    drawVerses(t);
+    drawObstacles();
+    drawPlayer(t);
+  }
+
+  // ---------------- loop ----------------
+  function loop(now){
+    if(!lastT) lastT = now;
+    let dt = (now-lastT)/1000;
+    dt = Math.min(dt, 1/30);
+    lastT = now;
+    update(dt);
+    render(now/1000);
+    raf = requestAnimationFrame(loop);
+  }
+
+  updateHUD();
+  raf = requestAnimationFrame(loop);
+})();
+</script>
