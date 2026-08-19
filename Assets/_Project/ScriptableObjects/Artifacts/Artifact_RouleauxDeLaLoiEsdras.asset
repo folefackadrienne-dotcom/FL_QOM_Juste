@@ -23,7 +23,7 @@ MonoBehaviour:
     le peuple retrouve son identité en réentendant la parole de Dieu.
   rarity: 3
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4fcaa9fdce884eb6bfa7a0bbc9736d65, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     +25 % de génération de Sagesse et débloque des réformes majeures.

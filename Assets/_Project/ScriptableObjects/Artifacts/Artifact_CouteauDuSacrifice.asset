@@ -22,7 +22,7 @@ MonoBehaviour:
     ultime de la foi d'Abraham et la fidélité de Dieu à sa promesse.
   rarity: 2
   age: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7ac917230e3f4b3c85b98bcd5e23393b, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Débloque le choix moral du sacrifice d'Isaac dans la mission « Le

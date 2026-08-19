@@ -22,7 +22,7 @@ MonoBehaviour:
     faute du Veau d'Or, préfigurant la mécanique de repentance du jeu.
   rarity: 3
   age: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c80ce66a3eee4e51bef5c2fbd6a28e47, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     +20 % de génération de Foi et de Justice tant que les tables sont

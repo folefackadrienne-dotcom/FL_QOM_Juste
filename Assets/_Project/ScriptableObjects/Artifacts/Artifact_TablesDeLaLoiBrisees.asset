@@ -22,7 +22,7 @@ MonoBehaviour:
     départ de la mission de repentance et de restauration.
   rarity: 2
   age: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ccd0cdf9e89e45f6b07589e75fc6a0a7, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Pénalité temporaire de Justice tant que l'objet n'a pas été remplacé ;

@@ -22,7 +22,7 @@ MonoBehaviour:
     devenu gouverneur, préfigurant le salut de toute sa famille.
   rarity: 2
   age: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9d70e2eebd2c43d48144ffb8b7c465ca, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Débloque des options de commerce avancées.

@@ -23,7 +23,7 @@ MonoBehaviour:
     David choisit ses propres armes, celles de la foi plutôt que du fer.
   rarity: 1
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 36753f7b4f9c41599a8b04ccdb6aa099, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Lourde protection défensive, mais réduit fortement la mobilité de

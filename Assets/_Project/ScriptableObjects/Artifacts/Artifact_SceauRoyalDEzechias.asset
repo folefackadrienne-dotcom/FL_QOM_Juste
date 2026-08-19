@@ -23,7 +23,7 @@ MonoBehaviour:
     seule stratégie militaire, face à l'empire assyrien.
   rarity: 2
   age: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8ef41aa297014ff183126da7ea2f2c03, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Réduit fortement le coût en Foi des miracles de protection.

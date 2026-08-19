@@ -22,7 +22,7 @@ MonoBehaviour:
     d'Abraham dans un pays qu'il ne possède pas encore (Hébreux 11:9).
   rarity: 1
   age: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e0f2b077efa24bf58691d3a921c21fe3, type: 3}
   passiveBonus:
   - type: 4
     amount: 3

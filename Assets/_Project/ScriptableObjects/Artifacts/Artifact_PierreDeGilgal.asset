@@ -22,7 +22,7 @@ MonoBehaviour:
     pierres ? » devient une occasion de raconter l'histoire de la foi.
   rarity: 0
   age: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6f6ad65d832b4aaeb36905f3c8b2e548, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Monument : +5 % de Foi générée en permanence dans la région.

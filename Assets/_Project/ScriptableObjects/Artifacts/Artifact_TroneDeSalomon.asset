@@ -23,7 +23,7 @@ MonoBehaviour:
     sa vraie richesse fut d'abord la sagesse demandée à Dieu.
   rarity: 2
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: f1ca8d959dbb4935a56b5669324880a3, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     +15 % de Sagesse et de meilleures options diplomatiques.

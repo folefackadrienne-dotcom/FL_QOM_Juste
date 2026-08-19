@@ -23,7 +23,7 @@ MonoBehaviour:
     persévérance collective.
   rarity: 2
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 43c5548c6f814e84a1864a9320ecee1c, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Accélère fortement la vitesse de construction sous la menace.

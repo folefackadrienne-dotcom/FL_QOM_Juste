@@ -23,7 +23,7 @@ MonoBehaviour:
     stratégie qui rend visible que « ce n'est pas par la force ».
   rarity: 2
   age: 3
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: da76f1bce0124220934548d7126dd00a, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Permet de combattre efficacement avec très peu d'unités.

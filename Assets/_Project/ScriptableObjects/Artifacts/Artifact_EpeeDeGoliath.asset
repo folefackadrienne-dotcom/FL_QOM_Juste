@@ -23,7 +23,7 @@ MonoBehaviour:
     un rappel constant tout au long du règne de David.
   rarity: 2
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0f324cf7601b4bafb8a4e3e5ebaa4745, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Arme puissante à usage limité : dégâts très élevés lors de son

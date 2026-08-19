@@ -23,7 +23,7 @@ MonoBehaviour:
     n'est oublié dans la restauration promise.
   rarity: 2
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6200dbbf3e3a4fe082dfd4bbebca1dba, type: 3}
   passiveBonus:
   - type: 4
     amount: 6

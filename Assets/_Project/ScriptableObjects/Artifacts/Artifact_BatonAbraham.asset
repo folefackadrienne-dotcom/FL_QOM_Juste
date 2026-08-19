@@ -23,7 +23,7 @@ MonoBehaviour:
     que la vie des Patriarches est celle de bergers en marche.
   rarity: 0
   age: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e9c0fc08ec954d4795c9dc9092fbf2b2, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     +10 % de chances de succès lors des voyages et déplacements de

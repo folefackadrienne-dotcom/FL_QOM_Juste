@@ -24,7 +24,7 @@ MonoBehaviour:
     l'Alliance.
   rarity: 1
   age: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4cfefd6a508b4324872cae654e2b3299, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Objet à double tranchant : guérit d'abord, puis devient un piège

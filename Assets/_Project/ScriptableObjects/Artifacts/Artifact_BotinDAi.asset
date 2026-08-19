@@ -23,7 +23,7 @@ MonoBehaviour:
     seul homme fait porter à tout le camp, tant qu'il n'est pas révélé.
   rarity: 2
   age: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 454bf04868f14ffe9942b0003a970807, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Objet piégé : inflige une malédiction (défaites, baisse de moral) tant

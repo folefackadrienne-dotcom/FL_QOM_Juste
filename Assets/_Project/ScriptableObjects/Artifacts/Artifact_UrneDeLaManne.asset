@@ -23,7 +23,7 @@ MonoBehaviour:
     peuple, jour après jour, sans qu'il puisse en amasser pour demain.
   rarity: 1
   age: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 30064f92433044438b42e382d88a68d2, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Nourrit gratuitement l'armée pendant 3 tours de bataille.

@@ -22,7 +22,7 @@ MonoBehaviour:
     fidélité se transmet d'une génération à l'autre.
   rarity: 3
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 76b42a19b68841e388a81cacd95c6531, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Débloque la construction du Temple de Salomon.

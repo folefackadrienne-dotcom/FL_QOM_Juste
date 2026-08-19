@@ -23,7 +23,7 @@ MonoBehaviour:
     en tête de l'armée d'Israël plutôt qu'une simple relique de camp.
   rarity: 3
   age: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 825303f772784edb9e9aa21b5a34abeb, type: 3}
   passiveBonus:
   - type: 4
     amount: 8

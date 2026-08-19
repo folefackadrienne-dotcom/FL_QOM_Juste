@@ -801,7 +801,23 @@ dans l'Éditeur, sans toucher au code.
    Jézabel, Sennachérib, Sanballat et Tobija) ont ensuite été reçus et
    assignés de la même façon — `AntagonistCodexUI` affichait déjà
    `AntagonistData.portrait` génériquement, donc aucun changement de code
-   n'était nécessaire, seulement l'import.
+   n'était nécessaire, seulement l'import. Un troisième lot a suivi : 11
+   icônes de Bâtiments supplémentaires (Aire à Battre le Blé, Autel de
+   l'Éternel-Paix, Camp des Trois Cents, Refuge des Collines, Atelier de
+   Charpentiers, École des Scribes, Fonderie, Palais Royal, Tribunal,
+   Réservoir, École des Prophètes — total 25 des 39 bâtiments illustrés)
+   et 5 icônes d'`ArtifactData` (Bâton d'Abraham, Anneau de Pharaon,
+   Arche d'Alliance, Armure de Saül, Butin d'Aï) — même procédé, aucun
+   changement de code requis pour ni l'un ni l'autre puisque
+   `BuildingPaletteUI`/`CollectionUI` lisaient déjà leurs champs `icon`
+   génériquement. Un quatrième lot a suivi, entièrement des icônes
+   d'`ArtifactData` (16 : Couteau du Sacrifice, Épée de Goliath, Éphod de
+   Gédéon, Ustensiles du Temple, Urne de la Manne, Trône de Salomon,
+   Truelle de Néhémie, Torches et cruches de Gédéon, Tente de la
+   Promesse, Tables de la Loi (nouvelles), Tables de la Loi (brisées),
+   Serpent d'airain (détruit), Sceau royal d'Ézéchias, Rouleaux de la Loi
+   (Esdras), Plans du Temple, Pierre de Gilgal — total 21 des 45
+   artefacts illustrés), même procédé, aucun changement de code requis.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`
