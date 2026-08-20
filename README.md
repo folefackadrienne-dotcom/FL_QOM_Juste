@@ -845,7 +845,11 @@ dans l'Éditeur, sans toucher au code.
    avec le voile d'entrée du parvis) a été réutilisée comme icône du
    Voile du Tabernacle (`Artifact_VoileDuTabernacle.asset`, même fichier
    `Image_Tabernacle.jpg`, nouveau guid dédié) — total 43 des 45
-   artefacts illustrés.
+   artefacts illustrés. Un dernier envoi de 2 images (« Nehemiah's
+   Sword » et un autel de pierre sur une montagne éclairée d'un rayon de
+   lumière) a fourni les 2 icônes manquantes — Épée de Néhémie et Autel
+   du Carmel — portant le total à **45 des 45 artefacts illustrés**,
+   catégorie désormais complète.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

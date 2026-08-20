@@ -23,7 +23,7 @@ MonoBehaviour:
     exige parfois de savoir aussi se défendre.
   rarity: 2
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 226f04c7103644f7bee4329b438860ae, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Permet à une unité de construire et de combattre au cours du même
