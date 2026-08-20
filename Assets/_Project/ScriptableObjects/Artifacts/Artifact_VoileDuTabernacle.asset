@@ -22,7 +22,7 @@ MonoBehaviour:
     la possibilité d'un accès rendu possible par la médiation.
   rarity: 1
   age: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e67699e8abdc47cb9aafa34487d3397b, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Réduit le coût en Foi des miracles de 15 %.

@@ -840,6 +840,11 @@ dans l'Éditeur, sans toucher au code.
    finalement été réutilisée telle quelle comme icône du Bâton de Moïse
    (`Artifact_BatonDeMoise.asset`, même fichier PNG que
    `Image_BatonDElisee.png`, nouveau guid dédié) — total 42 des 45
+   artefacts illustrés. Sur une demande similaire, l'illustration déjà
+   utilisée pour `Building_Tabernacle.asset` (vue d'ensemble du camp
+   avec le voile d'entrée du parvis) a été réutilisée comme icône du
+   Voile du Tabernacle (`Artifact_VoileDuTabernacle.asset`, même fichier
+   `Image_Tabernacle.jpg`, nouveau guid dédié) — total 43 des 45
    artefacts illustrés.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
