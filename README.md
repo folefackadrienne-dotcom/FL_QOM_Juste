@@ -836,7 +836,11 @@ dans l'Éditeur, sans toucher au code.
    illustrés), et à nouveau 1 doublon détecté par hash MD5 identique
    (donc pas un simple ré-encodage cette fois, mais le même fichier
    binaire) : une seconde image du Bâton d'Élisée, déjà assignée au
-   round précédent.
+   round précédent. Sur demande explicite, cette image du bâton a
+   finalement été réutilisée telle quelle comme icône du Bâton de Moïse
+   (`Artifact_BatonDeMoise.asset`, même fichier PNG que
+   `Image_BatonDElisee.png`, nouveau guid dédié) — total 42 des 45
+   artefacts illustrés.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

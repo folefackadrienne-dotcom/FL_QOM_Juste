@@ -22,7 +22,7 @@ MonoBehaviour:
     devenu l'instrument visible de la puissance de Dieu à travers Moïse.
   rarity: 3
   age: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8d9a0ca83b5e4ff3ae9d6980e60294a9, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Permet d'activer plusieurs miracles liés à l'eau et au serpent
