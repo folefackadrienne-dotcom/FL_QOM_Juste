@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Fantassin
   unitClass: 0
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0069f074646e42779db135862589ef9d, type: 3}
   maxHealth: 12
   attack: 4
   defense: 3

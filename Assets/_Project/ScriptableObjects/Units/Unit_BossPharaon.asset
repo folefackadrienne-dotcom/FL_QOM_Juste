@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Pharaon
   unitClass: 6
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: f4d0803b5a8745d89f4e200879c2b73d, type: 3}
   maxHealth: 40
   attack: 6
   defense: 8

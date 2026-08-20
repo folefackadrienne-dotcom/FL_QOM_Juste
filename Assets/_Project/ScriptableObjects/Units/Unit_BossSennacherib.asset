@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Sennachérib
   unitClass: 6
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b0718ca3778a4c889187d1a32f3a14af, type: 3}
   maxHealth: 50
   attack: 8
   defense: 6

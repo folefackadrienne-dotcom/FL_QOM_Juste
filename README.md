@@ -885,6 +885,34 @@ dans l'Éditeur, sans toucher au code.
    d'une convention de winding que je ne peux pas non plus vérifier sans
    Éditeur. À valider en Éditeur avant d'envisager d'appliquer la même
    approche aux 38 autres bâtiments et aux 11 unités.
+
+   Un lot de 16 images « personnage seul, fond neutre » (statuettes
+   façon figurine de collection, plaque gravée en légende) a fourni les
+   11 icônes d'`UnitData` qui manquaient toutes : Fantassin, Archer,
+   Cavalerie, Char, Prêtre/Lévite, Prophète, et les 5 boss (Pharaon,
+   Goliath, Jézabel, Sennachérib, Sanballat et Tobija) — 11/11
+   désormais. Les 5 images restantes du même lot, de retour au style
+   diorama isométrique, correspondaient à des bâtiments encore sans
+   icône : Puits, Veaux d'Or de Béthel et Dan (correspondance de nom
+   certaine), Poste de Garde, Poste de Guet Frontalier et Synagogue de
+   Babylone (les 3 dernières par déduction — ces images n'avaient pas de
+   plaque nommant le bâtiment, contrairement aux figurines d'unités) —
+   25 des 39 icônes de bâtiments désormais. Il reste 3 bâtiments sans
+   icône : Grand Marché (Comptoir commercial), Marché du Retour, Muraille
+   de Jérusalem.
+
+   **Incident et correction** : les 5 images de boss (Pharaon, Goliath,
+   Jézabel, Sennachérib, Sanballat et Tobija) portaient les mêmes noms de
+   fichier (`Image_Pharaon.png`, etc.) que les portraits d'antagonistes
+   déjà importés plusieurs rounds plus tôt (`AntagonistData.portrait`) —
+   l'import initial a donc écrasé ces fichiers et leurs guid, cassant la
+   référence `portrait` des 5 `AntagonistData`. Détecté par
+   `git diff`/`git show HEAD:...` avant le commit, corrigé en restaurant
+   les 5 fichiers + `.meta` d'origine (`git checkout HEAD --`) et en
+   réimportant les icônes d'unités sous des noms distincts
+   (`Image_UnitPharaon.png`, etc., nouveaux guid dédiés) — les portraits
+   d'antagonistes et les icônes des 5 unités boss sont maintenant
+   indépendants, comme voulu.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

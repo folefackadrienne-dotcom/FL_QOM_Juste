@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Char
   unitClass: 2
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 68d30da63ec04bb882d4cb9c04af21b9, type: 3}
   maxHealth: 15
   attack: 6
   defense: 4

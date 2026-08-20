@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Prophète
   unitClass: 5
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1a7f5f399a874c238e6fefdd9e3eb785, type: 3}
   maxHealth: 8
   attack: 3
   defense: 2

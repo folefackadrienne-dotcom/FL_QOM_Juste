@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Sanballat et Tobija
   unitClass: 6
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 46e39d3ff17e4fff9cb55618cee6823f, type: 3}
   maxHealth: 25
   attack: 4
   defense: 3

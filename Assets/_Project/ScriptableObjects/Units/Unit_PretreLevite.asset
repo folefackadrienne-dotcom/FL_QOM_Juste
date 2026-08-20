@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Prêtre / Lévite
   unitClass: 4
   prefab: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e23ca82994ec493d9a6df4d492989c48, type: 3}
   maxHealth: 6
   attack: 1
   defense: 1
