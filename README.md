@@ -849,7 +849,21 @@ dans l'Éditeur, sans toucher au code.
    Sword » et un autel de pierre sur une montagne éclairée d'un rayon de
    lumière) a fourni les 2 icônes manquantes — Épée de Néhémie et Autel
    du Carmel — portant le total à **45 des 45 artefacts illustrés**,
-   catégorie désormais complète.
+   catégorie désormais complète. Un lot de 16 rendus isométriques
+   « diorama » de bâtiments a suivi, envoyés en réponse à une demande de
+   modèles 3D — mais ce sont des images 2D (mêmes formats PNG/JPG que
+   les icônes précédentes), pas des `GameObject`/maillages Unity, donc
+   `BuildingData.prefab` (qui attend un vrai modèle 3D instanciable)
+   reste vide pour les 39 bâtiments. En revanche 6 de ces 16 images
+   correspondaient à des bâtiments sans icône : Camp des Exilés,
+   Campement des Tribus, Chantier de la Muraille, Grenier, Citerne du
+   Désert, Marché Royal — portant le total à 20 des 39 icônes de
+   bâtiments. Les 10 autres images (Autel de Pierres, Autel de
+   l'Éternel-Paix, Campement de Caravane, Citerne de Siège, Ferme,
+   Fonderie, Camp de Guilgal, Champs de Canaan, et deux rendus sans
+   correspondance exacte avec un bâtiment existant) montraient des
+   bâtiments déjà pourvus d'une icône — elles n'ont pas été
+   réimportées.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`
