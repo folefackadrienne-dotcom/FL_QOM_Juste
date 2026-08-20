@@ -22,7 +22,7 @@ MonoBehaviour:
     dans la capitale du royaume unifié, au cœur du culte national.
   rarity: 3
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e0c155a1b74f43cbb8bafb15b0155cb0, type: 3}
   passiveBonus:
   - type: 4
     amount: 12

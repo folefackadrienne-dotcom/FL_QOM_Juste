@@ -829,7 +829,14 @@ dans l'Éditeur, sans toucher au code.
    une image de la Tente de la Promesse déjà assignée au round
    précédent, et une image du Couteau du Sacrifice déjà assignée deux
    lots plus tôt — confirmant que certaines images étaient effectivement
-   renvoyées une seconde fois.
+   renvoyées une seconde fois. Un sixième lot de 7 images a suivi : 6
+   nouvelles icônes d'`ArtifactData` (Arche d'Alliance (Jérusalem),
+   Couronne de David, Couteau de silex (circoncision), Décret de Cyrus,
+   Manteau de Joseph, Menorah du Tabernacle — total 41 des 45 artefacts
+   illustrés), et à nouveau 1 doublon détecté par hash MD5 identique
+   (donc pas un simple ré-encodage cette fois, mais le même fichier
+   binaire) : une seconde image du Bâton d'Élisée, déjà assignée au
+   round précédent.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

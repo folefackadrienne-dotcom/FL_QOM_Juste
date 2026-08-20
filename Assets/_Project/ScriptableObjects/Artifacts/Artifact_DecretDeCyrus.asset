@@ -23,7 +23,7 @@ MonoBehaviour:
     exactement selon la parole de Jérémie sur les soixante-dix ans.
   rarity: 3
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 04a64c321bea4d4e918f2f9d2f28108c, type: 3}
   passiveBonus:
   - type: 3
     amount: 15

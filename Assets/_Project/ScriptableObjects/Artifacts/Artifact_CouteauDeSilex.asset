@@ -22,7 +22,7 @@ MonoBehaviour:
     traversée du désert, avant même le premier combat de la Conquête.
   rarity: 1
   age: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 785a8d9504d04e21aaff3bfc5a4f13c3, type: 3}
   passiveBonus:
   - type: 6
     amount: 5

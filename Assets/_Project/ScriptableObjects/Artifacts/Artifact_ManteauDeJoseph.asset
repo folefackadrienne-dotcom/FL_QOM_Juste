@@ -22,7 +22,7 @@ MonoBehaviour:
     Joseph en Égypte, et sa réussite malgré l'épreuve.
   rarity: 1
   age: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b045829771ec45f9a34bc49d22605e4e, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     +15 % de diplomatie et de faveur auprès des autorités.

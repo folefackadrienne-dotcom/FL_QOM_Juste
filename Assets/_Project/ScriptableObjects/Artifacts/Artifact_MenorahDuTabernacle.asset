@@ -22,7 +22,7 @@ MonoBehaviour:
     Dieu veillant sur son peuple, jour et nuit.
   rarity: 2
   age: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 027578ffaa06459dbf7ecac1f65b3dac, type: 3}
   passiveBonus:
   - type: 4
     amount: 6

@@ -22,7 +22,7 @@ MonoBehaviour:
     civile contre la maison de Saül.
   rarity: 3
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b17246b6978740c19a38facb4faad587, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     +20 % de loyauté du peuple et bonus de recrutement dans tout le
