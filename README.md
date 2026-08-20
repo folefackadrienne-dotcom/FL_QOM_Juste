@@ -864,6 +864,27 @@ dans l'Éditeur, sans toucher au code.
    correspondance exacte avec un bâtiment existant) montraient des
    bâtiments déjà pourvus d'une icône — elles n'ont pas été
    réimportées.
+
+   **Prototype de prefab low-poly texturé (Grenier uniquement, non
+   vérifié en Éditeur Unity)** — `Assets/_Project/Art/Models/
+   Building_Grenier.obj` : une boîte (murs) + un toit pyramidal, taille
+   0.75×0.75 au sol et 1.8 de haut (footprint `HexGrid.hexSize=1 * 0.75`,
+   hauteur alignée sur `BuildingCategory.Production` dans
+   `BuildingManager.GetPlaceholderShape`), texturé avec deux images
+   (`Wall_Grenier.png`, `Roof_Grenier.png`) recadrées directement dans
+   `Image_Grenier.png` — donc dérivées du même rendu IA déjà utilisé
+   comme icône. Câblé dans `Building_Grenier.asset` via
+   `prefab: {fileID: 100000, guid: ..., type: 3}`. **Ce `fileID: 100000`
+   est une estimation de la convention Unity pour le GameObject racine
+   d'un modèle importé — invérifiable sans Éditeur Unity dans cet
+   environnement.** Si la référence ne se résout pas à l'ouverture du
+   projet, le champ `prefab` apparaîtra simplement vide dans l'Inspecteur
+   (pas d'erreur, pas de corruption) et se corrige en un clic en
+   glissant `Building_Grenier.obj` dans le champ. Chaque face du maillage
+   est dupliquée dans les deux sens de rotation pour ne pas dépendre
+   d'une convention de winding que je ne peux pas non plus vérifier sans
+   Éditeur. À valider en Éditeur avant d'envisager d'appliquer la même
+   approche aux 38 autres bâtiments et aux 11 unités.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

@@ -18,7 +18,7 @@ MonoBehaviour:
     gaspillage en période d'abondance.
   category: 1
   introducedInAge: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 100000, guid: d13e5fa53db94ee4813703f7ac402710, type: 3}
   icon: {fileID: 21300000, guid: 09f9ee365da5475d83c2f02dd1c1ee34, type: 3}
   buildCost:
   - type: 2

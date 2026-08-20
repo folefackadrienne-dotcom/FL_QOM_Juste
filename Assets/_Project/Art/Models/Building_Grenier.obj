@@ -1,0 +1,52 @@
+# Building_Grenier — low-poly box + pyramid roof, generated from Image_Grenier.png crops.
+# Footprint 0.75 x 0.75 (HexGrid.hexSize=1 * 0.75), height 1.3 (BuildingCategory.Production),
+# matching BuildingManager.GetPlaceholderShape's Production primitive so this replaces the
+# fallback cylinder at roughly the same scale.
+# Each face is emitted twice (forward + reversed winding) since there is no Unity Editor in
+# this environment to verify which winding convention the importer treats as front-facing —
+# this guarantees visibility either way at a negligible poly-count cost for a background prop.
+mtllib Building_Grenier.mtl
+
+v -0.375 0 -0.375
+v 0.375 0 -0.375
+v 0.375 0 0.375
+v -0.375 0 0.375
+v -0.375 1.3 -0.375
+v 0.375 1.3 -0.375
+v 0.375 1.3 0.375
+v -0.375 1.3 0.375
+v 0 1.8 0
+
+vt 0 0
+vt 1 0
+vt 1 1
+vt 0 1
+vt 0.5 1
+
+usemtl Wall
+# front (z=-0.375)
+f 1/1 2/2 6/3 5/4
+f 5/4 6/3 2/2 1/1
+# right (x=0.375)
+f 2/1 3/2 7/3 6/4
+f 6/4 7/3 3/2 2/1
+# back (z=0.375)
+f 3/1 4/2 8/3 7/4
+f 7/4 8/3 4/2 3/1
+# left (x=-0.375)
+f 4/1 1/2 5/3 8/4
+f 8/4 5/3 1/2 4/1
+
+usemtl Roof
+# front slope
+f 5/1 6/2 9/5
+f 9/5 6/2 5/1
+# right slope
+f 6/1 7/2 9/5
+f 9/5 7/2 6/1
+# back slope
+f 7/1 8/2 9/5
+f 9/5 8/2 7/1
+# left slope
+f 8/1 5/2 9/5
+f 9/5 5/2 8/1

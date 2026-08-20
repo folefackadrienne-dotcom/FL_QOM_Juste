@@ -1,0 +1,17 @@
+# Materials for Building_Grenier.obj — textures cropped from Image_Grenier.png (the same
+# AI-rendered isometric diorama already used as this building's BuildingData.icon).
+newmtl Wall
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+illum 1
+map_Kd Wall_Grenier.png
+
+newmtl Roof
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+illum 1
+map_Kd Roof_Grenier.png
