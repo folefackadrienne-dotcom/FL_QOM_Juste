@@ -144,14 +144,13 @@ namespace KingdomOfGod.Battle
         }
 
         /// <summary>
-        /// Instantiates UnitData.prefab at the cell's world position — or, until real unit art
-        /// exists (none of the 11 UnitData assets have a prefab assigned), a code-generated
-        /// placeholder: a primitive shaped by UnitClass, colored by Allegiance (blue=Player,
-        /// red=Enemy, olive=Ally), scaled up and darkened for a boss (UnitData.antagonist set),
-        /// plus a camera-facing name label — the same UITheme-instead-of-art discipline already
-        /// used by BuildingManager's placeholder buildings. Swapping in real art later is just
-        /// assigning UnitData.prefab — no code change needed, this path stops being reached
-        /// automatically.
+        /// Instantiates UnitData.prefab at the cell's world position if one is assigned; failing
+        /// that, a camera-facing sprite billboard from UnitData.icon (all 11 units now have one — a
+        /// figurine-style character render) with a flat-colored ground marker for Allegiance (blue=
+        /// Player, red=Enemy, olive=Ally) since the art itself doesn't vary per battle instance;
+        /// failing that too, a code-generated flat-color primitive placeholder. Swapping in real 3D
+        /// art later is just assigning UnitData.prefab — no code change needed, these paths stop
+        /// being reached automatically.
         /// </summary>
         private void SpawnVisual(UnitInstance unit)
         {
@@ -163,7 +162,64 @@ namespace KingdomOfGod.Battle
                 return;
             }
 
+            if (unit.Data.icon != null)
+            {
+                unitVisuals[unit] = SpawnIconBillboard(unit, worldPosition);
+                return;
+            }
+
             unitVisuals[unit] = SpawnPlaceholderVisual(unit, worldPosition);
+        }
+
+        private GameObject SpawnIconBillboard(UnitInstance unit, Vector3 worldPosition)
+        {
+            GetPlaceholderShape(unit.Data.unitClass, out _, out float height);
+            bool isBoss = unit.Data.antagonist != null;
+            if (isBoss) height *= 1.5f;
+            float footprint = battleGrid.Grid.HexSize * 0.6f;
+
+            var anchor = new GameObject(unit.Data.displayName);
+            anchor.transform.SetParent(battleGrid.transform, false);
+            anchor.transform.position = worldPosition;
+
+            var marker = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            marker.name = "AllegianceMarker";
+            marker.transform.SetParent(anchor.transform, false);
+            marker.transform.localPosition = new Vector3(0f, 0.02f, 0f);
+            marker.transform.localScale = new Vector3(footprint, 0.02f, footprint);
+            var markerCollider = marker.GetComponent<Collider>();
+            if (markerCollider != null) Destroy(markerCollider);
+            var markerRenderer = marker.GetComponent<MeshRenderer>();
+            markerRenderer.sharedMaterial = CreateFlatMaterial(GetPlaceholderColor(unit.Allegiance, isBoss));
+            markerRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            markerRenderer.receiveShadows = false;
+
+            var spriteGO = new GameObject("Sprite");
+            spriteGO.transform.SetParent(anchor.transform, false);
+            spriteGO.transform.localPosition = new Vector3(0f, height * 0.5f, 0f);
+
+            var spriteRenderer = spriteGO.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = unit.Data.icon;
+            spriteRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            spriteRenderer.receiveShadows = false;
+
+            float nativeHeight = unit.Data.icon.bounds.size.y;
+            float scale = nativeHeight > 0f ? height / nativeHeight : 1f;
+            spriteGO.transform.localScale = Vector3.one * scale;
+            spriteGO.AddComponent<BillboardLabel>();
+
+            var labelGO = new GameObject("NameLabel");
+            labelGO.transform.SetParent(anchor.transform, false);
+            labelGO.transform.localPosition = new Vector3(0f, height + 0.35f, 0f);
+            labelGO.transform.localScale = Vector3.one * 0.15f;
+            var label = labelGO.AddComponent<TextMeshPro>();
+            label.text = unit.Data.displayName;
+            label.fontSize = 4f;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = theme != null ? theme.ivoryWhite : Color.white;
+            labelGO.AddComponent<BillboardLabel>();
+
+            return anchor;
         }
 
         private GameObject SpawnPlaceholderVisual(UnitInstance unit, Vector3 worldPosition)

@@ -63,24 +63,72 @@ namespace KingdomOfGod.Buildings
         }
 
         /// <summary>
-        /// Instantiates BuildingData.prefab at the cell's world position — or, until real building
-        /// art exists (none of the 39 BuildingData assets have a prefab assigned), a code-generated
-        /// placeholder: a primitive shaped/sized/colored by BuildingCategory via UITheme, plus a
-        /// camera-facing name label, the same UITheme-instead-of-art discipline already used by
-        /// HexGridRenderer/BuildingPaletteUI. Swapping in real art later is just assigning
-        /// BuildingData.prefab — no code change needed, this path stops being reached automatically.
+        /// Instantiates BuildingData.prefab at the cell's world position if one is assigned; failing
+        /// that, a camera-facing sprite billboard from BuildingData.icon (25 of 39 buildings now have
+        /// one — the AI-rendered isometric scene art already used for the palette button); failing
+        /// that too, a code-generated flat-color primitive placeholder. Swapping in real 3D art later
+        /// is just assigning BuildingData.prefab — no code change needed, these paths stop being
+        /// reached automatically.
         /// </summary>
         private void SpawnVisual(BuildingInstance instance)
         {
             var worldPosition = instance.Position.ToWorldPosition(grid.HexSize);
+            var data = instance.Data;
 
-            if (instance.Data.prefab != null)
+            if (data.prefab != null)
             {
-                Instantiate(instance.Data.prefab, worldPosition, Quaternion.identity, transform);
+                Instantiate(data.prefab, worldPosition, Quaternion.identity, transform);
                 return;
             }
 
-            SpawnPlaceholderVisual(instance.Data, worldPosition);
+            if (data.icon != null)
+            {
+                SpawnIconBillboard(data, worldPosition);
+                return;
+            }
+
+            SpawnPlaceholderVisual(data, worldPosition);
+        }
+
+        /// <summary>
+        /// A camera-facing SpriteRenderer using BuildingData.icon in place of a flat-color primitive.
+        /// Height matches GetPlaceholderShape's per-category tuning so buildings keep their
+        /// established relative scale on the hex grid; width follows Sprite.bounds' own aspect ratio
+        /// rather than the fixed footprint, since these renders are wide establishing shots of a whole
+        /// building compound, not square icons.
+        /// </summary>
+        private void SpawnIconBillboard(BuildingData data, Vector3 worldPosition)
+        {
+            GetPlaceholderShape(data.category, out _, out float height, out _);
+
+            var anchor = new GameObject(data.displayName);
+            anchor.transform.SetParent(transform, false);
+            anchor.transform.position = worldPosition;
+
+            var spriteGO = new GameObject("Sprite");
+            spriteGO.transform.SetParent(anchor.transform, false);
+            spriteGO.transform.localPosition = new Vector3(0f, height * 0.5f, 0f);
+
+            var spriteRenderer = spriteGO.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = data.icon;
+            spriteRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            spriteRenderer.receiveShadows = false;
+
+            float nativeHeight = data.icon.bounds.size.y;
+            float scale = nativeHeight > 0f ? height / nativeHeight : 1f;
+            spriteGO.transform.localScale = Vector3.one * scale;
+            spriteGO.AddComponent<BillboardLabel>();
+
+            var labelGO = new GameObject("NameLabel");
+            labelGO.transform.SetParent(anchor.transform, false);
+            labelGO.transform.localPosition = new Vector3(0f, height + 0.35f, 0f);
+            labelGO.transform.localScale = Vector3.one * 0.15f;
+            var label = labelGO.AddComponent<TextMeshPro>();
+            label.text = data.displayName;
+            label.fontSize = 4f;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = theme != null ? theme.panelText : new Color(0.2f, 0.133f, 0.078f);
+            labelGO.AddComponent<BillboardLabel>();
         }
 
         private void SpawnPlaceholderVisual(BuildingData data, Vector3 worldPosition)

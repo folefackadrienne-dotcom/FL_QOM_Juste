@@ -651,6 +651,19 @@ dans l'Éditeur, sans toucher au code.
    discipline UITheme-au-lieu-d'art que `HexGridRenderer`/`BuildingPaletteUI`.
    Remplacer par le vrai art se fera juste en assignant `BuildingData.prefab`,
    sans toucher au code.
+
+   Mise à jour : un vrai modèle 3D pour chaque bâtiment s'est avéré hors de
+   portée dans cet environnement (pas d'Éditeur Unity pour produire ou
+   vérifier des maillages/prefabs — voir le prototype non vérifié
+   `Building_Grenier.obj`). `SpawnVisual` a donc une troisième voie,
+   intercalée entre le prefab et la primitive : si `BuildingData.icon` est
+   assignée (25 des 39 bâtiments désormais, grâce aux rendus isométriques
+   IA reçus), elle s'affiche en sprite 2D toujours face à la caméra
+   (`SpriteRenderer` + `BillboardLabel`, taille verticale alignée sur le
+   `height` déjà réglé par `BuildingCategory`, largeur dérivée du ratio
+   propre au rendu). Un bâtiment sans art continue de retomber sur la
+   primitive colorée ; la primitive elle-même ne disparaît pas du code,
+   elle devient juste le dernier repli.
 4. ~~Habiller visuellement le journal des versets~~ Fait : `VerseJournalUI`
    ne dépend plus d'un `listItemPrefab` (jamais assigné faute d'art produit,
    donc `RefreshList()` restait un no-op permanent) — reconstruite sur
@@ -691,6 +704,14 @@ dans l'Éditeur, sans toucher au code.
    SpawnVisual` retombe sur un placeholder en code (primitive colorée par
    Allegiance/UnitClass, voir `Battle/` ci-dessus) tant qu'aucun
    `UnitData.prefab` n'est assigné.
+
+   Mise à jour : les 11 `UnitData` ont désormais chacune une `icon`
+   (figurine sur socle). `SpawnVisual` s'en sert en priorité sur la
+   primitive quand aucun `prefab` n'existe : sprite 2D face caméra, plus
+   un disque plat coloré au sol (même palette Allegiance qu'avant —
+   bleu Joueur/rouge Ennemi/olive Allié) puisque l'illustration elle-même
+   ne change pas selon le camp de l'unité qui l'utilise en combat. Sans
+   `icon` ni `prefab`, la primitive d'origine reste le dernier repli.
 6. Remplacer `EditorIAPService` par une vraie intégration store (Unity IAP
    ou équivalent) une fois les fiches produit créées dans App Store
    Connect / Play Console — voir `Assets/_Project/Scripts/Monetization`.
