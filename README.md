@@ -818,6 +818,18 @@ dans l'Éditeur, sans toucher au code.
    Serpent d'airain (détruit), Sceau royal d'Ézéchias, Rouleaux de la Loi
    (Esdras), Plans du Temple, Pierre de Gilgal — total 21 des 45
    artefacts illustrés), même procédé, aucun changement de code requis.
+   Un cinquième lot de 16 images a suivi : 14 nouvelles icônes
+   d'`ArtifactData` (Bâton d'Élisée, Char de feu d'Élie, Cheveux de
+   Samson, Manteau d'Élie, Harpe de David, Lettres de Sennachérib,
+   Mâchoire d'âne de Samson, Corne de bélier de Jéricho, Marteau et pieu
+   de Jaël, Muraille reconstruite, Frondes de David, Fournaise de
+   Babylone, Fosse aux lions, Huile de la veuve — total 35 des 45
+   artefacts illustrés), mais aussi 2 vrais doublons repérés et exclus
+   avant import (mêmes dimensions, ré-encodage différent seulement) :
+   une image de la Tente de la Promesse déjà assignée au round
+   précédent, et une image du Couteau du Sacrifice déjà assignée deux
+   lots plus tôt — confirmant que certaines images étaient effectivement
+   renvoyées une seconde fois.
 9. Les 35 missions se résolvent désormais toutes de bout en bout depuis
    `MissionListUI` : les 8 de type `Battle` via
    `MissionManager.StartMission` → scène `Battle` → `MissionBattleSetup`

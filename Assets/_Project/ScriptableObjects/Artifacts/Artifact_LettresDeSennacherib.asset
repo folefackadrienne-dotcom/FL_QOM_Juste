@@ -23,7 +23,7 @@ MonoBehaviour:
     il les étend devant l'Éternel plutôt que de céder à la peur.
   rarity: 1
   age: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: dc28bef72baa4be781ee89828e8f0822, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Déclenche un événement de défi : la menace assyrienne s'intensifie

@@ -22,7 +22,7 @@ MonoBehaviour:
     l'instant où l'obéissance du peuple rencontre la puissance de Dieu.
   rarity: 2
   age: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d0f39913716343648eca4df7d1f97c32, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Débloque le miracle « Chute des murailles ».

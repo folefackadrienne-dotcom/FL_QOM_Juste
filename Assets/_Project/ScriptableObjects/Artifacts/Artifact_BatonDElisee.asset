@@ -23,7 +23,7 @@ MonoBehaviour:
     résurrection vient finalement d'Élisée lui-même, corps contre corps.
   rarity: 2
   age: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 173a80b1e6aa416d8c0baecface314fa, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Peut ressusciter une unité alliée, une fois par bataille.

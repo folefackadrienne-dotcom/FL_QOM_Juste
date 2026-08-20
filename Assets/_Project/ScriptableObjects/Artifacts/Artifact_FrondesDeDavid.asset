@@ -22,7 +22,7 @@ MonoBehaviour:
     hommes pour confondre les puissants.
   rarity: 3
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 88642c66b07f4cb7bdcbf5e830c839b4, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Dégâts massifs contre les unités « géantes » et réduction importante

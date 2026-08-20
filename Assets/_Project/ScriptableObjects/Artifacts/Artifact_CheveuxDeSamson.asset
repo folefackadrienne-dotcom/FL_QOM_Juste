@@ -23,7 +23,7 @@ MonoBehaviour:
     d'orgueil, mais fragile dès que l'Alliance est trahie en secret.
   rarity: 3
   age: 3
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 780162a6ddd04c8ba6c5ca15696bab56, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Source de force surhumaine, mais fragile : perdue instantanément si

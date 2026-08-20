@@ -22,7 +22,7 @@ MonoBehaviour:
     la providence de Dieu au milieu des dettes et de la précarité.
   rarity: 2
   age: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 17391a5c4d4647bda2a70d532b345131, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Multiplie les ressources alimentaires du royaume.

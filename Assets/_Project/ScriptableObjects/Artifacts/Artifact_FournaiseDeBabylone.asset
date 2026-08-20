@@ -23,7 +23,7 @@ MonoBehaviour:
     fidélité de tout l'Ancien Testament face à l'idolâtrie imposée.
   rarity: 3
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 53d9051fdeaf4049af138464431585bd, type: 3}
   passiveBonus:
   - type: 4
     amount: 12

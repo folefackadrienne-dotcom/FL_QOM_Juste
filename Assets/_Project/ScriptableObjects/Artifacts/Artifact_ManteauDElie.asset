@@ -22,7 +22,7 @@ MonoBehaviour:
     génération à l'autre, dans un moment de transition dramatique.
   rarity: 3
   age: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 94062f9d578c4e50aa4f0b9dc6b86326, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Permet de transmettre un « double esprit » à un prophète allié.

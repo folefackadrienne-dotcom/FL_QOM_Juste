@@ -22,7 +22,7 @@ MonoBehaviour:
     devient un témoignage jusque devant les nations.
   rarity: 3
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7327ddb6a5824677b78c4ca1be26a4e1, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Débloque une mission spéciale de survie, avec une récompense de

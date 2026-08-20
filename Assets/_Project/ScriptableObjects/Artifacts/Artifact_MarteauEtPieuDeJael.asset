@@ -22,7 +22,7 @@ MonoBehaviour:
     victoire, accompli par une femme là où les guerriers avaient échoué.
   rarity: 2
   age: 3
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 91e5a4ee7f5649d8ba80c9e20efc18b3, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Permet d'éliminer instantanément un chef ennemi (1 fois par bataille).

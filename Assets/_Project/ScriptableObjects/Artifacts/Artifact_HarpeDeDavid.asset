@@ -22,7 +22,7 @@ MonoBehaviour:
     l'onction précède souvent le service humble.
   rarity: 2
   age: 4
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4459296e0b344d8284d62b8386a2d024, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Calme les esprits : réduit les murmures du peuple et restaure le

@@ -24,7 +24,7 @@ MonoBehaviour:
     du jeu.
   rarity: 3
   age: 6
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ebe57b309f2c4631841fd92ea4746857, type: 3}
   passiveBonus: []
   activeAbilityDescription: >-
     Monument final : grand bonus permanent de protection pour tout le
