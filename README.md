@@ -933,6 +933,24 @@ dans l'Éditeur, sans toucher au code.
    sur la primitive colorée tant qu'un `BuildingData`/`UnitData` garde
    son `icon` assignée.
 
+   Un dernier lot de 7 images a suivi : 4 portraits de leaders (Élie,
+   Salomon, Samson, Néhémie — **10/10 portraits de leaders désormais
+   complets**), 2 textures de terrain (Montagne, Forêt — **8/8 types de
+   terrain désormais complets**, câblées dans `TerrainTileSet.asset`
+   terrain 3 et 4), et 1 texture de parchemin ornée de motifs
+   géométriques (`PanelParchment.png`) pour le fond des panneaux. Cette
+   dernière a nécessité un vrai changement de code : `UIThemeData` gagne
+   un champ `panelBackgroundSprite` (`Sprite`), et
+   `ProjectSceneSetup.AddParchmentBackground` bascule sur cette texture
+   en mode `Image.Type.Sliced` (9-slice) quand elle est assignée,
+   au lieu de l'aplat `parchmentBackground` — qui reste le repli si le
+   champ est vide. Bordures 9-slice (`spriteBorder`) estimées visuellement
+   à 120px gauche/droite et 105px haut/bas sur une image de 1376×768 —
+   à ajuster dans l'Éditeur Unity (Sprite Editor) si besoin, aucun moyen
+   de vérifier le rendu final sans lui. Restent dans « Divers » : le fond
+   du Menu Principal, la bordure 9-slice dorée (toujours un simple
+   `Outline`), l'icône du produit boutique, et les 7 icônes de ressources.
+
    **Incident et correction** : les 5 images de boss (Pharaon, Goliath,
    Jézabel, Sennachérib, Sanballat et Tobija) portaient les mêmes noms de
    fichier (`Image_Pharaon.png`, etc.) que les portraits d'antagonistes

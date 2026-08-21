@@ -914,7 +914,17 @@ namespace KingdomOfGod.EditorTools
             var image = go.AddComponent<Image>();
             if (theme != null)
             {
-                image.color = theme.parchmentBackground;
+                if (theme.panelBackgroundSprite != null)
+                {
+                    image.sprite = theme.panelBackgroundSprite;
+                    image.type = Image.Type.Sliced;
+                    image.color = Color.white;
+                }
+                else
+                {
+                    image.color = theme.parchmentBackground;
+                }
+
                 var outline = go.AddComponent<Outline>();
                 outline.effectColor = theme.goldBorder;
                 outline.effectDistance = new Vector2(2f, 2f);

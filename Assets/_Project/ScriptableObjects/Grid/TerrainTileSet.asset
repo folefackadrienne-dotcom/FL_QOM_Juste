@@ -19,6 +19,10 @@ MonoBehaviour:
     texture: {fileID: 2800000, guid: 202fd38a27634422919f22631209d76c, type: 3}
   - terrain: 2
     texture: {fileID: 2800000, guid: 6309e9bb2d8246aeb500eb1714961777, type: 3}
+  - terrain: 3
+    texture: {fileID: 2800000, guid: 19afc908d7224d1ba657cab888454d72, type: 3}
+  - terrain: 4
+    texture: {fileID: 2800000, guid: 96cab1b5158642dc9ba20806ec5779dc, type: 3}
   - terrain: 5
     texture: {fileID: 2800000, guid: 00f9f41b860545529f57be4b56b31ae0, type: 3}
   - terrain: 6

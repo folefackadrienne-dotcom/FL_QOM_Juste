@@ -39,8 +39,10 @@ namespace KingdomOfGod.UI
         [Header("Chrome UI")]
         [Tooltip("Bordures dorées fines.")]
         public Color goldBorder = new Color(0.831f, 0.627f, 0.090f);
-        [Tooltip("Fond semi-transparent parchemin/pierre claire.")]
+        [Tooltip("Fond semi-transparent parchemin/pierre claire — repli de couleur plate tant que panelBackgroundSprite n'est pas assignée.")]
         public Color parchmentBackground = new Color(0.922f, 0.871f, 0.753f, 0.92f);
+        [Tooltip("Texture parchemin 9-slice pour le fond des panneaux (AddParchmentBackground) — remplace parchmentBackground une fois assignée.")]
+        public Sprite panelBackgroundSprite;
         public Color panelText = new Color(0.200f, 0.133f, 0.078f);
 
         [Header("Ambiance par Âge — pas encore branché sur un rendu visuel, prêt pour quand HexGrid en aura un")]
