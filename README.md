@@ -922,6 +922,17 @@ dans l'Éditeur, sans toucher au code.
    icône : Grand Marché (Comptoir commercial), Marché du Retour, Muraille
    de Jérusalem.
 
+   Ces 3 derniers ont été reçus juste après : une place de marché
+   opulente à l'architecture gréco-romaine (colonnes, dômes, fontaine)
+   pour Grand Marché (Comptoir commercial), un marché plus modeste en
+   terre battue devant une porte fortifiée pour Marché du Retour, et une
+   citadelle fortifiée vue d'en haut pour Muraille de Jérusalem —
+   **39/39 icônes de bâtiments et 11/11 icônes d'unités, les deux
+   catégories désormais complètes**. `BuildingManager.SpawnVisual` et
+   `BattleManager.SpawnVisual` n'ont donc plus jamais besoin de retomber
+   sur la primitive colorée tant qu'un `BuildingData`/`UnitData` garde
+   son `icon` assignée.
+
    **Incident et correction** : les 5 images de boss (Pharaon, Goliath,
    Jézabel, Sennachérib, Sanballat et Tobija) portaient les mêmes noms de
    fichier (`Image_Pharaon.png`, etc.) que les portraits d'antagonistes
