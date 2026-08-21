@@ -951,6 +951,52 @@ dans l'Éditeur, sans toucher au code.
    du Menu Principal, la bordure 9-slice dorée (toujours un simple
    `Outline`), l'icône du produit boutique, et les 7 icônes de ressources.
 
+   Un lot de 9 images a suivi, couvrant les 3 derniers éléments majeurs
+   de « Divers » : les 7 icônes de ressources (`Icon_Resource_Wheat.png`,
+   `Water`, `Wood`, `Gold`, `Faith`, `Wisdom`, `Justice` — **7/7
+   ressources désormais illustrées**), le fond du Menu Principal
+   (`MenuBackground.png`, un désert au crépuscule) et une bordure 9-slice
+   dorée ornée d'étoiles de David et de menorahs (`PanelBorderGold.png`).
+   **Traitement préalable nécessaire** : les 9 fichiers reçus n'avaient
+   pas de canal alpha (mode RGB) et encodaient la transparence prévue
+   sous forme d'un damier gris/noir littéralement peint dans l'image —
+   un import brut aurait affiché ce damier comme fond opaque en jeu. Un
+   script Python (PIL) a été écrit pour détecter ce damier par
+   correspondance de couleur (échantillonnage adaptatif des deux teintes
+   de damier propres à chaque image, la teinte exacte variant d'un
+   fichier à l'autre) puis le convertir en vraie transparence (canal
+   alpha), avec un nettoyage morphologique (ouverture/fermeture) pour
+   supprimer le bruit résiduel ; chaque résultat a été vérifié
+   visuellement avant import (composite sur fond de couleur unie) ;
+   ce script n'a pas été conservé dans le repo, seul son résultat (les
+   PNG avec canal alpha propre) a été importé. Quelques infimes artéfacts résiduels subsistent par
+   endroits (léger bord en pointillés sur certains contours dorés, un
+   petit logo décoratif semi-transparent en bas à droite de chaque icône
+   propre à l'outil de génération) — cosmétiques, non bloquants à la
+   taille d'affichage prévue. Fond du Menu Principal conservé tel quel
+   (opaque, aucune transparence nécessaire pour un fond plein écran).
+
+   Câblage code (suivant la même logique que `panelBackgroundSprite`) :
+   `UIThemeData` gagne `goldBorderSprite` et `menuBackgroundSprite`.
+   `ProjectSceneSetup.CreateMainMenuScene` bascule le fond sur
+   `menuBackgroundSprite` (`Image.Type.Simple`) quand assigné, sinon
+   garde l'aplat `deepBlue`. `AddParchmentBackground` ajoute un enfant
+   `Image` 9-slice (`Image.Type.Sliced`) rempli par `goldBorderSprite`
+   par-dessus le fond, à la place de l'`Outline`, quand ce champ est
+   assigné. `CreateButton` garde volontairement l'`Outline` même une
+   fois `goldBorderSprite` assigné : la bande dorée de cette texture
+   fait ~160px sur les 1408×768 de la source (estimée par profil de
+   canal alpha), ce qui engloutirait entièrement un bouton de 240×50 en
+   mode 9-slice — bordure réservée aux grands panneaux. `spriteBorder`
+   de `PanelBorderGold.png` posé à 160/160/160/160, estimation visuelle
+   du même ordre que celle de `PanelParchment.png`, à ajuster dans
+   l'Éditeur si besoin. Les 7 icônes de ressources sont câblées dans
+   `ResourceBarUI` (nouveau champ `Image icon` sur `ResourceLabel`) et
+   `ProjectSceneSetup` (un `Image` par ressource, chargé par chemin
+   `Icon_Resource_<Type>.png`, à gauche du texte). Il ne reste plus que
+   l'icône du produit boutique (`Product_EditionComplete`) dans
+   « Divers ».
+
    **Incident et correction** : les 5 images de boss (Pharaon, Goliath,
    Jézabel, Sennachérib, Sanballat et Tobija) portaient les mêmes noms de
    fichier (`Image_Pharaon.png`, etc.) que les portraits d'antagonistes

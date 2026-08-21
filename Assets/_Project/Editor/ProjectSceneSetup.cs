@@ -51,6 +51,7 @@ namespace KingdomOfGod.EditorTools
 
         private const string UIThemePath = "Assets/_Project/ScriptableObjects/UI/UITheme.asset";
         private const string TerrainTileSetPath = "Assets/_Project/ScriptableObjects/Grid/TerrainTileSet.asset";
+        private const string SpritesFolder = "Assets/_Project/Art/Sprites";
 
         [MenuItem("Kingdom of God/Setup/Create All Scenes", priority = 0)]
         public static void CreateAllScenes()
@@ -201,7 +202,17 @@ namespace KingdomOfGod.EditorTools
             backgroundRect.anchorMax = Vector2.one;
             backgroundRect.sizeDelta = Vector2.zero;
             var background = backgroundGO.AddComponent<Image>();
-            background.color = theme != null ? theme.deepBlue : new Color(0.05f, 0.05f, 0.08f);
+            if (theme != null && theme.menuBackgroundSprite != null)
+            {
+                background.sprite = theme.menuBackgroundSprite;
+                background.type = Image.Type.Simple;
+                background.preserveAspect = false;
+                background.color = Color.white;
+            }
+            else
+            {
+                background.color = theme != null ? theme.deepBlue : new Color(0.05f, 0.05f, 0.08f);
+            }
 
             CreateLabel(canvas.transform, "Title", "Kingdom of God", 48, TextAlignmentOptions.Center,
                 new Vector2(0, 300), new Vector2(600, 80), theme != null ? theme.divineLight : (Color?)null);
@@ -282,13 +293,25 @@ namespace KingdomOfGod.EditorTools
             var resourceLabels = new List<ResourceLabelRef>();
             for (int i = 0; i < resourceOrder.Length; i++)
             {
+                var iconGO = new GameObject(resourceOrder[i] + "Icon", typeof(RectTransform), typeof(Image));
+                iconGO.transform.SetParent(resourceBarGO.transform, false);
+                var iconRect = iconGO.GetComponent<RectTransform>();
+                iconRect.anchorMin = new Vector2(0f, 1f);
+                iconRect.anchorMax = new Vector2(0f, 1f);
+                iconRect.pivot = new Vector2(0f, 1f);
+                iconRect.sizeDelta = new Vector2(22, 22);
+                iconRect.anchoredPosition = new Vector2(0, -i * 26 - 1);
+                var iconImage = iconGO.GetComponent<Image>();
+                iconImage.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{SpritesFolder}/Icon_Resource_{resourceOrder[i]}.png");
+                iconImage.preserveAspect = true;
+
                 var label = CreateLabel(resourceBarGO.transform, resourceOrder[i] + "Label", $"{resourceOrder[i]}: 0",
-                    18, TextAlignmentOptions.MidlineLeft, new Vector2(0, -i * 26), new Vector2(180, 24),
+                    18, TextAlignmentOptions.MidlineLeft, new Vector2(26, -i * 26), new Vector2(154, 24),
                     theme != null ? theme.ivoryWhite : (Color?)null);
                 label.rectTransform.anchorMin = new Vector2(0f, 1f);
                 label.rectTransform.anchorMax = new Vector2(0f, 1f);
                 label.rectTransform.pivot = new Vector2(0f, 1f);
-                resourceLabels.Add(new ResourceLabelRef { type = resourceOrder[i], text = label });
+                resourceLabels.Add(new ResourceLabelRef { type = resourceOrder[i], text = label, icon = iconImage });
             }
             SetResourceLabels(resourceBar, resourceLabels);
 
@@ -879,7 +902,13 @@ namespace KingdomOfGod.EditorTools
             return (panelGO, listContainerGO.transform, portraitGO.GetComponent<Image>(), nameText, roleText, detailText, closeButton);
         }
 
-        /// <summary>Flat-color chrome per docs/ArtDirection.md section 6 ("bordures dorées fines") — an Outline effect stands in for a real 9-slice border sprite until one exists.</summary>
+        /// <summary>
+        /// Flat-color chrome per docs/ArtDirection.md section 6 ("bordures dorées fines") — an Outline
+        /// effect stands in for a real 9-slice border sprite. Deliberately does NOT consume
+        /// theme.goldBorderSprite even once assigned: that texture's ornamental band is ~160px thick
+        /// on its 1408x768 source, which would swallow this button's entire 240x50 body if sliced onto
+        /// it. AddParchmentBackground uses it instead, on panels large enough for it to read as a frame.
+        /// </summary>
         private static Button CreateButton(Transform parent, string name, string label, Vector2 anchoredPosition, UIThemeData theme = null)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
@@ -925,9 +954,26 @@ namespace KingdomOfGod.EditorTools
                     image.color = theme.parchmentBackground;
                 }
 
-                var outline = go.AddComponent<Outline>();
-                outline.effectColor = theme.goldBorder;
-                outline.effectDistance = new Vector2(2f, 2f);
+                if (theme.goldBorderSprite != null)
+                {
+                    var borderGO = new GameObject("GoldBorder", typeof(RectTransform), typeof(Image));
+                    borderGO.transform.SetParent(go.transform, false);
+                    var borderRect = borderGO.GetComponent<RectTransform>();
+                    borderRect.anchorMin = Vector2.zero;
+                    borderRect.anchorMax = Vector2.one;
+                    borderRect.sizeDelta = Vector2.zero;
+                    var borderImage = borderGO.GetComponent<Image>();
+                    borderImage.sprite = theme.goldBorderSprite;
+                    borderImage.type = Image.Type.Sliced;
+                    borderImage.color = Color.white;
+                    borderImage.raycastTarget = false;
+                }
+                else
+                {
+                    var outline = go.AddComponent<Outline>();
+                    outline.effectColor = theme.goldBorder;
+                    outline.effectDistance = new Vector2(2f, 2f);
+                }
             }
             return image;
         }
@@ -984,6 +1030,7 @@ namespace KingdomOfGod.EditorTools
         {
             public ResourceType type;
             public TextMeshProUGUI text;
+            public Image icon;
         }
 
         private static void SetResourceLabels(ResourceBarUI resourceBar, List<ResourceLabelRef> entries)
@@ -996,6 +1043,7 @@ namespace KingdomOfGod.EditorTools
                 var element = labelsProp.GetArrayElementAtIndex(i);
                 element.FindPropertyRelative("type").intValue = (int)entries[i].type;
                 element.FindPropertyRelative("valueText").objectReferenceValue = entries[i].text;
+                element.FindPropertyRelative("icon").objectReferenceValue = entries[i].icon;
             }
             so.ApplyModifiedProperties();
         }

@@ -44,6 +44,10 @@ namespace KingdomOfGod.UI
         [Tooltip("Texture parchemin 9-slice pour le fond des panneaux (AddParchmentBackground) — remplace parchmentBackground une fois assignée.")]
         public Sprite panelBackgroundSprite;
         public Color panelText = new Color(0.200f, 0.133f, 0.078f);
+        [Tooltip("Bordure 9-slice dorée ornementée (étoiles de David, menorahs) — bande épaisse (~160px sur une texture source 1408x768), pensée pour les grands panneaux (AddParchmentBackground). Non utilisée sur les petits boutons (240x50) : une bordure aussi épaisse les mangerait entièrement, donc CreateButton garde le repli Outline même quand ce champ est assigné.")]
+        public Sprite goldBorderSprite;
+        [Tooltip("Image de fond plein écran du Menu Principal — remplace l'aplat deepBlue une fois assignée.")]
+        public Sprite menuBackgroundSprite;
 
         [Header("Ambiance par Âge — pas encore branché sur un rendu visuel, prêt pour quand HexGrid en aura un")]
         public List<AgeAccent> ageAccents = new List<AgeAccent>();

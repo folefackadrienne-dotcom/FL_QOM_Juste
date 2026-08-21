@@ -3,6 +3,7 @@ using KingdomOfGod.Core;
 using KingdomOfGod.Resources;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace KingdomOfGod.UI
 {
@@ -11,6 +12,7 @@ namespace KingdomOfGod.UI
     {
         public ResourceType type;
         public TMP_Text valueText;
+        public Image icon;
     }
 
     /// <summary>HUD strip showing all 7 resources; subscribes to ResourceManager.ResourceChanged.</summary>
