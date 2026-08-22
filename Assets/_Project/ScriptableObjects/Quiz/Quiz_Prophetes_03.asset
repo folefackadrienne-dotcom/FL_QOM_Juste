@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Prophetes_03
+  m_EditorClassIdentifier:
+  questionId: "Prophetes_03"
+  age: 5
+  questionText: "Que répond Élisée à son serviteur effrayé devant l'armée araméenne ?"
+  answers:
+  - "\"Fuyons\""
+  - "\"Ceux qui sont avec nous sont plus nombreux qu'eux\""
+  - "\"Rendons-nous\""
+  - "\"Prions Baal\""
+  correctAnswerIndex: 1
+  sourceReference: "2 Rois 6:16"
+  explanation: "Élisée rassure son serviteur juste avant que Dieu ouvre ses yeux sur l'armée céleste qui les entoure."
+  faithReward: 6
+  pointsReward: 2

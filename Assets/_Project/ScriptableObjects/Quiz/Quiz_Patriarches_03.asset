@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Patriarches_03
+  m_EditorClassIdentifier:
+  questionId: "Patriarches_03"
+  age: 0
+  questionText: "Que répond Joseph à ses frères qui craignent sa vengeance (Genèse 50:20) ?"
+  answers:
+  - "\"Vous avez pensé le mal, mais Dieu l'a changé en bien\""
+  - "\"Je ne vous pardonnerai jamais\""
+  - "\"Retournez en Égypte\""
+  - "\"Le pharaon vous punira\""
+  correctAnswerIndex: 0
+  sourceReference: "Genèse 50:20"
+  explanation: "Joseph pardonne à ses frères qui l'avaient vendu, reconnaissant la providence de Dieu dans son épreuve."
+  faithReward: 6
+  pointsReward: 2

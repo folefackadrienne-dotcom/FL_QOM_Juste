@@ -47,6 +47,10 @@ namespace KingdomOfGod.SaveSystem
 
         public List<string> unlockedProphecyIds = new List<string>();
 
+        public List<string> answeredQuizQuestionIds = new List<string>();
+        public int quizScore;
+        public List<int> quizBadgeAges = new List<int>();
+
         public DateTime savedAtUtc;
     }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Juges_04
+  m_EditorClassIdentifier:
+  questionId: "Juges_04"
+  age: 3
+  questionText: "Que fait Dieu pour délivrer le peuple selon Juges 2:16 ?"
+  answers:
+  - "Il suscite des juges"
+  - "Il envoie un roi"
+  - "Il abandonne le peuple"
+  - "Il détruit les ennemis sans intermédiaire"
+  correctAnswerIndex: 0
+  sourceReference: "Juges 2:16"
+  explanation: "Le cycle des Juges : le peuple se détourne, est opprimé, crie à Dieu, qui suscite un libérateur."
+  faithReward: 6
+  pointsReward: 2

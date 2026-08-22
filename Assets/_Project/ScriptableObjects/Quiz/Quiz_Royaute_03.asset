@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Royaute_03
+  m_EditorClassIdentifier:
+  questionId: "Royaute_03"
+  age: 4
+  questionText: "Selon 1 Samuel 16:7, que regarde Dieu chez une personne plutôt que l'apparence ?"
+  answers:
+  - "La richesse"
+  - "Le cœur"
+  - "La taille"
+  - "La force"
+  correctAnswerIndex: 1
+  sourceReference: "1 Samuel 16:7"
+  explanation: "Alors que Samuel s'apprête à choisir l'aîné de Jessé, Dieu rappelle qu'il regarde le cœur, pas l'apparence."
+  faithReward: 6
+  pointsReward: 2

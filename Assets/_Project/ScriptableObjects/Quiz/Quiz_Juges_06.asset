@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Juges_06
+  m_EditorClassIdentifier:
+  questionId: "Juges_06"
+  age: 3
+  questionText: "Comment se termine la vie de Samson selon Juges 16:28 ?"
+  answers:
+  - "Il meurt de vieillesse"
+  - "Il fait s'effondrer le temple sur lui et ses ennemis"
+  - "Il s'enfuit en Égypte"
+  - "Il devient roi d'Israël"
+  correctAnswerIndex: 1
+  sourceReference: "Juges 16:28"
+  explanation: "Retrouvant sa force une dernière fois, Samson renverse les colonnes du temple de Dagon."
+  faithReward: 9
+  pointsReward: 3

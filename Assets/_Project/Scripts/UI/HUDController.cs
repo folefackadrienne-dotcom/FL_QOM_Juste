@@ -1,5 +1,6 @@
 using KingdomOfGod.Core;
 using KingdomOfGod.Miracles;
+using KingdomOfGod.Quiz;
 using KingdomOfGod.SaveSystem;
 using TMPro;
 using UnityEngine;
@@ -20,10 +21,13 @@ namespace KingdomOfGod.UI
         [SerializeField] private CollectionUI collectionUI;
         [SerializeField] private TechScreenUI techScreen;
         [SerializeField] private StoreUI storeUI;
+        [SerializeField] private QuizUI quizUI;
         [SerializeField] private KingdomTurnManager turnManager;
         [SerializeField] private TMP_Text turnLabel;
         [SerializeField] private MiracleManager miracleManager;
         [SerializeField] private TMP_Text prayerStatusLabel;
+        [SerializeField] private QuizManager quizManager;
+        [SerializeField] private TMP_Text quizStatusLabel;
         [SerializeField] private SaveCoordinator saveCoordinator;
 
         private void Awake()
@@ -42,6 +46,10 @@ namespace KingdomOfGod.UI
             if (saveCoordinator == null && GameManager.Instance != null)
             {
                 saveCoordinator = GameManager.Instance.SaveCoordinator;
+            }
+            if (quizManager == null && GameManager.Instance != null)
+            {
+                quizManager = GameManager.Instance.Quiz;
             }
         }
 
@@ -63,6 +71,13 @@ namespace KingdomOfGod.UI
                 miracleManager.MiracleCast += OnPrayerStateChanged;
             }
             UpdatePrayerLabel();
+
+            if (quizManager != null)
+            {
+                quizManager.QuestionAvailable += OnQuizQuestionAvailable;
+                quizManager.QuestionAnswered += OnQuizQuestionAnswered;
+            }
+            UpdateQuizLabel();
         }
 
         private void OnDisable()
@@ -77,6 +92,12 @@ namespace KingdomOfGod.UI
                 miracleManager.PrayerCancelled -= OnPrayerStateChanged;
                 miracleManager.MiracleCast -= OnPrayerStateChanged;
             }
+
+            if (quizManager != null)
+            {
+                quizManager.QuestionAvailable -= OnQuizQuestionAvailable;
+                quizManager.QuestionAnswered -= OnQuizQuestionAnswered;
+            }
         }
 
         public void OpenPrayerMenu() => prayerMenu.Open();
@@ -89,6 +110,7 @@ namespace KingdomOfGod.UI
         public void OpenCollection() => collectionUI.Open();
         public void OpenTechScreen() => techScreen.Open();
         public void OpenStore() => storeUI.Open();
+        public void OpenQuiz() => quizUI.Open();
 
         public void EndTurn()
         {
@@ -105,6 +127,33 @@ namespace KingdomOfGod.UI
         private void UpdateTurnLabel()
         {
             if (turnLabel != null && turnManager != null) turnLabel.text = $"Tour {turnManager.TurnNumber}";
+        }
+
+        private void OnPrayerStateChanged(MiracleData miracle) => UpdatePrayerLabel();
+        private void OnPrayerProgressed(MiracleData miracle, int turns) => UpdatePrayerLabel();
+
+        private void UpdatePrayerLabel()
+        {
+            if (prayerStatusLabel == null || miracleManager == null) return;
+
+            if (!miracleManager.IsPraying)
+            {
+                prayerStatusLabel.text = "";
+                return;
+            }
+
+            int duration = miracleManager.GetEffectivePrayerDuration(miracleManager.ActiveMiracle);
+            prayerStatusLabel.text = $"Prière : {miracleManager.ActiveMiracle.displayName} ({miracleManager.PrayerProgressTurns}/{duration})";
+        }
+
+        /// <summary>A new question rolled by QuizManager every turnsBetweenQuestions — mirrors prayerStatusLabel's always-visible HUD indicator, so the player notices without the panel being forced open.</summary>
+        private void OnQuizQuestionAvailable(QuizQuestionData question) => UpdateQuizLabel();
+        private void OnQuizQuestionAnswered(QuizQuestionData question, bool correct) => UpdateQuizLabel();
+
+        private void UpdateQuizLabel()
+        {
+            if (quizStatusLabel == null || quizManager == null) return;
+            quizStatusLabel.text = quizManager.HasAvailableQuestion ? "Nouvelle question disponible !" : "";
         }
     }
 }

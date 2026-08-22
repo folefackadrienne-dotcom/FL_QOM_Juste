@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Patriarches_04
+  m_EditorClassIdentifier:
+  questionId: "Patriarches_04"
+  age: 0
+  questionText: "Qu'est-ce qui est compté à Abraham comme justice en Genèse 15:6 ?"
+  answers:
+  - "Ses sacrifices"
+  - "Sa foi"
+  - "Sa richesse"
+  - "Son âge"
+  correctAnswerIndex: 1
+  sourceReference: "Genèse 15:6"
+  explanation: "Abraham crut à l'Éternel, qui le lui compta comme justice — un principe fondateur repris dans tout le récit biblique."
+  faithReward: 6
+  pointsReward: 2

@@ -1087,3 +1087,34 @@ dans l'Éditeur, sans toucher au code.
     (3 arbres × 5 branches) — contrairement au Temple ou aux missions,
     ce serait un vrai morceau d'UI à construire, hors du périmètre de ce
     chiffrage.
+12. Nouveau système : quiz biblique par Âge. `QuizQuestionData`
+    (question, 3-4 réponses, référence, explication, récompense en
+    Foi/points) et `QuizManager` (`Assets/_Project/Scripts/Quiz/`) —
+    toutes les 5 tours (`KingdomTurnManager.TurnAdvanced`), une question
+    non répondue de l'Âge courant est tirée au sort et attend que le
+    joueur l'ouvre ; rien n'est jamais imposé. Une bonne réponse paie une
+    fois (`+4/+6/+9 Foi` selon la difficulté Facile/Moyen/Difficile,
+    volontairement bien en dessous du `faithCost` d'un miracle, 10 à 35)
+    et ne peut plus être re-gagnée ; une mauvaise réponse ne coûte rien
+    et laisse la question disponible pour un tirage ultérieur. Répondre
+    à la totalité des questions d'un Âge accorde un Badge de Connaissance
+    ponctuel (+15 Foi), sur le même principe que
+    `CollectionManager.AgeCollectionCompleted` pour les artefacts — un
+    nouveau type de récompense plutôt qu'un `ArtifactData` de plus, pour
+    ne pas toucher aux 45 artefacts déjà terminés. Câblé de bout en bout :
+    `GameManager.Quiz`, `SaveData`/`SaveCoordinator` (progression et
+    score persistés), et un panneau `QuizUI` dans le HUD de Kingdom
+    (bouton « Question du Jour », 3ᵉ ligne de la barre d'outils) generé
+    par `ProjectSceneSetup`. 42 questions ont été rédigées (6 par Âge,
+    2 faciles/2 moyennes/2 difficiles), ancrées sur les mêmes épisodes
+    bibliques que les `VerseData`/`ArtifactData` déjà présents pour
+    chaque Âge plutôt que sur du contenu inventé.
+    **Bug préexistant corrigé au passage** : `HUDController` appelait
+    `OnPrayerStateChanged`, `OnPrayerProgressed` et `UpdatePrayerLabel`
+    dans `OnEnable`/`OnDisable` sans que ces méthodes existent nulle
+    part sur cette classe (les deux premières n'existaient que sur
+    `PrayerMenuUI`, une classe différente) — une erreur de compilation
+    qui aurait bloqué tout le projet dès qu'un Éditeur Unity l'aurait
+    ouvert. Corrigé en ajoutant ces trois méthodes à `HUDController`
+    (affichage de la prière en cours dans `prayerStatusLabel`), remarqué
+    en câblant `quizStatusLabel` juste à côté selon le même principe.

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Exil_06
+  m_EditorClassIdentifier:
+  questionId: "Exil_06"
+  age: 6
+  questionText: "Quel édit permet le retour d'exil et la reconstruction du Temple ?"
+  answers:
+  - "Le décret de Cyrus"
+  - "La loi de Moïse"
+  - "L'édit de Salomon"
+  - "Le pacte de David"
+  correctAnswerIndex: 0
+  sourceReference: "Esdras 1"
+  explanation: "Le roi perse Cyrus autorise le retour des exilés et la reconstruction du Temple de Jérusalem."
+  faithReward: 9
+  pointsReward: 3

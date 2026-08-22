@@ -110,6 +110,16 @@ namespace KingdomOfGod.SaveSystem
                 data.unlockedProphecyIds.Add(prophecy.displayName);
             }
 
+            foreach (var question in gameManager.Quiz.AnsweredCorrectly)
+            {
+                data.answeredQuizQuestionIds.Add(question.questionId);
+            }
+            data.quizScore = gameManager.Quiz.Score;
+            foreach (var age in gameManager.Quiz.BadgesEarned)
+            {
+                data.quizBadgeAges.Add((int)age);
+            }
+
             return data;
         }
 
@@ -147,6 +157,7 @@ namespace KingdomOfGod.SaveSystem
             gameManager.Leaders.RestoreFromSave(data.unlockedLeaderIds, data.activeLeaderId);
             gameManager.Miracles.RestoreFromSave(data.usedOnceMiracleIds);
             gameManager.Prophecies.RestoreFromSave(data.unlockedProphecyIds);
+            gameManager.Quiz.RestoreFromSave(data.answeredQuizQuestionIds, data.quizScore, data.quizBadgeAges);
         }
     }
 }

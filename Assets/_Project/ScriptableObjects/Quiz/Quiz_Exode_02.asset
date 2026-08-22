@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Exode_02
+  m_EditorClassIdentifier:
+  questionId: "Exode_02"
+  age: 1
+  questionText: "Qu'est-ce que Dieu envoie chaque matin pour nourrir le peuple dans le désert ?"
+  answers:
+  - "Des cailles"
+  - "La manne"
+  - "Du pain d'orge"
+  - "Des figues"
+  correctAnswerIndex: 1
+  sourceReference: "Exode 16"
+  explanation: "La manne tombe chaque matin, sauf le jour du sabbat où une double portion est donnée la veille."
+  faithReward: 4
+  pointsReward: 1

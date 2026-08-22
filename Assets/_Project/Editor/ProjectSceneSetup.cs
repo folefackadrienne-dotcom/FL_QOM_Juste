@@ -14,6 +14,7 @@ using KingdomOfGod.Monetization;
 using KingdomOfGod.Population;
 using KingdomOfGod.Progression;
 using KingdomOfGod.Prophecy;
+using KingdomOfGod.Quiz;
 using KingdomOfGod.Resources;
 using KingdomOfGod.SaveSystem;
 using KingdomOfGod.UI;
@@ -90,6 +91,7 @@ namespace KingdomOfGod.EditorTools
             var audioManager = root.AddComponent<AudioManager>();
             var kingdomTurnManager = root.AddComponent<KingdomTurnManager>();
             var prophecyManager = root.AddComponent<ProphecyManager>();
+            var quizManager = root.AddComponent<QuizManager>();
             var gameManager = root.AddComponent<GameManager>();
             root.AddComponent<BootstrapLoader>();
 
@@ -114,6 +116,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(gameManager, "audioManager", audioManager);
             SetRef(gameManager, "kingdomTurnManager", kingdomTurnManager);
             SetRef(gameManager, "prophecyManager", prophecyManager);
+            SetRef(gameManager, "quizManager", quizManager);
 
             SetRef(ageManager, "contentGateBehaviour", entitlementManager);
 
@@ -155,6 +158,11 @@ namespace KingdomOfGod.EditorTools
             SetAssetList<LeaderData>(leaderManager, "allLeaders", "Assets/_Project/ScriptableObjects/Leaders");
             SetRef(prophecyManager, "ageManager", ageManager);
             SetAssetList<ProphecyData>(prophecyManager, "allProphecies", "Assets/_Project/ScriptableObjects/Prophecies");
+
+            SetRef(quizManager, "resourceManager", resourceManager);
+            SetRef(quizManager, "ageManager", ageManager);
+            SetRef(quizManager, "turnManager", kingdomTurnManager);
+            SetAssetList<QuizQuestionData>(quizManager, "allQuestions", "Assets/_Project/ScriptableObjects/Quiz");
 
             SetRef(saveCoordinator, "gameManager", gameManager);
 
@@ -354,6 +362,13 @@ namespace KingdomOfGod.EditorTools
             prayerStatusLabel.rectTransform.pivot = new Vector2(1f, 0f);
             SetRef(hud, "prayerStatusLabel", prayerStatusLabel);
 
+            var quizStatusLabel = CreateLabel(canvas.transform, "QuizStatusLabel", "", 16, TextAlignmentOptions.Center,
+                new Vector2(-140f, 144f), new Vector2(260f, 26f), theme != null ? theme.divineLight : (Color?)null);
+            quizStatusLabel.rectTransform.anchorMin = new Vector2(1f, 0f);
+            quizStatusLabel.rectTransform.anchorMax = new Vector2(1f, 0f);
+            quizStatusLabel.rectTransform.pivot = new Vector2(1f, 0f);
+            SetRef(hud, "quizStatusLabel", quizStatusLabel);
+
             var prayerPanelGO = new GameObject("PrayerMenuPanel", typeof(RectTransform));
             prayerPanelGO.transform.SetParent(hudGO.transform, false);
             AddParchmentBackground(prayerPanelGO, theme);
@@ -412,6 +427,58 @@ namespace KingdomOfGod.EditorTools
             SetRef(prophecyJournal, "referenceText", prophecyRoleText);
             SetRef(prophecyJournal, "detailText", prophecyDetailText);
             prophecyPortrait.gameObject.SetActive(false);
+
+            var quizPanelGO = new GameObject("QuizPanel", typeof(RectTransform));
+            quizPanelGO.transform.SetParent(hudGO.transform, false);
+            var quizPanelRect = quizPanelGO.GetComponent<RectTransform>();
+            quizPanelRect.sizeDelta = new Vector2(640f, 480f);
+            AddParchmentBackground(quizPanelGO, theme);
+            var quizUI = quizPanelGO.AddComponent<QuizUI>();
+
+            var quizQuestionGroupGO = new GameObject("QuestionGroup", typeof(RectTransform));
+            quizQuestionGroupGO.transform.SetParent(quizPanelGO.transform, false);
+            var quizQuestionGroupRect = quizQuestionGroupGO.GetComponent<RectTransform>();
+            quizQuestionGroupRect.anchorMin = Vector2.zero;
+            quizQuestionGroupRect.anchorMax = Vector2.one;
+            quizQuestionGroupRect.sizeDelta = Vector2.zero;
+
+            var quizQuestionText = CreateLabel(quizQuestionGroupGO.transform, "QuestionText", "", 20,
+                TextAlignmentOptions.Center, new Vector2(0f, 170f), new Vector2(560f, 110f),
+                theme != null ? theme.panelText : (Color?)null);
+
+            var quizAnswerButtons = new List<Button>();
+            var quizAnswerLabels = new List<TextMeshProUGUI>();
+            for (int i = 0; i < 4; i++)
+            {
+                var answerButton = CreateButton(quizQuestionGroupGO.transform, $"AnswerButton{i}", "",
+                    new Vector2(0f, 70f - i * 56f), theme);
+                answerButton.GetComponent<RectTransform>().sizeDelta = new Vector2(560f, 46f);
+                quizAnswerButtons.Add(answerButton);
+                quizAnswerLabels.Add(answerButton.GetComponentInChildren<TextMeshProUGUI>());
+            }
+
+            var quizResultText = CreateLabel(quizQuestionGroupGO.transform, "ResultText", "", 15,
+                TextAlignmentOptions.Center, new Vector2(0f, -160f), new Vector2(560f, 80f),
+                theme != null ? theme.panelText : (Color?)null);
+
+            var quizNoQuestionText = CreateLabel(quizPanelGO.transform, "NoQuestionText",
+                "Pas de nouvelle question pour l'instant — reviens dans quelques tours.", 18,
+                TextAlignmentOptions.Center, new Vector2(0f, 20f), new Vector2(500f, 140f),
+                theme != null ? theme.panelText : (Color?)null);
+
+            var quizCloseButton = CreateButton(quizPanelGO.transform, "CloseButton", "Fermer", new Vector2(0f, -215f), theme);
+            UnityEventTools.AddPersistentListener(quizCloseButton.onClick, quizUI.Close);
+
+            SetRef(quizUI, "quizManager", quizManager);
+            SetRef(quizUI, "panelRoot", quizPanelGO);
+            SetRef(quizUI, "questionGroup", quizQuestionGroupGO);
+            SetRef(quizUI, "questionText", quizQuestionText);
+            SetObjectList(quizUI, "answerButtons", quizAnswerButtons);
+            SetObjectList(quizUI, "answerLabels", quizAnswerLabels);
+            SetRef(quizUI, "resultText", quizResultText);
+            SetRef(quizUI, "noQuestionText", quizNoQuestionText);
+            SetRef(quizUI, "closeButton", quizCloseButton);
+            quizPanelGO.SetActive(false);
 
             var buildingPanelGO = new GameObject("BuildingPalettePanel", typeof(RectTransform));
             buildingPanelGO.transform.SetParent(hudGO.transform, false);
@@ -660,6 +727,8 @@ namespace KingdomOfGod.EditorTools
             UnityEventTools.AddPersistentListener(techToolbarButton.onClick, hud.OpenTechScreen);
             var storeToolbarButton = CreateButton(toolbarRow3GO.transform, "StoreButton", "Boutique", Vector2.zero, theme);
             UnityEventTools.AddPersistentListener(storeToolbarButton.onClick, hud.OpenStore);
+            var quizToolbarButton = CreateButton(toolbarRow3GO.transform, "QuizButton", "Question du Jour", Vector2.zero, theme);
+            UnityEventTools.AddPersistentListener(quizToolbarButton.onClick, hud.OpenQuiz);
 
             SetRef(hud, "resourceBar", resourceBar);
             SetRef(hud, "prayerMenu", prayerMenu);
@@ -672,6 +741,7 @@ namespace KingdomOfGod.EditorTools
             SetRef(hud, "missionList", missionList);
             SetRef(hud, "techScreen", techScreen);
             SetRef(hud, "storeUI", storeUI);
+            SetRef(hud, "quizUI", quizUI);
 
             SaveScene(scene, KingdomPath);
         }
@@ -1223,6 +1293,19 @@ namespace KingdomOfGod.EditorTools
             for (int i = 0; i < missions.Count; i++)
             {
                 listProp.GetArrayElementAtIndex(i).objectReferenceValue = missions[i];
+            }
+            so.ApplyModifiedProperties();
+        }
+
+        /// <summary>Populates a List&lt;T&gt; field from already-built component references (as opposed to SetAssetList, which loads assets from a folder) — used for QuizUI.answerButtons/answerLabels, built inline as the 4 answer buttons are created.</summary>
+        private static void SetObjectList<T>(Object target, string fieldName, List<T> values) where T : Object
+        {
+            var so = new SerializedObject(target);
+            var listProp = so.FindProperty(fieldName);
+            listProp.arraySize = values.Count;
+            for (int i = 0; i < values.Count; i++)
+            {
+                listProp.GetArrayElementAtIndex(i).objectReferenceValue = values[i];
             }
             so.ApplyModifiedProperties();
         }

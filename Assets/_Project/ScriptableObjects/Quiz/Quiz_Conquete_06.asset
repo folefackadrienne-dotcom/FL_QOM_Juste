@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9cb6ff2dc4aa998c53f2b8a7b10b4, type: 3}
+  m_Name: Quiz_Conquete_06
+  m_EditorClassIdentifier:
+  questionId: "Conquete_06"
+  age: 2
+  questionText: "Quel objet sacré est porté en tête de la procession autour de Jéricho ?"
+  answers:
+  - "Les Tables de la Loi"
+  - "L'Arche d'Alliance"
+  - "Le bâton de Moïse"
+  - "La Menorah"
+  correctAnswerIndex: 1
+  sourceReference: "Josué 6"
+  explanation: "L'Arche d'Alliance, portée par les prêtres, précède le peuple lors des sept tours de la ville."
+  faithReward: 9
+  pointsReward: 3
