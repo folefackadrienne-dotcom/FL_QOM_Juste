@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KingdomOfGod.Core;
+using KingdomOfGod.Core.Vfx;
 using KingdomOfGod.Grid;
 using KingdomOfGod.Miracles;
 using KingdomOfGod.UI;
@@ -68,9 +69,16 @@ namespace KingdomOfGod.Battle
             if (attacker.Position.DistanceTo(defender.Position) > attacker.Data.attackRange) return false;
 
             int terrainBonus = battleGrid.GetTerrainDefenseBonus(defender.Position);
-            defender.TakeDamage(attacker.Data.attack - terrainBonus);
+            int damage = defender.TakeDamage(attacker.Data.attack - terrainBonus);
             attacker.HasActedThisTurn = true;
             GameManager.Instance?.Audio.PlaySfx("Bataille - Impact de Métal");
+
+            var defenderWorldPosition = defender.Position.ToWorldPosition(battleGrid.Grid.HexSize);
+            FloatingNumber.Spawn(defenderWorldPosition + Vector3.up, $"-{damage}",
+                theme != null ? theme.crisisRed : new Color(0.361f, 0.102f, 0.102f));
+            OneShotParticles.Burst(defenderWorldPosition + Vector3.up,
+                theme != null ? theme.panelText : new Color(0.2f, 0.133f, 0.078f));
+            CameraShake.Shake();
 
             // "Pendant le temps de prière, le joueur est vulnérable" (GDD) — an enemy landing a
             // hit on a praying player's unit disrupts the ritual in progress.
@@ -100,6 +108,10 @@ namespace KingdomOfGod.Battle
             target.Heal(healer.Data.healAmount);
             healer.HasActedThisTurn = true;
             GameManager.Instance?.Audio.PlaySfx("Alliance - Repentance / Restauration");
+
+            var targetWorldPosition = target.Position.ToWorldPosition(battleGrid.Grid.HexSize);
+            FloatingNumber.Spawn(targetWorldPosition + Vector3.up, $"+{healer.Data.healAmount}",
+                theme != null ? theme.oliveGreen : new Color(0.420f, 0.478f, 0.227f));
             return true;
         }
 
@@ -136,6 +148,8 @@ namespace KingdomOfGod.Battle
         private void OnUnitDied(UnitInstance unit)
         {
             battleGrid.RemoveUnit(unit);
+            OneShotParticles.Burst(unit.Position.ToWorldPosition(battleGrid.Grid.HexSize) + Vector3.up,
+                theme != null ? theme.crisisRed : new Color(0.361f, 0.102f, 0.102f), count: 20, size: 0.22f);
             DespawnVisual(unit);
             GameManager.Instance?.Audio.PlaySfx(unit.Data.antagonist != null
                 ? "Antagonistes - Boss Vaincu"
@@ -207,6 +221,9 @@ namespace KingdomOfGod.Battle
             float scale = nativeHeight > 0f ? height / nativeHeight : 1f;
             spriteGO.transform.localScale = Vector3.one * scale;
             spriteGO.AddComponent<BillboardLabel>();
+            spriteGO.AddComponent<PopInScale>();
+            spriteGO.AddComponent<IdleBob>();
+            GroundShadow.Attach(anchor.transform, footprint * 0.5f);
 
             var labelGO = new GameObject("NameLabel");
             labelGO.transform.SetParent(anchor.transform, false);
@@ -248,6 +265,9 @@ namespace KingdomOfGod.Battle
             renderer.sharedMaterial = CreateFlatMaterial(GetPlaceholderColor(unit.Allegiance, isBoss));
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderer.receiveShadows = false;
+            visual.AddComponent<PopInScale>();
+            visual.AddComponent<IdleBob>();
+            GroundShadow.Attach(anchor.transform, footprint * 0.5f);
 
             var labelGO = new GameObject("NameLabel");
             labelGO.transform.SetParent(anchor.transform, false);

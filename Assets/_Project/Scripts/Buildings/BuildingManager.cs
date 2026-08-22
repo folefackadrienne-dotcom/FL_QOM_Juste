@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using KingdomOfGod.Alliance;
 using KingdomOfGod.Core;
+using KingdomOfGod.Core.Vfx;
 using KingdomOfGod.Grid;
 using KingdomOfGod.Population;
 using KingdomOfGod.Resources;
@@ -47,6 +48,8 @@ namespace KingdomOfGod.Buildings
             cell.Building = instance;
             buildings.Add(instance);
             SpawnVisual(instance);
+            OneShotParticles.Burst(instance.Position.ToWorldPosition(grid.HexSize) + Vector3.up * 0.3f,
+                theme != null ? theme.ochre : new Color(0.800f, 0.467f, 0.133f), count: 16, size: 0.16f, speed: 1.2f);
 
             foreach (var bonus in data.storageCapacityBonus)
             {
@@ -118,6 +121,8 @@ namespace KingdomOfGod.Buildings
             float scale = nativeHeight > 0f ? height / nativeHeight : 1f;
             spriteGO.transform.localScale = Vector3.one * scale;
             spriteGO.AddComponent<BillboardLabel>();
+            spriteGO.AddComponent<PopInScale>();
+            GroundShadow.Attach(anchor.transform, grid.HexSize * 0.4f);
 
             var labelGO = new GameObject("NameLabel");
             labelGO.transform.SetParent(anchor.transform, false);
@@ -155,6 +160,8 @@ namespace KingdomOfGod.Buildings
             renderer.sharedMaterial = CreateFlatMaterial(color);
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderer.receiveShadows = false;
+            visual.AddComponent<PopInScale>();
+            GroundShadow.Attach(anchor.transform, grid.HexSize * 0.4f);
 
             var labelGO = new GameObject("NameLabel");
             labelGO.transform.SetParent(anchor.transform, false);

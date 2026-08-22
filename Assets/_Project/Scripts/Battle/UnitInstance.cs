@@ -30,12 +30,13 @@ namespace KingdomOfGod.Battle
             CurrentHealth = data.maxHealth;
         }
 
-        /// <summary>Resolves incoming damage, factoring in this unit's defense stat.</summary>
-        public void TakeDamage(int rawAttack)
+        /// <summary>Resolves incoming damage, factoring in this unit's defense stat. Returns the actual damage dealt (after defense/floor), so callers can show it without recomputing the same formula.</summary>
+        public int TakeDamage(int rawAttack)
         {
             int damage = Math.Max(1, rawAttack - Data.defense);
             CurrentHealth = Math.Max(0, CurrentHealth - damage);
             if (CurrentHealth == 0) Died?.Invoke(this);
+            return damage;
         }
 
         public void Heal(int amount) => CurrentHealth = Math.Min(Data.maxHealth, CurrentHealth + amount);

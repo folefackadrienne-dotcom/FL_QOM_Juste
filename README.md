@@ -1118,3 +1118,36 @@ dans l'Éditeur, sans toucher au code.
     ouvert. Corrigé en ajoutant ces trois méthodes à `HUDController`
     (affichage de la prière en cours dans `prayerStatusLabel`), remarqué
     en câblant `quizStatusLabel` juste à côté selon le même principe.
+13. « Game feel » — six ajouts purement code (aucun art requis) pour
+    compenser la platitude des billboards 2D en l'absence de vrais
+    prefabs 3D, regroupés dans `Assets/_Project/Scripts/Core/Vfx/` :
+    `GroundShadow` (ombre au sol procédurale sous chaque billboard,
+    câblée dans `BuildingManager`/`BattleManager`), `PopInScale`
+    (apparition en ease-out plutôt qu'un pop instantané), `IdleBob`
+    (léger rebond/pulse continu, unités de combat uniquement — les
+    bâtiments restent immobiles), `FloatingNumber` (texte qui monte et
+    s'estompe sur les dégâts/soins, câblé sur
+    `BattleManager.TryAttack`/`TryHeal`), `CameraShake` (tremblement de
+    caméra à chaque coup porté, en `LateUpdate` avec annulation du
+    jitter de la frame précédente pour ne jamais entrer en conflit avec
+    le pan/zoom de `HexCameraController`), `OneShotParticles` (rafale de
+    particules à la construction d'un bâtiment, à un impact, à la mort
+    d'une unité — même technique que `MiracleVfxController`,
+    `Resources.GetBuiltinResource<Material>("Default-Particle.mat")`,
+    aucune texture à produire), et `HexSelectionRing` (anneau doré
+    pulsant : survol continu de la case visée dans
+    `KingdomInputController` teinté vert/rouge selon
+    `BuildingManager.CanPlace`, et case de l'unité sélectionnée dans
+    `BattleInputController` sur `SelectionChanged`). Tout se construit
+    à l'exécution (`AddComponent`/texture procédurale générée une fois),
+    donc aucun câblage `ProjectSceneSetup` n'était nécessaire.
+    `UnitInstance.TakeDamage` change de `void` à `int` (dégâts réellement
+    infligés) — son unique appelant est mis à jour en conséquence — pour
+    que `BattleManager` affiche le vrai nombre sans redupliquer la
+    formule `Math.Max(1, attaque - défense)`. Les deux anneaux de
+    sélection sont délibérément rattachés à
+    `grid.transform`/`battleGrid.transform` plutôt qu'au transform de
+    leur contrôleur d'entrée (posé sur le rig caméra) :
+    `BattleInputController` ne les repositionne que sur changement de
+    sélection, pas chaque frame, donc les parenter à la caméra les
+    aurait fait dériver visuellement pendant un panoramique.

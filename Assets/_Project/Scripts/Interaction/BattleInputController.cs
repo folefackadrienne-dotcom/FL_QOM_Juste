@@ -1,5 +1,6 @@
 using KingdomOfGod.Battle;
 using KingdomOfGod.Core;
+using KingdomOfGod.Core.Vfx;
 using KingdomOfGod.Grid;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,10 @@ namespace KingdomOfGod.Interaction
         [SerializeField] private BattleManager battleManager;
         [SerializeField] private BattleGrid battleGrid;
         [SerializeField] private Camera targetCamera;
+
+        private static readonly Color SelectionColor = new Color(0.957f, 0.769f, 0.188f, 1f);
+
+        private HexSelectionRing selectionRing;
 
         public UnitInstance SelectedUnit { get; private set; }
         public event System.Action<UnitInstance> SelectionChanged;
@@ -78,6 +83,24 @@ namespace KingdomOfGod.Interaction
         {
             SelectedUnit = unit;
             SelectionChanged?.Invoke(unit);
+
+            if (unit == null)
+            {
+                selectionRing?.SetVisible(false);
+                return;
+            }
+
+            if (selectionRing == null)
+            {
+                // Parented to the grid, not this controller's own transform: this ring only moves
+                // on SelectionChanged, not every frame, so if it inherited the camera rig's transform
+                // (where this controller lives) it would visibly drift off the selected hex as the
+                // camera pans between selections.
+                selectionRing = HexSelectionRing.Create(battleGrid.transform, battleGrid.Grid.HexSize * 0.9f, SelectionColor);
+            }
+
+            selectionRing.SetVisible(true);
+            selectionRing.MoveTo(unit.Position.ToWorldPosition(battleGrid.Grid.HexSize));
         }
     }
 }
