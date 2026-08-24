@@ -1151,3 +1151,36 @@ dans l'Éditeur, sans toucher au code.
     `BattleInputController` ne les repositionne que sur changement de
     sélection, pas chaque frame, donc les parenter à la caméra les
     aurait fait dériver visuellement pendant un panoramique.
+14. Revue stylistique des 128 visuels importés, réunis pour la première
+    fois côte à côte dans une planche-contact (artifact), groupés par
+    style de rendu plutôt que par catégorie de jeu. Constat principal :
+    plusieurs images (surtout des icônes d'artefacts) portaient un cadre
+    doré/rouge ouvragé et une plaque de légende **en anglais et en
+    hébreu incrustée en dur dans les pixels** — jusqu'à un paragraphe
+    entier de texte descriptif sur certaines (Épée de Néhémie, Éphod de
+    Gédéon, Corne de bélier de Jéricho...), qui aurait doublé la bordure
+    dorée 9-slice déjà posée par le jeu autour de ses propres panneaux et
+    affiché un texte illisible et hors-sujet dans un jeu entièrement en
+    français. Sur les images où la légende ne débordait pas sur le sujet
+    principal (marge propre d'un seul côté), un recadrage a retiré le
+    cadre et la légende : `Image_BatonAbraham.png`, `Image_ArcheDAlliance.png`,
+    `Image_ArcheDAllianceJerusalem.png`, `Image_CharDeFeuDElie.png`,
+    `Image_CheveuxDeSamson.png` (marge 25px, bas 145px — pas de cadre
+    ouvragé sur celles-ci) et `Image_CampDesExiles.png`,
+    `Image_CampementDesTribus.png`, `Image_ChantierDeLaMuraille.png`,
+    `Image_MarcheRoyal.png`, `Image_Grenier.png` (marge 45px pour
+    dégager le cadre ouvragé, bas 145px). `spriteBorder` de ces 10
+    sprites était déjà à `{0,0,0,0}`, donc le recadrage n'a nécessité
+    aucune modification des `.meta`. La majorité des icônes d'artefacts
+    (Couronne de David, Épée de Goliath, Éphod de Gédéon, Corne de
+    bélier de Jéricho, Décret de Cyrus, Harpe de David, Frondes de
+    David, Lettres de Sennachérib, Mâchoire d'âne de Samson, Manteau
+    d'Élie, Manteau de Joseph, Huile de la veuve, et probablement
+    d'autres non encore vérifiées une par une) portent ce même texte
+    dense collé directement contre le sujet — non récupérables par
+    recadrage, seule une régénération réglerait le problème. Deux
+    trouvailles annexes pendant cette revue : `Image_AutelDuCarmel.png`
+    et `Image_AutelDuSinai.png` sont un doublon binaire exact (même
+    hash MD5) jamais signalé comme tel ; `Image_BotinDAi.png` porte une
+    légende incrustée mentionnant « l'armure du roi Saül » — un
+    mauvais raccord contenu/nom, à re-vérifier.
