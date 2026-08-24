@@ -1171,16 +1171,36 @@ dans l'Éditeur, sans toucher au code.
     `Image_MarcheRoyal.png`, `Image_Grenier.png` (marge 45px pour
     dégager le cadre ouvragé, bas 145px). `spriteBorder` de ces 10
     sprites était déjà à `{0,0,0,0}`, donc le recadrage n'a nécessité
-    aucune modification des `.meta`. La majorité des icônes d'artefacts
-    (Couronne de David, Épée de Goliath, Éphod de Gédéon, Corne de
-    bélier de Jéricho, Décret de Cyrus, Harpe de David, Frondes de
-    David, Lettres de Sennachérib, Mâchoire d'âne de Samson, Manteau
-    d'Élie, Manteau de Joseph, Huile de la veuve, et probablement
-    d'autres non encore vérifiées une par une) portent ce même texte
-    dense collé directement contre le sujet — non récupérables par
-    recadrage, seule une régénération réglerait le problème. Deux
-    trouvailles annexes pendant cette revue : `Image_AutelDuCarmel.png`
-    et `Image_AutelDuSinai.png` sont un doublon binaire exact (même
-    hash MD5) jamais signalé comme tel ; `Image_BotinDAi.png` porte une
-    légende incrustée mentionnant « l'armure du roi Saül » — un
-    mauvais raccord contenu/nom, à re-vérifier.
+    aucune modification des `.meta`.
+
+    Revue complétée sur l'intégralité des 84 « dioramas bâtiments &
+    artefacts » (les 44 restants après le premier passage ont été
+    vérifiés un par un). Bilan final : **33 images** portent ce même
+    texte dense collé directement contre le sujet, sans marge propre à
+    couper — non récupérables par recadrage, seule une régénération
+    réglerait le problème : Armure de Saül, Épée de Goliath, Couronne
+    de David, Harpe de David, Corne de bélier de Jéricho, Décret de
+    Cyrus, Épée de Néhémie, Éphod de Gédéon, Frondes de David, Huile de
+    la veuve, Lettres de Sennachérib, Mâchoire d'âne de Samson, Manteau
+    d'Élie, Manteau de Joseph, Bâton d'Élisée, Bâton de Moïse (ces deux
+    derniers ont en plus du texte hébreu fantôme dispersé sur tout le
+    fond de la scène, pas seulement dans la légende), Butin d'Aï,
+    Citerne du désert, Menorah du Tabernacle, Serpent d'airain, Marteau
+    et pieu de Jaël, Muraille reconstruite, Pierre de Gilgal, Plans du
+    Temple, Rouleaux de la Loi (Esdras), Sceau royal d'Ézéchias, Tables
+    de la Loi (brisées et nouvelles), Tente de la Promesse, Torches et
+    cruches de Gédéon, Trône de Salomon, Truelle de Néhémie, Urne de la
+    manne, Ustensiles du Temple. 5 images de plus portent un panneau
+    anglais peint dans le décor architectural lui-même (enseigne de
+    boutique, fronton de porte) — Atelier de charpentiers, École des
+    prophètes, École des scribes, Palais Royal, Fonderie — non
+    recadrables sans perdre une partie du bâtiment, mais moins visibles
+    qu'une légende de premier plan. Le reste (~36 images) est propre :
+    illustrations peintes ou dioramas CG sans texte parasite.
+
+    Deux trouvailles annexes hors périmètre du recadrage :
+    `Image_AutelDuCarmel.png` et `Image_AutelDuSinai.png` sont un
+    doublon binaire exact (même hash MD5) jamais signalé comme tel ;
+    `Image_BotinDAi.png` porte une légende incrustée mentionnant
+    « l'armure du roi Saül » — un mauvais raccord contenu/nom, à
+    re-vérifier.
