@@ -1201,6 +1201,29 @@ dans l'Éditeur, sans toucher au code.
     Deux trouvailles annexes hors périmètre du recadrage :
     `Image_AutelDuCarmel.png` et `Image_AutelDuSinai.png` sont un
     doublon binaire exact (même hash MD5) jamais signalé comme tel ;
-    `Image_BotinDAi.png` porte une légende incrustée mentionnant
-    « l'armure du roi Saül » — un mauvais raccord contenu/nom, à
-    re-vérifier.
+    `Image_BotinDAi.png` portait une légende incrustée mentionnant
+    « l'armure du roi Saül » — un mauvais raccord contenu/nom, corrigé
+    par la régénération ci-dessous.
+
+15. Sur les 34 images signalées ci-dessus, un premier lot de 16 a été
+    régénéré sans cadre ni légende (nouvelle demande explicite en ce
+    sens) et importé à la place des anciennes, même nom de fichier
+    donc même guid — aucun câblage `.asset` à retoucher :
+    `Image_ArmureDeSaul.png`, `Image_EpeeDeGoliath.png`,
+    `Image_CouronneDeDavid.png`, `Image_HarpeDeDavid.png`,
+    `Image_CorneDeBelierDeJericho.png`, `Image_DecretDeCyrus.png`,
+    `Image_EpeeDeNehemie.png`, `Image_EphodDeGedeon.png`,
+    `Image_FrondesDeDavid.png`, `Image_LettresDeSennacherib.png`,
+    `Image_MachoireDAneDeSamson.png`, `Image_ManteauDElie.png`,
+    `Image_ManteauDeJoseph.png`, `Image_BatonDElisee.png`,
+    `Image_BatonDeMoise.png`, `Image_BotinDAi.png` — ce dernier montre
+    maintenant bien un butin (pièces, étoffes, idole) et plus l'armure
+    de Saül. Le mauvais raccord contenu/nom relevé au point 14 est donc
+    résolu au passage. Restent à régénérer : Huile de la veuve, Citerne
+    du désert, Menorah du Tabernacle, Serpent d'airain, Marteau et pieu
+    de Jaël, Muraille reconstruite, Pierre de Gilgal, Plans du Temple,
+    Rouleaux de la Loi (Esdras), Sceau royal d'Ézéchias, Tables de la
+    Loi (brisées et nouvelles), Tente de la Promesse, Torches et
+    cruches de Gédéon, Trône de Salomon, Truelle de Néhémie, Urne de la
+    manne, Ustensiles du Temple (17 images), plus les 5 panneaux
+    architecturaux du point 14.
