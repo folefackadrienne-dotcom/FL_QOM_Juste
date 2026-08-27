@@ -1259,3 +1259,23 @@ dans l'Éditeur, sans toucher au code.
     même guid, aucun `.asset` à retoucher. Les 128 visuels du jeu sont
     désormais tous libres de texte anglais ou hébreu incrusté dans les
     pixels.
+
+19. Passe de vérification de compilation sur les 99 scripts C# (~11 300
+    lignes), faite sans Unity Editor ni compilateur .NET disponibles dans
+    cet environnement (aucun `dotnet`/`mono`/`csc` installable ici) : via
+    des scripts Python d'analyse statique (équilibre accolades/parenthèses,
+    extraction de corps de classe, résolution des classes de base/
+    interfaces contre les types Unity/BCL connus, cohérence `namespace`/
+    `using`, détection des références d'événements orphelines, typos
+    courantes, et références d'asmdef contre les versions réelles de
+    `Packages/manifest.json`). Un vrai bug trouvé et corrigé :
+    `KingdomOfGod.asmdef` référençait `Unity.Cinemachine`, qui n'existe
+    qu'à partir de Cinemachine 3.0+, alors que le package installé est
+    figé en 2.9.7 (nom d'assembly `Cinemachine`) — corrigé. Le reste des
+    vérifications ressort propre (0 accolade déséquilibrée, 0 référence
+    d'événement orpheline sur 152 abonnements, 0 incohérence namespace/
+    using, 0 classe de base non résolue). Ceci reste une approximation
+    statique, pas une compilation réelle : la vérification définitive
+    (erreurs de type, surcharges de méthode, génération de scène par
+    `ProjectSceneSetup`) nécessite toujours un vrai Unity Editor, jamais
+    disponible dans cet environnement.
