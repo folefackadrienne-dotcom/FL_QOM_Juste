@@ -1251,3 +1251,11 @@ dans l'Éditeur, sans toucher au code.
     et même guid. Il ne reste donc plus que les 5 panneaux architecturaux
     du point 14 (moins urgents) comme visuels encore marqués par une
     légende ou un cadre de premier plan.
+
+18. Les 5 panneaux architecturaux du point 14 régénérés à leur tour, sans
+    aucune inscription peinte dans le décor : `Image_AtelierDeCharpentiers.png`,
+    `Image_EcoleDesProphetes.png`, `Image_EcoleDesScribes.png`,
+    `Image_PalaisRoyal.png`, `Image_Fonderie.png` — même nom de fichier,
+    même guid, aucun `.asset` à retoucher. Les 128 visuels du jeu sont
+    désormais tous libres de texte anglais ou hébreu incrusté dans les
+    pixels.
