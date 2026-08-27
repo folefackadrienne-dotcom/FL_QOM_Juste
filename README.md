@@ -1227,3 +1227,21 @@ dans l'Éditeur, sans toucher au code.
     cruches de Gédéon, Trône de Salomon, Truelle de Néhémie, Urne de la
     manne, Ustensiles du Temple (17 images), plus les 5 panneaux
     architecturaux du point 14.
+
+16. Deuxième lot de 16 images régénérées sans cadre ni légende, importé
+    de la même façon (même nom de fichier, même guid, aucun `.asset`
+    à retoucher) : `Image_HuileDeLaVeuve.png`, `Image_CiterneDuDesert.png`,
+    `Image_MenorahDuTabernacle.png`, `Image_SerpentDAirain.png`,
+    `Image_MurailleReconstruite.png`, `Image_MarteauEtPieuDeJael.png`,
+    `Image_PierreDeGilgal.png`, `Image_RouleauxDeLaLoiEsdras.png`,
+    `Image_SceauRoyalDEzechias.png`, `Image_TablesDeLaLoiNouvelles.png`,
+    `Image_TroneDeSalomon.png`, `Image_TruelleDeNehemie.png`,
+    `Image_UrneDeLaManne.png`, `Image_TorchesEtCruchesDeGedeon.png`,
+    `Image_UstensilesDuTemple.png`, `Image_TenteDeLaPromesse.png` (celle-ci
+    fournie en JPEG, reconvertie en PNG à l'import pour rester cohérente
+    avec le reste du dossier Sprites).
+
+    Restent à régénérer : Plans du Temple et Tables de la Loi (brisées —
+    à distinguer des « nouvelles » ci-dessus, déjà réglées), plus les 5
+    panneaux architecturaux du point 14 (moins urgents, peints dans le
+    décor du bâtiment plutôt que dans une légende de premier plan).
