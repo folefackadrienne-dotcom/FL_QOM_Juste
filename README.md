@@ -1245,3 +1245,9 @@ dans l'Éditeur, sans toucher au code.
     à distinguer des « nouvelles » ci-dessus, déjà réglées), plus les 5
     panneaux architecturaux du point 14 (moins urgents, peints dans le
     décor du bâtiment plutôt que dans une légende de premier plan).
+
+17. `Image_PlansDuTemple.png` et `Image_TablesDeLaLoiBrisees.png`
+    régénérées à leur tour, sans cadre ni légende, même nom de fichier
+    et même guid. Il ne reste donc plus que les 5 panneaux architecturaux
+    du point 14 (moins urgents) comme visuels encore marqués par une
+    légende ou un cadre de premier plan.
