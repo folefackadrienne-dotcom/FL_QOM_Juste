@@ -3,7 +3,8 @@
    par l'appli native — absent dans un simple navigateur web). */
 
 const Billing = (function () {
-  const FREE_PARCOURS = ["creation", "david"];
+  // Version famille : tous les parcours sont gratuits, aucun achat proposé.
+  const FREE_PARCOURS = ["creation", "abraham", "jacob", "joseph", "exode", "david", "jesus", "paul"];
 
   const PRODUCT_IDS = {
     abraham: "unlock_abraham",
