@@ -46,22 +46,23 @@ const Activation = (function () {
   }
 
   /* Résout avec succès si le code débloque l'appareil, sinon rejette avec
-     un code d'erreur court : "empty" | "unavailable" | "not-found" |
-     "inactive" | "full" | "error". */
+     { code, debug } — code est un identifiant court : "empty" | "unavailable"
+     | "not-found" | "inactive" | "full" | "error". "debug" (optionnel) porte
+     un texte technique utile pour diagnostiquer un souci de configuration. */
   function activate(rawCode) {
     const code = (rawCode || "").trim().toUpperCase();
-    if (!code) return Promise.reject("empty");
+    if (!code) return Promise.reject({ code: "empty" });
 
     const database = firestore();
-    if (!database) return Promise.reject("unavailable");
+    if (!database) return Promise.reject({ code: "unavailable" });
 
     const ref = database.collection("codes").doc(code);
     return ref
       .get()
       .then((snap) => {
-        if (!snap.exists) throw "not-found";
+        if (!snap.exists) throw { code: "not-found" };
         const data = snap.data();
-        if (!data.Active) throw "inactive";
+        if (!data.Active) throw { code: "inactive", debug: JSON.stringify(data) };
 
         const devices = data.Devices || [];
         const myId = deviceId();
@@ -71,15 +72,15 @@ const Activation = (function () {
           return;
         }
 
-        if (devices.length >= data.MaxDevices) throw "full";
+        if (devices.length >= data.MaxDevices) throw { code: "full", debug: JSON.stringify(data) };
 
         return ref
           .update({ Devices: firebase.firestore.FieldValue.arrayUnion(myId) })
           .then(() => markActivated());
       })
       .catch((err) => {
-        if (typeof err === "string") throw err;
-        throw "error";
+        if (err && err.code) throw err;
+        throw { code: "error", debug: (err && err.message) || String(err) };
       });
   }
 

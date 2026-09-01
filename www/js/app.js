@@ -297,8 +297,10 @@ function handleActivateSubmit() {
       refreshActiveScreen();
     })
     .catch((err) => {
-      const key = ACTIVATE_ERROR_KEYS[err] || ACTIVATE_ERROR_KEYS.error;
-      setActivateFeedback(t(key), false);
+      const errCode = (err && err.code) || "error";
+      const key = ACTIVATE_ERROR_KEYS[errCode] || ACTIVATE_ERROR_KEYS.error;
+      const msg = t(key) + (err && err.debug ? " [debug: " + err.debug + "]" : "");
+      setActivateFeedback(msg, false);
     });
 }
 

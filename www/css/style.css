@@ -126,6 +126,12 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   color: #8a76b8;
 }
 
+.build-tag {
+  margin-top: 10px;
+  font-size: .65rem;
+  color: #c9bce0;
+}
+
 .topbar {
   width: 100%;
   display: flex;
