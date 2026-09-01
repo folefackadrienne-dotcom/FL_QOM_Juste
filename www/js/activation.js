@@ -1,7 +1,9 @@
 /* Déblocage manuel via un code d'activation (vente directe à des proches,
    sans passer par le Play Store). Chaque code est un document Firestore dans
-   la collection "codes", limité à un nombre d'appareils (champ MaxDevices) —
+   la collection "codes", limité à un nombre d'appareils (champ maxdevices) —
    c'est ce qui empêche un même code d'être partagé librement à tout le monde.
+   Noms de champs Firestore tout en minuscule (active, maxdevices, devices) :
+   plus simple et plus fiable à taper à la main sur téléphone que du camelCase.
    Le SDK Firebase (compat) est chargé en <script> dans index.html ; si le
    script n'a pas pu se charger (pas de réseau), Activation reste inoffensif. */
 
@@ -61,9 +63,9 @@ const Activation = (function () {
       .then((snap) => {
         if (!snap.exists) throw "not-found";
         const data = snap.data();
-        if (!data.Active) throw "inactive";
+        if (!data.active) throw "inactive";
 
-        const devices = data.Devices || [];
+        const devices = data.devices || [];
         const myId = deviceId();
 
         if (devices.includes(myId)) {
@@ -71,10 +73,10 @@ const Activation = (function () {
           return;
         }
 
-        if (devices.length >= data.MaxDevices) throw "full";
+        if (devices.length >= data.maxdevices) throw "full";
 
         return ref
-          .update({ Devices: firebase.firestore.FieldValue.arrayUnion(myId) })
+          .update({ devices: firebase.firestore.FieldValue.arrayUnion(myId) })
           .then(() => markActivated());
       })
       .catch((err) => {
