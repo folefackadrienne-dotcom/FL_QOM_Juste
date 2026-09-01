@@ -49,7 +49,21 @@ const I18N = {
     toast_unlocked: "Parcours débloqué ! 🎉",
     btn_share: "📤 Partager avec un ami",
     share_text: "Croque-Versets : un jeu pour apprendre des versets bibliques en s'amusant ! 🍭✝️",
-    share_copied: "Lien copié ! Colle-le où tu veux 📋"
+    share_copied: "Lien copié ! Colle-le où tu veux 📋",
+    btn_activate: "🔑 J'ai un code",
+    btn_activate_link: "🔑 J'ai un code d'accès",
+    activate_title: "Débloquer avec un code",
+    activate_desc: "Entre le code que tu as reçu pour débloquer tous les parcours sur cet appareil.",
+    activate_placeholder: "Ton code",
+    btn_activate_submit: "🔓 Débloquer",
+    activate_pending: "Vérification du code…",
+    activate_success: "Code accepté, tout est débloqué ! 🎉",
+    activate_err_empty: "Entre d'abord un code.",
+    activate_err_unavailable: "Vérifie ta connexion internet et réessaie.",
+    activate_err_notfound: "Ce code n'existe pas. Vérifie qu'il est bien écrit.",
+    activate_err_inactive: "Ce code n'est plus valable.",
+    activate_err_full: "Ce code a déjà été utilisé sur le nombre maximum d'appareils.",
+    activate_err_generic: "Une erreur est survenue. Réessaie plus tard."
   },
   en: {
     doc_title: "Croque-Versets — The Bible verse game",
@@ -99,7 +113,21 @@ const I18N = {
     toast_unlocked: "Journey unlocked! 🎉",
     btn_share: "📤 Share with a friend",
     share_text: "Croque-Versets: a fun game to learn Bible verses! 🍭✝️",
-    share_copied: "Link copied! Paste it anywhere 📋"
+    share_copied: "Link copied! Paste it anywhere 📋",
+    btn_activate: "🔑 I have a code",
+    btn_activate_link: "🔑 I have an access code",
+    activate_title: "Unlock with a code",
+    activate_desc: "Enter the code you received to unlock every journey on this device.",
+    activate_placeholder: "Your code",
+    btn_activate_submit: "🔓 Unlock",
+    activate_pending: "Checking your code…",
+    activate_success: "Code accepted, everything is unlocked! 🎉",
+    activate_err_empty: "Enter a code first.",
+    activate_err_unavailable: "Check your internet connection and try again.",
+    activate_err_notfound: "This code doesn't exist. Check the spelling.",
+    activate_err_inactive: "This code is no longer valid.",
+    activate_err_full: "This code has already been used on the maximum number of devices.",
+    activate_err_generic: "Something went wrong. Please try again later."
   }
 };
 

@@ -35,6 +35,7 @@ const Billing = (function () {
 
   function isUnlocked(parcoursId) {
     if (isFree(parcoursId)) return true;
+    if (typeof Activation !== "undefined" && Activation.isActivated()) return true;
     if (!available()) return true; // aperçu web (hors appli) : tout débloqué pour la démo/les tests
     if (owned.has(BUNDLE_ID)) return true;
     return owned.has(productIdFor(parcoursId));

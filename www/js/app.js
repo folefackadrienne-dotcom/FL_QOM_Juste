@@ -108,6 +108,12 @@ function applyStaticI18n() {
   document.getElementById("btn-library").textContent = t("btn_library");
   document.getElementById("btn-help").textContent = t("btn_help");
   document.getElementById("btn-share").textContent = t("btn_share");
+  document.getElementById("btn-activate").textContent = t("btn_activate");
+  document.getElementById("btn-activate-link").textContent = t("btn_activate_link");
+  document.getElementById("activate-title").textContent = t("activate_title");
+  document.getElementById("activate-desc").textContent = t("activate_desc");
+  document.getElementById("activate-code-input").placeholder = t("activate_placeholder");
+  document.getElementById("btn-activate-submit").textContent = t("btn_activate_submit");
   document.getElementById("parcours-header").textContent = t("parcours_header");
   document.getElementById("hud-moves-suffix").textContent = t("hud_moves_suffix");
   document.getElementById("btn-to-verse").textContent = t("btn_to_verse");
@@ -261,6 +267,39 @@ function handleRestore() {
     showToast(t("restore_done"));
     refreshActiveScreen();
   });
+}
+
+/* ---------- ACTIVATION PAR CODE ---------- */
+
+const ACTIVATE_ERROR_KEYS = {
+  empty: "activate_err_empty",
+  unavailable: "activate_err_unavailable",
+  "not-found": "activate_err_notfound",
+  inactive: "activate_err_inactive",
+  full: "activate_err_full",
+  error: "activate_err_generic"
+};
+
+function setActivateFeedback(msg, ok) {
+  const el = document.getElementById("activate-feedback");
+  el.textContent = msg;
+  el.className = "verse-feedback " + (ok ? "ok" : "ko");
+}
+
+function handleActivateSubmit() {
+  const input = document.getElementById("activate-code-input");
+  const code = input.value;
+  setActivateFeedback(t("activate_pending"), true);
+  Activation.activate(code)
+    .then(() => {
+      setActivateFeedback(t("activate_success"), true);
+      showToast(t("toast_unlocked"));
+      refreshActiveScreen();
+    })
+    .catch((err) => {
+      const key = ACTIVATE_ERROR_KEYS[err] || ACTIVATE_ERROR_KEYS.error;
+      setActivateFeedback(t(key), false);
+    });
 }
 
 /* ---------- CARTE DES NIVEAUX ---------- */
@@ -516,6 +555,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("btn-restore-top").addEventListener("click", handleRestore);
   document.getElementById("btn-restore-unlock").addEventListener("click", handleRestore);
+
+  document.getElementById("btn-activate").addEventListener("click", () => {
+    document.getElementById("activate-code-input").value = "";
+    setActivateFeedback("", true);
+    navTo("activate");
+  });
+  document.getElementById("btn-activate-link").addEventListener("click", () => {
+    document.getElementById("activate-code-input").value = "";
+    setActivateFeedback("", true);
+    navTo("activate");
+  });
+  document.getElementById("btn-activate-submit").addEventListener("click", handleActivateSubmit);
 
   document.getElementById("lang-toggle").addEventListener("click", () => {
     state.lang = state.lang === "fr" ? "en" : "fr";
