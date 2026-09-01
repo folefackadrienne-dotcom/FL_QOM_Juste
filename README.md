@@ -19,6 +19,7 @@ Ou double-cliquer le fichier pour l'ouvrir dans un navigateur.
 **Mécaniques communes aux deux niveaux :**
 - Déplacement (← → ou A/D) et saut (Espace / ↑) façon plateformer, avec boutons tactiles sur mobile.
 - Effets visuels (poussière, particules de collecte, tremblement d'écran) et sons synthétisés en direct (Web Audio, aucun fichier externe), avec bouton muet dans la barre HUD.
+- Vies : 3 cœurs de départ, 5 maximum. Trois façons d'en regagner : un cœur bonus tous les 2 versets collectés, un cœur qui se restaure après 14 secondes sans dégât, et un cœur caché à trouver en explorant chaque niveau.
 - Textes bibliques : version Louis Segond (1910, domaine public).
 
 **Niveau 1 — Éden :**

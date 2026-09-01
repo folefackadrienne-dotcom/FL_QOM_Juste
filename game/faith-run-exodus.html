@@ -519,7 +519,8 @@
     collect(){ tone(880,0.16,'sine',0.18,0); tone(1108.73,0.16,'sine',0.16,0.06); tone(1318.51,0.22,'sine',0.14,0.12); },
     hit(){ noiseBurst(0.16,0.22,'bandpass',700); tone(180,0.22,'sawtooth',0.16,0,70); },
     chime(){ tone(523.25,1.3,'sine',0.09,0); tone(659.25,1.3,'sine',0.08,0.12); tone(783.99,1.5,'sine',0.07,0.24); },
-    fanfare(){ tone(523.25,0.18,'triangle',0.2,0); tone(659.25,0.18,'triangle',0.2,0.15); tone(783.99,0.18,'triangle',0.2,0.3); tone(1046.5,0.4,'triangle',0.22,0.46); }
+    fanfare(){ tone(523.25,0.18,'triangle',0.2,0); tone(659.25,0.18,'triangle',0.2,0.15); tone(783.99,0.18,'triangle',0.2,0.3); tone(1046.5,0.4,'triangle',0.22,0.46); },
+    heal(){ tone(523.25,0.2,'triangle',0.14,0); tone(659.25,0.24,'triangle',0.13,0.1); tone(783.99,0.32,'triangle',0.12,0.2); }
   };
   const btnMute = document.getElementById('btnMute');
   btnMute.addEventListener('click', ()=>{
@@ -576,6 +577,8 @@
   const PILLAR_TRIGGER_X = 3760;
   const CHECKPOINTS = [0,720,2010,3130,3560];
 
+  const HIDDEN_HEART = {x:2430,y:245,collected:false};
+
   const PYRAMIDS = Array.from({length:6},(_,i)=>({
     x: i*640 + (i*97)%180,
     scale: 0.8+((i*61)%70)/100,
@@ -588,10 +591,14 @@
   }));
 
   // ---------------- state ----------------
+  const HEARTS_START = 3;
+  const HEARTS_MAX = 5;
+  const HEART_REGEN_DELAY = 14;
+
   const player = {
     x:60, y:GROUND_Y-42, prevY:GROUND_Y-42, w:26, h:42,
     vx:0, vy:0, facing:1, onGround:true,
-    hearts:3, invuln:0, running:0
+    hearts:HEARTS_START, invuln:0, running:0
   };
   let camera = {x:0};
   let lastCheckpoint = 0;
@@ -602,6 +609,7 @@
   let shake = 0;
   let particles = [];
   let dialogueSoundPlayed = false;
+  let noHitTimer = 0;
 
   const keys = new Set();
   let touchLeft=false, touchRight=false;
@@ -689,6 +697,7 @@
     if(player.invuln>0) return;
     player.hearts--;
     player.invuln = 1.1;
+    noHitTimer = 0;
     player.x = Math.max(0, player.x - player.facing*26);
     player.vy = -320;
     spawnBurst(player.x+player.w/2, player.y+player.h/2, {count:14,color:'#ff6a54',speed:180,life:0.5,size:3,gravity:600});
@@ -699,6 +708,21 @@
       gameState = 'gameover';
       show('overlayGameover');
     }
+  }
+
+  function gainHeart(reason){
+    if(player.hearts>=HEARTS_MAX) return false;
+    player.hearts++;
+    spawnBurst(player.x+player.w/2, player.y+player.h/2, {count:16,color:'#ff8fae',speed:130,life:0.6,size:3,gravity:150,spread:Math.PI*2});
+    sfx.heal();
+    const messages = {
+      milestone:'Cœur bonus — palier de versets atteint !',
+      regen:'Cœur restauré par le repos.',
+      hidden:'Cœur caché trouvé !'
+    };
+    showToast(messages[reason]||'Cœur restauré.');
+    updateHUD();
+    return true;
   }
 
   function respawnAtCheckpoint(){
@@ -715,7 +739,7 @@
   function updateHUD(){
     const heartsEl = document.getElementById('hearts');
     heartsEl.innerHTML = '';
-    for(let i=0;i<3;i++){
+    for(let i=0;i<HEARTS_MAX;i++){
       const lost = i >= player.hearts;
       heartsEl.insertAdjacentHTML('beforeend',
         `<svg viewBox="0 0 24 24" class="${lost?'lost':''}"><path d="M12 21s-7.5-4.7-10-9.3C.4 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.2C10.2 6.1 11.6 5 13.6 5 17 5 18.6 8.4 17 11.7 15 16.3 12 21 12 21z"/></svg>`);
@@ -725,13 +749,17 @@
     document.getElementById('progressFill').style.width = pct+'%';
   }
 
-  function toast(ref, text){
+  function showToast(text){
     const layer = document.getElementById('toastLayer');
     const div = document.createElement('div');
     div.className = 'toast';
-    div.textContent = ref + ' — ' + text;
+    div.textContent = text;
     layer.appendChild(div);
     setTimeout(()=>div.remove(), 2500);
+  }
+
+  function toast(ref, text){
+    showToast(ref + ' — ' + text);
   }
 
   function fmtTime(s){
@@ -750,10 +778,11 @@
   function resetAll(){
     player.x=60; player.y=GROUND_Y-42; player.prevY=player.y;
     player.vx=0; player.vy=0; player.facing=1; player.onGround=true;
-    player.hearts=3; player.invuln=0;
-    camera.x=0; lastCheckpoint=0; collectedCount=0;
+    player.hearts=HEARTS_START; player.invuln=0;
+    camera.x=0; lastCheckpoint=0; collectedCount=0; noHitTimer=0;
     particles = []; shake = 0; dialogueSoundPlayed = false;
     VERSES.forEach(v=>v.collected=false);
+    HIDDEN_HEART.collected = false;
     OBSTACLES.forEach(o=>{ if(o.type==='chariot'){ o.x=o.range[0]; o.dir=1; }});
     updateHUD();
   }
@@ -764,7 +793,7 @@
     hide('overlayDialogue');
     elapsed = (performance.now()-startTime)/1000;
     document.getElementById('sumVerses').textContent = collectedCount+'/5';
-    document.getElementById('sumHearts').textContent = player.hearts+'/3';
+    document.getElementById('sumHearts').textContent = player.hearts+'/'+HEARTS_MAX;
     document.getElementById('sumTime').textContent = fmtTime(elapsed);
     gameState = 'complete';
     show('overlayComplete');
@@ -842,6 +871,13 @@
     // invuln timer
     if(player.invuln>0) player.invuln = Math.max(0, player.invuln-dt);
 
+    // heart regeneration after a period without damage
+    noHitTimer += dt;
+    if(noHitTimer>=HEART_REGEN_DELAY){
+      noHitTimer = 0;
+      gainHeart('regen');
+    }
+
     // obstacles
     for(const o of OBSTACLES){
       if(o.type==='chariot'){
@@ -862,7 +898,17 @@
         toast(v.ref, v.text);
         spawnBurst(v.x, v.y, {count:18,color:'#ffd873',speed:150,life:0.7,size:3,gravity:200,spread:Math.PI*2});
         sfx.collect();
+        if(collectedCount%2===0) gainHeart('milestone');
         updateHUD();
+      }
+    }
+
+    // hidden heart
+    if(!HIDDEN_HEART.collected){
+      const hb = {x:HIDDEN_HEART.x-14,y:HIDDEN_HEART.y-14,w:28,h:28};
+      if(overlap(player,hb)){
+        HIDDEN_HEART.collected = true;
+        if(!gainHeart('hidden')) showToast('Cœur caché trouvé — cœurs déjà au maximum.');
       }
     }
 
@@ -1096,6 +1142,38 @@
     }
   }
 
+  function drawHeartShape(cx,cy,size,color){
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.scale(size,size);
+    ctx.beginPath();
+    ctx.moveTo(0,3);
+    ctx.bezierCurveTo(0,1,-3,-2,-6,-2);
+    ctx.bezierCurveTo(-10,-2,-10,3,-10,3);
+    ctx.bezierCurveTo(-10,7,-6,10,0,15);
+    ctx.bezierCurveTo(6,10,10,7,10,3);
+    ctx.bezierCurveTo(10,3,10,-2,6,-2);
+    ctx.bezierCurveTo(3,-2,0,1,0,3);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawHiddenHeart(t){
+    if(HIDDEN_HEART.collected) return;
+    const sx = HIDDEN_HEART.x-camera.x;
+    if(sx<-30||sx>W+30) return;
+    const bob = Math.sin(t*2.4)*6;
+    const pulse = 1+Math.sin(t*4)*0.14;
+    const glow = ctx.createRadialGradient(sx,HIDDEN_HEART.y+bob,2,sx,HIDDEN_HEART.y+bob,30);
+    glow.addColorStop(0,'rgba(255,110,140,.6)');
+    glow.addColorStop(1,'rgba(255,110,140,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(sx-32,HIDDEN_HEART.y+bob-32,64,64);
+    drawHeartShape(sx, HIDDEN_HEART.y+bob-6, 1.05*pulse, '#ff5f7d');
+  }
+
   function drawPillar(t){
     const sx = PILLAR_X - camera.x;
     if(sx<-260||sx>W+260) return;
@@ -1186,6 +1264,7 @@
     drawPlatforms();
     drawPillar(t);
     drawVerses(t);
+    drawHiddenHeart(t);
     drawObstacles();
     drawParticles();
     drawPlayer(t);
