@@ -220,6 +220,61 @@ class Board {
     }
   }
 
+  // Flash visuel au déclenchement d'un pion spécial : une barre lumineuse
+  // balaie la ligne/colonne cassée, ou une onde s'étend depuis la bombe.
+  flashSpecialEffect(r, c, special) {
+    const boardRect = this.container.getBoundingClientRect();
+    const el = document.createElement("div");
+    el.className = "special-flash special-flash-" + special;
+
+    if (special === "row") {
+      const rect = this.cellEls[r][0].getBoundingClientRect();
+      el.style.left = "0px";
+      el.style.width = this.container.clientWidth + "px";
+      el.style.top = rect.top - boardRect.top + "px";
+      el.style.height = rect.height + "px";
+    } else if (special === "col") {
+      const rect = this.cellEls[0][c].getBoundingClientRect();
+      el.style.top = "0px";
+      el.style.height = this.container.clientHeight + "px";
+      el.style.left = rect.left - boardRect.left + "px";
+      el.style.width = rect.width + "px";
+    } else if (special === "bomb") {
+      const rect = this.cellEls[r][c].getBoundingClientRect();
+      const cx = rect.left - boardRect.left + rect.width / 2;
+      const cy = rect.top - boardRect.top + rect.height / 2;
+      const size = rect.width * 5.5;
+      el.style.left = cx - size / 2 + "px";
+      el.style.top = cy - size / 2 + "px";
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+    }
+
+    this.container.appendChild(el);
+    setTimeout(() => el.remove(), 500);
+  }
+
+  // Petit texte qui s'élève et s'efface, pour souligner un gros match ou
+  // un enchaînement (combo), au centre des cases cassées.
+  spawnFloatingText(text, cells, variant) {
+    if (cells.length === 0) return;
+    const boardRect = this.container.getBoundingClientRect();
+    let sx = 0;
+    let sy = 0;
+    cells.forEach(({ r, c }) => {
+      const rect = this.cellEls[r][c].getBoundingClientRect();
+      sx += rect.left - boardRect.left + rect.width / 2;
+      sy += rect.top - boardRect.top + rect.height / 2;
+    });
+    const el = document.createElement("div");
+    el.className = "floating-text" + (variant ? " " + variant : "");
+    el.textContent = text;
+    el.style.left = sx / cells.length + "px";
+    el.style.top = sy / cells.length + "px";
+    this.container.appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  }
+
   // Retourne la liste plate des cases alignées (>=3), tous alignements confondus.
   // Sert uniquement à savoir si un échange est valide.
   findMatches() {
@@ -368,6 +423,8 @@ class Board {
         const cell = this.grid[r][c];
         if (!cell || !cell.special) return;
         triggered.add(key);
+        this.flashSpecialEffect(r, c, cell.special);
+        SFX.boost();
         this.specialBonusCells(r, c, cell.special).forEach(({ r: er, c: ec }) => {
           const ekey = `${er},${ec}`;
           if (!toClear.has(ekey)) {
@@ -414,6 +471,14 @@ class Board {
 
     const gained = clearCells.length * 10 * cascadeLevel;
     this.onScore(gained, clearCells.length, cascadeLevel, typeCounts);
+
+    // Petit texte flottant sur un gros match ou un enchaînement, purement
+    // informatif (le son et le score, eux, ne changent jamais d'intensité).
+    if (cascadeLevel >= 3) {
+      this.spawnFloatingText(t("combo_text"), clearCells, "combo");
+    } else if (clearCells.length >= 5 || cascadeLevel >= 2) {
+      this.spawnFloatingText("+" + gained, clearCells, cascadeLevel >= 2 ? "combo" : "");
+    }
 
     await this.wait(220);
 

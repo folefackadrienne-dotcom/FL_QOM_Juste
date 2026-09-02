@@ -68,6 +68,12 @@ const SFX = (function () {
       tone(f * 1.5, 0.12, { type: "sine", volume: 0.03, delay: 0.02 });
     },
     drop: () => tone(jitter(220), 0.07, { type: "sine", volume: 0.02 }),
+    // Déclenchement d'un pion spécial (ligne/colonne/bombe) : un "whoosh"
+    // net et satisfaisant, toujours la même intensité (pas d'escalade).
+    boost: () => {
+      tone(180, 0.22, { type: "sawtooth", volume: 0.05, slideTo: 620 });
+      tone(90, 0.18, { type: "sine", volume: 0.04, slideTo: 260, delay: 0.02 });
+    },
     wordPlaced: () => tone(660, 0.05, { volume: 0.045 }),
     levelWin: () => {
       [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, 0.32, { volume: 0.065, delay: i * 0.08 }));
