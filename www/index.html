@@ -21,13 +21,14 @@
       <div class="home-emoji">✝️🕊️🍇</div>
       <h1>Croque-Versets</h1>
       <p class="subtitle" id="home-subtitle"></p>
+      <button class="btn btn-primary hidden" id="btn-resume"></button>
       <button class="btn btn-primary" id="btn-play"></button>
       <button class="btn btn-secondary" id="btn-library"></button>
       <button class="btn btn-secondary" id="btn-help"></button>
       <button class="btn btn-secondary" id="btn-share"></button>
       <button class="btn btn-secondary" id="btn-activate"></button>
       <div class="home-stats" id="home-stats"></div>
-      <div class="build-tag" id="build-tag">build v20</div>
+      <div class="build-tag" id="build-tag">build v21</div>
     </div>
   </section>
 
@@ -89,7 +90,10 @@
   <!-- ÉCRAN DE JEU -->
   <section id="screen-game" class="screen">
     <header class="topbar">
-      <button class="btn-icon" id="btn-quit-game">⬅️</button>
+      <div class="topbar-left">
+        <button class="btn-icon" id="btn-quit-game">⬅️</button>
+        <button class="btn-icon" id="btn-pause">⏸️</button>
+      </div>
       <div class="game-ref" id="game-ref">Référence</div>
       <span></span>
     </header>
@@ -110,6 +114,15 @@
     </div>
 
     <div class="verse-preview" id="verse-preview"></div>
+
+    <div class="pause-overlay hidden" id="pause-overlay">
+      <div class="pause-card">
+        <div class="pause-emoji">⏸️</div>
+        <h2 id="pause-title"></h2>
+        <button class="btn btn-primary" id="btn-resume-pause"></button>
+        <button class="btn btn-secondary" id="btn-quit-pause"></button>
+      </div>
+    </div>
   </section>
 
   <!-- ÉCRAN RÉSULTAT NIVEAU -->

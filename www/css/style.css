@@ -329,6 +329,27 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.topbar-left { display: flex; align-items: center; }
+
+.pause-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(75, 46, 145, 0.55);
+}
+.pause-card {
+  background: #fffdf8;
+  border-radius: var(--card-radius);
+  padding: 28px 24px;
+  width: 82%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(90, 50, 130, 0.35);
+}
+.pause-emoji { font-size: 2.4rem; }
 
 .board-wrap { width: 100%; display: flex; justify-content: center; }
 .board {

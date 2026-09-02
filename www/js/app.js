@@ -17,7 +17,8 @@ const state = {
   target: 0,
   collected: {},
   collectGoal: null,
-  timerId: null
+  timerId: null,
+  paused: false
 };
 
 function emptyParcoursProgress() {
@@ -69,6 +70,48 @@ function saveProgress() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ progress: state.progress, lang: state.lang, sound: state.sound }));
   } catch (e) {
     /* stockage indisponible : progression non persistée */
+  }
+}
+
+/* Partie en cours (pas juste les étoiles gagnées) : permet de fermer
+   l'appli en pleine partie et de reprendre exactement où on en était. */
+const INPROGRESS_KEY = "croqueVersetsInProgressV1";
+
+function saveInProgress() {
+  if (!state.board || !state.currentParcoursId || !state.currentLevelId || levelFinished) return;
+  try {
+    localStorage.setItem(
+      INPROGRESS_KEY,
+      JSON.stringify({
+        parcoursId: state.currentParcoursId,
+        levelId: state.currentLevelId,
+        score: state.score,
+        movesLeft: state.movesLeft,
+        timeLeft: state.timeLeft,
+        collected: state.collected,
+        grid: state.board.grid,
+        revealed: state.board.revealed
+      })
+    );
+  } catch (e) {
+    /* stockage indisponible : reprise impossible, sans gravité */
+  }
+}
+
+function loadInProgress() {
+  try {
+    const raw = localStorage.getItem(INPROGRESS_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function clearInProgress() {
+  try {
+    localStorage.removeItem(INPROGRESS_KEY);
+  } catch (e) {
+    /* rien à faire */
   }
 }
 
@@ -125,6 +168,9 @@ function applyStaticI18n() {
   document.getElementById("btn-next-level").textContent = t("btn_next_level");
   document.getElementById("library-header").textContent = t("library_header");
   document.getElementById("help-header").textContent = t("help_header");
+  document.getElementById("pause-title").textContent = t("pause_title");
+  document.getElementById("btn-resume-pause").textContent = t("btn_resume_pause");
+  document.getElementById("btn-quit-pause").textContent = t("btn_quit_pause");
   document.getElementById("btn-restore-top").textContent = t("btn_restore");
   document.getElementById("btn-restore-unlock").textContent = t("btn_restore");
   document.getElementById("unlock-desc").textContent = t("unlock_desc");
@@ -175,6 +221,16 @@ function renderHome() {
     learnedCount += Object.keys(prog.learned).length;
   });
   document.getElementById("home-stats").textContent = t("home_stats", learnedCount, TOTAL_LEVELS, PARCOURS.length);
+
+  const resumeBtn = document.getElementById("btn-resume");
+  const saved = loadInProgress();
+  const savedParcours = saved ? getParcours(saved.parcoursId) : null;
+  if (savedParcours) {
+    resumeBtn.textContent = t("btn_resume", parcoursText(savedParcours).title, saved.levelId);
+    resumeBtn.classList.remove("hidden");
+  } else {
+    resumeBtn.classList.add("hidden");
+  }
 }
 
 /* ---------- CHOIX DU PARCOURS ---------- */
@@ -341,6 +397,7 @@ let levelFinished = false;
 
 function startLevel(levelId) {
   levelFinished = false;
+  state.paused = false;
   state.currentLevelId = levelId;
   state.score = 0;
   state.collected = {};
@@ -370,7 +427,79 @@ function startLevel(levelId) {
   });
   state.board.init();
 
+  document.getElementById("pause-overlay").classList.add("hidden");
   navTo("game");
+}
+
+// Restaure une partie sauvegardée (fermeture de l'appli en pleine partie) :
+// on reconstruit le plateau tel qu'il était, sans en tirer un nouveau.
+function resumeLevel(saved) {
+  const p = getParcours(saved.parcoursId);
+  state.currentParcoursId = saved.parcoursId;
+  state.currentLevelId = saved.levelId;
+  const level = currentLevel();
+  if (!p || !level) return false;
+
+  levelFinished = false;
+  state.paused = false;
+  state.score = saved.score;
+  state.collected = saved.collected || {};
+  state.movesLeft = saved.movesLeft;
+  state.timeLeft = saved.timeLeft;
+  state.target = level.target;
+  state.collectGoal = level.collectGoal;
+
+  refreshGameTexts();
+  updateHud();
+  startTimer();
+
+  const container = document.getElementById("board");
+  if (state.board) state.board.destroy();
+  state.board = new Board(container, {
+    rows: 8,
+    cols: 8,
+    tiles: level.tiles,
+    symbols: p.tileSymbols,
+    specialSymbols: p.specialSymbols,
+    illustrationSvg: p.illustrationSvg,
+    onScore: handleScore,
+    onMove: handleMove,
+    onInvalid: () => {}
+  });
+  state.board.grid = saved.grid;
+  state.board.revealed = saved.revealed;
+  state.board.renderAll();
+
+  document.getElementById("pause-overlay").classList.add("hidden");
+  navTo("game");
+  return true;
+}
+
+function pauseGame() {
+  if (levelFinished || state.paused) return;
+  state.paused = true;
+  stopTimer();
+  if (state.board) state.board.locked = true;
+  saveInProgress();
+  document.getElementById("pause-overlay").classList.remove("hidden");
+}
+
+function resumeGame() {
+  if (!state.paused) return;
+  state.paused = false;
+  document.getElementById("pause-overlay").classList.add("hidden");
+  if (state.board) state.board.locked = false;
+  startTimer();
+}
+
+function quitGame() {
+  stopTimer();
+  state.paused = false;
+  document.getElementById("pause-overlay").classList.add("hidden");
+  clearInProgress();
+  if (state.board) state.board.destroy();
+  renderLevels();
+  navTo("levels");
 }
 
 function startTimer() {
@@ -469,6 +598,8 @@ function handleMove() {
   if (state.movesLeft <= 0) {
     stopTimer();
     setTimeout(() => finishLevel(levelWon()), 500);
+  } else {
+    saveInProgress();
   }
 }
 
@@ -477,6 +608,7 @@ function finishLevel(win) {
   levelFinished = true;
   state.lastWin = win;
   stopTimer();
+  clearInProgress();
 
   const p = currentParcours();
   const prog = getProgress(p.id);
@@ -668,11 +800,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("btn-share").addEventListener("click", shareApp);
 
-  document.getElementById("btn-quit-game").addEventListener("click", () => {
-    stopTimer();
-    if (state.board) state.board.destroy();
-    renderLevels();
-    navTo("levels");
+  document.getElementById("btn-quit-game").addEventListener("click", quitGame);
+  document.getElementById("btn-quit-pause").addEventListener("click", quitGame);
+  document.getElementById("btn-pause").addEventListener("click", pauseGame);
+  document.getElementById("btn-resume-pause").addEventListener("click", resumeGame);
+
+  document.getElementById("btn-resume").addEventListener("click", () => {
+    const saved = loadInProgress();
+    if (saved) resumeLevel(saved);
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) return;
+    const active = document.querySelector(".screen.active");
+    if (active && active.id === "screen-game" && !levelFinished && !state.paused) {
+      pauseGame();
+    }
   });
 
   document.getElementById("btn-to-verse").addEventListener("click", () => {
