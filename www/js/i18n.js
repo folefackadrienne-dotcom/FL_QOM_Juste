@@ -18,6 +18,7 @@ const I18N = {
     result_win_text: (score, target) => `Score : ${score} / ${target}. Tu peux maintenant apprendre le verset de ce niveau.`,
     result_lose_text: (score, target, collected, count) =>
       `Score : ${score} / ${target} • Objectif : ${collected} / ${count}. Courage, réessaie !`,
+    symbol_explain_label: "💡 Le savais-tu ?",
     btn_to_verse: "📖 Mémoriser le verset",
     btn_retry: "🔄 Rejouer",
     btn_back_levels: "🗺️ Carte des niveaux",
@@ -84,6 +85,7 @@ const I18N = {
     result_win_text: (score, target) => `Score: ${score} / ${target}. You can now learn this level's verse.`,
     result_lose_text: (score, target, collected, count) =>
       `Score: ${score} / ${target} • Goal: ${collected} / ${count}. Don't give up, try again!`,
+    symbol_explain_label: "💡 Did you know?",
     btn_to_verse: "📖 Memorize the verse",
     btn_retry: "🔄 Retry",
     btn_back_levels: "🗺️ Level map",

@@ -156,6 +156,7 @@ function refreshActiveScreen() {
       break;
     case "screen-result":
       renderResultTexts();
+      renderSymbolExplain();
       break;
     case "screen-verse":
       openVerseGameForCurrentLevel();
@@ -486,7 +487,21 @@ function finishLevel(win) {
   }
 
   renderResultTexts();
+  renderSymbolExplain();
   navTo("result");
+}
+
+function renderSymbolExplain() {
+  const el = document.getElementById("symbol-explain");
+  if (!state.collectGoal) {
+    el.innerHTML = "";
+    return;
+  }
+  const p = currentParcours();
+  const idx = state.collectGoal.symbolIndex;
+  const symbol = p.tileSymbols[idx];
+  const meaning = p.symbolMeanings[idx][state.lang];
+  el.innerHTML = `<div class="symbol-explain-label">${t("symbol_explain_label")}</div><div class="symbol-explain-body"><span class="symbol-explain-icon">${symbol}</span> ${meaning}</div>`;
 }
 
 function renderResultTexts() {

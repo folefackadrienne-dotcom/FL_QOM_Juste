@@ -40,6 +40,14 @@ const PARCOURS = [
     id: "creation",
     emoji: "🌱",
     tileSymbols: ["☀️", "🦁", "🐟", "🐦", "🍎", "🧑"],
+    symbolMeanings: [
+      { fr: "Le 4e jour, Dieu créa le soleil, la lune et les étoiles pour éclairer la terre.", en: "On day 4, God created the sun, moon and stars to light the earth." },
+      { fr: "Le 6e jour, Dieu créa les animaux de la terre, comme le lion.", en: "On day 6, God created the land animals, like the lion." },
+      { fr: "Le 5e jour, Dieu remplit les mers de poissons et de créatures vivantes.", en: "On day 5, God filled the seas with fish and living creatures." },
+      { fr: "Le 5e jour, Dieu créa aussi les oiseaux qui remplissent le ciel.", en: "On day 5, God also created the birds that fill the sky." },
+      { fr: "Le 3e jour, Dieu fit apparaître les arbres et leurs fruits sur la terre.", en: "On day 3, God made the trees and their fruit appear on the earth." },
+      { fr: "Le 6e jour, Dieu créa l'homme à son image, dernier et plus précieux de ses œuvres.", en: "On day 6, God created man in his image, the last and most precious of his works." }
+    ],
     fr: { title: "La Création", subtitle: "Les 7 jours où Dieu a tout créé" },
     en: { title: "Creation", subtitle: "The 7 days God made everything" },
     verses: [
@@ -97,6 +105,14 @@ const PARCOURS = [
     id: "abraham",
     emoji: "⛺",
     tileSymbols: ["⛺", "🐫", "⭐", "🐑", "🔥", "🏜️"],
+    symbolMeanings: [
+      { fr: "Abraham vivait sous la tente, voyageant partout où Dieu le conduisait.", en: "Abraham lived in a tent, travelling wherever God led him." },
+      { fr: "Les chameaux transportaient Abraham et sa famille à travers le désert.", en: "Camels carried Abraham and his family across the desert." },
+      { fr: "Dieu promit à Abraham une descendance aussi nombreuse que les étoiles du ciel.", en: "God promised Abraham descendants as numerous as the stars in the sky." },
+      { fr: "Dieu fournit un bélier pour remplacer Isaac, montrant sa grâce et sa provision.", en: "God provided a ram to replace Isaac, showing his grace and provision." },
+      { fr: "Un feu passa entre les animaux offerts, scellant l'alliance de Dieu avec Abraham.", en: "A fire passed between the offered animals, sealing God's covenant with Abraham." },
+      { fr: "Abraham traversa le désert par la foi, sans savoir où Dieu le menait.", en: "Abraham crossed the desert by faith, not knowing where God was leading him." }
+    ],
     fr: { title: "La vie d'Abraham", subtitle: "L'ami de Dieu, père des croyants" },
     en: { title: "The life of Abraham", subtitle: "God's friend, father of believers" },
     verses: [
@@ -154,6 +170,14 @@ const PARCOURS = [
     id: "jacob",
     emoji: "🪜",
     tileSymbols: ["🪜", "👼", "🐑", "🪨", "🥊", "💧"],
+    symbolMeanings: [
+      { fr: "Jacob vit en songe une échelle reliant la terre au ciel, avec des anges qui montaient et descendaient.", en: "Jacob dreamed of a ladder connecting earth to heaven, with angels going up and down." },
+      { fr: "Des anges de Dieu montaient et descendaient sur l'échelle du songe de Jacob.", en: "Angels of God went up and down the ladder in Jacob's dream." },
+      { fr: "Jacob travailla comme berger, prenant soin des troupeaux de son oncle Laban.", en: "Jacob worked as a shepherd, tending his uncle Laban's flocks." },
+      { fr: "Jacob posa sa tête sur une pierre, qu'il dressa ensuite en mémorial à Dieu.", en: "Jacob rested his head on a stone, which he later set up as a memorial to God." },
+      { fr: "Jacob lutta toute une nuit avec un ange, et reçut le nouveau nom d'Israël.", en: "Jacob wrestled all night with an angel, and received the new name Israel." },
+      { fr: "C'est près d'un puits que Jacob rencontra Rachel, celle qui deviendrait sa femme.", en: "It was near a well that Jacob met Rachel, who would become his wife." }
+    ],
     fr: { title: "La vie de Jacob", subtitle: "L'échelle qui touche le ciel" },
     en: { title: "The life of Jacob", subtitle: "The ladder that touches heaven" },
     verses: [
@@ -211,6 +235,14 @@ const PARCOURS = [
     id: "joseph",
     emoji: "🌾",
     tileSymbols: ["🌈", "💭", "🌾", "👑", "⛓️", "🏺"],
+    symbolMeanings: [
+      { fr: "Jacob offrit à Joseph une tunique de plusieurs couleurs, signe de son amour particulier.", en: "Jacob gave Joseph a coat of many colors, a sign of his special love." },
+      { fr: "Dieu parla à Joseph à travers des songes, annonçant son avenir extraordinaire.", en: "God spoke to Joseph through dreams, announcing his extraordinary future." },
+      { fr: "Joseph interpréta le songe de Pharaon sur les épis, annonçant sept années de famine.", en: "Joseph interpreted Pharaoh's dream about grain, foretelling seven years of famine." },
+      { fr: "Pharaon éleva Joseph au rang de gouverneur, juste après lui-même, sur toute l'Égypte.", en: "Pharaoh made Joseph ruler over all Egypt, second only to himself." },
+      { fr: "Trahi par ses frères, Joseph fut vendu comme esclave et jeté en prison.", en: "Betrayed by his brothers, Joseph was sold as a slave and thrown into prison." },
+      { fr: "Joseph stocka le grain d'Égypte dans d'immenses réserves pour survivre à la famine.", en: "Joseph stored Egypt's grain in huge reserves to survive the famine." }
+    ],
     fr: { title: "La vie de Joseph", subtitle: "Du puits d'Égypte au palais de Pharaon" },
     en: { title: "The life of Joseph", subtitle: "From the pit to Pharaoh's palace" },
     verses: [
@@ -268,6 +300,14 @@ const PARCOURS = [
     id: "exode",
     emoji: "🌊",
     tileSymbols: ["🌊", "🔥", "🐸", "🍞", "🐑", "📜"],
+    symbolMeanings: [
+      { fr: "Dieu ouvrit la mer Rouge en deux pour que son peuple traverse à pied sec.", en: "God split the Red Sea in two so his people could cross on dry ground." },
+      { fr: "Dieu guidait Israël la nuit par une colonne de feu, et parla à Moïse depuis un buisson ardent.", en: "God guided Israel by night with a pillar of fire, and spoke to Moses from a burning bush." },
+      { fr: "Les grenouilles furent l'une des dix plaies envoyées sur l'Égypte pour libérer Israël.", en: "Frogs were one of the ten plagues sent on Egypt to free Israel." },
+      { fr: "Dieu nourrit son peuple dans le désert avec la manne, un pain tombé du ciel.", en: "God fed his people in the desert with manna, bread that fell from heaven." },
+      { fr: "Le sang de l'agneau sur les portes protégea les Israélites lors de la dernière plaie.", en: "The blood of the lamb on the doorposts protected the Israelites during the final plague." },
+      { fr: "Sur le mont Sinaï, Dieu donna à Moïse les Dix Commandements pour guider son peuple.", en: "On Mount Sinai, God gave Moses the Ten Commandments to guide his people." }
+    ],
     fr: { title: "L'Exode", subtitle: "La sortie d'Égypte vers la liberté" },
     en: { title: "The Exodus", subtitle: "Leaving Egypt for freedom" },
     verses: [
@@ -325,6 +365,14 @@ const PARCOURS = [
     id: "david",
     emoji: "🪨",
     tileSymbols: ["🪨", "🎼", "👑", "🐑", "⚔️", "🦁"],
+    symbolMeanings: [
+      { fr: "Avec cinq pierres lisses et une fronde, David terrassa le géant Goliath.", en: "With five smooth stones and a sling, David defeated the giant Goliath." },
+      { fr: "David jouait de la harpe pour apaiser le roi Saül, avant même de devenir roi.", en: "David played the harp to soothe King Saul, even before becoming king himself." },
+      { fr: "Dieu choisit David, le plus jeune des fils de Jessé, pour devenir roi d'Israël.", en: "God chose David, the youngest son of Jesse, to become king of Israel." },
+      { fr: "Avant d'être roi, David était berger, protégeant son troupeau des bêtes sauvages.", en: "Before becoming king, David was a shepherd, protecting his flock from wild animals." },
+      { fr: "David devint un vaillant guerrier, remportant de nombreuses batailles pour Israël.", en: "David became a mighty warrior, winning many battles for Israel." },
+      { fr: "Jeune berger, David tua un lion et un ours de ses mains pour protéger ses brebis.", en: "As a young shepherd, David killed a lion and a bear with his bare hands to protect his sheep." }
+    ],
     fr: { title: "La vie de David", subtitle: "Le petit berger devenu roi" },
     en: { title: "The life of David", subtitle: "The shepherd boy who became king" },
     verses: [
@@ -382,6 +430,14 @@ const PARCOURS = [
     id: "jesus",
     emoji: "🌟",
     tileSymbols: ["⭐", "👼", "🐑", "👶", "🐫", "🎁"],
+    symbolMeanings: [
+      { fr: "Une étoile guida les mages depuis l'Orient jusqu'à l'endroit où était né Jésus.", en: "A star guided the wise men from the East to the place where Jesus was born." },
+      { fr: "Un ange annonça aux bergers la naissance du Sauveur dans les champs de Bethléem.", en: "An angel announced the Savior's birth to shepherds in the fields of Bethlehem." },
+      { fr: "Les bergers gardaient leurs troupeaux la nuit où les anges leur annoncèrent la bonne nouvelle.", en: "Shepherds were watching their flocks the night angels announced the good news to them." },
+      { fr: "Jésus, le Fils de Dieu, naquit à Bethléem et fut couché dans une mangeoire.", en: "Jesus, the Son of God, was born in Bethlehem and laid in a manger." },
+      { fr: "Les mages voyagèrent depuis l'Orient, probablement à dos de chameau, pour adorer Jésus.", en: "The wise men traveled from the East, likely by camel, to worship Jesus." },
+      { fr: "Les mages offrirent à Jésus de l'or, de l'encens et de la myrrhe.", en: "The wise men offered Jesus gold, frankincense, and myrrh." }
+    ],
     fr: { title: "La naissance de Jésus", subtitle: "Noël : Dieu vient habiter parmi nous" },
     en: { title: "The birth of Jesus", subtitle: "Christmas: God comes to live among us" },
     verses: [
@@ -439,6 +495,14 @@ const PARCOURS = [
     id: "paul",
     emoji: "📜",
     tileSymbols: ["⚡", "⛓️", "📜", "⛵", "✍️", "🕊️"],
+    symbolMeanings: [
+      { fr: "Une lumière éclatante terrassa Saul sur le chemin de Damas, changeant sa vie à jamais.", en: "A blinding light struck Saul down on the road to Damascus, changing his life forever." },
+      { fr: "Paul fut emprisonné à plusieurs reprises à cause de sa foi en Jésus.", en: "Paul was imprisoned several times because of his faith in Jesus." },
+      { fr: "Paul écrivit de nombreuses lettres aux Églises, qui font aujourd'hui partie de la Bible.", en: "Paul wrote many letters to churches, which are now part of the Bible." },
+      { fr: "Paul voyagea sur les mers lors de plusieurs longs voyages missionnaires.", en: "Paul traveled by sea on several long missionary journeys." },
+      { fr: "Paul, autrefois nommé Saul, devint l'un des plus grands enseignants de la foi chrétienne.", en: "Paul, once named Saul, became one of the greatest teachers of the Christian faith." },
+      { fr: "Malgré les épreuves, Paul annonça partout la paix et l'amour offerts par Jésus.", en: "Despite hardships, Paul proclaimed everywhere the peace and love offered through Jesus." }
+    ],
     fr: { title: "La vie de Paul", subtitle: "De persécuteur à apôtre de Jésus" },
     en: { title: "The life of Paul", subtitle: "From persecutor to apostle of Jesus" },
     verses: [

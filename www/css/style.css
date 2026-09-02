@@ -442,6 +442,26 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   100% { opacity: 1; transform: scale(1) rotate(0); }
 }
 
+.symbol-explain {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #fff3d6;
+  border-radius: 14px;
+  text-align: left;
+}
+.symbol-explain-label {
+  font-weight: bold;
+  font-size: .8rem;
+  color: var(--purple-dark);
+  margin-bottom: 4px;
+}
+.symbol-explain-body {
+  font-size: .88rem;
+  color: #6b5a3a;
+  line-height: 1.35;
+}
+.symbol-explain-icon { font-size: 1.1rem; }
+
 /* CONFETTIS (victoire de niveau / verset mémorisé) */
 .confetti-piece {
   position: fixed;
