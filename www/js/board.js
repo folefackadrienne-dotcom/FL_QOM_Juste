@@ -1,6 +1,16 @@
-/* Moteur de jeu "match-3" façon Candy Crush, à thème biblique. */
+/* Moteur de jeu "match-3" façon Candy Crush, à thème biblique.
+
+   Chaque case de la grille est soit `null` (vide, en cours de chute), soit un
+   objet { type, special } où `type` est l'index du symbole et `special` vaut
+   null | "row" | "col" | "bomb" :
+   - Aligner 4 pions identiques transforme l'un d'eux en pion spécial "ligne"
+     ou "colonne" (selon l'orientation de l'alignement) : rassemblé dans un
+     match plus tard, il casse toute sa ligne/colonne.
+   - Aligner 5 pions (ou plus) crée un pion "bombe" : il casse un bloc de 3x3
+     autour de lui. Ça libère plus d'espace d'un coup, comme demandé. */
 
 const DEFAULT_TILE_SYMBOLS = ["✝️", "🕊️", "🐟", "⭐", "👑", "📖"];
+const SPECIAL_BADGES = { row: "↔️", col: "↕️", bomb: "💥" };
 
 class Board {
   constructor(container, options) {
@@ -31,7 +41,7 @@ class Board {
         do {
           type = this.randomType();
         } while (this.createsMatchAt(row, r, c, type));
-        row.push(type);
+        row.push({ type, special: null });
       }
       this.grid.push(row);
     }
@@ -40,10 +50,14 @@ class Board {
   // Vérifie si placer "type" en (r,c) créerait immédiatement un alignement,
   // en ne regardant que ce qui est déjà posé (gauche et haut).
   createsMatchAt(currentRowInProgress, r, c, type) {
-    if (c >= 2 && currentRowInProgress[c - 1] === type && currentRowInProgress[c - 2] === type) {
+    if (
+      c >= 2 &&
+      currentRowInProgress[c - 1].type === type &&
+      currentRowInProgress[c - 2].type === type
+    ) {
       return true;
     }
-    if (r >= 2 && this.grid[r - 1][c] === type && this.grid[r - 2][c] === type) {
+    if (r >= 2 && this.grid[r - 1][c].type === type && this.grid[r - 2][c].type === type) {
       return true;
     }
     return false;
@@ -66,12 +80,16 @@ class Board {
         el.className = "tile";
         el.dataset.r = r;
         el.dataset.c = c;
-        el.textContent = this.symbols[this.grid[r][c]];
         el.addEventListener("click", () => this.handleClick(r, c));
         this.container.appendChild(el);
         rowEls.push(el);
       }
       this.cellEls.push(rowEls);
+    }
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.cols; c++) {
+        this.paintCell(r, c);
+      }
     }
   }
 
@@ -108,16 +126,16 @@ class Board {
   async trySwap(r1, c1, r2, c2) {
     this.locked = true;
     this.swapValues(r1, c1, r2, c2);
-    this.updateCell(r1, c1);
-    this.updateCell(r2, c2);
+    this.paintCell(r1, c1);
+    this.paintCell(r2, c2);
     await this.wait(120);
 
     const matches = this.findMatches();
     if (matches.length === 0) {
       // échange invalide : on annule
       this.swapValues(r1, c1, r2, c2);
-      this.updateCell(r1, c1);
-      this.updateCell(r2, c2);
+      this.paintCell(r1, c1);
+      this.paintCell(r2, c2);
       this.flashInvalid(r1, c1, r2, c2);
       SFX.invalid();
       this.onInvalid();
@@ -138,10 +156,23 @@ class Board {
     this.grid[r2][c2] = tmp;
   }
 
-  updateCell(r, c) {
+  // Affiche le symbole (+ badge spécial éventuel) de la case (r,c).
+  paintCell(r, c) {
     const el = this.cellEls[r][c];
-    const type = this.grid[r][c];
-    el.textContent = type === null ? "" : this.symbols[type];
+    const cell = this.grid[r][c];
+    el.classList.remove("special-row", "special-col", "special-bomb");
+    if (!cell) {
+      el.innerHTML = "";
+      return;
+    }
+    el.innerHTML = `<span class="tile-symbol">${this.symbols[cell.type]}</span>`;
+    if (cell.special) {
+      el.classList.add("special-" + cell.special);
+      const badge = document.createElement("span");
+      badge.className = "special-badge";
+      badge.textContent = SPECIAL_BADGES[cell.special];
+      el.appendChild(badge);
+    }
   }
 
   flashInvalid(r1, c1, r2, c2) {
@@ -172,13 +203,17 @@ class Board {
     }
   }
 
+  // Retourne la liste plate des cases alignées (>=3), tous alignements confondus.
+  // Sert uniquement à savoir si un échange est valide.
   findMatches() {
     const matched = new Set();
 
     for (let r = 0; r < this.rows; r++) {
       let runStart = 0;
       for (let c = 1; c <= this.cols; c++) {
-        const same = c < this.cols && this.grid[r][c] === this.grid[r][runStart] && this.grid[r][runStart] !== null;
+        const a = c < this.cols ? this.grid[r][c] : null;
+        const b = this.grid[r][runStart];
+        const same = a && b && a.type === b.type;
         if (!same) {
           if (c - runStart >= 3) {
             for (let k = runStart; k < c; k++) matched.add(`${r},${k}`);
@@ -191,7 +226,9 @@ class Board {
     for (let c = 0; c < this.cols; c++) {
       let runStart = 0;
       for (let r = 1; r <= this.rows; r++) {
-        const same = r < this.rows && this.grid[r][c] === this.grid[runStart][c] && this.grid[runStart][c] !== null;
+        const a = r < this.rows ? this.grid[r][c] : null;
+        const b = this.grid[runStart][c];
+        const same = a && b && a.type === b.type;
         if (!same) {
           if (r - runStart >= 3) {
             for (let k = runStart; k < r; k++) matched.add(`${k},${c}`);
@@ -207,27 +244,156 @@ class Board {
     });
   }
 
-  async resolveMatches(cascadeLevel) {
-    const matches = this.findMatches();
-    if (matches.length === 0) return;
+  // Comme findMatches, mais garde les alignements groupés (avec leur
+  // orientation et longueur) pour savoir où créer un pion spécial.
+  findMatchRuns() {
+    const runs = [];
 
-    matches.forEach(({ r, c }) => {
+    for (let r = 0; r < this.rows; r++) {
+      let runStart = 0;
+      for (let c = 1; c <= this.cols; c++) {
+        const a = c < this.cols ? this.grid[r][c] : null;
+        const b = this.grid[r][runStart];
+        const same = a && b && a.type === b.type;
+        if (!same) {
+          if (c - runStart >= 3) {
+            const cells = [];
+            for (let k = runStart; k < c; k++) cells.push({ r, c: k });
+            runs.push({ cells, orientation: "row" });
+          }
+          runStart = c;
+        }
+      }
+    }
+
+    for (let c = 0; c < this.cols; c++) {
+      let runStart = 0;
+      for (let r = 1; r <= this.rows; r++) {
+        const a = r < this.rows ? this.grid[r][c] : null;
+        const b = this.grid[runStart][c];
+        const same = a && b && a.type === b.type;
+        if (!same) {
+          if (r - runStart >= 3) {
+            const cells = [];
+            for (let k = runStart; k < r; k++) cells.push({ r: k, c });
+            runs.push({ cells, orientation: "col" });
+          }
+          runStart = r;
+        }
+      }
+    }
+
+    return runs;
+  }
+
+  // Calcule le plan complet d'un match : quelles cases sont alignées, et
+  // lesquelles doivent devenir des pions spéciaux plutôt que d'être retirées.
+  computeMatchPlan() {
+    const runs = this.findMatchRuns();
+    if (runs.length === 0) return null;
+
+    const matchedKeys = new Set();
+    runs.forEach((run) => run.cells.forEach(({ r, c }) => matchedKeys.add(`${r},${c}`)));
+
+    const specialCells = new Map(); // "r,c" -> { r, c, special }
+    runs.forEach((run) => {
+      if (run.cells.length < 4) return;
+      const kind = run.cells.length >= 5 ? "bomb" : run.orientation === "row" ? "row" : "col";
+      const pick = run.cells[Math.floor(run.cells.length / 2)];
+      const key = `${pick.r},${pick.c}`;
+      const existing = specialCells.get(key);
+      if (!existing || (kind === "bomb" && existing.special !== "bomb")) {
+        specialCells.set(key, { r: pick.r, c: pick.c, special: kind });
+      }
+    });
+
+    return { matchedKeys, specialCells };
+  }
+
+  // Cases supplémentaires cassées par le déclenchement d'un pion spécial.
+  specialBonusCells(r, c, special) {
+    const extra = [];
+    if (special === "row") {
+      for (let cc = 0; cc < this.cols; cc++) extra.push({ r, c: cc });
+    } else if (special === "col") {
+      for (let rr = 0; rr < this.rows; rr++) extra.push({ r: rr, c });
+    } else if (special === "bomb") {
+      for (let rr = r - 1; rr <= r + 1; rr++) {
+        for (let cc = c - 1; cc <= c + 1; cc++) {
+          if (rr >= 0 && rr < this.rows && cc >= 0 && cc < this.cols) extra.push({ r: rr, c: cc });
+        }
+      }
+    }
+    return extra;
+  }
+
+  async resolveMatches(cascadeLevel) {
+    const plan = this.computeMatchPlan();
+    if (!plan) return;
+
+    const { matchedKeys, specialCells } = plan;
+    const toClear = new Set(matchedKeys);
+    const triggered = new Set();
+
+    // Si un pion déjà spécial (créé lors d'un tour précédent) se retrouve
+    // dans ce match, on déclenche son effet et on étend la casse en chaîne.
+    let frontier = Array.from(toClear);
+    let guard = 0;
+    while (frontier.length > 0 && guard < 60) {
+      guard++;
+      const next = [];
+      frontier.forEach((key) => {
+        if (specialCells.has(key) || triggered.has(key)) return;
+        const [r, c] = key.split(",").map(Number);
+        const cell = this.grid[r][c];
+        if (!cell || !cell.special) return;
+        triggered.add(key);
+        this.specialBonusCells(r, c, cell.special).forEach(({ r: er, c: ec }) => {
+          const ekey = `${er},${ec}`;
+          if (!toClear.has(ekey)) {
+            toClear.add(ekey);
+            next.push(ekey);
+          }
+        });
+      });
+      frontier = next;
+    }
+
+    const clearCells = Array.from(toClear)
+      .map((k) => {
+        const [r, c] = k.split(",").map(Number);
+        return { r, c };
+      })
+      .filter(({ r, c }) => !specialCells.has(`${r},${c}`));
+
+    clearCells.forEach(({ r, c }) => {
       this.cellEls[r][c].classList.add("matched");
       this.spawnSparkles(this.cellEls[r][c]);
     });
+    specialCells.forEach(({ r, c }) => {
+      this.cellEls[r][c].classList.add("upgrading");
+      this.spawnSparkles(this.cellEls[r][c]);
+    });
+
     SFX.match();
     this.container.classList.remove("pulse");
     // force reflow so the animation restarts even on rapid consecutive matches
     void this.container.offsetWidth;
     this.container.classList.add("pulse");
 
-    const gained = matches.length * 10 * cascadeLevel;
-    this.onScore(gained, matches.length, cascadeLevel);
+    const gained = clearCells.length * 10 * cascadeLevel;
+    this.onScore(gained, clearCells.length, cascadeLevel);
 
     await this.wait(220);
 
-    matches.forEach(({ r, c }) => {
+    clearCells.forEach(({ r, c }) => {
       this.grid[r][c] = null;
+    });
+    specialCells.forEach(({ r, c, special }) => {
+      const existingType = this.grid[r][c] ? this.grid[r][c].type : this.randomType();
+      this.grid[r][c] = { type: existingType, special };
+      this.cellEls[r][c].classList.remove("upgrading");
+      this.paintCell(r, c);
     });
 
     this.collapseAndRefill();
@@ -248,7 +414,7 @@ class Board {
         }
       }
       for (let r = writeRow; r >= 0; r--) {
-        this.grid[r][c] = this.randomType();
+        this.grid[r][c] = { type: this.randomType(), special: null };
       }
     }
 
@@ -257,7 +423,7 @@ class Board {
         const el = this.cellEls[r][c];
         el.classList.remove("matched");
         el.classList.add("dropping");
-        el.textContent = this.symbols[this.grid[r][c]];
+        this.paintCell(r, c);
         setTimeout(() => el.classList.remove("dropping"), 260);
       }
     }
