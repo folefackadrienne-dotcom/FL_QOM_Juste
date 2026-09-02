@@ -10,11 +10,17 @@ const levelTiles = (n) => (n <= 6 ? 6 : 5);
 // vraie contrainte de temps qui se resserre légèrement sur les niveaux
 // avancés, en plus de la limite de coups.
 const levelTime = (movesForLevel) => movesForLevel * 4;
+// Objectif de collecte : casser un nombre croissant de pions d'un symbole
+// donné (fixe pour un niveau donné, pour rester le même à chaque tentative).
+// Le symbole visé change de niveau en niveau, en tournant sur les symboles
+// du parcours, pour varier ce qu'on demande de collecter.
+const collectCount = (n) => 15 + (n - 1) * 3;
 
 function buildLevels(rawVerses, lang) {
   return rawVerses.map((v, i) => {
     const n = i + 1;
     const l = v[lang];
+    const tiles = levelTiles(n);
     return {
       id: n,
       ref: l.ref,
@@ -23,7 +29,8 @@ function buildLevels(rawVerses, lang) {
       target: LEVEL_TARGET[i],
       moves: LEVEL_MOVES[i],
       time: levelTime(LEVEL_MOVES[i]),
-      tiles: levelTiles(n)
+      tiles,
+      collectGoal: { symbolIndex: (n - 1) % tiles, count: collectCount(n) }
     };
   });
 }

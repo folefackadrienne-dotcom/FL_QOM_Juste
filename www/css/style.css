@@ -283,6 +283,7 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
 /* JEU */
 .hud {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
   background: #ffffffaa;
@@ -294,6 +295,15 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
 }
 .hud-item { white-space: nowrap; }
 #hud-timer-item.low { color: #e0475b; }
+#hud-goal-item {
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed #d8c8ef;
+  color: var(--purple-dark);
+}
+#hud-goal-item.reached { color: var(--green); }
 .game-ref {
   font-weight: bold;
   text-align: center;

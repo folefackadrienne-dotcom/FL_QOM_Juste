@@ -15,6 +15,8 @@ const state = {
   movesLeft: 0,
   timeLeft: 0,
   target: 0,
+  collected: {},
+  collectGoal: null,
   timerId: null
 };
 
@@ -116,6 +118,7 @@ function applyStaticI18n() {
   document.getElementById("btn-activate-submit").textContent = t("btn_activate_submit");
   document.getElementById("parcours-header").textContent = t("parcours_header");
   document.getElementById("hud-moves-suffix").textContent = t("hud_moves_suffix");
+  document.getElementById("hud-goal-label").textContent = t("hud_goal_label");
   document.getElementById("btn-to-verse").textContent = t("btn_to_verse");
   document.getElementById("btn-retry").textContent = t("btn_retry");
   document.getElementById("btn-back-levels").textContent = t("btn_back_levels");
@@ -334,11 +337,13 @@ function startLevel(levelId) {
   levelFinished = false;
   state.currentLevelId = levelId;
   state.score = 0;
+  state.collected = {};
 
   const level = currentLevel();
   state.movesLeft = level.moves;
   state.timeLeft = level.time;
   state.target = level.target;
+  state.collectGoal = level.collectGoal;
 
   refreshGameTexts();
   updateHud();
@@ -367,7 +372,7 @@ function startTimer() {
     updateHud();
     if (state.timeLeft <= 0) {
       stopTimer();
-      finishLevel(state.score >= state.target);
+      finishLevel(levelWon());
     }
   }, 1000);
 }
@@ -393,6 +398,25 @@ function updateHud() {
   document.getElementById("hud-timer").textContent = Math.max(0, state.timeLeft);
   document.getElementById("hud-timer-item").classList.toggle("low", state.timeLeft <= 10);
   document.getElementById("hud-stars").textContent = starsPreview();
+
+  if (state.collectGoal) {
+    const symbol = currentParcours().tileSymbols[state.collectGoal.symbolIndex];
+    const got = state.collected[state.collectGoal.symbolIndex] || 0;
+    document.getElementById("hud-goal-icon").textContent = symbol;
+    document.getElementById("hud-goal-count").textContent = got;
+    document.getElementById("hud-goal-target").textContent = state.collectGoal.count;
+    document.getElementById("hud-goal-item").classList.toggle("reached", got >= state.collectGoal.count);
+  }
+}
+
+function goalReached() {
+  if (!state.collectGoal) return true;
+  const got = state.collected[state.collectGoal.symbolIndex] || 0;
+  return got >= state.collectGoal.count;
+}
+
+function levelWon() {
+  return state.score >= state.target && goalReached();
 }
 
 function starsPreview() {
@@ -416,8 +440,13 @@ function renderStarsAnimated(elementId, filledCount) {
   }
 }
 
-function handleScore(gained) {
+function handleScore(gained, matchedCount, cascadeLevel, typeCounts) {
   state.score += gained;
+  if (typeCounts) {
+    Object.keys(typeCounts).forEach((type) => {
+      state.collected[type] = (state.collected[type] || 0) + typeCounts[type];
+    });
+  }
   updateHud();
 }
 
@@ -426,7 +455,7 @@ function handleMove() {
   updateHud();
   if (state.movesLeft <= 0) {
     stopTimer();
-    setTimeout(() => finishLevel(state.score >= state.target), 500);
+    setTimeout(() => finishLevel(levelWon()), 500);
   }
 }
 
@@ -478,7 +507,9 @@ function renderResultTexts() {
     document.getElementById("result-emoji").textContent = "🙏";
     document.getElementById("result-title").textContent = t("result_lose_title");
     document.getElementById("result-stars").textContent = "";
-    document.getElementById("result-text").textContent = t("result_lose_text", state.score, state.target);
+    const got = state.collectGoal ? state.collected[state.collectGoal.symbolIndex] || 0 : 0;
+    const need = state.collectGoal ? state.collectGoal.count : 0;
+    document.getElementById("result-text").textContent = t("result_lose_text", state.score, state.target, got, need);
     document.getElementById("btn-to-verse").classList.add("hidden");
   }
 }

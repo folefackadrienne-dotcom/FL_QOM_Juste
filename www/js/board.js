@@ -381,8 +381,14 @@ class Board {
     void this.container.offsetWidth;
     this.container.classList.add("pulse");
 
+    const typeCounts = {};
+    clearCells.forEach(({ r, c }) => {
+      const cell = this.grid[r][c];
+      if (cell) typeCounts[cell.type] = (typeCounts[cell.type] || 0) + 1;
+    });
+
     const gained = clearCells.length * 10 * cascadeLevel;
-    this.onScore(gained, clearCells.length, cascadeLevel);
+    this.onScore(gained, clearCells.length, cascadeLevel, typeCounts);
 
     await this.wait(220);
 
