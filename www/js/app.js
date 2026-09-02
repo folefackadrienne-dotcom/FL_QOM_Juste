@@ -10,6 +10,7 @@ const state = {
   currentParcoursId: null,
   currentLevelId: null,
   lastWin: false,
+  lastStars: null,
   board: null,
   score: 0,
   movesLeft: 0,
@@ -589,12 +590,18 @@ function levelWon() {
   return state.score >= state.target && goalReached();
 }
 
+// Les étoiles récompensent l'efficacité (coups économisés) plutôt que le
+// score : comme la partie s'arrête dès l'objectif atteint, rejouer plus
+// longtemps pour gonfler le score n'a plus aucun sens.
+function computeStars(level) {
+  const efficiency = level && level.moves > 0 ? state.movesLeft / level.moves : 0;
+  if (efficiency >= 0.5) return 3;
+  if (efficiency >= 0.25) return 2;
+  return 1;
+}
+
 function starsPreview() {
-  const ratio = state.target > 0 ? state.score / state.target : 0;
-  let n = 0;
-  if (ratio >= 1) n = 1;
-  if (ratio >= 1.3) n = 2;
-  if (ratio >= 1.6) n = 3;
+  const n = computeStars(currentLevel());
   return "⭐".repeat(n) + "☆".repeat(3 - n);
 }
 
@@ -618,6 +625,11 @@ function handleScore(gained, matchedCount, cascadeLevel, typeCounts) {
     });
   }
   updateHud();
+  // La partie s'arrête dès que le score ET l'objectif sont atteints : pas
+  // besoin d'attendre la fin des coups, il n'y a aucun avantage à continuer.
+  if (levelWon()) {
+    finishLevel(true);
+  }
 }
 
 function handleMove() {
@@ -643,10 +655,8 @@ function finishLevel(win) {
   const level = currentLevel();
 
   if (win) {
-    const ratio = state.score / state.target;
-    let stars = 1;
-    if (ratio >= 1.6) stars = 3;
-    else if (ratio >= 1.3) stars = 2;
+    const stars = computeStars(level);
+    state.lastStars = stars;
 
     prog.stars[level.id] = Math.max(prog.stars[level.id] || 0, stars);
     if (level.id === prog.unlocked && level.id < currentLevels().length) {
@@ -679,14 +689,9 @@ function renderSymbolExplain() {
 function renderResultTexts() {
   const win = state.lastWin;
   if (win) {
-    const ratio = state.target > 0 ? state.score / state.target : 0;
-    let stars = 1;
-    if (ratio >= 1.6) stars = 3;
-    else if (ratio >= 1.3) stars = 2;
-
     document.getElementById("result-emoji").textContent = "🎉";
     document.getElementById("result-title").textContent = t("result_win_title");
-    renderStarsAnimated("result-stars", stars);
+    renderStarsAnimated("result-stars", state.lastStars || 1);
     document.getElementById("result-text").textContent = t("result_win_text", state.score, state.target);
     document.getElementById("btn-to-verse").classList.remove("hidden");
     document.getElementById("result-illustration").innerHTML = currentParcours().illustrationSvg || "";
