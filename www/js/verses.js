@@ -49,6 +49,15 @@ const PARCOURS = [
       { fr: "Le 6e jour, Dieu créa l'homme à son image, dernier et plus précieux de ses œuvres.", en: "On day 6, God created man in his image, the last and most precious of his works." }
     ],
     specialSymbols: { row: "🌬️", col: "🌊", bomb: "✨" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#bfe3ff"/>
+      <circle cx="150" cy="115" r="55" fill="#ffd23c"/>
+      <rect y="200" width="300" height="100" fill="#3fa9d1"/>
+      <rect y="245" width="300" height="55" fill="#2f8fb5"/>
+      <ellipse cx="95" cy="232" rx="70" ry="16" fill="#7bc47f"/>
+      <rect x="86" y="150" width="14" height="60" fill="#7a5230"/>
+      <circle cx="93" cy="140" r="34" fill="#4caf50"/>
+    </svg>`,
     fr: { title: "La Création", subtitle: "Les 7 jours où Dieu a tout créé" },
     en: { title: "Creation", subtitle: "The 7 days God made everything" },
     verses: [
@@ -115,6 +124,19 @@ const PARCOURS = [
       { fr: "Abraham traversa le désert par la foi, sans savoir où Dieu le menait.", en: "Abraham crossed the desert by faith, not knowing where God was leading him." }
     ],
     specialSymbols: { row: "🏜️", col: "⭐", bomb: "🔥" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#1c2340"/>
+      <circle cx="60" cy="50" r="3" fill="#fff"/>
+      <circle cx="120" cy="30" r="2" fill="#fff"/>
+      <circle cx="222" cy="55" r="3" fill="#fff"/>
+      <circle cx="262" cy="30" r="2" fill="#fff"/>
+      <circle cx="180" cy="20" r="2" fill="#fff"/>
+      <circle cx="40" cy="90" r="2" fill="#fff"/>
+      <rect y="220" width="300" height="80" fill="#d9a066"/>
+      <polygon points="150,140 90,220 210,220" fill="#a9673a"/>
+      <polygon points="150,140 150,220 90,220" fill="#8a4f2c"/>
+      <rect x="140" y="195" width="20" height="25" fill="#3a2416"/>
+    </svg>`,
     fr: { title: "La vie d'Abraham", subtitle: "L'ami de Dieu, père des croyants" },
     en: { title: "The life of Abraham", subtitle: "God's friend, father of believers" },
     verses: [
@@ -181,6 +203,17 @@ const PARCOURS = [
       { fr: "C'est près d'un puits que Jacob rencontra Rachel, celle qui deviendrait sa femme.", en: "It was near a well that Jacob met Rachel, who would become his wife." }
     ],
     specialSymbols: { row: "🐑", col: "🪜", bomb: "🥊" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#8fd3ff"/>
+      <rect y="240" width="300" height="60" fill="#c79a5c"/>
+      <line x1="120" y1="60" x2="100" y2="260" stroke="#7a5230" stroke-width="10"/>
+      <line x1="180" y1="60" x2="200" y2="260" stroke="#7a5230" stroke-width="10"/>
+      <line x1="110" y1="90" x2="190" y2="90" stroke="#7a5230" stroke-width="8"/>
+      <line x1="107" y1="130" x2="193" y2="130" stroke="#7a5230" stroke-width="8"/>
+      <line x1="104" y1="170" x2="196" y2="170" stroke="#7a5230" stroke-width="8"/>
+      <line x1="101" y1="210" x2="199" y2="210" stroke="#7a5230" stroke-width="8"/>
+      <circle cx="150" cy="45" r="14" fill="#fff8e0"/>
+    </svg>`,
     fr: { title: "La vie de Jacob", subtitle: "L'échelle qui touche le ciel" },
     en: { title: "The life of Jacob", subtitle: "The ladder that touches heaven" },
     verses: [
@@ -247,6 +280,17 @@ const PARCOURS = [
       { fr: "Joseph stocka le grain d'Égypte dans d'immenses réserves pour survivre à la famine.", en: "Joseph stored Egypt's grain in huge reserves to survive the famine." }
     ],
     specialSymbols: { row: "🌾", col: "🌈", bomb: "👑" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#fff3d6"/>
+      <path d="M40 190 A110 110 0 0 1 260 190" stroke="#e74c3c" stroke-width="12" fill="none"/>
+      <path d="M55 200 A95 95 0 0 1 245 200" stroke="#f39c12" stroke-width="12" fill="none"/>
+      <path d="M70 210 A80 80 0 0 1 230 210" stroke="#27ae60" stroke-width="12" fill="none"/>
+      <path d="M85 220 A65 65 0 0 1 215 220" stroke="#2980b9" stroke-width="12" fill="none"/>
+      <rect y="235" width="300" height="65" fill="#d8b45a"/>
+      <line x1="60" y1="235" x2="60" y2="185" stroke="#c9a227" stroke-width="5"/>
+      <line x1="90" y1="235" x2="90" y2="175" stroke="#c9a227" stroke-width="5"/>
+      <line x1="120" y1="235" x2="120" y2="185" stroke="#c9a227" stroke-width="5"/>
+    </svg>`,
     fr: { title: "La vie de Joseph", subtitle: "Du puits d'Égypte au palais de Pharaon" },
     en: { title: "The life of Joseph", subtitle: "From the pit to Pharaoh's palace" },
     verses: [
@@ -313,6 +357,17 @@ const PARCOURS = [
       { fr: "Sur le mont Sinaï, Dieu donna à Moïse les Dix Commandements pour guider son peuple.", en: "On Mount Sinai, God gave Moses the Ten Commandments to guide his people." }
     ],
     specialSymbols: { row: "🌊", col: "🔥", bomb: "🍞" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#fbe8b0"/>
+      <rect x="0" y="0" width="70" height="300" fill="#3fa9d1"/>
+      <rect x="230" y="0" width="70" height="300" fill="#3fa9d1"/>
+      <path d="M70 0 Q90 150 70 300" stroke="#1c6f8f" stroke-width="6" fill="none"/>
+      <path d="M230 0 Q210 150 230 300" stroke="#1c6f8f" stroke-width="6" fill="none"/>
+      <circle cx="150" cy="120" r="10" fill="#e74c3c"/>
+      <circle cx="130" cy="140" r="10" fill="#f39c12"/>
+      <circle cx="170" cy="140" r="10" fill="#27ae60"/>
+      <circle cx="150" cy="160" r="10" fill="#8e44ad"/>
+    </svg>`,
     fr: { title: "L'Exode", subtitle: "La sortie d'Égypte vers la liberté" },
     en: { title: "The Exodus", subtitle: "Leaving Egypt for freedom" },
     verses: [
@@ -379,6 +434,16 @@ const PARCOURS = [
       { fr: "Jeune berger, David tua un lion et un ours de ses mains pour protéger ses brebis.", en: "As a young shepherd, David killed a lion and a bear with his bare hands to protect his sheep." }
     ],
     specialSymbols: { row: "🦁", col: "👑", bomb: "🪨" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#f7d9a0"/>
+      <rect y="220" width="300" height="80" fill="#c2a06a"/>
+      <circle cx="100" cy="150" r="18" fill="#e8b98a"/>
+      <rect x="90" y="168" width="20" height="50" fill="#6b4226"/>
+      <line x1="100" y1="140" x2="140" y2="110" stroke="#3a2416" stroke-width="4"/>
+      <line x1="140" y1="110" x2="170" y2="130" stroke="#3a2416" stroke-width="4"/>
+      <circle cx="170" cy="130" r="8" fill="#888"/>
+      <polygon points="230,220 250,150 270,220" fill="#9b9b9b"/>
+    </svg>`,
     fr: { title: "La vie de David", subtitle: "Le petit berger devenu roi" },
     en: { title: "The life of David", subtitle: "The shepherd boy who became king" },
     verses: [
@@ -445,6 +510,14 @@ const PARCOURS = [
       { fr: "Les mages offrirent à Jésus de l'or, de l'encens et de la myrrhe.", en: "The wise men offered Jesus gold, frankincense, and myrrh." }
     ],
     specialSymbols: { row: "👼", col: "⭐", bomb: "🎁" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#101830"/>
+      <polygon points="150,40 160,75 195,75 167,96 178,131 150,110 122,131 133,96 105,75 140,75" fill="#ffd23c"/>
+      <rect y="230" width="300" height="70" fill="#7a5230"/>
+      <polygon points="90,230 150,170 210,230" fill="#5a3b1e"/>
+      <ellipse cx="150" cy="250" rx="35" ry="14" fill="#e8c48a"/>
+      <ellipse cx="150" cy="245" rx="15" ry="8" fill="#fff8e0"/>
+    </svg>`,
     fr: { title: "La naissance de Jésus", subtitle: "Noël : Dieu vient habiter parmi nous" },
     en: { title: "The birth of Jesus", subtitle: "Christmas: God comes to live among us" },
     verses: [
@@ -511,6 +584,14 @@ const PARCOURS = [
       { fr: "Malgré les épreuves, Paul annonça partout la paix et l'amour offerts par Jésus.", en: "Despite hardships, Paul proclaimed everywhere the peace and love offered through Jesus." }
     ],
     specialSymbols: { row: "⛵", col: "⚡", bomb: "🕊️" },
+    illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="300" fill="#cde6f5"/>
+      <rect y="200" width="300" height="100" fill="#c9a876"/>
+      <path d="M0 250 L300 250" stroke="#a9895a" stroke-width="8"/>
+      <polygon points="150,20 110,180 190,180" fill="#fff6c9" opacity="0.85"/>
+      <path d="M60 222 Q150 195 240 222 L240 240 Q150 217 60 240 Z" fill="#5a3b1e"/>
+      <rect x="140" y="195" width="6" height="40" fill="#3a2416"/>
+    </svg>`,
     fr: { title: "La vie de Paul", subtitle: "De persécuteur à apôtre de Jésus" },
     en: { title: "The life of Paul", subtitle: "From persecutor to apostle of Jesus" },
     verses: [

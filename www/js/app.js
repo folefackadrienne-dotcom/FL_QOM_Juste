@@ -358,6 +358,7 @@ function startLevel(levelId) {
     tiles: level.tiles,
     symbols: currentParcours().tileSymbols,
     specialSymbols: currentParcours().specialSymbols,
+    illustrationSvg: currentParcours().illustrationSvg,
     onScore: handleScore,
     onMove: handleMove,
     onInvalid: () => {}
@@ -518,11 +519,13 @@ function renderResultTexts() {
     renderStarsAnimated("result-stars", stars);
     document.getElementById("result-text").textContent = t("result_win_text", state.score, state.target);
     document.getElementById("btn-to-verse").classList.remove("hidden");
+    document.getElementById("result-illustration").innerHTML = currentParcours().illustrationSvg || "";
     VFX.confetti();
   } else {
     document.getElementById("result-emoji").textContent = "🙏";
     document.getElementById("result-title").textContent = t("result_lose_title");
     document.getElementById("result-stars").textContent = "";
+    document.getElementById("result-illustration").innerHTML = "";
     const got = state.collectGoal ? state.collected[state.collectGoal.symbolIndex] || 0 : 0;
     const need = state.collectGoal ? state.collectGoal.count : 0;
     document.getElementById("result-text").textContent = t("result_lose_text", state.score, state.target, got, need);

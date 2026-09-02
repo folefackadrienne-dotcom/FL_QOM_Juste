@@ -20,6 +20,7 @@ class Board {
     this.numTypes = options.tiles || 6;
     this.symbols = options.symbols || DEFAULT_TILE_SYMBOLS;
     this.specialSymbols = options.specialSymbols || DEFAULT_SPECIAL_SYMBOLS;
+    this.illustrationSvg = options.illustrationSvg || null;
     this.onScore = options.onScore || function () {};
     this.onMove = options.onMove || function () {};
     this.onInvalid = options.onInvalid || function () {};
@@ -27,6 +28,10 @@ class Board {
     this.selected = null;
     this.grid = [];
     this.cellEls = [];
+    // Une case révélée le reste pour tout le niveau, même quand une nouvelle
+    // pièce retombe dessus : ça dévoile petit à petit l'illustration du
+    // parcours, cachée derrière le plateau.
+    this.revealed = [];
   }
 
   randomType() {
@@ -35,6 +40,7 @@ class Board {
 
   buildInitialGrid() {
     this.grid = [];
+    this.revealed = [];
     for (let r = 0; r < this.rows; r++) {
       const row = [];
       for (let c = 0; c < this.cols; c++) {
@@ -45,6 +51,7 @@ class Board {
         row.push({ type, special: null });
       }
       this.grid.push(row);
+      this.revealed.push(new Array(this.cols).fill(false));
     }
   }
 
@@ -73,6 +80,14 @@ class Board {
     this.container.innerHTML = "";
     this.container.style.gridTemplateColumns = `repeat(${this.cols}, 1fr)`;
     this.container.style.gridTemplateRows = `repeat(${this.rows}, 1fr)`;
+
+    if (this.illustrationSvg) {
+      const illu = document.createElement("div");
+      illu.className = "board-illustration";
+      illu.innerHTML = this.illustrationSvg;
+      this.container.appendChild(illu);
+    }
+
     this.cellEls = [];
     for (let r = 0; r < this.rows; r++) {
       const rowEls = [];
@@ -162,6 +177,7 @@ class Board {
     const el = this.cellEls[r][c];
     const cell = this.grid[r][c];
     el.classList.remove("special-row", "special-col", "special-bomb");
+    el.classList.toggle("revealed", !!(this.revealed[r] && this.revealed[r][c]));
     if (!cell) {
       el.innerHTML = "";
       return;
@@ -359,6 +375,11 @@ class Board {
       });
       frontier = next;
     }
+
+    toClear.forEach((key) => {
+      const [r, c] = key.split(",").map(Number);
+      if (this.revealed[r]) this.revealed[r][c] = true;
+    });
 
     const clearCells = Array.from(toClear)
       .map((k) => {
