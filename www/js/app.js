@@ -412,7 +412,9 @@ function updateHud() {
     const idx = state.collectGoal.symbolIndex;
     const symbol = p.tileSymbols[idx];
     const got = state.collected[idx] || 0;
-    document.getElementById("hud-goal-story").textContent = p.objectiveText[idx][state.lang];
+    // Une mission par niveau (pas par symbole) : le texte varie à chaque
+    // répétition du même symbole au fil des 12 niveaux d'un parcours.
+    document.getElementById("hud-goal-story").textContent = p.objectiveText[state.currentLevelId - 1][state.lang];
     document.getElementById("hud-goal-icon").textContent = symbol;
     document.getElementById("hud-goal-count-num").textContent = got;
     document.getElementById("hud-goal-target").textContent = state.collectGoal.count;

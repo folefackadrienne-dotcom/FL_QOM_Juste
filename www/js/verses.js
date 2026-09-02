@@ -48,13 +48,21 @@ const PARCOURS = [
       { fr: "Le 3e jour, Dieu fit apparaître les arbres et leurs fruits sur la terre.", en: "On day 3, God made the trees and their fruit appear on the earth." },
       { fr: "Le 6e jour, Dieu créa l'homme à son image, dernier et plus précieux de ses œuvres.", en: "On day 6, God created man in his image, the last and most precious of his works." }
     ],
+    // 12 missions (une par niveau) : les 6 symboles reviennent plusieurs
+    // fois sur les niveaux 7-12, mais avec un texte différent à chaque fois.
     objectiveText: [
       { fr: "Rassemble les soleils pour éclairer le monde que Dieu vient de créer.", en: "Gather the suns to light up the world God just created." },
       { fr: "Rassemble les animaux pour peupler la terre le sixième jour.", en: "Gather the animals to fill the earth on the sixth day." },
       { fr: "Rassemble les poissons pour remplir les mers créées par Dieu.", en: "Gather the fish to fill the seas God created." },
       { fr: "Rassemble les oiseaux pour remplir le ciel de vie.", en: "Gather the birds to fill the sky with life." },
       { fr: "Rassemble les fruits pour faire pousser les premiers arbres de la terre.", en: "Gather the fruits to grow the earth's first trees." },
-      { fr: "Rassemble les figures humaines pour façonner Adam à l'image de Dieu.", en: "Gather the human figures to shape Adam in God's image." }
+      { fr: "Rassemble les figures humaines pour façonner Adam à l'image de Dieu.", en: "Gather the human figures to shape Adam in God's image." },
+      { fr: "Rassemble les animaux sauvages que Dieu déclara tous « très bons ».", en: "Gather the wild animals God called \"very good\"." },
+      { fr: "Rassemble les poissons qui nagent dans les mers, bénis par Dieu pour se multiplier.", en: "Gather the fish swimming in the seas, blessed by God to multiply." },
+      { fr: "Rassemble les oiseaux, bénis eux aussi pour remplir le ciel et se multiplier.", en: "Gather the birds, also blessed to fill the sky and multiply." },
+      { fr: "Rassemble les fruits que Dieu donna en nourriture à l'homme et aux animaux.", en: "Gather the fruits God gave as food for man and the animals." },
+      { fr: "Rassemble les soleils qui marquent les jours, les saisons et les années.", en: "Gather the suns that mark the days, seasons and years." },
+      { fr: "Rassemble les animaux que Dieu confia à l'homme pour qu'il les gouverne avec soin.", en: "Gather the animals God entrusted to man to care for wisely." }
     ],
     specialSymbols: { row: "🌬️", col: "🌊", bomb: "✨" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +145,13 @@ const PARCOURS = [
       { fr: "Rassemble les étoiles pour compter la descendance promise à Abraham.", en: "Gather the stars to count the descendants promised to Abraham." },
       { fr: "Rassemble les béliers pour fournir l'offrande que Dieu a préparée.", en: "Gather the rams to provide the offering God prepared." },
       { fr: "Rassemble les feux pour sceller l'alliance de Dieu avec Abraham.", en: "Gather the fires to seal God's covenant with Abraham." },
-      { fr: "Rassemble les dunes pour traverser le désert avec Abraham, par la foi.", en: "Gather the dunes to cross the desert with Abraham, by faith." }
+      { fr: "Rassemble les dunes pour traverser le désert avec Abraham, par la foi.", en: "Gather the dunes to cross the desert with Abraham, by faith." },
+      { fr: "Rassemble les chameaux du serviteur envoyé chercher une femme pour Isaac.", en: "Gather the camels of the servant sent to find a wife for Isaac." },
+      { fr: "Rassemble les étoiles qu'Abraham contempla la nuit où Dieu fit sa promesse.", en: "Gather the stars Abraham gazed at the night God made his promise." },
+      { fr: "Rassemble les moutons du troupeau qu'Abraham offrit en signe de paix.", en: "Gather the sheep from the flock Abraham offered as a sign of peace." },
+      { fr: "Rassemble les flammes qui consument le sacrifice offert par la foi d'Abraham.", en: "Gather the flames consuming the offering from Abraham's faith." },
+      { fr: "Rassemble les tentes dressées à chaque étape du voyage d'Abraham vers Canaan.", en: "Gather the tents pitched at each stop of Abraham's journey to Canaan." },
+      { fr: "Rassemble les chameaux chargés de richesses, bénédiction de Dieu sur Abraham.", en: "Gather the camels loaded with riches, God's blessing on Abraham." }
     ],
     specialSymbols: { row: "🏜️", col: "⭐", bomb: "🔥" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -224,7 +238,13 @@ const PARCOURS = [
       { fr: "Rassemble les moutons pour aider Jacob à garder les troupeaux de Laban.", en: "Gather the sheep to help Jacob tend Laban's flocks." },
       { fr: "Rassemble les pierres pour bâtir le mémorial de Jacob à Béthel.", en: "Gather the stones to build Jacob's memorial at Bethel." },
       { fr: "Rassemble les gants de boxe pour aider Jacob à gagner sa lutte contre l'ange.", en: "Gather the boxing gloves to help Jacob win his wrestling match with the angel." },
-      { fr: "Rassemble les gouttes d'eau pour retrouver Jacob près du puits où il rencontra Rachel.", en: "Gather the water drops to find Jacob by the well where he met Rachel." }
+      { fr: "Rassemble les gouttes d'eau pour retrouver Jacob près du puits où il rencontra Rachel.", en: "Gather the water drops to find Jacob by the well where he met Rachel." },
+      { fr: "Rassemble les anges qui rassurèrent Jacob à son retour vers son frère Ésaü.", en: "Gather the angels who reassured Jacob as he returned to his brother Esau." },
+      { fr: "Rassemble les moutons tachetés que Jacob obtint pour son propre troupeau.", en: "Gather the speckled sheep Jacob earned for his own flock." },
+      { fr: "Rassemble les pierres empilées en témoin entre Jacob et Laban.", en: "Gather the stones piled up as a witness between Jacob and Laban." },
+      { fr: "Rassemble les gants de boxe du combat qui donna à Jacob le nom d'Israël.", en: "Gather the boxing gloves from the fight that gave Jacob the name Israel." },
+      { fr: "Rassemble les échelles qui rappellent que Dieu reste avec Jacob partout où il va.", en: "Gather the ladders that remind us God stayed with Jacob wherever he went." },
+      { fr: "Rassemble les anges qui veillaient sur Jacob tout au long de son voyage.", en: "Gather the angels who watched over Jacob throughout his journey." }
     ],
     specialSymbols: { row: "🐑", col: "🪜", bomb: "🥊" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -309,7 +329,13 @@ const PARCOURS = [
       { fr: "Rassemble les épis de blé du songe de Pharaon, interprété par Joseph.", en: "Gather the wheat sheaves from Pharaoh's dream, interpreted by Joseph." },
       { fr: "Rassemble les couronnes pour élever Joseph au rang de gouverneur d'Égypte.", en: "Gather the crowns to raise Joseph to governor of Egypt." },
       { fr: "Rassemble les chaînes pour libérer Joseph de la prison injuste.", en: "Gather the chains to free Joseph from unjust prison." },
-      { fr: "Rassemble les jarres de grain que Joseph stocka pour survivre à la famine.", en: "Gather the grain jars Joseph stored to survive the famine." }
+      { fr: "Rassemble les jarres de grain que Joseph stocka pour survivre à la famine.", en: "Gather the grain jars Joseph stored to survive the famine." },
+      { fr: "Rassemble les songes de Pharaon que Joseph seul sut expliquer.", en: "Gather Pharaoh's dreams, which only Joseph could explain." },
+      { fr: "Rassemble les épis de blé récoltés pendant les sept années d'abondance.", en: "Gather the wheat sheaves harvested during the seven years of plenty." },
+      { fr: "Rassemble les couronnes des frères de Joseph venus s'incliner devant lui sans le reconnaître.", en: "Gather the crowns of Joseph's brothers, who bowed before him without recognizing him." },
+      { fr: "Rassemble les chaînes brisées le jour où Joseph retrouva enfin la liberté.", en: "Gather the broken chains from the day Joseph finally found freedom." },
+      { fr: "Rassemble les tuniques qui rappellent la jalousie des frères de Joseph.", en: "Gather the coats that recall the jealousy of Joseph's brothers." },
+      { fr: "Rassemble les songes qui, année après année, se réalisèrent pour Joseph.", en: "Gather the dreams that, year after year, came true for Joseph." }
     ],
     specialSymbols: { row: "🌾", col: "🌈", bomb: "👑" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -394,7 +420,13 @@ const PARCOURS = [
       { fr: "Rassemble les grenouilles, l'une des plaies envoyées sur l'Égypte.", en: "Gather the frogs, one of the plagues sent on Egypt." },
       { fr: "Rassemble les pains de manne tombés du ciel pour nourrir le peuple.", en: "Gather the manna bread that fell from heaven to feed the people." },
       { fr: "Rassemble les agneaux dont le sang protégea les Israélites de la dernière plaie.", en: "Gather the lambs whose blood protected the Israelites from the final plague." },
-      { fr: "Rassemble les rouleaux des Dix Commandements donnés à Moïse sur le Sinaï.", en: "Gather the scrolls of the Ten Commandments given to Moses on Sinai." }
+      { fr: "Rassemble les rouleaux des Dix Commandements donnés à Moïse sur le Sinaï.", en: "Gather the scrolls of the Ten Commandments given to Moses on Sinai." },
+      { fr: "Rassemble les flammes du buisson ardent où Dieu parla à Moïse.", en: "Gather the flames of the burning bush where God spoke to Moses." },
+      { fr: "Rassemble les grenouilles qui envahirent l'Égypte jusqu'à ce que Pharaon cède.", en: "Gather the frogs that overran Egypt until Pharaoh gave in." },
+      { fr: "Rassemble les pains de manne ramassés chaque matin dans le désert.", en: "Gather the manna bread collected each morning in the desert." },
+      { fr: "Rassemble les agneaux du repas de la Pâque, mangé prêt à partir.", en: "Gather the lambs from the Passover meal, eaten ready to leave." },
+      { fr: "Rassemble les vagues qui se refermèrent sur l'armée de Pharaon.", en: "Gather the waves that closed over Pharaoh's army." },
+      { fr: "Rassemble les flammes qui éclairaient le camp d'Israël chaque nuit.", en: "Gather the flames that lit up Israel's camp every night." }
     ],
     specialSymbols: { row: "🌊", col: "🔥", bomb: "🍞" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -479,7 +511,13 @@ const PARCOURS = [
       { fr: "Rassemble les couronnes pour faire de David, le jeune berger, un roi.", en: "Gather the crowns to make David, the young shepherd, a king." },
       { fr: "Rassemble les moutons que David protégeait avant de devenir roi.", en: "Gather the sheep David protected before becoming king." },
       { fr: "Rassemble les épées des batailles remportées par David pour Israël.", en: "Gather the swords from the battles David won for Israel." },
-      { fr: "Rassemble les lions que David affronta pour protéger ses brebis.", en: "Gather the lions David faced to protect his flock." }
+      { fr: "Rassemble les lions que David affronta pour protéger ses brebis.", en: "Gather the lions David faced to protect his flock." },
+      { fr: "Rassemble les mélodies des psaumes que David composa pour louer Dieu.", en: "Gather the melodies of the psalms David wrote to praise God." },
+      { fr: "Rassemble les couronnes du royaume que David bâtit avec le cœur d'un berger.", en: "Gather the crowns of the kingdom David built with a shepherd's heart." },
+      { fr: "Rassemble les moutons du troupeau que David quitta pour affronter Goliath.", en: "Gather the sheep from the flock David left behind to face Goliath." },
+      { fr: "Rassemble les épées de Saül, qui poursuivit longtemps David avant sa victoire.", en: "Gather Saul's swords, who long pursued David before his victory." },
+      { fr: "Rassemble les pierres lisses choisies par David dans le torrent.", en: "Gather the smooth stones David chose from the stream." },
+      { fr: "Rassemble les mélodies qui rappellent que David resta un homme selon le cœur de Dieu.", en: "Gather the melodies that remind us David stayed a man after God's own heart." }
     ],
     specialSymbols: { row: "🦁", col: "👑", bomb: "🪨" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -563,7 +601,13 @@ const PARCOURS = [
       { fr: "Rassemble les moutons des bergers qui reçurent la première bonne nouvelle.", en: "Gather the shepherds' sheep, who received the very first good news." },
       { fr: "Rassemble les berceaux pour accueillir Jésus, né à Bethléem.", en: "Gather the cradles to welcome Jesus, born in Bethlehem." },
       { fr: "Rassemble les chameaux des mages venus de l'Orient pour adorer Jésus.", en: "Gather the camels of the wise men who came from the East to worship Jesus." },
-      { fr: "Rassemble les cadeaux offerts à Jésus : l'or, l'encens et la myrrhe.", en: "Gather the gifts offered to Jesus: gold, frankincense and myrrh." }
+      { fr: "Rassemble les cadeaux offerts à Jésus : l'or, l'encens et la myrrhe.", en: "Gather the gifts offered to Jesus: gold, frankincense and myrrh." },
+      { fr: "Rassemble les anges dont la multitude chanta « Gloire à Dieu » cette nuit-là.", en: "Gather the angels whose multitude sang \"Glory to God\" that night." },
+      { fr: "Rassemble les moutons que les bergers laissèrent pour courir voir l'enfant Jésus.", en: "Gather the sheep the shepherds left behind to run see baby Jesus." },
+      { fr: "Rassemble les berceaux qui rappellent Jésus couché dans une mangeoire.", en: "Gather the cradles that recall Jesus lying in a manger." },
+      { fr: "Rassemble les chameaux du long voyage des mages suivant l'étoile.", en: "Gather the camels from the wise men's long journey following the star." },
+      { fr: "Rassemble les étoiles qui s'arrêtèrent juste au-dessus du lieu où était Jésus.", en: "Gather the stars that stopped right above the place where Jesus was." },
+      { fr: "Rassemble les anges qui annoncèrent la paix sur la terre pour les hommes.", en: "Gather the angels who announced peace on earth for mankind." }
     ],
     specialSymbols: { row: "👼", col: "⭐", bomb: "🎁" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -645,7 +689,13 @@ const PARCOURS = [
       { fr: "Rassemble les rouleaux des lettres que Paul écrivit aux Églises.", en: "Gather the scrolls of the letters Paul wrote to the churches." },
       { fr: "Rassemble les bateaux des voyages missionnaires de Paul sur les mers.", en: "Gather the ships from Paul's missionary journeys across the seas." },
       { fr: "Rassemble les plumes de Paul, devenu l'un des grands enseignants de la foi.", en: "Gather Paul's quills, as he became one of the great teachers of the faith." },
-      { fr: "Rassemble les colombes de paix que Paul annonça malgré les épreuves.", en: "Gather the doves of peace Paul proclaimed despite hardship." }
+      { fr: "Rassemble les colombes de paix que Paul annonça malgré les épreuves.", en: "Gather the doves of peace Paul proclaimed despite hardship." },
+      { fr: "Rassemble les chaînes de la prison où Paul chanta des louanges à minuit.", en: "Gather the chains from the prison where Paul sang praises at midnight." },
+      { fr: "Rassemble les rouleaux des lettres qui encouragèrent les chrétiens persécutés.", en: "Gather the scrolls of the letters that encouraged persecuted Christians." },
+      { fr: "Rassemble les bateaux du naufrage que Paul traversa en pleine tempête.", en: "Gather the ships from the shipwreck Paul survived in a fierce storm." },
+      { fr: "Rassemble les plumes des lettres que Paul écrivit même depuis sa prison.", en: "Gather the quills from the letters Paul wrote even from prison." },
+      { fr: "Rassemble les éclairs qui rappellent le jour où Saul devint Paul.", en: "Gather the flashes of light that recall the day Saul became Paul." },
+      { fr: "Rassemble les chaînes que Paul porta jusqu'à Rome sans jamais cesser d'annoncer Jésus.", en: "Gather the chains Paul wore all the way to Rome, never ceasing to proclaim Jesus." }
     ],
     specialSymbols: { row: "⛵", col: "⚡", bomb: "🕊️" },
     illustrationSvg: `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
