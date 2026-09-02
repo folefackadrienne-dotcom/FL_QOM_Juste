@@ -523,7 +523,8 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   padding: 0 4px;
   color: var(--purple);
 }
-.blank.filled { border-bottom-color: var(--green); }
+.blank.filled { border-bottom-color: var(--green); cursor: pointer; }
+.blank.filled:active { opacity: .6; }
 
 .word-bank {
   display: flex;

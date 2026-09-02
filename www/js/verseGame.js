@@ -59,6 +59,7 @@ const VerseGame = (function () {
         span.className = "blank";
         span.dataset.index = i;
         span.textContent = "＿＿＿";
+        span.addEventListener("click", () => unfillBlank(i));
         els.sentence.appendChild(span);
       } else {
         els.sentence.appendChild(document.createTextNode(w));
@@ -86,6 +87,7 @@ const VerseGame = (function () {
     if (!target) return;
     target.filled = true;
     target.chosen = word;
+    target.chosenBtnEl = btnEl;
 
     const span = els.sentence.querySelector(`.blank[data-index="${target.index}"]`);
     span.textContent = word;
@@ -96,10 +98,44 @@ const VerseGame = (function () {
     els.feedback.textContent = "";
   }
 
+  function clearBlank(b) {
+    b.filled = false;
+    b.chosen = null;
+
+    const span = els.sentence.querySelector(`.blank[data-index="${b.index}"]`);
+    span.textContent = "＿＿＿";
+    span.classList.remove("filled");
+
+    if (b.chosenBtnEl) {
+      b.chosenBtnEl.classList.remove("used");
+      b.chosenBtnEl = null;
+    }
+  }
+
+  // Toucher un mot déjà posé le renvoie dans la banque, pour corriger une
+  // erreur sans devoir tout recommencer.
+  function unfillBlank(index) {
+    const b = blanks.find((bl) => bl.index === index);
+    if (!b || !b.filled) return;
+    clearBlank(b);
+    SFX.select();
+    els.feedback.textContent = "";
+    els.feedback.className = "verse-feedback";
+  }
+
+  // Après une vérification ratée, ne renvoie dans la banque que les mots mal
+  // placés : les bonnes réponses restent acquises, pas besoin de tout refaire.
+  function clearWrongBlanks() {
+    blanks.forEach((b) => {
+      if (b.filled && b.chosen !== b.word) clearBlank(b);
+    });
+  }
+
   function reset() {
     blanks.forEach((b) => {
       b.filled = false;
       b.chosen = null;
+      b.chosenBtnEl = null;
     });
     buildBank();
     render();
@@ -124,7 +160,7 @@ const VerseGame = (function () {
     } else {
       els.feedback.textContent = t("verse_retry");
       els.feedback.className = "verse-feedback ko";
-      reset();
+      clearWrongBlanks();
       return false;
     }
   }
