@@ -307,7 +307,15 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   padding-top: 6px;
   border-top: 1px dashed #d8c8ef;
   color: var(--purple-dark);
+  white-space: normal;
 }
+.hud-goal-story {
+  font-size: .72rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 2px;
+}
+.hud-goal-count { font-size: .85rem; }
 #hud-goal-item.reached { color: var(--green); }
 .game-ref {
   font-weight: bold;

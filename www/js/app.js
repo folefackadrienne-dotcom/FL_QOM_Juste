@@ -118,7 +118,6 @@ function applyStaticI18n() {
   document.getElementById("btn-activate-submit").textContent = t("btn_activate_submit");
   document.getElementById("parcours-header").textContent = t("parcours_header");
   document.getElementById("hud-moves-suffix").textContent = t("hud_moves_suffix");
-  document.getElementById("hud-goal-label").textContent = t("hud_goal_label");
   document.getElementById("btn-to-verse").textContent = t("btn_to_verse");
   document.getElementById("btn-retry").textContent = t("btn_retry");
   document.getElementById("btn-back-levels").textContent = t("btn_back_levels");
@@ -409,10 +408,13 @@ function updateHud() {
   document.getElementById("hud-stars").textContent = starsPreview();
 
   if (state.collectGoal) {
-    const symbol = currentParcours().tileSymbols[state.collectGoal.symbolIndex];
-    const got = state.collected[state.collectGoal.symbolIndex] || 0;
+    const p = currentParcours();
+    const idx = state.collectGoal.symbolIndex;
+    const symbol = p.tileSymbols[idx];
+    const got = state.collected[idx] || 0;
+    document.getElementById("hud-goal-story").textContent = p.objectiveText[idx][state.lang];
     document.getElementById("hud-goal-icon").textContent = symbol;
-    document.getElementById("hud-goal-count").textContent = got;
+    document.getElementById("hud-goal-count-num").textContent = got;
     document.getElementById("hud-goal-target").textContent = state.collectGoal.count;
     document.getElementById("hud-goal-item").classList.toggle("reached", got >= state.collectGoal.count);
   }
