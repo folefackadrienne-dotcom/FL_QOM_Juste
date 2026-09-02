@@ -10,7 +10,7 @@
      autour de lui. Ça libère plus d'espace d'un coup, comme demandé. */
 
 const DEFAULT_TILE_SYMBOLS = ["✝️", "🕊️", "🐟", "⭐", "👑", "📖"];
-const SPECIAL_BADGES = { row: "↔️", col: "↕️", bomb: "💥" };
+const DEFAULT_SPECIAL_SYMBOLS = { row: "↔️", col: "↕️", bomb: "💥" };
 
 class Board {
   constructor(container, options) {
@@ -19,6 +19,7 @@ class Board {
     this.cols = options.cols || 8;
     this.numTypes = options.tiles || 6;
     this.symbols = options.symbols || DEFAULT_TILE_SYMBOLS;
+    this.specialSymbols = options.specialSymbols || DEFAULT_SPECIAL_SYMBOLS;
     this.onScore = options.onScore || function () {};
     this.onMove = options.onMove || function () {};
     this.onInvalid = options.onInvalid || function () {};
@@ -170,7 +171,7 @@ class Board {
       el.classList.add("special-" + cell.special);
       const badge = document.createElement("span");
       badge.className = "special-badge";
-      badge.textContent = SPECIAL_BADGES[cell.special];
+      badge.textContent = this.specialSymbols[cell.special];
       el.appendChild(badge);
     }
   }

@@ -48,6 +48,7 @@ const PARCOURS = [
       { fr: "Le 3e jour, Dieu fit apparaître les arbres et leurs fruits sur la terre.", en: "On day 3, God made the trees and their fruit appear on the earth." },
       { fr: "Le 6e jour, Dieu créa l'homme à son image, dernier et plus précieux de ses œuvres.", en: "On day 6, God created man in his image, the last and most precious of his works." }
     ],
+    specialSymbols: { row: "🌬️", col: "🌊", bomb: "✨" },
     fr: { title: "La Création", subtitle: "Les 7 jours où Dieu a tout créé" },
     en: { title: "Creation", subtitle: "The 7 days God made everything" },
     verses: [
@@ -113,6 +114,7 @@ const PARCOURS = [
       { fr: "Un feu passa entre les animaux offerts, scellant l'alliance de Dieu avec Abraham.", en: "A fire passed between the offered animals, sealing God's covenant with Abraham." },
       { fr: "Abraham traversa le désert par la foi, sans savoir où Dieu le menait.", en: "Abraham crossed the desert by faith, not knowing where God was leading him." }
     ],
+    specialSymbols: { row: "🏜️", col: "⭐", bomb: "🔥" },
     fr: { title: "La vie d'Abraham", subtitle: "L'ami de Dieu, père des croyants" },
     en: { title: "The life of Abraham", subtitle: "God's friend, father of believers" },
     verses: [
@@ -178,6 +180,7 @@ const PARCOURS = [
       { fr: "Jacob lutta toute une nuit avec un ange, et reçut le nouveau nom d'Israël.", en: "Jacob wrestled all night with an angel, and received the new name Israel." },
       { fr: "C'est près d'un puits que Jacob rencontra Rachel, celle qui deviendrait sa femme.", en: "It was near a well that Jacob met Rachel, who would become his wife." }
     ],
+    specialSymbols: { row: "🐑", col: "🪜", bomb: "🥊" },
     fr: { title: "La vie de Jacob", subtitle: "L'échelle qui touche le ciel" },
     en: { title: "The life of Jacob", subtitle: "The ladder that touches heaven" },
     verses: [
@@ -243,6 +246,7 @@ const PARCOURS = [
       { fr: "Trahi par ses frères, Joseph fut vendu comme esclave et jeté en prison.", en: "Betrayed by his brothers, Joseph was sold as a slave and thrown into prison." },
       { fr: "Joseph stocka le grain d'Égypte dans d'immenses réserves pour survivre à la famine.", en: "Joseph stored Egypt's grain in huge reserves to survive the famine." }
     ],
+    specialSymbols: { row: "🌾", col: "🌈", bomb: "👑" },
     fr: { title: "La vie de Joseph", subtitle: "Du puits d'Égypte au palais de Pharaon" },
     en: { title: "The life of Joseph", subtitle: "From the pit to Pharaoh's palace" },
     verses: [
@@ -308,6 +312,7 @@ const PARCOURS = [
       { fr: "Le sang de l'agneau sur les portes protégea les Israélites lors de la dernière plaie.", en: "The blood of the lamb on the doorposts protected the Israelites during the final plague." },
       { fr: "Sur le mont Sinaï, Dieu donna à Moïse les Dix Commandements pour guider son peuple.", en: "On Mount Sinai, God gave Moses the Ten Commandments to guide his people." }
     ],
+    specialSymbols: { row: "🌊", col: "🔥", bomb: "🍞" },
     fr: { title: "L'Exode", subtitle: "La sortie d'Égypte vers la liberté" },
     en: { title: "The Exodus", subtitle: "Leaving Egypt for freedom" },
     verses: [
@@ -373,6 +378,7 @@ const PARCOURS = [
       { fr: "David devint un vaillant guerrier, remportant de nombreuses batailles pour Israël.", en: "David became a mighty warrior, winning many battles for Israel." },
       { fr: "Jeune berger, David tua un lion et un ours de ses mains pour protéger ses brebis.", en: "As a young shepherd, David killed a lion and a bear with his bare hands to protect his sheep." }
     ],
+    specialSymbols: { row: "🦁", col: "👑", bomb: "🪨" },
     fr: { title: "La vie de David", subtitle: "Le petit berger devenu roi" },
     en: { title: "The life of David", subtitle: "The shepherd boy who became king" },
     verses: [
@@ -438,6 +444,7 @@ const PARCOURS = [
       { fr: "Les mages voyagèrent depuis l'Orient, probablement à dos de chameau, pour adorer Jésus.", en: "The wise men traveled from the East, likely by camel, to worship Jesus." },
       { fr: "Les mages offrirent à Jésus de l'or, de l'encens et de la myrrhe.", en: "The wise men offered Jesus gold, frankincense, and myrrh." }
     ],
+    specialSymbols: { row: "👼", col: "⭐", bomb: "🎁" },
     fr: { title: "La naissance de Jésus", subtitle: "Noël : Dieu vient habiter parmi nous" },
     en: { title: "The birth of Jesus", subtitle: "Christmas: God comes to live among us" },
     verses: [
@@ -503,6 +510,7 @@ const PARCOURS = [
       { fr: "Paul, autrefois nommé Saul, devint l'un des plus grands enseignants de la foi chrétienne.", en: "Paul, once named Saul, became one of the greatest teachers of the Christian faith." },
       { fr: "Malgré les épreuves, Paul annonça partout la paix et l'amour offerts par Jésus.", en: "Despite hardships, Paul proclaimed everywhere the peace and love offered through Jesus." }
     ],
+    specialSymbols: { row: "⛵", col: "⚡", bomb: "🕊️" },
     fr: { title: "La vie de Paul", subtitle: "De persécuteur à apôtre de Jésus" },
     en: { title: "The life of Paul", subtitle: "From persecutor to apostle of Jesus" },
     verses: [
