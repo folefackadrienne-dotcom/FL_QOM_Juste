@@ -198,6 +198,10 @@ function refreshActiveScreen() {
       break;
     case "screen-game":
       refreshGameTexts();
+      updateHud();
+      if (!document.getElementById("intro-overlay").classList.contains("hidden")) {
+        showLevelIntro(currentLevel());
+      }
       break;
     case "screen-result":
       renderResultTexts();
@@ -410,7 +414,6 @@ function startLevel(levelId) {
 
   refreshGameTexts();
   updateHud();
-  startTimer();
 
   const container = document.getElementById("board");
   if (state.board) state.board.destroy();
@@ -426,9 +429,32 @@ function startLevel(levelId) {
     onInvalid: () => {}
   });
   state.board.init();
+  state.board.locked = true;
 
   document.getElementById("pause-overlay").classList.add("hidden");
   navTo("game");
+  // Le compte à rebours et les coups ne démarrent qu'une fois l'objectif
+  // lu et l'écran d'intro fermé par le joueur, pas avant.
+  showLevelIntro(level);
+}
+
+function showLevelIntro(level) {
+  const p = currentParcours();
+  const idx = level.collectGoal.symbolIndex;
+  document.getElementById("intro-emoji").textContent = p.emoji;
+  document.getElementById("intro-ref").textContent = level.ref;
+  document.getElementById("intro-story").textContent = p.objectiveText[level.id - 1][state.lang];
+  document.getElementById("intro-goal-icon").textContent = p.tileSymbols[idx];
+  document.getElementById("intro-goal-target").textContent = level.collectGoal.count;
+  document.getElementById("intro-score-target").textContent = level.target;
+  document.getElementById("btn-start-level").textContent = t("btn_start_level");
+  document.getElementById("intro-overlay").classList.remove("hidden");
+}
+
+function beginLevelPlay() {
+  document.getElementById("intro-overlay").classList.add("hidden");
+  if (state.board) state.board.locked = false;
+  startTimer();
 }
 
 // Restaure une partie sauvegardée (fermeture de l'appli en pleine partie) :
@@ -471,6 +497,7 @@ function resumeLevel(saved) {
   state.board.renderAll();
 
   document.getElementById("pause-overlay").classList.add("hidden");
+  document.getElementById("intro-overlay").classList.add("hidden");
   navTo("game");
   return true;
 }
@@ -496,6 +523,7 @@ function quitGame() {
   stopTimer();
   state.paused = false;
   document.getElementById("pause-overlay").classList.add("hidden");
+  document.getElementById("intro-overlay").classList.add("hidden");
   clearInProgress();
   if (state.board) state.board.destroy();
   renderLevels();
@@ -804,6 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-quit-pause").addEventListener("click", quitGame);
   document.getElementById("btn-pause").addEventListener("click", pauseGame);
   document.getElementById("btn-resume-pause").addEventListener("click", resumeGame);
+  document.getElementById("btn-start-level").addEventListener("click", beginLevelPlay);
 
   document.getElementById("btn-resume").addEventListener("click", () => {
     const saved = loadInProgress();

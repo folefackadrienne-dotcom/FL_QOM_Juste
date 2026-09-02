@@ -350,6 +350,18 @@ h2 { font-size: 1.3rem; margin: 0; color: var(--purple-dark); }
   box-shadow: 0 8px 24px rgba(90, 50, 130, 0.35);
 }
 .pause-emoji { font-size: 2.4rem; }
+.intro-story {
+  font-size: .9rem;
+  color: var(--purple-dark);
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 6px 0 14px;
+}
+.intro-goal-line {
+  font-weight: bold;
+  color: var(--purple);
+  margin-bottom: 16px;
+}
 
 .board-wrap { width: 100%; display: flex; justify-content: center; }
 .board {
