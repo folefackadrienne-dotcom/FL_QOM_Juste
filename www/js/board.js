@@ -335,8 +335,11 @@ class Board {
     } else if (special === "col") {
       for (let rr = 0; rr < this.rows; rr++) extra.push({ r: rr, c });
     } else if (special === "bomb") {
-      for (let rr = r - 1; rr <= r + 1; rr++) {
-        for (let cc = c - 1; cc <= c + 1; cc++) {
+      // Rayon 2 (zone 5x5) : plus puissant qu'un simple 3x3, pour aider à
+      // atteindre l'objectif du niveau plus vite quand ça se corse.
+      const radius = 2;
+      for (let rr = r - radius; rr <= r + radius; rr++) {
+        for (let cc = c - radius; cc <= c + radius; cc++) {
           if (rr >= 0 && rr < this.rows && cc >= 0 && cc < this.cols) extra.push({ r: rr, c: cc });
         }
       }

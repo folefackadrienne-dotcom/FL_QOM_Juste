@@ -33,10 +33,12 @@ const I18N = {
     help_lines: [
       "1️⃣ Touche une image, puis touche une image voisine pour les échanger.",
       "2️⃣ Aligne <strong>3 images identiques</strong> (ligne ou colonne) pour les faire disparaître et gagner des points.",
-      "3️⃣ Atteins le score demandé avant la fin des coups pour gagner le niveau.",
-      "4️⃣ Après chaque victoire, apprends un <strong>verset biblique</strong> en complétant la phrase avec les bons mots.",
-      "5️⃣ Choisis parmi <strong>8 parcours</strong> (la Création, Abraham, Jacob, Joseph, l'Exode, David, la naissance de Jésus, Paul), chacun avec 12 niveaux.",
-      "6️⃣ Retrouve tous tes versets appris dans <strong>« Mes versets »</strong> pour les réviser."
+      "3️⃣ Aligne <strong>4 images</strong> : tu obtiens un bonus qui casse toute une ligne ou une colonne. Aligne <strong>5 images</strong> : tu obtiens une bombe qui casse une grande zone d'un coup. Ces bonus t'aident à avancer beaucoup plus vite !",
+      "4️⃣ Chaque niveau demande aussi de récolter un certain nombre d'un symbole précis (affiché sous le score) — utilise tes bonus pour l'atteindre plus facilement.",
+      "5️⃣ Atteins le score ET cet objectif avant la fin des coups pour gagner le niveau.",
+      "6️⃣ Après chaque victoire, apprends un <strong>verset biblique</strong> en complétant la phrase avec les bons mots.",
+      "7️⃣ Choisis parmi <strong>8 parcours</strong> (la Création, Abraham, Jacob, Joseph, l'Exode, David, la naissance de Jésus, Paul), chacun avec 12 niveaux.",
+      "8️⃣ Retrouve tous tes versets appris dans <strong>« Mes versets »</strong> pour les réviser."
     ],
     help_quote: "« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. » — Psaume 119.105",
     toast_learned: "Verset mémorisé ! 🌟",
@@ -100,10 +102,12 @@ const I18N = {
     help_lines: [
       "1️⃣ Tap a tile, then tap a neighboring tile to swap them.",
       "2️⃣ Line up <strong>3 matching tiles</strong> (row or column) to clear them and score points.",
-      "3️⃣ Reach the target score before you run out of moves to win the level.",
-      "4️⃣ After every win, learn a <strong>Bible verse</strong> by completing the sentence with the right words.",
-      "5️⃣ Choose from <strong>8 journeys</strong> (Creation, Abraham, Jacob, Joseph, the Exodus, David, the birth of Jesus, Paul), each with 12 levels.",
-      "6️⃣ Find every verse you've learned in <strong>“My verses”</strong> to review them."
+      "3️⃣ Line up <strong>4 tiles</strong> and get a bonus that clears a whole row or column. Line up <strong>5 tiles</strong> and get a bomb that clears a big area at once. These bonuses help you move much faster!",
+      "4️⃣ Each level also asks you to collect a certain number of a specific symbol (shown under the score) — use your bonuses to reach it more easily.",
+      "5️⃣ Reach both the target score AND that goal before you run out of moves to win the level.",
+      "6️⃣ After every win, learn a <strong>Bible verse</strong> by completing the sentence with the right words.",
+      "7️⃣ Choose from <strong>8 journeys</strong> (Creation, Abraham, Jacob, Joseph, the Exodus, David, the birth of Jesus, Paul), each with 12 levels.",
+      "8️⃣ Find every verse you've learned in <strong>“My verses”</strong> to review them."
     ],
     help_quote: "“Thy word is a lamp unto my feet, and a light unto my path.” — Psalm 119:105",
     toast_learned: "Verse memorized! 🌟",
