@@ -212,15 +212,12 @@ function renderParcoursList() {
       ${badge}
     `;
     card.addEventListener("click", () => {
-      if (Billing.isUnlocked(p.id)) {
-        state.currentParcoursId = p.id;
-        renderLevels();
-        navTo("levels");
-      } else {
-        state.currentUnlockParcoursId = p.id;
-        renderUnlockScreen(p.id);
-        navTo("unlock");
-      }
+      // Les 2 premiers niveaux de chaque parcours sont toujours jouables :
+      // on ouvre donc toujours la carte des niveaux, jamais directement
+      // l'écran d'achat (celui-ci n'apparaît qu'en touchant un niveau payant).
+      state.currentParcoursId = p.id;
+      renderLevels();
+      navTo("levels");
     });
     list.appendChild(card);
   });
@@ -318,13 +315,22 @@ function renderLevels() {
   const grid = document.getElementById("levels-grid");
   grid.innerHTML = "";
   currentLevels().forEach((level) => {
-    const locked = level.id > prog.unlocked;
+    const progLocked = level.id > prog.unlocked;
+    const paywalled = !progLocked && !Billing.isLevelUnlocked(p.id, level.id);
     const btn = document.createElement("button");
-    btn.className = "level-btn" + (locked ? " locked" : "");
+    btn.className = "level-btn" + (progLocked ? " locked" : "") + (paywalled ? " paywalled" : "");
     const starCount = prog.stars[level.id] || 0;
-    btn.innerHTML = `<div>${level.id}</div><div class="lv-stars">${locked ? "" : "⭐".repeat(starCount) + "☆".repeat(3 - starCount)}</div>`;
-    if (!locked) {
-      btn.addEventListener("click", () => startLevel(level.id));
+    btn.innerHTML = `<div>${level.id}</div><div class="lv-stars">${progLocked ? "" : "⭐".repeat(starCount) + "☆".repeat(3 - starCount)}</div>`;
+    if (!progLocked) {
+      if (paywalled) {
+        btn.addEventListener("click", () => {
+          state.currentUnlockParcoursId = p.id;
+          renderUnlockScreen(p.id);
+          navTo("unlock");
+        });
+      } else {
+        btn.addEventListener("click", () => startLevel(level.id));
+      }
     }
     grid.appendChild(btn);
   });

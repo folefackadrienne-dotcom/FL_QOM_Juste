@@ -1,15 +1,21 @@
 /* Déblocage payant des parcours via Google Play Billing
    (plugin cordova-plugin-purchase, namespace global CdvPurchase injecté
-   par l'appli native — absent dans un simple navigateur web). */
+   par l'appli native — absent dans un simple navigateur web).
+
+   Modèle freemium : les 2 premiers niveaux de CHAQUE parcours sont
+   toujours jouables gratuitement (aperçu) ; au-delà, il faut débloquer
+   le parcours (achat ou code d'activation manuel). */
 
 const Billing = (function () {
-  const FREE_PARCOURS = ["creation", "david"];
+  const FREE_LEVELS_PER_PARCOURS = 2;
 
   const PRODUCT_IDS = {
+    creation: "unlock_creation",
     abraham: "unlock_abraham",
     jacob: "unlock_jacob",
     joseph: "unlock_joseph",
     exode: "unlock_exode",
+    david: "unlock_david",
     jesus: "unlock_jesus",
     paul: "unlock_paul"
   };
@@ -25,8 +31,8 @@ const Billing = (function () {
     return typeof CdvPurchase !== "undefined";
   }
 
-  function isFree(parcoursId) {
-    return FREE_PARCOURS.includes(parcoursId);
+  function isLevelFree(levelId) {
+    return levelId <= FREE_LEVELS_PER_PARCOURS;
   }
 
   function productIdFor(parcoursId) {
@@ -34,11 +40,14 @@ const Billing = (function () {
   }
 
   function isUnlocked(parcoursId) {
-    if (isFree(parcoursId)) return true;
     if (typeof Activation !== "undefined" && Activation.isActivated()) return true;
     if (!available()) return true; // aperçu web (hors appli) : tout débloqué pour la démo/les tests
     if (owned.has(BUNDLE_ID)) return true;
     return owned.has(productIdFor(parcoursId));
+  }
+
+  function isLevelUnlocked(parcoursId, levelId) {
+    return isLevelFree(levelId) || isUnlocked(parcoursId);
   }
 
   function refreshOwned() {
@@ -123,8 +132,9 @@ const Billing = (function () {
   return {
     init,
     available,
-    isFree,
+    isLevelFree,
     isUnlocked,
+    isLevelUnlocked,
     priceFor,
     bundlePrice,
     purchase,
