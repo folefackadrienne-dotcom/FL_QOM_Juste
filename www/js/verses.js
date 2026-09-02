@@ -2,9 +2,11 @@
    anglais : King James Version — deux traductions du domaine public),
    organisées en "parcours" narratifs de 12 niveaux chacun. */
 
-/* Difficulté progressive appliquée aux 12 niveaux de chaque parcours */
-const LEVEL_TARGET = [400, 435, 470, 505, 540, 575, 610, 645, 680, 715, 750, 785];
-const LEVEL_MOVES = [20, 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15];
+/* Difficulté progressive appliquée aux 12 niveaux de chaque parcours.
+   Les tout premiers niveaux doivent rester faciles et accueillants ; la
+   difficulté ne doit monter que graduellement au fil des 12 niveaux. */
+const LEVEL_TARGET = [250, 280, 310, 350, 390, 430, 470, 510, 555, 600, 650, 700];
+const LEVEL_MOVES = [22, 22, 21, 21, 20, 20, 19, 19, 18, 18, 17, 17];
 const levelTiles = (n) => (n <= 6 ? 6 : 5);
 // Compte à rebours (secondes) : assez large pour réfléchir, mais ajoute une
 // vraie contrainte de temps qui se resserre légèrement sur les niveaux
@@ -13,8 +15,9 @@ const levelTime = (movesForLevel) => movesForLevel * 4;
 // Objectif de collecte : casser un nombre croissant de pions d'un symbole
 // donné (fixe pour un niveau donné, pour rester le même à chaque tentative).
 // Le symbole visé change de niveau en niveau, en tournant sur les symboles
-// du parcours, pour varier ce qu'on demande de collecter.
-const collectCount = (n) => 15 + (n - 1) * 3;
+// du parcours, pour varier ce qu'on demande de collecter. Départ modeste
+// (8 pions) pour rester accessible dès le niveau 1.
+const collectCount = (n) => 8 + Math.floor((n - 1) * 1.5);
 
 function buildLevels(rawVerses, lang) {
   return rawVerses.map((v, i) => {
