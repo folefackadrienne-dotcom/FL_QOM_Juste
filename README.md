@@ -6,6 +6,7 @@ Un jeu de plateforme/course inspiré de Super Mario qui intègre la Bible et le 
 
 - `game/faith-run-eden.html` — Niveau 1 : Éden.
 - `game/faith-run-exodus.html` — Niveau 2 : l'Exode.
+- `game/faith-run-canaan.html` — Niveau 3 : la Terre promise.
 
 Fichiers HTML autonomes (aucune dépendance à installer, aucun appel réseau). Pour les lancer :
 
@@ -16,7 +17,7 @@ xdg-open game/faith-run-eden.html  # Linux
 
 Ou double-cliquer le fichier pour l'ouvrir dans un navigateur.
 
-**Mécaniques communes aux deux niveaux :**
+**Mécaniques communes aux trois niveaux :**
 - Déplacement (← → ou A/D) et saut (Espace / ↑) façon plateformer, avec boutons tactiles sur mobile.
 - Effets visuels (poussière, particules de collecte, tremblement d'écran) et sons synthétisés en direct (Web Audio, aucun fichier externe), avec bouton muet dans la barre HUD.
 - Vies : 3 cœurs de départ, 5 maximum. Trois façons d'en regagner : un cœur bonus tous les 2 versets collectés, un cœur qui se restaure après 14 secondes sans dégât, et un cœur caché à trouver en explorant chaque niveau.
@@ -34,8 +35,14 @@ Ou double-cliquer le fichier pour l'ouvrir dans un navigateur.
 - Le Nil à franchir par plateformes, puis traversée de la mer Rouge (murs d'eau animés).
 - Arrivée : dialogue avec la Colonne de Feu (Exode 33:14) reliant la délivrance d'Égypte à la confiance au jour le jour.
 
+**Niveau 3 — la Terre promise :**
+- 5 versets à collecter (Josué, Nombres 13), affichés en toast à la collecte.
+- Obstacles : lances et un géant patrouilleur — 3 cœurs de vie.
+- Le Jourdain à franchir par plateformes, puis approche des murailles de Jéricho, qui s'effondrent (tremblement d'écran, gravats) à l'arrivée.
+- Arrivée : dialogue au pied de l'Arche et des murailles tombées (Josué 1:9) sur le courage face aux géants de la vie.
+
 ## Prochaines étapes possibles
 
-- Niveau 3 : la Terre promise, puis les Évangiles et les Actes.
+- Niveau 4 : les Évangiles, puis les Actes.
 - Écran d'accueil / hub reliant les niveaux entre eux.
 - Système de progression entre niveaux (sauvegarde locale du niveau atteint / versets collectés).
