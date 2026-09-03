@@ -4,18 +4,19 @@ Un jeu de plateforme/course inspiré de Super Mario qui intègre la Bible et le 
 
 ## Prototypes jouables
 
+- `game/faith-run-hub.html` — écran d'accueil : choix du chapitre, relie tous les niveaux entre eux.
 - `game/faith-run-eden.html` — Niveau 1 : Éden.
 - `game/faith-run-exodus.html` — Niveau 2 : l'Exode.
 - `game/faith-run-canaan.html` — Niveau 3 : la Terre promise.
 
-Fichiers HTML autonomes (aucune dépendance à installer, aucun appel réseau). Pour les lancer :
+Fichiers HTML autonomes (aucune dépendance à installer, aucun appel réseau), à garder dans le même dossier : le hub et les écrans de fin de niveau se lient entre eux par chemins relatifs. Pour lancer le jeu :
 
 ```bash
-open game/faith-run-eden.html      # macOS
-xdg-open game/faith-run-eden.html  # Linux
+open game/faith-run-hub.html      # macOS
+xdg-open game/faith-run-hub.html  # Linux
 ```
 
-Ou double-cliquer le fichier pour l'ouvrir dans un navigateur.
+Ou double-cliquer sur `faith-run-hub.html` pour l'ouvrir dans un navigateur, puis choisir un chapitre. Chaque niveau propose aussi un lien « ← Tous les niveaux » dans l'en-tête et, une fois terminé, un lien direct vers le chapitre suivant.
 
 **Mécaniques communes aux trois niveaux :**
 - Déplacement (← → ou A/D) et saut (Espace / ↑) façon plateformer, avec boutons tactiles sur mobile.
@@ -44,5 +45,4 @@ Ou double-cliquer le fichier pour l'ouvrir dans un navigateur.
 ## Prochaines étapes possibles
 
 - Niveau 4 : les Évangiles, puis les Actes.
-- Écran d'accueil / hub reliant les niveaux entre eux.
-- Système de progression entre niveaux (sauvegarde locale du niveau atteint / versets collectés).
+- Système de progression entre niveaux (sauvegarde locale du niveau atteint / versets collectés), et déblocage réel des chapitres 4-5 sur le hub.

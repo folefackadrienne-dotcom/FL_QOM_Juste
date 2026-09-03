@@ -299,6 +299,33 @@
     opacity:.75;
   }
 
+  .hub-link{
+    font-size:.72rem;
+    color:var(--parchment-dim);
+    text-decoration:none;
+    letter-spacing:.03em;
+    border-bottom:1px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .hub-link:hover{color:var(--gold-soft);border-color:var(--gold-soft);}
+
+  .nav-links{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .nav-links a{
+    font-size:.78rem;
+    font-weight:600;
+    color:var(--gold-soft);
+    text-decoration:none;
+    border-bottom:1px solid var(--line-gold);
+    padding-bottom:1px;
+  }
+  .nav-links a:hover{color:var(--gold);}
+
   /* ---------- controls legend + touch pad ---------- */
   .legend{
     display:flex;
@@ -369,6 +396,7 @@
     <span class="kicker">Faith Run · Prototype jouable</span>
     <h1>FAITH RUN</h1>
     <span class="subtitle">Niveau 3 — La Terre promise</span>
+    <a class="hub-link" href="faith-run-hub.html">← Tous les niveaux</a>
   </header>
 
   <div class="hud">
@@ -421,6 +449,9 @@
               <div><b id="sumTime">0:00</b>temps</div>
             </div>
             <button class="cta" id="btnReplayWin">Rejouer le niveau</button>
+            <div class="nav-links">
+              <a href="faith-run-hub.html">← Accueil</a>
+            </div>
             <p class="next-note">À suivre — Niveau 4 : les Évangiles</p>
           </div>
         </div>
