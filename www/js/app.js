@@ -401,6 +401,17 @@ function renderLevels() {
 let levelFinished = false;
 
 function startLevel(levelId) {
+  // Filet de sécurité : quel que soit le bouton qui a mené ici (carte des
+  // niveaux, "niveau suivant", reprise...), un niveau payant non débloqué
+  // ne doit jamais pouvoir démarrer directement.
+  const p = currentParcours();
+  if (!Billing.isLevelUnlocked(p.id, levelId)) {
+    state.currentUnlockParcoursId = p.id;
+    renderUnlockScreen(p.id);
+    navTo("unlock");
+    return;
+  }
+
   levelFinished = false;
   state.paused = false;
   state.currentLevelId = levelId;
